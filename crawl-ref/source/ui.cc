@@ -6,6 +6,7 @@
 #include "AppHdr.h"
 
 #include <numeric>
+#include <stack>
 
 #include "ui.h"
 #include "cio.h"
@@ -21,6 +22,15 @@
 # include "stringutil.h"
 #endif
 
+static i4 aabb_intersect(i4 a, i4 b)
+{
+    a[2] += a[0]; a[3] += a[1];
+    b[2] += b[0]; b[3] += b[1];
+    i4 i = { max(a[0], b[0]), max(a[1], b[1]), min(a[2], b[2]), min(a[3], b[3]) };
+    i[2] -= i[0]; i[3] -= i[1];
+    return i;
+}
+
 static struct UIRoot
 {
 public:
@@ -34,9 +44,12 @@ public:
 
 protected:
     int m_w, m_h;
+    i4 m_region;
     UIStack m_root;
     bool m_dirty;
 } ui_root;
+
+static stack<i4> scissor_stack;
 
 void UI::render()
 {
@@ -274,7 +287,7 @@ void UIImage::set_file(string img_path)
 void UIImage::_render()
 {
 #ifdef USE_TILE_LOCAL
-    glmanager->set_scissor(m_region[0], m_region[1], m_region[2], m_region[3]);
+    ui_push_scissor(m_region);
     if (m_using_tile)
     {
         TileBuffer tb;
@@ -303,7 +316,7 @@ void UIImage::_render()
 
         buf.draw();
     }
-    glmanager->reset_scissor();
+    ui_pop_scissor();
 #endif
 }
 
@@ -546,6 +559,11 @@ void UIRoot::layout()
     UISizeReq sr_vert = m_root.get_preferred_size(1, width);
     int height = max(sr_vert.min, m_h);
 
+#ifdef USE_TILE_LOCAL
+    m_region = {0, 0, width, height};
+#else
+    m_region = {0, 0, m_w, m_h};
+#endif
     m_root.allocate_region({0, 0, width, height});
 }
 
@@ -557,6 +575,7 @@ void UIRoot::render()
     clrscr();
 #endif
 
+    ui_push_scissor(m_region);
 #ifdef USE_TILE_LOCAL
     m_root.render();
 #else
@@ -566,11 +585,37 @@ void UIRoot::render()
     else
         redraw_screen(false);
 #endif
+    ui_pop_scissor();
 
 #ifdef USE_TILE_LOCAL
     wm->swap_buffers();
 #else
     update_screen();
+#endif
+}
+
+void ui_push_scissor(i4 scissor)
+{
+    if (scissor_stack.size() > 0)
+        scissor = aabb_intersect(scissor, scissor_stack.top());
+    scissor_stack.push(scissor);
+#ifdef USE_TILE_LOCAL
+    glmanager->set_scissor(scissor[0], scissor[1], scissor[2], scissor[3]);
+#endif
+}
+
+void ui_pop_scissor()
+{
+    ASSERT(scissor_stack.size() > 0);
+    scissor_stack.pop();
+#ifdef USE_TILE_LOCAL
+    if (scissor_stack.size() > 0)
+    {
+        i4 scissor = scissor_stack.top();
+        glmanager->set_scissor(scissor[0], scissor[1], scissor[2], scissor[3]);
+    }
+    else
+        glmanager->reset_scissor();
 #endif
 }
 
