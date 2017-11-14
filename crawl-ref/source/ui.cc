@@ -45,7 +45,7 @@ static inline bool pos_in_rect(i2 pos, i4 rect)
 static struct UIRoot
 {
 public:
-    UIRoot() : m_dirty(false) {};
+    UIRoot() : m_needs_layout(false) {};
     void push_child(shared_ptr<UI> child);
     void pop_child();
 
@@ -54,12 +54,13 @@ public:
     void render();
 
     bool on_event(wm_event event);
+    void queue_layout() { m_needs_layout = true; };
 
 protected:
     int m_w, m_h;
     i4 m_region;
     UIStack m_root;
-    bool m_dirty;
+    bool m_needs_layout;
 } ui_root;
 
 static stack<i4> scissor_stack;
@@ -116,7 +117,6 @@ UISizeReq UI::get_preferred_size(int dim, int prosp_width)
     ASSERT(dim == 0 || dim == 1);
     ASSERT((dim == 0) == (prosp_width == -1));
 
-    // XXX: This needs invalidation on widget/descendant property change!
     if (cached_sr_valid[dim] && (!dim || cached_sr_pw == prosp_width))
         return cached_sr[dim];
 
@@ -164,9 +164,25 @@ void UI::_allocate_region()
 {
 }
 
+void UI::_set_parent(UI* p)
+{
+    m_parent = p;
+}
+
+void UI::_invalidate_sizereq()
+{
+    cached_sr_valid[0] = false;
+    cached_sr_valid[1] = false;
+    if (m_parent)
+        m_parent->_invalidate_sizereq();
+    ui_root.queue_layout();
+}
+
 void UIBox::add_child(shared_ptr<UI> child)
 {
+    child->_set_parent(this);
     m_children.push_back(move(child));
+    _invalidate_sizereq();
 }
 
 void UIBox::_render()
@@ -319,6 +335,7 @@ void UIText::set_text(const formatted_string &fs)
 {
     m_text.clear();
     m_text += fs;
+    _invalidate_sizereq();
     m_wrapped_size = { -1, -1 };
     _allocate_region();
 }
@@ -480,6 +497,7 @@ void UIImage::set_tile(tile_def tile)
     m_tw = ti.width;
     m_th = ti.height;
     m_using_tile = true;
+    _invalidate_sizereq();
 #endif
 }
 
@@ -493,6 +511,7 @@ void UIImage::set_file(string img_path)
 
     m_tw = m_img.orig_width();
     m_th = m_img.orig_height();
+    _invalidate_sizereq();
 #endif
 }
 
@@ -549,7 +568,9 @@ UISizeReq UIImage::_get_preferred_size(int dim, int prosp_width)
 
 void UIStack::add_child(shared_ptr<UI> child)
 {
+    child->_set_parent(this);
     m_children.push_back(move(child));
+    _invalidate_sizereq();
 }
 
 void UIStack::pop_child()
@@ -557,6 +578,7 @@ void UIStack::pop_child()
     if (!m_children.size())
         return;
     m_children.pop_back();
+    _invalidate_sizereq();
 }
 
 void UIStack::_render()
@@ -601,9 +623,11 @@ bool UIStack::on_event(wm_event event)
 
 void UIGrid::add_child(shared_ptr<UI> child, int x, int y, int w, int h)
 {
+    child->_set_parent(this);
     child_info ch = { {x, y}, {w, h}, move(child) };
     m_child_info.push_back(ch);
     m_track_info_dirty = true;
+    _invalidate_sizereq();
 }
 
 void UIGrid::init_track_info()
@@ -784,7 +808,9 @@ void UIScroller::set_scroll(int y)
 
 void UIScroller::set_child(shared_ptr<UI> child)
 {
+    child->_set_parent(this);
     m_child = move(child);
+    _invalidate_sizereq();
 }
 
 void UIScroller::_render()
@@ -870,7 +896,7 @@ bool UIScroller::on_event(wm_event event)
 void UIRoot::push_child(shared_ptr<UI> ch)
 {
     m_root.add_child(move(ch));
-    m_dirty = true;
+    m_needs_layout = true;
 #ifndef USE_TILE_LOCAL
     if (m_root.num_children() == 1)
     {
@@ -883,7 +909,7 @@ void UIRoot::push_child(shared_ptr<UI> ch)
 void UIRoot::pop_child()
 {
     m_root.pop_child();
-    m_dirty = true;
+    m_needs_layout = true;
 #ifndef USE_TILE_LOCAL
     if (m_root.num_children() == 0)
         clrscr();
@@ -897,28 +923,29 @@ void UIRoot::resize(int w, int h)
 
     m_w = w;
     m_h = h;
-    m_dirty = true;
+    m_needs_layout = true;
 }
 
 void UIRoot::layout()
 {
-    if (!m_dirty)
-        return;
-    m_dirty = false;
+    while (m_needs_layout)
+    {
+        m_needs_layout = false;
 
-    // Find preferred size with height-for-width: we never allocate less than
-    // the minimum size, but may allocate more than the natural size.
-    UISizeReq sr_horz = m_root.get_preferred_size(0, -1);
-    int width = max(sr_horz.min, m_w);
-    UISizeReq sr_vert = m_root.get_preferred_size(1, width);
-    int height = max(sr_vert.min, m_h);
+        // Find preferred size with height-for-width: we never allocate less than
+        // the minimum size, but may allocate more than the natural size.
+        UISizeReq sr_horz = m_root.get_preferred_size(0, -1);
+        int width = max(sr_horz.min, m_w);
+        UISizeReq sr_vert = m_root.get_preferred_size(1, width);
+        int height = max(sr_vert.min, m_h);
 
 #ifdef USE_TILE_LOCAL
-    m_region = {0, 0, width, height};
+        m_region = {0, 0, width, height};
 #else
-    m_region = {0, 0, m_w, m_h};
+        m_region = {0, 0, m_w, m_h};
 #endif
-    m_root.allocate_region({0, 0, width, height});
+        m_root.allocate_region({0, 0, width, height});
+    }
 }
 
 void UIRoot::render()
