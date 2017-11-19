@@ -235,9 +235,9 @@ protected:
     struct child_info {
         i2 pos;
         i2 span;
+        shared_ptr<UI> widget;
     };
     vector<child_info> m_child_info;
-    vector<shared_ptr<UI>> m_children;
 
     void layout_track(int dim, UISizeReq sr, int size);
     void set_track_offsets(vector<track_info>& tracks);
@@ -252,6 +252,7 @@ void ui_pump_events();
 
 void ui_push_scissor(i4 scissor);
 void ui_pop_scissor();
+i4 ui_get_scissor();
 
 // XXX: this is a hack used to ensure that when switching to a
 // layout-based UI, the starting window size is correct. This is necessary
