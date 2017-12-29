@@ -418,6 +418,21 @@ protected:
     int m_scroll;
 };
 
+class UIPopup : public UIBin
+{
+public:
+    UIPopup(shared_ptr<UI> child);
+    virtual void _render() override;
+    virtual UISizeReq _get_preferred_size(int dim, int prosp_width) override;
+    virtual void _allocate_region() override;
+
+protected:
+    shared_ptr<UI> m_root;
+#ifdef USE_TILE_LOCAL
+    ShapeBuffer m_buf;
+#endif
+};
+
 void ui_push_layout(shared_ptr<UI> root);
 void ui_pop_layout();
 void ui_pump_events();
