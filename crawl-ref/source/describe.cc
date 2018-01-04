@@ -2567,6 +2567,10 @@ bool describe_item(item_def &item, function<void (string&)> fixup_desc)
         vbox->add_child(move(footer));
     }
 
+#ifdef USE_TILE_LOCAL
+    vbox->max_size()[0] = tiles.get_crt_font()->char_width()*80;
+#endif
+
     auto popup = make_shared<UIPopup>(move(vbox));
 
     bool done = false;
@@ -2936,6 +2940,10 @@ void describe_spell(spell_type spell, const monster_info *mon_owner,
     bool can_mem = _get_spell_description(spell, mon_owner, desc, item);
 
     auto vbox = make_shared<UIBox>(false, false, false);
+
+#ifdef USE_TILE_LOCAL
+    vbox->max_size()[0] = tiles.get_crt_font()->char_width()*80;
+#endif
 
     auto title_hbox = make_shared<UIBox>(true, false, false);
 
@@ -4240,6 +4248,10 @@ int describe_monsters(const monster_info &mi, bool force_seen,
         more->set_margin_for_sdl({20, 0, 0, 0});
         vbox->add_child(move(more));
     }
+
+#ifdef USE_TILE_LOCAL
+    vbox->max_size()[0] = tiles.get_crt_font()->char_width()*80;
+#endif
 
     auto popup = make_shared<UIPopup>(move(vbox));
 

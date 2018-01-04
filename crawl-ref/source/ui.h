@@ -89,7 +89,7 @@ protected:
 class UI
 {
 public:
-    UI() : margin({0,0,0,0}), flex_grow(1), align_self(UI_ALIGN_UNSET), expand_h(false), expand_v(false), cached_sr_valid{false, false}, m_parent(nullptr) {};
+    UI() : margin({0,0,0,0}), flex_grow(1), align_self(UI_ALIGN_UNSET), expand_h(false), expand_v(false), cached_sr_valid{false, false}, alloc_queued(false), m_parent(nullptr), m_min_size{0,0}, m_max_size{INT_MAX, INT_MAX} {};
     virtual ~UI() {
         UI::slots.event.remove_by_target(this);
     }
@@ -99,6 +99,8 @@ public:
     UIAlign_type align_self;
     bool expand_h, expand_v;
     const i4 get_region() const { return m_region; }
+    i2& min_size() { _invalidate_sizereq(); return m_min_size; }
+    i2& max_size() { _invalidate_sizereq(); return m_max_size; }
 
     virtual void _render() = 0;
     virtual UISizeReq _get_preferred_size(int dim, int prosp_width);
@@ -146,6 +148,7 @@ private:
     UISizeReq cached_sr[2];
     int cached_sr_pw;
     UI* m_parent;
+    i2 m_min_size, m_max_size;
 };
 
 class UIContainer : public UI
