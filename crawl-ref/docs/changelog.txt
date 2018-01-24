@@ -50,6 +50,9 @@ Changes swiped from other variants
 ----------------------------------
 bcrawl:
 * Chaos Knights are always Xom's playthings.
+Gooncrawl:
+* Malmutate is gone; nexos got paralyse, cacos entropic weave, shining eyes
+  polymorph. OOFs got Corrupting Pulse and the new stat draining malmutate.
 
 Stoat Soup 0.22 "Spirits of the Dead"
 -------------------------------------

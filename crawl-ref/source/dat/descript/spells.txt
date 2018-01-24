@@ -383,6 +383,11 @@ expiry, the spell cannot immediately be recast, but with high power the caster
 will be left more resilient when the effect ends. It has no effect on those who
 are already undead.
 %%%%
+Deterioration spell
+
+Drains all of the target's physical attributes at an incredible rate. This 
+loss is temporary, and can be recovered by gaining experience.
+%%%%
 Debugging Ray spell
 
 Fires a ray which does massive damage (1500 hp) and always hits.
@@ -863,11 +868,6 @@ expiry, the tentacle will be severed and turn on the caster.
 Malign Offering spell
 
 Drains life from an enemy, healing nearby allies in the process.
-%%%%
-Malmutate spell
-
-Bestows a mutation on a target. The mutation is almost always harmful. It
-cannot affect artificial beings, and the undead will decompose if affected.
 %%%%
 Mara Summon spell
 

@@ -952,7 +952,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_SHINING_EYE,
       {
-       { SPELL_MALMUTATE, 57, MON_SPELL_MAGICAL },
+       { SPELL_POLYMORPH, 57, MON_SPELL_MAGICAL },
       }
     },
 
@@ -1446,7 +1446,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_NEQOXEC,
       {
-       { SPELL_MALMUTATE, 19, MON_SPELL_MAGICAL },
+       { SPELL_PARALYSE, 19, MON_SPELL_MAGICAL },
        { SPELL_BRAIN_FEED, 19, MON_SPELL_MAGICAL },
        { SPELL_SUMMON_MINOR_DEMON, 19, MON_SPELL_MAGICAL },
       }
@@ -1491,7 +1491,7 @@ static const mon_spellbook mspell_list[] =
        { SPELL_ENERGY_BOLT, 13, MON_SPELL_MAGICAL },
        { SPELL_SLOW, 13, MON_SPELL_MAGICAL },
        { SPELL_CONFUSE, 13, MON_SPELL_MAGICAL },
-       { SPELL_MALMUTATE, 13, MON_SPELL_MAGICAL },
+       { SPELL_ENTROPIC_WEAVE, 13, MON_SPELL_MAGICAL },
        { SPELL_DIG, 13, MON_SPELL_MAGICAL },
       }
     },

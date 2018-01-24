@@ -2830,7 +2830,7 @@ static const struct spell_desc spelldata[] =
 },
 
 {
-    SPELL_MALMUTATE, "Malmutate",
+    SPELL_MALMUTATE, "Deterioration",
     SPTYP_TRANSMUTATION | SPTYP_HEXES,
     SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_CHAOTIC | SPFLAG_NEEDS_TRACER,
     6,
