@@ -10,6 +10,7 @@
 
 #include "ui.h"
 #include "cio.h"
+#include "macro.h"
 
 #ifdef USE_TILE_LOCAL
 # include "glwrapper.h"
@@ -59,7 +60,7 @@ static struct UIRoot
 {
 public:
     UIRoot() : m_dirty_region({0, 0, 0, 0}), m_needs_layout(false) {};
-    void push_child(shared_ptr<UI> child);
+    void push_child(shared_ptr<UI> child, KeymapContext km);
     void pop_child();
 
     void resize(int w, int h);
@@ -79,6 +80,7 @@ public:
     };
 
     bool needs_paint;
+    vector<KeymapContext> keymap_stack;
 
 protected:
     int m_w, m_h;
@@ -1089,10 +1091,11 @@ UISizeReq UIDungeon::_get_preferred_size(int dim, int prosp_width)
 }
 #endif
 
-void UIRoot::push_child(shared_ptr<UI> ch)
+void UIRoot::push_child(shared_ptr<UI> ch, KeymapContext km)
 {
     m_root.add_child(move(ch));
     m_needs_layout = true;
+    keymap_stack.push_back(km);
 #ifndef USE_TILE_LOCAL
     if (m_root.num_children() == 1)
     {
@@ -1106,6 +1109,7 @@ void UIRoot::pop_child()
 {
     m_root.pop_child();
     m_needs_layout = true;
+    keymap_stack.pop_back();
 #ifndef USE_TILE_LOCAL
     if (m_root.num_children() == 0)
         clrscr();
@@ -1244,9 +1248,9 @@ static void ui_clear_text_region(i4 region)
 }
 #endif
 
-void ui_push_layout(shared_ptr<UI> root)
+void ui_push_layout(shared_ptr<UI> root, KeymapContext km)
 {
-    ui_root.push_child(move(root));
+    ui_root.push_child(move(root), km);
 }
 
 void ui_pop_layout()
@@ -1259,23 +1263,48 @@ void ui_resize(int w, int h)
     ui_root.resize(w, h);
 }
 
+static void remap_key(wm_event &event)
+{
+    keyseq keys = {event.key.keysym.sym};
+    KeymapContext km = ui_root.keymap_stack.size() > 0 ? ui_root.keymap_stack[0] : KMC_NONE;
+    macro_buf_add_with_keymap(keys, km);
+    event.key.keysym.sym = macro_buf_get();
+    ASSERT(event.key.keysym.sym != -1);
+}
+
 void ui_pump_events()
 {
+    int macro_key = macro_buf_get();
+
 #ifdef USE_TILE_LOCAL
     // Don't render while there are unhandled mousewheel events,
     // since these can come in faster than crawl can redraw.
     // unlike mousemotion events, we don't drop all but the last event
-    if (!wm->get_event_count(WME_MOUSEWHEEL))
+    // ...but if there are macro keys, we do need to layout (for menu UI)
+    if (!wm->get_event_count(WME_MOUSEWHEEL) || macro_key != -1)
 #endif
     {
         ui_root.layout();
-        ui_root.render();
+#ifndef USE_TILE_WEB
+        // On webtiles, we can't skip rendering while there are macro keys: a
+        // crt screen may be opened and without a render() call, its text won't
+        // won't be sent to the client(s). E.g: macro => iai
+        if (macro_key == -1)
+#endif
+            ui_root.render();
     }
 
 #ifdef USE_TILE_LOCAL
     wm_event event = {0};
     while (true)
     {
+        if (macro_key != -1)
+        {
+            event.type = WME_KEYDOWN;
+            event.key.keysym.sym = macro_key;
+            break;
+        }
+
         if (!wm->wait_event(&event))
             continue;
         if (event.type == WME_MOUSEMOTION)
@@ -1290,6 +1319,10 @@ void ui_pump_events()
         }
         if (event.type == WME_KEYDOWN && event.key.keysym.sym == 0)
             continue;
+
+        // translate any key events with the current keymap
+        if (event.type == WME_KEYDOWN)
+            remap_key(event);
         break;
     }
 
@@ -1327,7 +1360,7 @@ void ui_pump_events()
     }
 #else
     set_getch_returns_resizes(true);
-    int k = getch_ck();
+    int k = macro_key != -1 ? macro_key : getch_ck();
     set_getch_returns_resizes(false);
 
     if (k == CK_RESIZE)
@@ -1344,6 +1377,8 @@ void ui_pump_events()
         wm_event ev = {0};
         ev.type = WME_KEYDOWN;
         ev.key.keysym.sym = k;
+        if (macro_key == -1)
+            remap_key(ev);
         ui_root.on_event(ev);
     }
 #endif
