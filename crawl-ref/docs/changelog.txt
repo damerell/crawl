@@ -73,6 +73,7 @@ Gooncrawl:
 * Malmutate is gone, replaced with Corrupt Body, a weaker Corrupting Pulse.
   OOFs got a new stat draining malmutate and Corrupt Body.
 * Iskenderun's Undoing - cast 8 orbs of destruction at once.
+* Haste spell returns as level 9.
 
 Stoat Soup 0.22 "Spirits of the Dead"
 -------------------------------------
