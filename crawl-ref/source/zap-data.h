@@ -1357,4 +1357,22 @@ _mon_hex_zap(ZAP_DRAIN_MAGIC, BEAM_DRAIN_MAGIC),
     false,
     0 // No additional effect noise.
 },
+{
+    ZAP_ORBAGEDDON_EXPLOSION,
+    "orb of destruction",
+    200,
+    new calcdice_calculator<3, 24, 1, 3>,
+    new tohit_calculator<AUTOMATIC_HIT>,
+    new dicedef_calculator<3, 7, 1, 14>,
+    new tohit_calculator<AUTOMATIC_HIT>,
+    ETC_MAGIC,
+    false,
+    BEAM_DEVASTATION,
+    DCHAR_FIRED_BURST,
+    true,
+    false,
+    false,
+    7
+},
+
 };
