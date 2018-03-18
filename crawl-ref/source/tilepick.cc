@@ -946,6 +946,7 @@ static tileidx_t _zombie_tile_to_spectral(const tileidx_t z_tile)
     case TILEP_MONS_ZOMBIE_OGRE:
     case TILEP_MONS_ZOMBIE_TROLL:
     case TILEP_MONS_ZOMBIE_JUGGERNAUT:
+    case TILEP_MONS_ZOMBIE_UGLY_THING:
         return TILEP_MONS_SPECTRAL_LARGE;
     case TILEP_MONS_ZOMBIE_QUADRUPED_SMALL:
     case TILEP_MONS_ZOMBIE_RAT:
@@ -954,13 +955,18 @@ static tileidx_t _zombie_tile_to_spectral(const tileidx_t z_tile)
     case TILEP_MONS_ZOMBIE_HOUND:
     case TILEP_MONS_ZOMBIE_CRAB:
     case TILEP_MONS_ZOMBIE_TURTLE:
+    case TILEP_MONS_ZOMBIE_BEAR:
         return TILEP_MONS_SPECTRAL_QUADRUPED_SMALL;
     case TILEP_MONS_ZOMBIE_QUADRUPED_LARGE:
     case TILEP_MONS_ZOMBIE_ELEPHANT:
+    case TILEP_MONS_ZOMBIE_YAK:
+    case TILEP_MONS_ZOMBIE_QUADRUPED_WINGED:
         return TILEP_MONS_SPECTRAL_QUADRUPED_LARGE;
     case TILEP_MONS_ZOMBIE_FROG:
         return TILEP_MONS_SPECTRAL_FROG;
     case TILEP_MONS_ZOMBIE_BAT:
+    case TILEP_MONS_ZOMBIE_BIRD: /* no bird spectral tile */
+    case TILEP_MONS_ZOMBIE_HARPY:
         return TILEP_MONS_SPECTRAL_BAT;
     case TILEP_MONS_ZOMBIE_BEE:
         return TILEP_MONS_SPECTRAL_BEE;
@@ -1031,8 +1037,10 @@ static tileidx_t _zombie_tile_to_simulacrum(const tileidx_t z_tile)
     case TILEP_MONS_ZOMBIE_OGRE:
     case TILEP_MONS_ZOMBIE_TROLL:
     case TILEP_MONS_ZOMBIE_JUGGERNAUT:
+    case TILEP_MONS_ZOMBIE_UGLY_THING:
         return TILEP_MONS_SIMULACRUM_LARGE;
     case TILEP_MONS_ZOMBIE_QUADRUPED_SMALL:
+    case TILEP_MONS_ZOMBIE_BEAR:
     case TILEP_MONS_ZOMBIE_RAT:
     case TILEP_MONS_ZOMBIE_QUOKKA:
     case TILEP_MONS_ZOMBIE_JACKAL:
@@ -1043,8 +1051,12 @@ static tileidx_t _zombie_tile_to_simulacrum(const tileidx_t z_tile)
     case TILEP_MONS_ZOMBIE_QUADRUPED_LARGE:
     case TILEP_MONS_ZOMBIE_FROG:
     case TILEP_MONS_ZOMBIE_ELEPHANT:
+    case TILEP_MONS_ZOMBIE_YAK:
+    case TILEP_MONS_ZOMBIE_QUADRUPED_WINGED:
         return TILEP_MONS_SIMULACRUM_QUADRUPED_LARGE;
     case TILEP_MONS_ZOMBIE_BAT:
+    case TILEP_MONS_ZOMBIE_BIRD: /* no bird simulacrum tile */
+    case TILEP_MONS_ZOMBIE_HARPY:
         return TILEP_MONS_SIMULACRUM_BAT;
     case TILEP_MONS_ZOMBIE_BEE:
         return TILEP_MONS_SIMULACRUM_BEE;
@@ -1475,7 +1487,10 @@ enum class tentacle_type
     kraken = 0,
     eldritch = 1,
     starspawn = 2,
-    vine = 3
+    vine = 3,
+    zombie_kraken = 4,
+    simulacrum_kraken = 5,
+    spectral_kraken = 6,
 };
 
 static void _add_tentacle_overlay(const coord_def pos,
@@ -1525,6 +1540,9 @@ static void _add_tentacle_overlay(const coord_def pos,
         case tentacle_type::eldritch: flag = TILE_FLAG_TENTACLE_ELDRITCH; break;
         case tentacle_type::starspawn: flag = TILE_FLAG_TENTACLE_STARSPAWN; break;
         case tentacle_type::vine: flag = TILE_FLAG_TENTACLE_VINE; break;
+        case tentacle_type::zombie_kraken: flag = TILE_FLAG_TENTACLE_ZOMBIE_KRAKEN; break;
+        case tentacle_type::simulacrum_kraken: flag = TILE_FLAG_TENTACLE_SIMULACRUM_KRAKEN; break;
+        case tentacle_type::spectral_kraken: flag = TILE_FLAG_TENTACLE_SPECTRAL_KRAKEN; break;
         default: flag = TILE_FLAG_TENTACLE_KRAKEN;
     }
     env.tile_bg(next_showpos) |= flag;
@@ -1589,13 +1607,23 @@ static void _handle_tentacle_overlay(const coord_def pos,
     }
 }
 
-static tentacle_type _get_tentacle_type(const int mtype)
+static tentacle_type _get_tentacle_type(const monster_info& mon)
 {
-    switch (mtype)
+    switch (mon.type)
     {
         case MONS_KRAKEN_TENTACLE:
         case MONS_KRAKEN_TENTACLE_SEGMENT:
-            return tentacle_type::kraken;
+            switch (mon.base_type)
+            {
+                case MONS_ZOMBIE:
+                    return tentacle_type::zombie_kraken;
+                case MONS_SIMULACRUM:
+                    return tentacle_type::simulacrum_kraken;
+                case MONS_SPECTRAL_THING:
+                    return tentacle_type::spectral_kraken;
+                default:
+                    return tentacle_type::kraken;
+            }
         case MONS_ELDRITCH_TENTACLE:
         case MONS_ELDRITCH_TENTACLE_SEGMENT:
             return tentacle_type::eldritch;
@@ -1617,7 +1645,13 @@ static bool _tentacle_tile_not_flying(tileidx_t tile)
     // All tiles between these two enums feature tentacles
     // emerging from water.
     return tile >= TILEP_FIRST_TENTACLE_IN_WATER
-           && tile <= TILEP_LAST_TENTACLE_IN_WATER;
+           && tile <= TILEP_LAST_TENTACLE_IN_WATER
+        || tile >= TILEP_FIRST_ZOMBIE_TENTACLE_IN_WATER
+           && tile <= TILEP_LAST_ZOMBIE_TENTACLE_IN_WATER
+        || tile >= TILEP_FIRST_SIMULACRUM_TENTACLE_IN_WATER
+           && tile <= TILEP_LAST_SIMULACRUM_TENTACLE_IN_WATER
+        || tile >= TILEP_FIRST_SPECTRAL_TENTACLE_IN_WATER
+           && tile <= TILEP_LAST_SPECTRAL_TENTACLE_IN_WATER;
 }
 
 static tileidx_t _tileidx_monster_no_props(const monster_info& mon)
@@ -1759,7 +1793,7 @@ static tileidx_t _tileidx_monster_no_props(const monster_info& mon)
         case MONS_SNAPLASHER_VINE_SEGMENT:
         {
             tileidx_t tile = tileidx_tentacle(mon);
-            _handle_tentacle_overlay(mon.pos, tile, _get_tentacle_type(mon.type));
+            _handle_tentacle_overlay(mon.pos, tile, _get_tentacle_type(mon));
 
             if (!_mons_is_kraken_tentacle(mon.type)
                 && tile >= TILEP_MONS_KRAKEN_TENTACLE_SEGMENT_N
@@ -1782,6 +1816,22 @@ static tileidx_t _tileidx_monster_no_props(const monster_info& mon)
                     tile += TILEP_MONS_VINE_N;
                     tile -= TILEP_MONS_ELDRITCH_TENTACLE_N;
                 }
+            }
+
+            if (_mons_is_kraken_tentacle(mon.type) && mon.base_type == MONS_ZOMBIE)
+            {
+                tile += TILEP_MONS_KRAKEN_ZOMBIE_TENTACLE_SEGMENT_N;
+                tile -= TILEP_MONS_KRAKEN_TENTACLE_SEGMENT_N;
+            }
+            if (_mons_is_kraken_tentacle(mon.type) && mon.base_type == MONS_SIMULACRUM)
+            {
+                tile += TILEP_MONS_KRAKEN_SIMULACRUM_TENTACLE_SEGMENT_N;
+                tile -= TILEP_MONS_KRAKEN_TENTACLE_SEGMENT_N;
+            }
+            if (_mons_is_kraken_tentacle(mon.type) && mon.base_type == MONS_SPECTRAL_THING)
+            {
+                tile += TILEP_MONS_KRAKEN_SPECTRAL_TENTACLE_SEGMENT_N;
+                tile -= TILEP_MONS_KRAKEN_TENTACLE_SEGMENT_N;
             }
 
             return tile;
