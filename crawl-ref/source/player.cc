@@ -5975,7 +5975,7 @@ int player::base_ac(int scale) const
     AC += get_mutation_level(MUT_IRIDESCENT_SCALES, mutation_activity_type::FULL) * 200;
               // +2, +4, +6
     AC += get_mutation_level(MUT_SHIMMERING_SCALES, mutation_activity_type::FULL) * 600;
-                          // +6
+              // +6
 #if TAG_MAJOR_VERSION == 34
     AC += get_mutation_level(MUT_ROUGH_BLACK_SCALES, mutation_activity_type::FULL)
           ? -100 + get_mutation_level(MUT_ROUGH_BLACK_SCALES, mutation_activity_type::FULL) * 300 : 0;

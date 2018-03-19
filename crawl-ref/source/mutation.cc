@@ -350,13 +350,13 @@ mutation_activity_type mutation_activity_level(mutation_type mut)
         case MUT_ROUGH_BLACK_SCALES:
 #endif
         case MUT_RUGGED_BROWN_SCALES:
+		case MUT_SHIMMERING_SCALES:
             return mutation_activity_type::PARTIAL;
         case MUT_YELLOW_SCALES:
         case MUT_ICY_BLUE_SCALES:
         case MUT_MOLTEN_SCALES:
         case MUT_SLIMY_GREEN_SCALES:
         case MUT_THIN_METALLIC_SCALES:
-        case MUT_SHIMMERING_SCALES:
             return you.get_base_mutation_level(mut) > 2 ? mutation_activity_type::PARTIAL :
                                                           mutation_activity_type::INACTIVE;
         default:
