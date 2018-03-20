@@ -44,8 +44,8 @@ static const map<species_type, species_def> species_data =
     0, -2, 2, 4,
     MONS_ACID_DRAGON,
     HT_LAND, US_ALIVE, SIZE_SMALL,
-    4, 12, 8, // 24
-    { STAT_INT }, 4,
+    5, 12, 7, // 24
+    { STAT_INT, STAT_DEX }, 4,
     { { MUT_SHIMMERING_SCALES, 1, 1 }, {MUT_FAERIE_DRAGON_FLIGHT, 1, 1 }, },
     { "Your affinity for magic reduces the MP cost of spells by 1.",
       "Your bright wings attract enemies. (Stealth-)",
