@@ -1255,13 +1255,13 @@ static const species_skill_aptitude species_skill_aptitudes[] =
 
     // SP_FAERIE_DRAGON
     APT(SP_FAERIE_DRAGON,   SK_FIGHTING,       -1),
-    APT(SP_FAERIE_DRAGON,   SK_SHORT_BLADES,   -1),
+    APT(SP_FAERIE_DRAGON,   SK_SHORT_BLADES,   -2),
     APT(SP_FAERIE_DRAGON,   SK_LONG_BLADES,    -2),
     APT(SP_FAERIE_DRAGON,   SK_AXES,           -3),
     APT(SP_FAERIE_DRAGON,   SK_MACES_FLAILS,   -1),
     APT(SP_FAERIE_DRAGON,   SK_POLEARMS,       -3),
     APT(SP_FAERIE_DRAGON,   SK_STAVES,         -2),
-    APT(SP_FAERIE_DRAGON,   SK_SLINGS,         -1),
+    APT(SP_FAERIE_DRAGON,   SK_SLINGS,         -2),
     APT(SP_FAERIE_DRAGON,   SK_BOWS,           -2),
     APT(SP_FAERIE_DRAGON,   SK_CROSSBOWS,      -3),
     APT(SP_FAERIE_DRAGON,   SK_THROWING,       -2),
@@ -1277,7 +1277,7 @@ static const species_skill_aptitude species_skill_aptitudes[] =
 #endif
     APT(SP_FAERIE_DRAGON,   SK_UNARMED_COMBAT, -1),
     APT(SP_FAERIE_DRAGON,   SK_SPELLCASTING,    1),
-    APT(SP_FAERIE_DRAGON,   SK_CONJURATIONS,    3),
+    APT(SP_FAERIE_DRAGON,   SK_CONJURATIONS,    2),
     APT(SP_FAERIE_DRAGON,   SK_HEXES,          -1),
     APT(SP_FAERIE_DRAGON,   SK_CHARMS,          0),
     APT(SP_FAERIE_DRAGON,   SK_SUMMONINGS,      0),
