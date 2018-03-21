@@ -4,8 +4,8 @@
 enum size_type
 {
     SIZE_TINY,              // rats/bats
-    SIZE_LITTLE,            // spriggans/faerie dragons
-    SIZE_SMALL,             // halflings/kobolds
+    SIZE_LITTLE,            // spriggans
+    SIZE_SMALL,             // halflings/kobolds/faerie dragons
     SIZE_MEDIUM,            // humans/elves/dwarves
     SIZE_LARGE,             // trolls/ogres/centaurs/nagas
     SIZE_BIG,               // large quadrupeds

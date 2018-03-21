@@ -3182,9 +3182,9 @@ int player_stealth()
     //Faerie Dragons' bright wings reduce stealth.
     if (you.species == SP_FAERIE_DRAGON && (you.form == transformation::none
         || you.form == transformation::appendage))
-		{
-            stealth -= STEALTH_PIP;
-		}
+    {
+        stealth -= STEALTH_PIP;
+    }
 
     if (!you.airborne())
     {
@@ -4895,10 +4895,9 @@ void float_player()
     else
         mpr("You fly up into the air.");
 
-    if (you.species == SP_TENGU)
-                        you.redraw_evasion = true;
-    else if (you.species == SP_FAERIE_DRAGON)
-                        you.redraw_evasion = true;
+    if (you.species == SP_TENGU || you.species == SP_FAERIE_DRAGON)
+
+        you.redraw_evasion = true;
 }
 
 // Faerie Dragons start the game flying.
@@ -4910,7 +4909,7 @@ void float_once()
         }
 
         you.attribute[ATTR_PERM_FLIGHT] = 1;
-                float_player();
+        float_player();
 
 }
 

@@ -731,9 +731,9 @@ void tilep_race_default(int sp, int level, dolls_data *doll)
         case SP_FORMICID:
             hair = 0;
             break;
-		case SP_FAERIE_DRAGON:
-		    hair = 0;
-			break;
+        case SP_FAERIE_DRAGON:
+            hair = 0;
+            break;
         default:
             // nothing to do
             break;
@@ -991,7 +991,7 @@ void tilep_calc_flags(const dolls_data &doll, int flag[])
         flag[TILEP_PART_BOOTS] = flag[TILEP_PART_LEG] = TILEP_FLAG_HIDE;
         flag[TILEP_PART_BODY]  = TILEP_FLAG_CUT_CENTAUR;
     }
-	else if (is_player_tile(doll.parts[TILEP_PART_BASE], TILEP_BASE_FAERIE_DRAGON))
+    else if (is_player_tile(doll.parts[TILEP_PART_BASE], TILEP_BASE_FAERIE_DRAGON))
     {
         flag[TILEP_PART_LEG]   = TILEP_FLAG_HIDE;
     }
