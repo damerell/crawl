@@ -341,6 +341,9 @@ const vector<god_power> god_powers[NUM_GODS] =
       { 5, ABIL_WU_JIAN_HEAVENLY_STORM, "summon a storm of heavenly clouds to empower your attacks",
            "summon a storm of heavenly clouds" },
     },
+    // Demigod
+    { },
+
 };
 
 vector<god_power> get_god_powers(god_type god)
@@ -435,6 +438,9 @@ bool is_unavailable_god(god_type god)
         return true;
 
     if (god == GOD_JIYVA && jiyva_is_dead())
+        return true;
+
+    if (god == GOD_DEMI_GOD)
         return true;
 
     return false;
@@ -2099,7 +2105,8 @@ string god_name(god_type which_god, bool long_name)
     case GOD_PAKELLAS:      return "Pakellas";
     case GOD_USKAYAW:       return "Uskayaw";
     case GOD_HEPLIAKLQANA:  return "Hepliaklqana";
-    case GOD_WU_JIAN:     return "Wu Jian";
+    case GOD_WU_JIAN:       return "Wu Jian";
+    case GOD_DEMI_GOD:      return "Demigod";
     case GOD_JIYVA: // This is handled at the beginning of the function
     case GOD_ECUMENICAL:    return "an unknown god";
     case NUM_GODS:          return "Buggy";
@@ -4080,6 +4087,8 @@ void handle_god_time(int /*time_delta*/)
 
             break;
 
+        case GOD_DEMI_GOD:
+            // Temp assignment - Realz to fix
         case GOD_USKAYAW:
             // We handle Uskayaw elsewhere because this func gets called rarely
         case GOD_GOZAG:
