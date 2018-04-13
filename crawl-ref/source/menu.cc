@@ -686,7 +686,7 @@ void UIMenu::pack_buffers()
     const VColour selected_colour(50, 50, 10, 255);
     const VColour header_div_colour(64, 64, 64, 200);
 
-    m_hdr_text_buf.add(title, 0, 0);
+    m_hdr_text_buf.add(title, m_menu->m_indent_title ? 38 : 0, 0);
     if (m_show_more)
         m_hdr_text_buf.add(m_menu->more, 0, m_region[3] - more_height);
 
@@ -905,7 +905,7 @@ void Menu::set_highlighter(MenuHighlighter *mh)
     highlighter = mh;
 }
 
-void Menu::set_title(MenuEntry *e, bool first)
+void Menu::set_title(MenuEntry *e, bool first, bool indent)
 {
     if (first)
     {
@@ -920,6 +920,7 @@ void Menu::set_title(MenuEntry *e, bool first)
         title2 = e;
         title2->level = MEL_TITLE;
     }
+    m_indent_title = indent;
     update_title();
 }
 
