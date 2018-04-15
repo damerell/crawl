@@ -2983,6 +2983,12 @@ void level_change(bool skip_attribute_increase)
                 _felid_extra_life();
                 break;
 
+            case SP_DEMIGOD:
+                if (you.experience_level == 10)
+                {
+                    demigod_small_abil(GOD_DEMI_GOD);
+                }
+
             default:
                 break;
             }

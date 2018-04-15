@@ -112,6 +112,7 @@ void set_penance_xp_timeout();
 bool fedhas_protects(const monster& target);
 bool fedhas_neutralises(const monster& target);
 void nemelex_death_message();
+void demigod_small_abil(god_type god);
 
 void mons_make_god_gift(monster& mon, god_type god = you.religion);
 bool mons_is_god_gift(const monster& mon, god_type god = you.religion);
@@ -179,15 +180,16 @@ struct god_power
     ability_type abil;
     const char* gain;
     const char* loss;
+    bool demigod_can;
 
     god_power(int rank_, ability_type abil_, const char* gain_,
-              const char* loss_ = "") :
+              const char* loss_ = "", bool demigod_can_ = false) :
               rank{rank_}, abil{abil_}, gain{gain_},
-              loss{*loss_ ? loss_ : gain_}
+              loss{*loss_ ? loss_ : gain_}, demigod_can{demigod_can_}
     { }
 
-    god_power(int rank_, const char* gain_, const char* loss_ = "") :
-              god_power(rank_, ABIL_NON_ABILITY, gain_, loss_)
+    god_power(int rank_, const char* gain_, const char* loss_ = "", bool demigod_can_ = false) :
+              god_power(rank_, ABIL_NON_ABILITY, gain_, loss_, demigod_can_)
     { }
 
     void display(bool gaining, const char* fmt) const;

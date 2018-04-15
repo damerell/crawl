@@ -85,7 +85,7 @@ static brand_type _hepliaklqana_weapon_brand(monster_type mc, int HD);
 static armour_type _hepliaklqana_shield_type(monster_type mc, int HD);
 static special_armour_type _hepliaklqana_shield_ego(int HD);
 
-const vector<god_power> god_powers[NUM_GODS] =
+vector<god_power> god_powers[NUM_GODS] =
 {
     // no god
     { },
@@ -103,7 +103,7 @@ const vector<god_power> god_powers[NUM_GODS] =
     // TSO
     { { 1, "You and your allies can gain power from killing the unholy and evil.",
            "You and your allies can no longer gain power from killing the unholy and evil." },
-      { 2, ABIL_TSO_DIVINE_SHIELD, "call upon the Shining One for a divine shield" },
+      { 2, ABIL_TSO_DIVINE_SHIELD, "call upon the Shining One for a divine shield", "", true },
       { 4, ABIL_TSO_CLEANSING_FLAME, "channel blasts of cleansing flame", },
       { 5, ABIL_TSO_SUMMON_DIVINE_WARRIOR, "summon a divine warrior" },
       { 7, ABIL_TSO_BLESS_WEAPON,
@@ -112,7 +112,7 @@ const vector<god_power> god_powers[NUM_GODS] =
     },
 
     // Kikubaaqudgha
-    { { 1, ABIL_KIKU_RECEIVE_CORPSES, "receive cadavers from Kikubaaqudgha" },
+    { { 1, ABIL_KIKU_RECEIVE_CORPSES, "receive cadavers from Kikubaaqudgha", "", true },
       { 2, "Kikubaaqudgha is protecting you from necromantic miscasts and death curses.",
            "Kikubaaqudgha no longer protects you from necromantic miscasts or death curses." },
       { 4, "Kikubaaqudgha is protecting you from unholy torment.",
@@ -149,7 +149,7 @@ const vector<god_power> god_powers[NUM_GODS] =
     },
 
     // Okawaru
-    { { 1, ABIL_OKAWARU_HEROISM, "gain great but temporary skills" },
+    { { 1, ABIL_OKAWARU_HEROISM, "gain great but temporary skills", "", true },
       { 3, "Okawaru will gift you ammunition as your piety grows.",
            "Okawaru will no longer gift you ammunition." },
       { 5, ABIL_OKAWARU_FINESSE, "speed up your combat" },
@@ -180,8 +180,8 @@ const vector<god_power> god_powers[NUM_GODS] =
 
     // Trog
     {
-      { 1, ABIL_TROG_BERSERK, "go berserk at will" },
-      { 2, ABIL_TROG_REGEN_MR, "call upon Trog for regeneration and magic resistance" },
+      { 1, ABIL_TROG_BERSERK, "go berserk at will", "", true },
+      { 2, ABIL_TROG_REGEN_MR, "call upon Trog for regeneration and magic resistance", "", true },
       { 4, ABIL_TROG_BROTHERS_IN_ARMS, "call in reinforcements" },
       { 5, "Trog will gift you weapons as you gain piety.",
            "Trog will no longer gift you weapons." },
@@ -349,7 +349,7 @@ const vector<god_power> god_powers[NUM_GODS] =
 vector<god_power> get_god_powers(god_type god)
 {
     vector<god_power> ret;
-    for (const auto& power : god_powers[god])
+    for (auto& power : god_powers[god])
     {
         if (!(power.abil != ABIL_NON_ABILITY
               && fixup_ability(power.abil) == ABIL_NON_ABILITY))
@@ -385,6 +385,21 @@ void god_power::display(bool gaining, const char* fmt) const
         god_speaks(you.religion, str);
     else
         god_speaks(you.religion, make_stringf(fmt, str).c_str());
+}
+
+void demigod_small_abil(god_type god)
+{
+    vector<god_power> possible_powers;
+    for (auto& power : god_powers[god])
+    {
+        if (power.demigod_can == true)
+        {
+            possible_powers.push_back(power);
+        }
+    }
+    int random_small = rand()%static_cast<int>(possible_powers.size());
+
+    god_powers[GOD_DEMI_GOD].push_back(possible_powers[random_small]);
 }
 
 static void _place_delayed_monsters();
@@ -2356,7 +2371,7 @@ static void _gain_piety_point()
 
         const int rank = piety_rank();
         take_note(Note(NOTE_PIETY_RANK, you.religion, rank));
-        for (const auto& power : get_god_powers(you.religion))
+        for (auto& power : get_god_powers(you.religion))
         {
             if (power.rank == rank
                 || power.rank == 7 && can_do_capstone_ability(you.religion))
@@ -2530,7 +2545,7 @@ void lose_piety(int pgn)
 
         const int old_rank = piety_rank(old_piety);
 
-        for (const auto& power : get_god_powers(you.religion))
+        for (auto& power : get_god_powers(you.religion))
         {
             if (power.rank == old_rank
                 || power.rank == 7 && old_rank == 6
@@ -3409,7 +3424,7 @@ static void _join_gozag()
 
     // Note relevant powers.
     bool needs_redraw = false;
-    for (const auto& power : get_god_powers(you.religion))
+    for (auto& power : get_god_powers(you.religion))
     {
         if (power.abil == ABIL_GOZAG_POTION_PETITION
             && !you.attribute[ATTR_GOZAG_FIRST_POTION])
@@ -3653,7 +3668,7 @@ void join_religion(god_type which_god)
     _check_good_god_wrath(old_god);
 
     if (!you_worship(GOD_GOZAG))
-        for (const auto& power : get_god_powers(you.religion))
+        for (auto& power : get_god_powers(you.religion))
             if (power.rank <= 0)
                 power.display(true, "You can now %s.");
 
@@ -4653,7 +4668,7 @@ const god_power* god_power_from_ability(ability_type abil)
 {
     for (int god = GOD_NO_GOD; god < NUM_GODS; god++)
     {
-        for (const auto& power : god_powers[god])
+        for (auto& power : god_powers[god])
         {
             if (power.abil == abil)
                 return &power;
