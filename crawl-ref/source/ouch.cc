@@ -34,7 +34,6 @@
 #include "fight.h"
 #include "files.h"
 #include "fineff.h"
-#include "ghost.h"
 #include "god-abil.h"
 #include "god-conduct.h"
 #include "god-passive.h"
@@ -49,7 +48,6 @@
 #include "message.h"
 #include "mgen-data.h"
 #include "mon-death.h"
-#include "mon-transit.h"
 #include "mon-place.h"
 #include "mon-util.h"
 #include "mutation.h"
@@ -1131,34 +1129,10 @@ void ouch(int dam, kill_method_type death_type, mid_t source, const char *aux,
         return;
     }
 
-    // The game's over.
-    crawl_state.need_save       = false;
-    crawl_state.updating_scores = true;
-
     // Prevent bogus notes.
     activate_notes(false);
 
-    int hiscore_index = -1;
-#ifndef SCORE_WIZARD_CHARACTERS
-    if (!you.wizard && !you.explore)
-#endif
-    {
-        // Add this highscore to the score file.
-        hiscore_index = hiscores_new_entry(se);
-        logfile_new_entry(se);
-    }
-
-    // Never generate bones files of wizard or tutorial characters -- bwr
-    if (!crawl_state.game_is_tutorial()) {
-        if (!non_death && !you.wizard) {
-            monster_type slayer_type=se.slayer_type;
-            save_ghosts(ghost_demon::find_ghosts(slayer_type));
-        }
-    }
-    for (auto& limbolist : limbo_monsters) {
-        save_limbo_ghosts(limbolist.first);
-    }
-    end_game(se, hiscore_index);
+    end_game(se);
 }
 
 string morgue_name(string char_name, time_t when_crawl_got_even)
