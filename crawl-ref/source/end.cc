@@ -16,7 +16,9 @@
 #include "database.h"
 #include "describe.h"
 #include "dungeon.h"
+#include "files.h"
 #include "god-passive.h"
+#include "ghost.h"
 #include "hints.h"
 #include "invent.h"
 #include "item-prop.h"
@@ -24,6 +26,7 @@
 #include "macro.h"
 #include "message.h"
 #include "misc.h"
+#include "mon-transit.h"
 #include "prompt.h"
 #include "religion.h"
 #include "startup.h"
@@ -287,8 +290,41 @@ static string _exit_type_to_string(game_exit e)
     return "BUGGY EXIT TYPE";
 }
 
-NORETURN void end_game(scorefile_entry &se, int hiscore_index)
+NORETURN void end_game(scorefile_entry &se)
 {
+    //Update states
+    crawl_state.need_save       = false;
+    crawl_state.updating_scores = true;
+
+    const kill_method_type death_type = (kill_method_type) se.get_death_type();
+
+    const bool non_death = death_type == KILLED_BY_QUITTING
+                        || death_type == KILLED_BY_WINNING
+                        || death_type == KILLED_BY_LEAVING;
+
+    int hiscore_index = -1;
+#ifndef SCORE_WIZARD_CHARACTERS
+    if (!you.wizard && !you.explore)
+#endif
+    {
+        // Add this highscore to the score file.
+        hiscore_index = hiscores_new_entry(se);
+        logfile_new_entry(se);
+    }
+#ifndef SCORE_WIZARD_CHARACTERS
+    else 
+    {
+        hiscores_read_to_memory();
+    }
+#endif
+
+    // Never generate bones files of wizard or tutorial characters -- bwr
+    if (!crawl_state.game_is_tutorial()) {                                                                                                                                                                      
+        if (!non_death && !you.wizard) {                                                                                                                                                                                     monster_type slayer_type=se.slayer_type;                                                                                                                                                                         save_ghosts(ghost_demon::find_ghosts(slayer_type));                                                                                                                                                          }                                                                                                                                                                                                            }                                                                                                                                                                                                           
+    for (auto& limbolist : limbo_monsters) {                                                                                                                                                                    
+        save_limbo_ghosts(limbolist.first);                                                                                                                                                                     
+    }                                         
+
     for (auto &item : you.inv)
         if (item.defined() && item_type_unknown(item))
             add_inscription(item, "unknown");
@@ -297,11 +333,8 @@ NORETURN void end_game(scorefile_entry &se, int hiscore_index)
 
     _delete_files();
 
-    kill_method_type death_type = (kill_method_type) se.get_death_type();
-
     // death message
-    if (death_type != KILLED_BY_LEAVING && death_type != KILLED_BY_QUITTING
-        && death_type != KILLED_BY_WINNING)
+    if (!non_death)
     {
         canned_msg(MSG_YOU_DIE);
         xom_death_message(death_type);
@@ -425,7 +458,7 @@ NORETURN void end_game(scorefile_entry &se, int hiscore_index)
 
     string hiscore = hiscores_format_single_long(se, true);
 
-    const int lines = count_occurrences(hiscore, "\n") + 1;
+    const int desc_lines = count_occurrences(hiscore, "\n") + 1;
 
     goodbye_msg += hiscore;
 
@@ -433,8 +466,8 @@ NORETURN void end_game(scorefile_entry &se, int hiscore_index)
             crawl_state.game_type_name().c_str());
 
     // "- 5" gives us an extra line in case the description wraps on a line.
-    goodbye_msg += hiscores_print_list(24 - lines - 5, SCORE_TERSE,
-                        hiscore_index);
+    goodbye_msg += hiscores_print_list(get_number_of_lines() - desc_lines - 5, 
+                                       SCORE_TERSE, hiscore_index);
 
 #ifndef DGAMELAUNCH
     goodbye_msg += make_stringf("\nYou can find your morgue file in the '%s' directory.",
