@@ -437,6 +437,12 @@ NORETURN static void _launch_game()
     if (game_start && you.char_class == JOB_WANDERER)
         _wanderer_startup_message();
 
+    if (!game_start && you_worship(GOD_DEMI_GOD))
+    {
+        you.dg_has_small();
+        you.dg_has_big();
+    }
+
     if (game_start)
        _announce_goal_message();
 

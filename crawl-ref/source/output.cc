@@ -1253,6 +1253,10 @@ static void _redraw_title()
     else
     {
         string god = " of ";
+        if (you_worship(GOD_DEMI_GOD))
+        {
+            god = "";
+        }
         god += you_worship(GOD_JIYVA) ? god_name_jiyva(true)
                                       : god_name(you.religion);
         NOWRAP_EOL_CPRINTF("%s", god.c_str());

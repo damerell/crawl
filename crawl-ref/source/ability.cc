@@ -3364,7 +3364,7 @@ vector<talent> your_talents(bool check_confused, bool include_unusable)
     }
 
     // And finally, the ability to opt-out of your faith {dlb}:
-    if (!you_worship(GOD_NO_GOD))
+    if (!you_worship(GOD_NO_GOD) && !you_worship(GOD_DEMI_GOD))
         _add_talent(talents, ABIL_RENOUNCE_RELIGION, check_confused);
 
     if (env.level_state & LSTATE_BEOGH && can_convert_to_beogh())
@@ -3643,6 +3643,16 @@ vector<ability_type> get_god_abilities(bool ignore_silence, bool ignore_piety,
     }
     // XXX: should we check ignore_piety?
     if (you_worship(GOD_HEPLIAKLQANA)
+        && piety_rank() >= 2 && !you.props.exists(HEPLIAKLQANA_ALLY_TYPE_KEY))
+    {
+        for (int anc_type = ABIL_HEPLIAKLQANA_FIRST_TYPE;
+             anc_type <= ABIL_HEPLIAKLQANA_LAST_TYPE;
+             ++anc_type)
+        {
+            abilities.push_back(static_cast<ability_type>(anc_type));
+        }
+    }
+    if (you_worship(GOD_DEMI_GOD) && you.dg_passive_god_enum == GOD_HEPLIAKLQANA
         && piety_rank() >= 2 && !you.props.exists(HEPLIAKLQANA_ALLY_TYPE_KEY))
     {
         for (int anc_type = ABIL_HEPLIAKLQANA_FIRST_TYPE;

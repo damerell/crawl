@@ -1406,6 +1406,9 @@ static void tag_construct_you(writer &th)
 
     marshallInt(th, you.exp_available);
 
+    marshallInt(th, you.dg_small_abil_enum);
+    marshallInt(th, you.dg_big_abil_enum);
+
     marshallInt(th, you.zigs_completed);
     marshallByte(th, you.zig_max);
 
@@ -2321,6 +2324,7 @@ static void tag_read_you(reader &th)
     you.hp              = unmarshallShort(th);
     you.hunger          = unmarshallShort(th);
     you.fishtail        = unmarshallBoolean(th);
+
 #if TAG_MAJOR_VERSION == 34
     if (th.getMinorVersion() < TAG_MINOR_NOME_NO_MORE)
         unmarshallInt(th);
@@ -2429,9 +2433,12 @@ static void tag_read_you(reader &th)
 #endif
 
     you.experience                = unmarshallInt(th);
-    you.total_experience = unmarshallInt(th);
+    you.total_experience          = unmarshallInt(th);
     you.gold                      = unmarshallInt(th);
     you.exp_available             = unmarshallInt(th);
+
+    you.dg_small_abil_enum        = unmarshallInt(th);
+    you.dg_big_abil_enum          = unmarshallInt(th);
 #if TAG_MAJOR_VERSION == 34
     if (th.getMinorVersion() < TAG_MINOR_XP_SCALING)
     {

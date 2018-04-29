@@ -620,6 +620,11 @@ static string _get_god_misc_info(god_type which_god)
             info += _describe_ancestor_upgrades();
             break;
 
+        case GOD_DEMI_GOD:
+            if (have_passive(passive_t::frail))
+                info += _describe_ancestor_upgrades();
+            break;
+
         default:
             break;
     }
@@ -920,6 +925,10 @@ static formatted_string _describe_god_powers(god_type which_god)
     case GOD_LUGONU:
         have_any = true;
         cprintf("You are protected from the effects of unwielding distortion weapons.\n");
+        break;
+
+    case GOD_DEMI_GOD:
+        //TEMP FIXME special case a bunch of shit here -- Realz
         break;
 
     default:

@@ -2984,10 +2984,19 @@ void level_change(bool skip_attribute_increase)
                 break;
 
             case SP_DEMIGOD:
+                if (you.experience_level == 5)
+                {
+                    demigod_get_passives();
+                }
                 if (you.experience_level == 10)
                 {
-                    demigod_small_abil(GOD_DEMI_GOD);
+                    demigod_get_small();
                 }
+                else if (you.experience_level == 15)
+                {
+                    demigod_get_big();
+                }
+                break;
 
             default:
                 break;
@@ -5085,6 +5094,7 @@ player::player()
     old_vehumet_gifts.clear();
     spell_no        = 0;
     vehumet_gifts.clear();
+    clear_demigod_powers();
     chapter  = CHAPTER_ORB_HUNTING;
     royal_jelly_dead = false;
     transform_uncancellable = false;
@@ -5155,6 +5165,12 @@ player::player()
     temp_mutation.init(0);
     demonic_traits.clear();
     sacrifices.init(0);
+
+    dg_small_god_enum = 0;
+    dg_big_god_enum = 0;
+    dg_small_abil_enum = 0;
+    dg_big_abil_enum = 0;
+    dg_passive_god_enum = 0;
 
     magic_contamination = 0;
 
@@ -5664,6 +5680,36 @@ int player::missile_deflection() const
     }
 
     return 0;
+}
+
+bool player::dg_has_small()
+{
+    if (you.dg_small_abil_enum != 0)
+    {
+        demigod_small_abil(dg_small_abil_enum);
+        return true;
+    }
+    return false;
+}
+
+bool player::dg_has_big()
+{
+    if (you.dg_big_abil_enum != 0)
+    {
+        demigod_big_abil(dg_big_abil_enum);
+        return true;
+    }
+    return false;
+}
+
+bool player::dg_has_passives()
+{
+    if (you.dg_passive_god_enum != 0)
+    {
+        demigod_passives(dg_passive_god_enum);
+        return true;
+    }
+    return false;
 }
 
 void player::ablate_deflection()

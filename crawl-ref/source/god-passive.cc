@@ -112,13 +112,16 @@ struct god_passive
      */
     const char* loss;
 
+    bool demigod_can;
+
     god_passive(int rank_, passive_t pasv_, const char* gain_,
-                const char* loss_ = "")
-        : rank{rank_}, pasv{pasv_}, gain{gain_}, loss{*loss_ ? loss_ : gain_}
+                const char* loss_ = "", bool demigod_can_ = false)
+        : rank{rank_}, pasv{pasv_}, gain{gain_}, loss{*loss_ ? loss_ : gain_},
+        demigod_can{demigod_can_}
     { }
 
-    god_passive(int rank_, const char* gain_, const char* loss_ = "")
-        : god_passive(rank_, passive_t::none, gain_, loss_)
+    god_passive(int rank_, const char* gain_, const char* loss_ = "", bool demigod_can_ = false)
+        : god_passive(rank_, passive_t::none, gain_, loss_, demigod_can_)
     { }
 
     void display(bool gaining, const char* fmt) const
@@ -131,7 +134,7 @@ struct god_passive
     }
 };
 
-static const vector<god_passive> god_passives[] =
+static vector<god_passive> god_passives[] =
 {
     // no god
     { },
@@ -168,17 +171,17 @@ static const vector<god_passive> god_passives[] =
     {
         { -1, passive_t::protect_from_harm,
               "GOD sometimes watches over you",
-              "GOD no longer watches over you"
+              "GOD no longer watches over you", true
         },
         { -1, passive_t::abjuration_protection_hd,
-              "GOD NOW protects your summons from abjuration" },
+              "GOD NOW protects your summons from abjuration", "", true },
         { -1, passive_t::bless_followers_vs_evil,
-              "GOD NOW blesses your followers when they kill evil beings" },
+              "GOD NOW blesses your followers when they kill evil beings", "", true },
         { -1, passive_t::restore_hp_mp_vs_evil,
-              "gain health and magic from killing evil beings" },
+              "gain health and magic from killing evil beings", "", true },
         { -1, passive_t::no_stabbing,
               "are NOW prevented from stabbing unaware creatures" },
-        {  0, passive_t::halo, "are NOW surrounded by divine halo" },
+        {  0, passive_t::halo, "are NOW surrounded by divine halo", "", true },
     },
 
     // Kikubaaqudgha
@@ -202,11 +205,11 @@ static const vector<god_passive> god_passives[] =
     // Vehumet
     {
         { -1, passive_t::mp_on_kill,
-              "have a chance to gain magical power from killing" },
+              "have a chance to gain magical power from killing", "", true },
         {  3, passive_t::spells_success,
-              "are NOW less likely to miscast destructive spells" },
+              "are NOW less likely to miscast destructive spells", "", true },
         {  4, passive_t::spells_range,
-              "can NOW cast destructive spells farther" },
+              "can NOW cast destructive spells farther", "", true },
     },
 
     // Okawaru
@@ -216,7 +219,7 @@ static const vector<god_passive> god_passives[] =
 
     // Makhleb
     {
-        { -1, passive_t::restore_hp, "gain health from killing" },
+        { -1, passive_t::restore_hp, "gain health from killing", "", true },
     },
 
     // Sif Muna
@@ -320,18 +323,15 @@ static const vector<god_passive> god_passives[] =
     {
         { -1, passive_t::no_haste,
               "are NOW protected from inadvertent hurry" },
-        { -1, passive_t::slowed, "move less quickly" },
+        { -1, passive_t::slowed, "move less quickly", "", true },
         {  0, passive_t::slow_orb_run,
-              "GOD will NOW aid your escape with the Orb of Zot",
-        },
+              "GOD will NOW aid your escape with the Orb of Zot", "", true },
         {  0, passive_t::stat_boost,
-              "GOD NOW supports your attributes"
-        },
+              "GOD NOW supports your attributes", "", true },
         {  0, passive_t::slow_abyss,
-              "GOD will NOW slow the Abyss"
-        },
+              "GOD will NOW slow the Abyss", "", true },
         // TODO: this one should work regardless of penance
-        {  1, passive_t::slow_metabolism, "have a slowed metabolism" },
+        {  1, passive_t::slow_metabolism, "have a slowed metabolism", "", true },
     },
 
     // Ashenzari
@@ -352,14 +352,14 @@ static const vector<god_passive> god_passives[] =
 
     // Dithmenos
     {
-        {  1, passive_t::nightvision, "can NOW see well in the dark" },
-        {  1, passive_t::umbra, "are NOW surrounded by an umbra" },
+        {  1, passive_t::nightvision, "can NOW see well in the dark", "", true },
+        {  1, passive_t::umbra, "are NOW surrounded by an umbra", "", true },
         // TODO: this one should work regardless of penance.
-        {  3, passive_t::hit_smoke, "emit smoke when hit" },
+        {  3, passive_t::hit_smoke, "emit smoke when hit", "", true },
         {  4, passive_t::shadow_attacks,
-              "Your attacks are NOW mimicked by a shadow" },
+              "Your attacks are NOW mimicked by a shadow", "", true },
         {  4, passive_t::shadow_spells,
-              "Your attack spells are NOW mimicked by a shadow" },
+              "Your attack spells are NOW mimicked by a shadow", "", true },
     },
 
     // Gozag
@@ -372,15 +372,14 @@ static const vector<god_passive> god_passives[] =
 
     // Qazlal
     {
-        {  0, passive_t::cloud_immunity, "are ADV immune to clouds" },
+        {  0, passive_t::cloud_immunity, "are ADV immune to clouds", "", true },
         {  1, passive_t::storm_shield,
-              "generate elemental clouds to protect yourself" },
+              "generate elemental clouds to protect yourself", "", true },
         {  4, passive_t::upgraded_storm_shield,
-              "Your chances to be struck by projectiles are NOW reduced" },
+              "Your chances to be struck by projectiles are NOW reduced", "", true },
         {  5, passive_t::elemental_adaptation,
               "Elemental attacks NOW leave you somewhat more resistant"
-              " to them"
-        }
+              " to them", "", true }
     },
 
     // Ru
@@ -421,15 +420,16 @@ static const vector<god_passive> god_passives[] =
 
     // Wu Jian
     {
-        { 0, passive_t::wu_jian_lunge, "perform damaging attacks by moving towards foes." },
-        { 1, passive_t::wu_jian_whirlwind, "lightly attack and pin monsters in place by moving around them." },
-        { 2, passive_t::wu_jian_wall_jump, "perform airborne attacks by moving against a solid obstacle." },
+        {  0, passive_t::wu_jian_lunge,
+              "perform damaging attacks by moving towards foes.", "", true },
+        {  1, passive_t::wu_jian_whirlwind,
+              "lightly attack and pin monsters in place by moving around them.", "", true },
+        {  2, passive_t::wu_jian_wall_jump,
+              "perform airborne attacks by moving against a solid obstacle.", "", true },
     },
 
     // Demigod
-    {
-        // None
-    },
+    { },
 };
 COMPILE_CHECK(ARRAYSZ(god_passives) == NUM_GODS);
 
@@ -465,6 +465,86 @@ int rank_for_passive(passive_t passive)
                                   return p.pasv == passive;
                               });
     return found == end(pasvec) ? 10 : found->rank;
+}
+
+void demigod_get_passives()
+{
+    vector<god_type> which_god;
+//    bool demigod_can_god;
+//	vector<god_passive> possible_passives;
+// TEMP FIXME currently hardcoded list, should fix -- Realz
+
+    which_god.push_back(GOD_SHINING_ONE);
+    which_god.push_back(GOD_VEHUMET);
+    which_god.push_back(GOD_MAKHLEB);
+    which_god.push_back(GOD_CHEIBRIADOS);
+    which_god.push_back(GOD_DITHMENOS);
+    which_god.push_back(GOD_QAZLAL);
+    which_god.push_back(GOD_HEPLIAKLQANA);
+    which_god.push_back(GOD_WU_JIAN);
+
+/*    for (god = GOD_NO_GOD; god < NUM_GODS; god++)
+    {
+        which_god.push_back(god);
+    }
+    for (auto& remove_god : which_god)
+    {
+        int keep = 0;
+        for (auto& passive : god_passives[remove_god])
+		{
+            if (passive.demigod_can == true)
+            {
+                keep++;
+            }
+    
+            
+
+            if (passive.demigod_can == true)
+            {
+                for (auto& have_god : which_god)
+                {
+                    if (have_god == god)
+                    {
+                        break;
+                    }
+			    }
+				which_god.push_back(god);
+            }
+        }
+    }
+*/
+    int size_possible = which_god.size();
+    int random_possible = 0;
+	if (size_possible >= 1)
+    {
+        random_possible = random2(size_possible);
+    }
+    you.dg_passive_god_enum = which_god[random_possible];
+    you.dg_has_passives();
+}
+
+bool demigod_passives(int god_enum)
+{
+    if (god_enum == GOD_NO_GOD)
+    {
+        return false;
+    }
+    for (auto& passive : god_passives[god_enum])
+    {
+        if (passive.demigod_can)
+        {
+            god_passives[GOD_DEMI_GOD].push_back(passive);
+        }
+    }
+    if (god_enum == GOD_HEPLIAKLQANA)
+    {
+        _demigod_hepliaklqana_passive();
+    }
+    if (god_enum == GOD_CHEIBRIADOS)
+    {
+        _demigod_cheibriados_passive();
+    }
+    return true;
 }
 
 int chei_stat_boost(int piety)
