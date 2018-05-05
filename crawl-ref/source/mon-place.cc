@@ -399,8 +399,7 @@ void spawn_random_monsters()
     {
         dprf(DIAG_MONPLACE, "Placing monster, rate: %d, turns here: %d",
              rate, env.turns_on_level);
-        proximity_type prox = (one_chance_in(10) ? PROX_NEAR_STAIRS
-                                                 : PROX_AWAY_FROM_PLAYER);
+        proximity_type prox = PROX_AWAY_FROM_PLAYER;
 
         // The rules change once the player has picked up the Orb...
         if (player_on_orb_run())
