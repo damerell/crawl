@@ -1,6 +1,8 @@
 Stoat Soup 0.21.1
 -----------------
 Restore spawns
+Restore purple chunks. Mutagenic monsters "cool down" to stop Mr Boring
+but Optimal storing them all in a branch somewhere for later.
 
 Stone Soup 0.21.1 (20180201)
 ----------------------------
