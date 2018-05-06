@@ -13,6 +13,8 @@
     {},
     {}, // not a starting race
     {}, // not a starting race
+    nullptr,
+    nullptr
 } },
 
 { SP_LAVA_ORC, {
@@ -29,6 +31,8 @@
     {},
     {}, // not a starting race
     {}, // not a starting race
+    nullptr,
+    nullptr
 } },
 
 { SP_DJINNI, {
@@ -45,6 +49,8 @@
     {},
     {}, // not a starting race
     {}, // not a starting race
+    nullptr,
+    nullptr
 } },
 
 #endif
