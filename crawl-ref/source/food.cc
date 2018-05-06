@@ -633,16 +633,24 @@ static void _eat_chunk(item_def& food)
 
     bool likes_chunks = player_likes_chunks(true);
     int nutrition     = _chunk_nutrition(likes_chunks);
+    int age           = you.elapsed_time - food.turnofbirth;
     bool suppress_msg = false; // do we display the chunk nutrition message?
     bool do_eat       = false;
 
     switch (chunk_effect)
     {
     case CE_MUTAGEN:
-        mpr("This meat tastes really weird.");
-        mutate(RANDOM_MUTATION, "mutagenic meat");
+        //take_note(Note(NOTE_MESSAGE, 0, 0, make_stringf("Ate age %d.", age)), true);
+        if (random2(age) < 5000) {
+            mpr("This meat tastes really weird.");
+            mutate(RANDOM_MUTATION, "mutagenic meat");
+            xom_is_stimulated(100);
+        } else {
+            mpr("This meat tastes unpleasant.");
+        }
+        // Zin minds you trying, whether or not you succeed, but Xom
+        // demands actual entertainment
         did_god_conduct(DID_DELIBERATE_MUTATING, 10);
-        xom_is_stimulated(100);
         break;
 
     case CE_CLEAN:
