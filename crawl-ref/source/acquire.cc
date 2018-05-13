@@ -415,10 +415,13 @@ static int _acquirement_food_subtype(bool /*divine*/, int& quantity)
         type_wanted = FOOD_FRUIT;
     }
     else
-        type_wanted = FOOD_RATION;
+    {
+        type_wanted = you.get_mutation_level(MUT_HERBIVOROUS) ? FOOD_BREAD_RATION
+                                                      : FOOD_MEAT_RATION;
+    }
 
-    quantity = 3 + random2(5);
-
+    quantity = 3 + random2(4); // reduced because the removal of royal jellies
+                               // gives the average item more nutrition
     // giving more of the lower food value items
     if (type_wanted == FOOD_FRUIT)
         quantity = 8 + random2avg(15, 2);

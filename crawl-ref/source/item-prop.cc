@@ -679,18 +679,17 @@ struct food_def
 static int Food_index[NUM_FOODS];
 static const food_def Food_prop[] =
 {
-    { FOOD_RATION,       "ration",       4700,  3250,  2950 },
+    { FOOD_MEAT_RATION,  "meat ration",  5000,  6500,     0 },
     { FOOD_CHUNK,        "chunk",        1000,  1300,     0 },
-
+    { FOOD_BREAD_RATION, "bread ration", 4400,     0,  5900 },
     { FOOD_FRUIT,        "fruit",         850,     0,  1000 },
 
 
 #if TAG_MAJOR_VERSION == 34
     // is_real_food assumes we list FOOD_ROYAL_JELLY as the first removed
     // food here, after all the unremoved foods.
-    { FOOD_UNUSED,       "buggy pizza",     0,     0,     0 },
+    { FOOD_UNUSED,       "buggy food",      0,     0,     0 },
     { FOOD_ROYAL_JELLY,  "buggy jelly",  2000,  2000,  2000 },
-    { FOOD_BREAD_RATION, "buggy ration", 4400,     0,  5900 },
     { FOOD_AMBROSIA,     "buggy fruit",     0,     0,     0 },
     { FOOD_ORANGE,       "buggy fruit",  1000,  -300,   300 },
     { FOOD_BANANA,       "buggy fruit",  1000,  -300,   300 },
@@ -704,10 +703,10 @@ static const food_def Food_prop[] =
     { FOOD_STRAWBERRY,   "buggy fruit",   200,   -50,    50 },
     { FOOD_GRAPE,        "buggy fruit",   100,   -20,    20 },
     { FOOD_SULTANA,      "buggy fruit",    70,   -20,    20 },
-    { FOOD_CHEESE,       "buggy fruit",  1200,     0,     0 },
-    { FOOD_SAUSAGE,      "buggy fruit",  1200,   150,  -400 },
-    { FOOD_BEEF_JERKY,   "buggy fruit",  1500,   200,  -200 },
-    { FOOD_PIZZA,        "buggy fruit",  1500,     0,     0 },
+    { FOOD_CHEESE,       "buggy cheese", 1200,     0,     0 },
+    { FOOD_SAUSAGE,      "buggy soss",   1200,   150,  -400 },
+    { FOOD_BEEF_JERKY,   "buggy jerky",  1500,   200,  -200 },
+    { FOOD_PIZZA,        "buggy pizza",  1500,     0,     0 },
 #endif
 };
 
@@ -791,8 +790,6 @@ const set<pair<object_class_type, int> > removed_items =
     { OBJ_SCROLLS,   SCR_CURSE_WEAPON },
     { OBJ_SCROLLS,   SCR_CURSE_ARMOUR },
     { OBJ_SCROLLS,   SCR_CURSE_JEWELLERY },
-    { OBJ_FOOD,      FOOD_BREAD_RATION },
-    { OBJ_FOOD,      FOOD_ROYAL_JELLY },
     { OBJ_FOOD,      FOOD_UNUSED },
 #endif
     // Outside the #if because we probably won't remove these.

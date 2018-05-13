@@ -3601,7 +3601,8 @@ colour_t item_def::food_colour() const
             return LIGHTGREEN;
         case FOOD_CHUNK:
             return LIGHTRED;
-        case FOOD_RATION:
+        case FOOD_BREAD_RATION:
+        case FOOD_MEAT_RATION:
         default:
             return BROWN;
     }

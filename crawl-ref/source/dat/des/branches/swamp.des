@@ -570,7 +570,7 @@ dgn.delayed_decay_extra(_G, 'p', 'orc corpse', 'hand axe / broad axe, ' ..
    'leather armour / pair of gloves')
 }}
 KITEM: w = mundane quarterstaff
-KITEM: s = ration
+KITEM: s = meat ration / bread ration
 KFEAT: 'o = W
 CLEAR:  _
 MAP
@@ -1614,7 +1614,7 @@ SUBST: ghi = .
 KMONS: D = patrolling spriggan rider
 KMONS: SGHI = spriggan / nothing
 KMONS: F = spriggan druid
-KITEM: f = ration w:20 / fruit
+KITEM: f = bread_ration w:20 / fruit
 MAP
        ttttt
   ttttttgggt
