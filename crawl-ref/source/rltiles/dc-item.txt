@@ -553,24 +553,21 @@ i-scattershot WAND_SCATTERSHOT WAND_ID_LAST
 
 #################OBJ_FOOD
 %sdir item/food
-bread_ration FOOD_RATION UNSEEN_FOOD FOOD_RATION_FIRST FOOD_RATION_INVENTORY
-meat_ration
-cheese
-honeycomb
-sausage
-pizza FOOD_PIZZA
-beef_jerky
+bread_ration FOOD_RATION UNSEEN_FOOD
+
 apple FOOD_FRUIT_FIRST FOOD_APPLE
 apricot
 banana
 choko
 grape
 lemon
+lychee
 orange
 pear
+rambutan
 snozzcumber
 strawberry FOOD_FRUIT_LAST
-fruit FOOD_FRUIT_INVENTORY FOOD_RATION_LAST
+fruit FOOD_FRUIT_INVENTORY
 
 %rim 0
 bone_humanoid1 FOOD_BONE_HUMANOID
