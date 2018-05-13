@@ -532,6 +532,10 @@ unsigned int item_value(item_def item, bool ident)
             valued = 50;
             break;
 
+        case FOOD_FRUIT:
+            valued = 15;
+            break;
+
         case FOOD_CHUNK:
         default:
             break;
