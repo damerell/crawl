@@ -274,7 +274,7 @@ KFEAT: l = altar_lugonu
 KFEAT: J = altar_jiyva
 KMONS: m = shadow
 KMONS: j = patrolling jelly
-KITEM: * = bread_ration / meat_ration
+KITEM: * = bread ration / meat ration
 COLOUR: # = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
@@ -451,9 +451,9 @@ ENDMAP
 NAME: sprint_mu_hive_nellie
 TAGS: sprint_mu_hive no_rotate no_hmirror no_vmirror
 KMONS: 1 = killer bee
-KITEM: 1 = meat_ration / bread_ration / nothing w:40
+KITEM: 1 = meat ration / bread ration / nothing w:40
 KMONS: 2 = queen bee
-KITEM: 2 = meat_ration / bread_ration
+KITEM: 2 = meat ration / bread ration
 KMONS: 3 = generate_awake Nellie
 KITEM: 3 = demonic rune of zot
 : acq_on_sight(_G, '3', {"food","misc","wand"})

@@ -163,8 +163,8 @@ end
 
 
 function general_item_setup(e)
-  e.kitem("^ = superb_item ident:all w:590 / bread_ration w:1 /\
-          meat_ration w:1 /\
+  e.kitem("^ = superb_item ident:all w:590 / bread ration w:1 /\
+          meat ration w:1 /\
           potion of heal wounds ident:all q:4 w:3 /\
           potion of haste ident:all q:4 w:3 /\
           scroll of fog w:1 ident:all / scroll of holy word w:1 ident:all /\

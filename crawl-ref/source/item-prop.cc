@@ -686,7 +686,7 @@ static const food_def Food_prop[] =
 
 
 #if TAG_MAJOR_VERSION == 34
-    // is_real_food assumes we list FOOD_ROYAL_JELLY as the first removed
+    // is_real_food assumes we list FOOD_UNUSED as the first removed
     // food here, after all the unremoved foods.
     { FOOD_UNUSED,       "buggy food",      0,     0,     0 },
     { FOOD_ROYAL_JELLY,  "buggy jelly",  2000,  2000,  2000 },

@@ -273,7 +273,7 @@ SUBST:   2 = 2.
 SUBST:   3 = 3.
 NSUBST:  . = 5:% / *:.
 KITEM:   % = w:12 animal skin / club / hand axe /\
-             meat ration / bread_ration / nothing w:7
+             meat ration / bread ration / nothing w:7
 KFEAT:   8 = orcish_idol / w:5 floor
 KFEAT:   _ = altar_beogh / w:15 floor
 KITEM:   $ = battleaxe / nothing, plate armour / nothing, \

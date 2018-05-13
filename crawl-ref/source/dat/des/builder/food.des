@@ -99,7 +99,7 @@ WEIGHT: 15
 TAGS:   uniq_second_food extra chance_second_food
 MONS:   queen bee, killer bee
 # Why the bees gather up this food is unclear...
-ITEM:   meat_ration / bread_ration
+ITEM:   meat ration / bread ration
 COLOUR: a = yellow
 TILE:   a = wall_wax
 SUBST:  a = x
@@ -171,9 +171,9 @@ WEIGHT: 15
 TAGS:   uniq_second_food extra chance_second_food no_monster_gen patrolling
 MONS:   hornet / worm w:5 / worker ant
 MONS:   hornet w:7 / soldier ant w:13
-ITEM:   meat_ration q:1 / fruit q:3
-ITEM:   meat_ration q:1
-ITEM:   bread_ration q:2
+ITEM:   meat ration q:1 / fruit q:3
+ITEM:   meat ration q:1
+ITEM:   bread ration q:2
 MAP
 .xxxxxxx
 @xx.x.xcccc
@@ -193,7 +193,7 @@ KMONS:  B = ooze
 : if you.absdepth() > 10 then
 KMONS:  C = slime creature
 : end
-KITEM:  C = bread_ration q:2, meat_ration q:2
+KITEM:  C = bread ration q:2, meat ration q:2
 KFEAT:  C = altar_jiyva w:1 / . w:20
 KMASK:  W = no_monster_gen
 MARKER: + = lua:props_marker({ door_restrict="veto" })
@@ -220,7 +220,7 @@ KMONS:    C = yak
 KMONS:    D = big kobold
 KMONS:    E = big kobold ; nothing
 KMONS:    F = plant
-KITEM:    C = bread_ration
+KITEM:    C = bread ration
 KITEM:    E = falchion ego:flaming ident:type / \
               hand axe ego:flaming ident:type
 KITEM:    H = meat ration q:2

@@ -1614,7 +1614,7 @@ SUBST: ghi = .
 KMONS: D = patrolling spriggan rider
 KMONS: SGHI = spriggan / nothing
 KMONS: F = spriggan druid
-KITEM: f = bread_ration w:20 / fruit
+KITEM: f = bread ration w:20 / fruit
 MAP
        ttttt
   ttttttgggt

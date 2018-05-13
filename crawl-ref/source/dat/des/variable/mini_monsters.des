@@ -124,7 +124,7 @@ DEPTH:  D:9-, Spider
 MONS:   killer bee, meliai, queen bee, hornet
 KMONS:  *R = worm
 KITEM:  * = *
-KITEM:  R = meat_ration / bread_ration
+KITEM:  R = meat ration / bread ration
 SUBST:  ? : .w
 SUBST:  * : *:20 R:3
 # Since one has to dig the bees out, early meliai are fine.
@@ -157,7 +157,7 @@ NAME:   minivault_7
 TAGS:   uniq_beehive patrolling
 DEPTH:  D:9-
 MONS:   queen bee, meliai, killer bee
-KITEM:  R = meat_ration / bread_ration / nothing w:20
+KITEM:  R = meat ration / bread ration / nothing w:20
 COLOUR: x = yellow
 TILE:   x = wall_wax
 : if you.absdepth() < 12 then
@@ -2393,7 +2393,7 @@ TAGS:   no_monster_gen no_item_gen patrolling
 MONS:   spriggan skeleton / centaur skeleton
 MONS:   troll skeleton / hungry ghost
 KMONS:  A = unseen horror
-ITEM:   fruit q:1, meat_ration q:1, bread ration q:1
+ITEM:   fruit q:1, meat ration q:1, bread ration q:1
 SUBST:  D : DDDDE
 NSUBST: D = 1 = A:4 .:1 / 2:d / 2:e / 1:1, E = 2:d / 2:e / 2:1
 MAP
@@ -2919,7 +2919,7 @@ NAME:    minislime_mu
 TAGS:    no_monster_gen no_item_gen
 DEPTH:   Depths, !Depths:$
 MONS:    large slime creature, great orb of eyes, eye of draining
-KITEM:   R = bread_ration / meat_ration
+KITEM:   R = bread ration / meat ration
 ITEM:    scroll of teleportation q:2 / wand of digging
 ITEM:    scroll of teleportation q:2 w:20 / wand of digging w:20 / \
          dagger ego:distortion ident:type

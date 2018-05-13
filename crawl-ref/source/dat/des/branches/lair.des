@@ -339,7 +339,7 @@ MONS:    basilisk / wyvern w:25 / komodo dragon / crocodile w:25
 NSUBST:  2 = 3:2 / 3 = 2. / *:.
 SUBST:   z = .xc
 SHUFFLE: %*RO
-KITEM:   R = meat_ration
+KITEM:   R = meat ration
 KFEAT:   O = enter_lair
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
