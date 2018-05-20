@@ -278,26 +278,11 @@ public:
 
     vector<demon_trait> demonic_traits;
 
-    int dg_small_god_enum;
-    int dg_big_god_enum;
-    int dg_small_abil_enum;
-    int dg_big_abil_enum;
-    int dg_passive_god_enum;
-
-/*struct god_power
-{
-    // 1-6 means it unlocks at that many stars of piety;
-    // 0 means it is always available when worshipping the god;
-    // -1 means it is available even under penance;
-    // 7 means it is a capstone.
-    int rank;
-    ability_type abil;
-    const char* gain;
-    const char* loss;
-    bool demigod_can;
-};
-*/
-    //god_power& demigod_small;
+    int dg_passive_god;
+    int dg_small_abil;
+    int dg_small_god;
+    int dg_big_abil;
+    int dg_big_god;
 
     int magic_contamination;
 
@@ -568,11 +553,11 @@ public:
     kill_category kill_alignment() const override;
 
     bool has_spell(spell_type spell) const override;
-
+/*
     bool dg_has_small();
     bool dg_has_big();
     bool dg_has_passives();
-
+*/
     string shout_verb(bool directed = false) const;
     int shout_volume() const;
 

@@ -1844,7 +1844,7 @@ int player_prot_life(bool calc_unid, bool temp, bool items)
 
     // Same here. Your piety status, and, hence, TSO's protection, is
     // something you can more or less control.
-    if (you_worship(GOD_SHINING_ONE))
+    if (you_worship(GOD_SHINING_ONE) || you.dg_passive_god == GOD_SHINING_ONE)
     {
         if (you.piety >= piety_breakpoint(1))
             pl++;
@@ -2987,14 +2987,29 @@ void level_change(bool skip_attribute_increase)
                 if (you.experience_level == 5)
                 {
                     demigod_get_passives();
+                    mprf(MSGCH_INTRINSIC_GAIN,
+                         "Some of your divine derivation reveals itself...");
+                    mprf(MSGCH_INTRINSIC_GAIN,
+                         "You sense a connection to %s.",
+                         god_name(static_cast<god_type>(you.dg_passive_god)).c_str());
                 }
                 if (you.experience_level == 10)
                 {
                     demigod_get_small();
+                    mprf(MSGCH_INTRINSIC_GAIN,
+                         "Some of your divine derivation reveals itself...");
+                    mprf(MSGCH_INTRINSIC_GAIN,
+                         "You sense a connection to %s.",
+                         god_name(static_cast<god_type>(you.dg_small_god)).c_str());
                 }
-                else if (you.experience_level == 15)
+                if (you.experience_level == 15)
                 {
                     demigod_get_big();
+                    mprf(MSGCH_INTRINSIC_GAIN,
+                         "Some of your divine derivation reveals itself...");
+                    mprf(MSGCH_INTRINSIC_GAIN,
+                         "You sense a connection to %s.",
+                         god_name(static_cast<god_type>(you.dg_big_god)).c_str());
                 }
                 break;
 
@@ -3015,7 +3030,7 @@ void level_change(bool skip_attribute_increase)
             _gain_and_note_hp_mp();
 
         xom_is_stimulated(12);
-        if (in_good_standing(GOD_HEPLIAKLQANA))
+        if (in_good_standing(GOD_HEPLIAKLQANA) || you.dg_passive_god == GOD_HEPLIAKLQANA)
             upgrade_hepliaklqana_ancestor();
 
         learned_something_new(HINT_NEW_LEVEL);
@@ -4800,7 +4815,8 @@ bool invis_allowed(bool quiet, string *fail_reason)
     if (you.haloed() && you.halo_radius() != -1)
     {
         bool divine = you.attribute[ATTR_HEAVENLY_STORM] > 0 ||
-                you.religion == GOD_SHINING_ONE;
+                you.religion == GOD_SHINING_ONE ||
+                you.dg_passive_god == GOD_SHINING_ONE;
         bool weapon = player_equip_unrand(UNRAND_EOS);
         string reason;
 
@@ -5094,7 +5110,8 @@ player::player()
     old_vehumet_gifts.clear();
     spell_no        = 0;
     vehumet_gifts.clear();
-    clear_demigod_powers();
+    demigod_clear_passives();
+    demigod_clear_powers();
     chapter  = CHAPTER_ORB_HUNTING;
     royal_jelly_dead = false;
     transform_uncancellable = false;
@@ -5166,11 +5183,11 @@ player::player()
     demonic_traits.clear();
     sacrifices.init(0);
 
-    dg_small_god_enum = 0;
-    dg_big_god_enum = 0;
-    dg_small_abil_enum = 0;
-    dg_big_abil_enum = 0;
-    dg_passive_god_enum = 0;
+    dg_passive_god = 0;
+    dg_small_abil = 0;
+    dg_small_god = 0;
+    dg_big_abil = 0;
+    dg_big_god = 0;
 
     magic_contamination = 0;
 
@@ -5681,12 +5698,12 @@ int player::missile_deflection() const
 
     return 0;
 }
-
+/*
 bool player::dg_has_small()
 {
-    if (you.dg_small_abil_enum != 0)
+    if (dg_small_abil != 0)
     {
-        demigod_small_abil(dg_small_abil_enum);
+        demigod_small_abil();
         return true;
     }
     return false;
@@ -5694,9 +5711,9 @@ bool player::dg_has_small()
 
 bool player::dg_has_big()
 {
-    if (you.dg_big_abil_enum != 0)
+    if (dg_big_abil != 0)
     {
-        demigod_big_abil(dg_big_abil_enum);
+        demigod_big_abil();
         return true;
     }
     return false;
@@ -5704,14 +5721,14 @@ bool player::dg_has_big()
 
 bool player::dg_has_passives()
 {
-    if (you.dg_passive_god_enum != 0)
+    if (dg_passive_god != 0)
     {
-        demigod_passives(dg_passive_god_enum);
+        demigod_passives();
         return true;
     }
     return false;
 }
-
+*/
 void player::ablate_deflection()
 {
     if (attribute[ATTR_DEFLECT_MISSILES])

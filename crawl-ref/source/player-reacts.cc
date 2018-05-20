@@ -824,7 +824,7 @@ static void _decrement_durations()
         process_sunlights();
 
     if (!you.duration[DUR_ANCESTOR_DELAY]
-        && in_good_standing(GOD_HEPLIAKLQANA)
+        && (in_good_standing(GOD_HEPLIAKLQANA) || you.dg_passive_god == GOD_HEPLIAKLQANA)
         && hepliaklqana_ancestor() == MID_NOBODY)
     {
         _try_to_respawn_ancestor();
@@ -1052,7 +1052,7 @@ void player_reacts()
     // XOM now ticks from here, to increase his reaction time to tension.
     if (you_worship(GOD_XOM))
         xom_tick();
-    else if (you_worship(GOD_QAZLAL))
+    else if (you_worship(GOD_QAZLAL) || you.dg_passive_god == GOD_QAZLAL)
         qazlal_storm_clouds();
 
     if (you.props[EMERGENCY_FLIGHT_KEY].get_bool())

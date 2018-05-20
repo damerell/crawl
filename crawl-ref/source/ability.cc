@@ -3642,17 +3642,7 @@ vector<ability_type> get_god_abilities(bool ignore_silence, bool ignore_piety,
             abilities.push_back(ABIL_RU_REJECT_SACRIFICES);
     }
     // XXX: should we check ignore_piety?
-    if (you_worship(GOD_HEPLIAKLQANA)
-        && piety_rank() >= 2 && !you.props.exists(HEPLIAKLQANA_ALLY_TYPE_KEY))
-    {
-        for (int anc_type = ABIL_HEPLIAKLQANA_FIRST_TYPE;
-             anc_type <= ABIL_HEPLIAKLQANA_LAST_TYPE;
-             ++anc_type)
-        {
-            abilities.push_back(static_cast<ability_type>(anc_type));
-        }
-    }
-    if (you_worship(GOD_DEMI_GOD) && you.dg_passive_god_enum == GOD_HEPLIAKLQANA
+    if ((you_worship(GOD_HEPLIAKLQANA) || you.dg_passive_god == GOD_HEPLIAKLQANA)
         && piety_rank() >= 2 && !you.props.exists(HEPLIAKLQANA_ALLY_TYPE_KEY))
     {
         for (int anc_type = ABIL_HEPLIAKLQANA_FIRST_TYPE;

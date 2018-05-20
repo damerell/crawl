@@ -296,7 +296,9 @@ void dithmenos_shadow_spell(bolt* orig_beam, spell_type spell);
 void uskayaw_prepares_audience();
 void uskayaw_bonds_audience();
 void demigod_get_passives();
-bool demigod_passives(int god_enum);
+void demigod_passives();
+void demigod_berserk();
+void demigod_clear_passives();
 
 void wu_jian_wall_jump_effects(const coord_def& old_pos);
 bool wu_jian_has_momentum(wu_jian_attack_type);

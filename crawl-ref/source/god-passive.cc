@@ -134,7 +134,7 @@ struct god_passive
     }
 };
 
-static vector<god_passive> god_passives[] =
+vector<god_passive> god_passives[] =
 {
     // no god
     { },
@@ -171,7 +171,7 @@ static vector<god_passive> god_passives[] =
     {
         { -1, passive_t::protect_from_harm,
               "GOD sometimes watches over you",
-              "GOD no longer watches over you", true
+              "GOD no longer watches over you"
         },
         { -1, passive_t::abjuration_protection_hd,
               "GOD NOW protects your summons from abjuration", "", true },
@@ -386,13 +386,13 @@ static vector<god_passive> god_passives[] =
     {
         {  1, passive_t::aura_of_power,
               "Your enemies will sometimes fail their attack or even hit themselves",
-              "Your enemies will NOW fail their attack or hit themselves"
+              "Your enemies will NOW fail their attack or hit themselves", true
         },
         {  2, passive_t::upgraded_aura_of_power,
               "Enemies that inflict damage upon you will sometimes receive"
               " a detrimental status effect",
               "Enemies that inflict damage upon you will NOW receive"
-              " a detrimental status effect"
+              " a detrimental status effect", true
         },
     },
 
@@ -413,7 +413,7 @@ static vector<god_passive> god_passives[] =
     // Hepliaklqana
     {
         { -1, passive_t::frail,
-              "GOD NOW siphons a part of your essence into your ancestor" },
+              "GOD NOW siphons a part of your essence into your ancestor", "", true },
         {  5, passive_t::transfer_drain,
               "drain nearby creatures when transferring your ancestor" },
     },
@@ -421,11 +421,11 @@ static vector<god_passive> god_passives[] =
     // Wu Jian
     {
         {  0, passive_t::wu_jian_lunge,
-              "perform damaging attacks by moving towards foes.", "", true },
+              "perform damaging attacks by moving towards foes.", "" },
         {  1, passive_t::wu_jian_whirlwind,
-              "lightly attack and pin monsters in place by moving around them.", "", true },
+              "lightly attack and pin monsters in place by moving around them.", "" },
         {  2, passive_t::wu_jian_wall_jump,
-              "perform airborne attacks by moving against a solid obstacle.", "", true },
+              "perform airborne attacks by moving against a solid obstacle.", "" },
     },
 
     // Demigod
@@ -469,82 +469,62 @@ int rank_for_passive(passive_t passive)
 
 void demigod_get_passives()
 {
-    vector<god_type> which_god;
-//    bool demigod_can_god;
-//	vector<god_passive> possible_passives;
-// TEMP FIXME currently hardcoded list, should fix -- Realz
-
+    vector<int> which_god;
+    // TEMP FIXME currently hardcoded list, should fix -- Realz
     which_god.push_back(GOD_SHINING_ONE);
     which_god.push_back(GOD_VEHUMET);
     which_god.push_back(GOD_MAKHLEB);
     which_god.push_back(GOD_CHEIBRIADOS);
     which_god.push_back(GOD_DITHMENOS);
+    which_god.push_back(GOD_RU);
     which_god.push_back(GOD_QAZLAL);
     which_god.push_back(GOD_HEPLIAKLQANA);
-    which_god.push_back(GOD_WU_JIAN);
 
-/*    for (god = GOD_NO_GOD; god < NUM_GODS; god++)
-    {
-        which_god.push_back(god);
-    }
-    for (auto& remove_god : which_god)
-    {
-        int keep = 0;
-        for (auto& passive : god_passives[remove_god])
-		{
-            if (passive.demigod_can == true)
-            {
-                keep++;
-            }
-    
-            
-
-            if (passive.demigod_can == true)
-            {
-                for (auto& have_god : which_god)
-                {
-                    if (have_god == god)
-                    {
-                        break;
-                    }
-			    }
-				which_god.push_back(god);
-            }
-        }
-    }
-*/
     int size_possible = which_god.size();
     int random_possible = 0;
+
 	if (size_possible >= 1)
     {
         random_possible = random2(size_possible);
     }
-    you.dg_passive_god_enum = which_god[random_possible];
-    you.dg_has_passives();
+    you.dg_passive_god = which_god[random_possible];
+    demigod_passives();
 }
 
-bool demigod_passives(int god_enum)
+void demigod_passives()
 {
-    if (god_enum == GOD_NO_GOD)
+    if (you.dg_passive_god == GOD_NO_GOD
+        || god_passives[GOD_DEMI_GOD].size() != 0)
+            return;
+
+    demigod_non_abils();
+    for (auto& passive : god_passives[you.dg_passive_god])
     {
-        return false;
-    }
-    for (auto& passive : god_passives[god_enum])
-    {
-        if (passive.demigod_can)
-        {
+        if (passive.demigod_can == true)
             god_passives[GOD_DEMI_GOD].push_back(passive);
+    }
+    if (you.dg_passive_god== GOD_HEPLIAKLQANA)
+        _demigod_hepliaklqana_passive();
+
+    if (you.dg_passive_god == GOD_CHEIBRIADOS)
+        _demigod_cheibriados_passive();
+}
+
+void demigod_berserk()
+{
+    if (you.dg_small_god == GOD_TROG)
+    {
+        for (auto& passive : god_passives[GOD_TROG])
+        {
+            if (passive.pasv == passive_t::extend_berserk)
+                god_passives[GOD_DEMI_GOD].push_back(passive);
         }
     }
-    if (god_enum == GOD_HEPLIAKLQANA)
-    {
-        _demigod_hepliaklqana_passive();
-    }
-    if (god_enum == GOD_CHEIBRIADOS)
-    {
-        _demigod_cheibriados_passive();
-    }
-    return true;
+}
+
+void demigod_clear_passives()
+{
+    god_passives[GOD_DEMI_GOD].clear();
 }
 
 int chei_stat_boost(int piety)

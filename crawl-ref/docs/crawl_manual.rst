@@ -1575,13 +1575,12 @@ Demigods
   they can be created by a number of processes, including magical experiments
   and the time-honoured practice of interplanar miscegenation.
 
-  Demigods look more or less like members of their mortal part's species, but
-  have excellent attributes (Str, Int, Dex) and are extremely robust; they can
-  also draw on great supplies of magical energy. On the downside, they advance
-  more slowly in experience than any other race, gain skills slightly less
-  quickly than Humans and, due to their status, cannot worship the various gods
-  and powers available to other races.
-
+  Demigods look more or less like members of their mortal part's species. They
+  have excellent attributes (Str, Int, Dex), but advance slowly in experience.
+  As a Demigod gains levels, some of their divine ancestry will periodically
+  reveal itself, granting godly traits and abilities. Due to their status,
+  Demigods cannot worship the various gods and powers available to other races.
+    
 Demonspawn
   Demonspawn are horrible half-mortal, half-infernal creatures - the flip side
   of the Demigods. Demonspawn can be created in any number of ways: magical

@@ -92,7 +92,7 @@ vector<god_power> god_powers[NUM_GODS] =
     { },
 
     // Zin
-    { { 1, ABIL_ZIN_RECITE, "recite Zin's Axioms of Law", "", true },
+    { { 1, ABIL_ZIN_RECITE, "recite Zin's Axioms of Law" },
       { 2, ABIL_ZIN_VITALISATION, "call upon Zin for vitalisation", "", true },
       { 3, ABIL_ZIN_IMPRISON, "call upon Zin to imprison the lawless", "", true },
       { 5, ABIL_ZIN_SANCTUARY, "call upon Zin to create a sanctuary", "", true},
@@ -103,7 +103,7 @@ vector<god_power> god_powers[NUM_GODS] =
 
     // TSO
     { { 1, "You and your allies can gain power from killing the unholy and evil.",
-           "You and your allies can no longer gain power from killing the unholy and evil." },
+           "You and your allies can no longer gain power from killing the unholy and evil.", true },
       { 2, ABIL_TSO_DIVINE_SHIELD, "call upon the Shining One for a divine shield", "", true },
       { 4, ABIL_TSO_CLEANSING_FLAME, "channel blasts of cleansing flame", "", true },
       { 5, ABIL_TSO_SUMMON_DIVINE_WARRIOR, "summon a divine warrior", "", true },
@@ -130,7 +130,7 @@ vector<god_power> god_powers[NUM_GODS] =
     // Yredelemnul
     { { 1, ABIL_YRED_ANIMATE_REMAINS, "animate remains", "", true },
       { 2, ABIL_YRED_RECALL_UNDEAD_SLAVES, "recall your undead slaves" },
-      { 2, ABIL_YRED_INJURY_MIRROR, "mirror injuries on your foes", "", true },
+      { 2, ABIL_YRED_INJURY_MIRROR, "mirror injuries on your foes" },
       { 3, ABIL_YRED_ANIMATE_DEAD, "animate legions of the dead" },
       { 3, "Yredelemnul will gift you servants as you gain piety.",
            "Yredelemnul will no longer gift you servants." },
@@ -142,11 +142,11 @@ vector<god_power> god_powers[NUM_GODS] =
     { },
 
     // Vehumet
-    { { 1, "gain magical power from killing" },
+    { { 1, "gain magical power from killing", "", true },
       { 3, "Vehumet is aiding your destructive magics.",
-           "Vehumet will no longer aid your destructive magics." },
+           "Vehumet will no longer aid your destructive magics.", true },
       { 4, "Vehumet is extending the range of your destructive magics.",
-           "Vehumet will no longer extend the range of your destructive magics." },
+           "Vehumet will no longer extend the range of your destructive magics.", true },
     },
 
     // Okawaru
@@ -159,7 +159,7 @@ vector<god_power> god_powers[NUM_GODS] =
     },
 
     // Makhleb
-    { { 1, "gain health from killing" },
+    { { 1, "gain health from killing", "", true },
       { 2, ABIL_MAKHLEB_MINOR_DESTRUCTION, "harness Makhleb's destructive might", "", true },
       { 3, ABIL_MAKHLEB_LESSER_SERVANT_OF_MAKHLEB, "summon a lesser servant of Makhleb", "", true },
       { 4, ABIL_MAKHLEB_MAJOR_DESTRUCTION, "hurl Makhleb's greater destruction", "", true },
@@ -196,7 +196,7 @@ vector<god_power> god_powers[NUM_GODS] =
     },
 
     // Elyvilon
-    { { 1, ABIL_ELYVILON_LESSER_HEALING, "provide lesser healing for yourself", "", true },
+    { { 1, ABIL_ELYVILON_LESSER_HEALING, "provide lesser healing for yourself" },
       { 2, ABIL_ELYVILON_HEAL_OTHER, "heal and attempt to pacify others", "", true },
       { 3, ABIL_ELYVILON_PURIFICATION, "purify yourself", "", true },
       { 4, ABIL_ELYVILON_GREATER_HEALING, "provide greater healing for yourself", "", true },
@@ -230,7 +230,7 @@ vector<god_power> god_powers[NUM_GODS] =
       { 4, ABIL_JIYVA_SLIMIFY, "turn your foes to slime", "", true },
       { 5, "You may now expel jellies when seriously injured.",
            "You will no longer expel jellies when injured." },
-      { 5, ABIL_JIYVA_CURE_BAD_MUTATION, "call upon Jiyva to remove your harmful mutations", "", true },
+      { 5, ABIL_JIYVA_CURE_BAD_MUTATION, "call upon Jiyva to remove your harmful mutations" },
     },
 
     // Fedhas
@@ -246,15 +246,15 @@ vector<god_power> god_powers[NUM_GODS] =
     // Cheibriados
     { { 0, ABIL_CHEIBRIADOS_TIME_BEND, "bend time to slow others", "", true },
       { 1, "Cheibriados slows and strengthens your metabolism.",
-           "Cheibriados no longer slows and strengthens your metabolism." },
+           "Cheibriados no longer slows and strengthens your metabolism.", true },
       { 3, ABIL_CHEIBRIADOS_DISTORTION, "warp the flow of time around you" },
-      { 4, ABIL_CHEIBRIADOS_SLOUCH, "inflict damage on those overly hasty", "", true },
+      { 4, ABIL_CHEIBRIADOS_SLOUCH, "inflict damage on those overly hasty", "" },
       { 5, ABIL_CHEIBRIADOS_TIME_STEP, "step out of the time flow", "", true },
     },
 
     // Ashenzari
     { { 0, ABIL_ASHENZARI_CURSE, "curse your items" },
-      { 1, ABIL_ASHENZARI_SCRYING, "scry through walls", "", true },
+      { 1, ABIL_ASHENZARI_SCRYING, "scry through walls" },
       { 2, "The more cursed you are, the more Ashenzari supports your skills.",
            "Ashenzari no longer supports your skills." },
       { 3, "Ashenzari reveals the unseen.",
@@ -269,9 +269,9 @@ vector<god_power> god_powers[NUM_GODS] =
     // Dithmenos
     { { 2, ABIL_DITHMENOS_SHADOW_STEP, "step into the shadows of nearby creatures" },
       { 3, "You now sometimes bleed smoke when heavily injured by enemies.",
-           "You no longer bleed smoke." },
+           "You no longer bleed smoke.", true },
       { 4, "Your shadow now sometimes tangibly mimics your actions.",
-           "Your shadow no longer tangibly mimics your actions." },
+           "Your shadow no longer tangibly mimics your actions.", true },
       { 5, ABIL_DITHMENOS_SHADOW_FORM, "transform into a swirling mass of shadows", "", true },
     },
 
@@ -283,24 +283,24 @@ vector<god_power> god_powers[NUM_GODS] =
 
     // Qazlal
     {
-      { 0, "Qazlal grants you immunity to clouds." },
-      { 1, "You are surrounded by a storm.", "Your storm dissipates completely." },
+      { 0, "Qazlal grants you and your allies immunity to clouds.", "", true },
+      { 1, "You are surrounded by a storm.", "Your storm dissipates completely.", true },
       { 2, ABIL_QAZLAL_UPHEAVAL, "call upon nature to destroy your foes", "", true },
       { 3, ABIL_QAZLAL_ELEMENTAL_FORCE, "give life to nearby clouds" },
       { 4, "The storm surrounding you is powerful enough to repel missiles.",
-           "The storm surrounding you is now too weak to repel missiles." },
+           "The storm surrounding you is now too weak to repel missiles.", true },
       { 4, "You adapt resistances upon receiving elemental damage.",
-           "You no longer adapt resistances upon receiving elemental damage." },
+           "You no longer adapt resistances upon receiving elemental damage.", true },
       { 5, ABIL_QAZLAL_DISASTER_AREA, "call upon nature's wrath in a wide area around you", "", true },
     },
 
     // Ru
     { { 1, "You exude an aura of power that intimidates your foes.",
-           "You no longer exude an aura of power that intimidates your foes." },
+           "You no longer exude an aura of power that intimidates your foes.", true },
       { 2, "Your aura of power can strike those that harm you.",
-           "Your aura of power no longer strikes those that harm you." },
+           "Your aura of power no longer strikes those that harm you.", true },
       { 3, ABIL_RU_DRAW_OUT_POWER, "heal your body and restore your magic", "", true },
-      { 4, ABIL_RU_POWER_LEAP, "gather your power into a mighty leap", "", true },
+      { 4, ABIL_RU_POWER_LEAP, "gather your power into a mighty leap" },
       { 5, ABIL_RU_APOCALYPSE, "wreak a terrible wrath on your foes", "", true },
     },
 
@@ -395,48 +395,54 @@ void demigod_get_small()
     {
         for (auto& power : god_powers[god])
         {
-            if (power.demigod_can == true && power.rank <= 3
-                && power.abil != ABIL_NON_ABILITY)
-            {
-                possible_powers.push_back(power);
-            }
+            if (power.demigod_can == true
+                && power.abil != ABIL_NON_ABILITY
+                && god != you.dg_passive_god
+                && power.rank <= 3)
+                    possible_powers.push_back(power);
         }
     }
     int size_possible = possible_powers.size();
     int random_possible = 0;
+
 	if (size_possible >= 1)
     {
         random_possible = random2(size_possible);
     }
-    you.dg_small_abil_enum = possible_powers[random_possible].abil;
-    you.dg_has_small();
+    you.dg_small_abil = possible_powers[random_possible].abil;
+    demigod_small_abil();
 }
 
-bool demigod_small_abil(int abil_enum)
+void demigod_small_abil()
 {
     for (int god = GOD_NO_GOD; god < NUM_GODS; god++)
     {
         for (auto& power : god_powers[god])
         {
-            if (power.abil == you.dg_small_abil_enum)
+            if (power.abil == you.dg_small_abil)
             {
-                you.dg_small_god_enum = god;
+                you.dg_small_god = god;
                 god_powers[GOD_DEMI_GOD].push_back(power);
                 if (power.abil == ABIL_YRED_ANIMATE_REMAINS)
                 {
                     for (auto& animate : god_powers[GOD_YREDELEMNUL])
                     {
                         if (animate.abil == ABIL_YRED_ANIMATE_DEAD)
-                        {
                             god_powers[GOD_DEMI_GOD].push_back(animate);
-                        }
                     }
                 }
-                return true;
+                if (power.abil == ABIL_TROG_BERSERK)
+                    demigod_berserk();
+
+                vector<ability_type> abilities = get_god_abilities();
+                for (ability_type abil : abilities)
+                    you.start_train.insert(abil_skill(abil));
+                update_can_train();
+
+                return;
             }
         }
     }
-    return false;
 }
 
 void demigod_get_big()
@@ -446,43 +452,80 @@ void demigod_get_big()
     {
         for (auto& power : god_powers[god])
         {
-            if (power.demigod_can == true && power.rank >= 4
-                && power.abil != ABIL_NON_ABILITY)
-            {
-                possible_powers.push_back(power);
-            }
+            if (power.demigod_can == true
+                && power.abil != ABIL_NON_ABILITY
+                && god != you.dg_passive_god
+                && god != you.dg_small_god
+                && power.rank >= 4)
+                    possible_powers.push_back(power);
         }
     }
     int size_possible = possible_powers.size();
     int random_possible = 0;
+
 	if (size_possible >= 1)
-    {
         random_possible = random2(size_possible);
-    }
-    you.dg_big_abil_enum = possible_powers[random_possible].abil;
-    you.dg_has_big();
+
+    you.dg_big_abil = possible_powers[random_possible].abil;
+    demigod_big_abil();
 }
 
-bool demigod_big_abil(int abil_enum)
+void demigod_big_abil()
 {
     for (int god = GOD_NO_GOD; god < NUM_GODS; god++)
     {
         for (auto& power : god_powers[god])
         {
-            if (power.abil == you.dg_big_abil_enum)
+            if (power.abil == you.dg_big_abil)
             {
-                you.dg_big_god_enum = god;
+                you.dg_big_god = god;
                 god_powers[GOD_DEMI_GOD].push_back(power);
-                return true;
+                if (power.abil == ABIL_LUGONU_ABYSS_ENTER)
+                {
+                    for (auto& enter_abyss : god_powers[GOD_LUGONU])
+                    {
+                        if (enter_abyss.abil == ABIL_LUGONU_ABYSS_EXIT)
+                            god_powers[GOD_DEMI_GOD].push_back(power);
+                    }
+                }
+                vector<ability_type> abilities = get_god_abilities();
+                for (ability_type abil : abilities)
+                    you.start_train.insert(abil_skill(abil));
+                update_can_train();
+
+                return;
             }
         }
     }
-    return false;
+
 }
 
-void clear_demigod_powers()
+void demigod_non_abils()
+{
+    for (auto& power : god_powers[you.dg_passive_god])
+    {
+        if (power.abil == ABIL_NON_ABILITY && power.demigod_can == true)
+            god_powers[GOD_DEMI_GOD].push_back(power);
+    }
+    if (you.dg_passive_god == GOD_HEPLIAKLQANA)
+    {
+        for (auto& power : god_powers[GOD_HEPLIAKLQANA])
+        {
+            if (power.abil == ABIL_HEPLIAKLQANA_RECALL
+                || power.abil == ABIL_HEPLIAKLQANA_IDENTITY)
+                    god_powers[GOD_DEMI_GOD].push_back(power);
+        }
+    }
+}
+
+void demigod_clear_powers()
 {
     god_powers[GOD_DEMI_GOD].clear();
+}
+
+bool cloud_immune_allies()
+{
+    return have_passive(passive_t::cloud_immunity);
 }
 
 static void _place_delayed_monsters();
@@ -2519,7 +2562,7 @@ static void _gain_piety_point()
 
             you.one_time_ability_used.set(you.religion);
         }
-        if ((you_worship(GOD_HEPLIAKLQANA) || you_worship(GOD_DEMI_GOD))
+        if ((you_worship(GOD_HEPLIAKLQANA) || you.dg_passive_god == (GOD_HEPLIAKLQANA))
             && rank == 2 && !you.props.exists(HEPLIAKLQANA_ALLY_TYPE_KEY))
         {
            god_speaks(you.religion,
@@ -2792,6 +2835,9 @@ int initial_wrath_penance_for(god_type god)
 
 void excommunication(bool voluntary, god_type new_god)
 {
+    if (you.religion == GOD_DEMI_GOD)
+        return;
+
     const god_type old_god = you.religion;
     ASSERT(old_god != new_god);
     ASSERT(old_god != GOD_NO_GOD);
@@ -3190,7 +3236,7 @@ static bool _god_rejects_loveless(god_type god)
     case GOD_YREDELEMNUL:
         return true;
     case GOD_DEMI_GOD:
-        if (have_passive(passive_t::frail))
+        if (you.dg_passive_god == GOD_HEPLIAKLQANA)
             return true;
         return false;
     default:
@@ -4211,6 +4257,7 @@ void handle_god_time(int /*time_delta*/)
         case GOD_PAKELLAS:
         case GOD_JIYVA:
         case GOD_WU_JIAN:
+        case GOD_DEMI_GOD:
             if (one_chance_in(17))
                 lose_piety(1);
             break;
@@ -4223,7 +4270,6 @@ void handle_god_time(int /*time_delta*/)
         case GOD_SIF_MUNA:
         case GOD_SHINING_ONE:
         case GOD_NEMELEX_XOBEH:
-        case GOD_DEMI_GOD:
             if (one_chance_in(35))
                 lose_piety(1);
             break;
@@ -4678,7 +4724,7 @@ static void _place_delayed_monsters()
             if (you_worship(GOD_YREDELEMNUL)
                 || you_worship(GOD_HEPLIAKLQANA)
                 || have_passive(passive_t::convert_orcs)
-                || (you_worship(GOD_DEMI_GOD) && have_passive(passive_t::frail)))
+                || (you.dg_passive_god == GOD_HEPLIAKLQANA))
             {
                 add_companion(mon);
             }

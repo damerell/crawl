@@ -127,12 +127,23 @@ bool vehumet_is_offering(spell_type spell);
 void vehumet_accept_gift(spell_type spell);
 
 mgen_data hepliaklqana_ancestor_gen_data();
+mgen_data demigod_ancestor_gen_data();
 string hepliaklqana_ally_name();
 int hepliaklqana_ally_hp();
 
 void upgrade_hepliaklqana_ancestor(bool quiet_force = false);
 void upgrade_hepliaklqana_weapon(monster_type mtyp, item_def &item);
 void upgrade_hepliaklqana_shield(const monster& ancestor, item_def &item);
+
+void demigod_small_abil();
+void demigod_big_abil();
+void demigod_get_small();
+void demigod_get_big();
+void demigod_non_abils();
+void _demigod_hepliaklqana_passive();
+void _demigod_cheibriados_passive();
+bool cloud_immune_allies();
+void demigod_clear_powers();
 
 bool god_hates_attacking_friend(god_type god, const monster& fr);
 
@@ -197,11 +208,4 @@ struct god_power
 void set_god_ability_slots();
 vector<god_power> get_god_powers(god_type god);
 const god_power* god_power_from_ability(ability_type abil);
-bool demigod_small_abil(int abil_enum);
-bool demigod_big_abil(int abil_enum);
-void demigod_get_small();
-void demigod_get_big();
-void _demigod_hepliaklqana_passive();
-void _demigod_cheibriados_passive();
-void clear_demigod_powers();
 bool god_power_usable(const god_power& power, bool ignore_piety=false, bool ignore_penance=false);

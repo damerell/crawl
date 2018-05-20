@@ -437,10 +437,11 @@ NORETURN static void _launch_game()
     if (game_start && you.char_class == JOB_WANDERER)
         _wanderer_startup_message();
 
-    if (!game_start && you_worship(GOD_DEMI_GOD))
+    if (!game_start && you.religion == GOD_DEMI_GOD)
     {
-        you.dg_has_small();
-        you.dg_has_big();
+        demigod_passives();
+        demigod_small_abil();
+        demigod_big_abil();
     }
 
     if (game_start)
