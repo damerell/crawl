@@ -431,6 +431,13 @@ NORETURN static void _launch_game()
     if (game_start && you.char_class == JOB_WANDERER)
         _wanderer_startup_message();
 
+    if (!game_start && you.religion == GOD_DEMI_GOD)
+    {
+        demigod_passives();
+        demigod_small_abil();
+        demigod_big_abil();
+    }
+
     if (game_start)
        _announce_goal_message();
 
@@ -440,6 +447,12 @@ NORETURN static void _launch_game()
         mpr("Press <w>?</w> for a list of commands and other information.");
 
     _prep_input();
+
+    if (you.species == SP_FAERIE_DRAGON && you.num_turns == 0
+        && !you.airborne())
+    {
+        float_once();
+    }
 
     if (game_start)
     {

@@ -100,6 +100,21 @@ static string _describe_favour(god_type which_god)
     if (which_god == GOD_XOM)
         return uppercase_first(describe_xom_favour());
 
+    if (you.religion == GOD_DEMI_GOD)
+    {
+        string related_gods = "";
+
+        if (you.dg_passive_god != 0)
+            related_gods += god_name(static_cast<god_type>(you.dg_passive_god));
+
+        if (you.dg_small_god != 0)
+            related_gods += (", " + god_name(static_cast<god_type>(you.dg_small_god)));
+
+        if (you.dg_big_god != 0)
+            related_gods += (", " + god_name(static_cast<god_type>(you.dg_big_god)));
+
+        return related_gods;
+    }
 
     const string godname = god_name(which_god);
     switch (god_favour_rank(which_god))
@@ -238,6 +253,11 @@ static const char *divine_title[][8] =
     // Wu Jian -- animal/chinese martial arts monk theme
     {"Wooden Rat",          "Young Dog",             "Young Crane",              "Young Tiger",
         "Young Dragon",     "Red Sash",               "Golden Sash",              "Sifu"},
+
+    // Demigod -- descendant of the gods theme
+    {"Dormant",          "Nescient",             "Confident",               "Divergent",
+        "Spark",             "Awoken",               "Ascendant",                "Prime"},
+
 };
 COMPILE_CHECK(ARRAYSZ(divine_title) == NUM_GODS);
 
@@ -508,7 +528,6 @@ static string _describe_god_wrath_causes(god_type which_god)
                    comma_separated_fn(begin(evil_gods), end(evil_gods),
                                       bind(god_name, placeholders::_1, false)) +
                    " are evil gods.)";
-
         case GOD_ZIN:
             return uppercase_first(god_name(which_god)) +
                    " forgives followers for abandonment; however, those who"
@@ -520,6 +539,9 @@ static string _describe_god_wrath_causes(god_type which_god)
                    comma_separated_fn(begin(chaotic_gods), end(chaotic_gods),
                                       bind(god_name, placeholders::_1, false)) +
                    " are chaotic.)";
+        case GOD_DEMI_GOD:
+            return "Demigods are masters of their own fate, and as such are"
+                   " not subject to any special conduct.";
         default:
             return uppercase_first(god_name(which_god)) +
                    " does not appreciate abandonment, and will call down"
@@ -552,6 +574,13 @@ static formatted_string _print_top_line(god_type which_god, int width)
 static formatted_string _god_wrath_description(god_type which_god)
 {
     formatted_string desc;
+
+    if (which_god == GOD_DEMI_GOD)
+    {
+        _add_par(desc, "Demigods are masters of their own fate, and as such"
+                       " are not subject to the wrath of any god." );
+        return desc;
+    }
 
     _add_par(desc, get_god_dislikes(which_god));
     _add_par(desc, _describe_god_wrath_causes(which_god));
@@ -613,6 +642,11 @@ static string _get_god_misc_info(god_type which_god)
 
         case GOD_HEPLIAKLQANA:
             info += _describe_ancestor_upgrades();
+            break;
+
+        case GOD_DEMI_GOD:
+            if (you.dg_passive_god == GOD_HEPLIAKLQANA)
+                info += _describe_ancestor_upgrades();
             break;
 
         default:
@@ -917,6 +951,75 @@ static formatted_string _describe_god_powers(god_type which_god)
         cprintf("You are protected from the effects of unwielding distortion weapons.\n");
         break;
 
+    case GOD_DEMI_GOD:
+        if (you.dg_passive_god == GOD_SHINING_ONE)
+        {
+            have_any = true;
+            if (piety < piety_breakpoint(1))
+                desc.textcolour(DARKGREY);
+            else
+                desc.textcolour(god_colour(which_god));
+            const char *how =
+                (piety >= piety_breakpoint(5)) ? "completely" :
+                (piety >= piety_breakpoint(3)) ? "mostly" :
+                                                 "partially";
+
+            desc.cprintf("%s %s shields you from negative energy.\n",
+                uppercase_first(god_name(which_god)).c_str(), how);
+
+            const int halo_size = you_worship(which_god) ? you.halo_radius() : -1;
+            if (halo_size < 0)
+                desc.textcolour(DARKGREY);
+            else
+                desc.textcolour(god_colour(which_god));
+            desc.cprintf("You radiate a%s righteous aura, and others within it are "
+                "easier to hit.\n",
+                halo_size > 5 ? " large" :
+                halo_size > 3 ? "" :
+                                " small");
+        }
+        if (you.dg_passive_god == GOD_ASHENZARI)
+        {
+            have_any = true;
+            desc.cprintf("You are provided with a bounty of information.\n");
+        }
+        if (you.dg_passive_god == GOD_CHEIBRIADOS)
+        {
+            have_any = true;
+            if (have_passive(passive_t::stat_boost))
+                desc.textcolour(god_colour(which_god));
+            else
+                desc.textcolour(DARKGREY);
+            desc.cprintf("%s %sslows your movement.\n",
+                    uppercase_first(god_name(which_god)).c_str(),
+                    piety >= piety_breakpoint(5) ? "greatly " :
+                    piety >= piety_breakpoint(2) ? "" :
+                                                   "slightly ");
+            desc.cprintf("%s supports your attributes. (+%d)\n",
+                    uppercase_first(god_name(which_god)).c_str(),
+                    chei_stat_boost(piety));
+        }
+        if (you.dg_passive_god == GOD_DITHMENOS)
+        {
+            have_any = true;
+            const int umbra_size = you_worship(which_god) ? you.umbra_radius() : -1;
+            if (umbra_size < 0)
+                desc.textcolour(DARKGREY);
+            else
+                desc.textcolour(god_colour(which_god));
+            desc.cprintf("You radiate a%s aura of darkness, enhancing your stealth "
+                    "and reducing the accuracy of your foes.\n",
+                    umbra_size > 5 ? " large" :
+                    umbra_size > 3 ? "n" :
+                                     " small");
+        }
+        if (you.dg_passive_god == GOD_HEPLIAKLQANA)
+        {
+            have_any = true;
+            desc.cprintf("Your life essence is reduced. (-10%% HP)\n");
+        }
+        break;
+
     default:
         break;
     }
@@ -973,11 +1076,12 @@ static formatted_string _god_overview_description(god_type which_god)
     const string god_desc = getLongDescription(god_name(which_god));
     desc += formatted_string(trimmed_string(god_desc) + "\n");
 
+    bool demigod = (you.religion == GOD_DEMI_GOD);
     // Title only shown for our own god.
     if (you_worship(which_god))
     {
         // Print title based on piety.
-        desc.cprintf("\nTitle  - ");
+        desc.cprintf(demigod ? "\nStatus     - " : "\nTitle  - ");
         desc.textcolour(god_colour(which_god));
 
         string title = god_title(which_god, you.species, you.piety);
@@ -989,7 +1093,7 @@ static formatted_string _god_overview_description(god_type which_god)
     // something better, do it.
 
     desc.textcolour(LIGHTGREY);
-    desc.cprintf("\nFavour - ");
+    desc.cprintf(demigod ? "\nDerivation - " : "\nFavour - ");
     desc.textcolour(god_colour(which_god));
 
     if (!you_worship(which_god))
@@ -1015,12 +1119,13 @@ static int _describe_god_by_type(god_type which_god, bool give_title, god_desc_t
 
     formatted_string desc;
 
+    bool demigod = (you.religion == GOD_DEMI_GOD);
     // Title: has extra left-aligned text on first pane
     const int numcols = min(80, get_number_of_cols()) - 1;
     if (give_title)
     {
         desc.textcolour(WHITE);
-        desc.cprintf("Religion");
+        desc.cprintf(demigod ? "Your Divinity" : "Religion");
         desc.textcolour(LIGHTGREY);
     }
     // Center top line even if it already contains "Religion" (len = 8)

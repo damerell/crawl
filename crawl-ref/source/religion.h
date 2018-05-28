@@ -127,12 +127,23 @@ bool vehumet_is_offering(spell_type spell);
 void vehumet_accept_gift(spell_type spell);
 
 mgen_data hepliaklqana_ancestor_gen_data();
+mgen_data demigod_ancestor_gen_data();
 string hepliaklqana_ally_name();
 int hepliaklqana_ally_hp();
 
 void upgrade_hepliaklqana_ancestor(bool quiet_force = false);
 void upgrade_hepliaklqana_weapon(monster_type mtyp, item_def &item);
 void upgrade_hepliaklqana_shield(const monster& ancestor, item_def &item);
+
+void demigod_small_abil();
+void demigod_big_abil();
+void demigod_get_small();
+void demigod_get_big();
+void demigod_non_abils();
+void _demigod_hepliaklqana_passive();
+void _demigod_cheibriados_passive();
+bool cloud_immune_allies();
+void demigod_clear_powers();
 
 bool god_hates_attacking_friend(god_type god, const monster& fr);
 
@@ -179,15 +190,16 @@ struct god_power
     ability_type abil;
     const char* gain;
     const char* loss;
+    bool demigod_can;
 
     god_power(int rank_, ability_type abil_, const char* gain_,
-              const char* loss_ = "") :
+              const char* loss_ = "", bool demigod_can_ = false) :
               rank{rank_}, abil{abil_}, gain{gain_},
-              loss{*loss_ ? loss_ : gain_}
+              loss{*loss_ ? loss_ : gain_}, demigod_can{demigod_can_}
     { }
 
-    god_power(int rank_, const char* gain_, const char* loss_ = "") :
-              god_power(rank_, ABIL_NON_ABILITY, gain_, loss_)
+    god_power(int rank_, const char* gain_, const char* loss_ = "", bool demigod_can_ = false) :
+              god_power(rank_, ABIL_NON_ABILITY, gain_, loss_, demigod_can_)
     { }
 
     void display(bool gaining, const char* fmt) const;

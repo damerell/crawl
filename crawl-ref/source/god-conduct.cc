@@ -462,6 +462,8 @@ static peeve_map divine_peeves[] =
     peeve_map(),
     // GOD_WU_JIAN,
     peeve_map(),
+    // GOD_DEMI_GOD,
+    peeve_map(),
 };
 
 string get_god_dislikes(god_type which_god)
@@ -987,6 +989,49 @@ static like_map divine_likes[] =
         { DID_KILL_HOLY, KILL_HOLY_RESPONSE },
         { DID_KILL_NONLIVING, KILL_NONLIVING_RESPONSE },
     },
+    // GOD_DEMI_GOD
+    {
+        { DID_KILL_LIVING, { "Your divinity strengthens when you kill living beings",
+            false, -6, 18, 2, nullptr, [] (int &piety, int &denom,
+                                            const monster* victim)
+            {
+                mprf(MSGCH_GOD, you.religion,
+                     "Your kill strengthens your divinity.");
+            },
+        } },
+        { DID_KILL_UNDEAD, { "destroy the undead",
+            false, -6, 18, 2, nullptr, [] (int &piety, int &denom,
+                                            const monster* victim)
+            {
+                mprf(MSGCH_GOD, you.religion,
+                     "Your kill strengthens your divinity.");
+            },
+        } },
+        { DID_KILL_DEMON, { "kill demons",
+            false, -6, 18, 2, nullptr, [] (int &piety, int &denom,
+                                            const monster* victim)
+            {
+                mprf(MSGCH_GOD, you.religion,
+                     "Your kill strengthens your divinity.");
+            },
+        } },
+        { DID_KILL_HOLY, { "kill holy beings",
+            false, -6, 18, 2, nullptr, [] (int &piety, int &denom,
+                                            const monster* victim)
+            {
+                mprf(MSGCH_GOD, you.religion,
+                     "Your kill strengthens your divinity.");
+            },
+        } },
+        { DID_KILL_NONLIVING, { "destroy nonliving beings",
+            false, -6, 18, 2, nullptr, [] (int &piety, int &denom,
+                                            const monster* victim)
+            {
+                mprf(MSGCH_GOD, you.religion,
+                     "Your kill strengthens your divinity.");
+            },
+        } },
+    },
 };
 
 /**
@@ -1104,6 +1149,7 @@ string get_god_likes(god_type which_god)
     string text = uppercase_first(god_name(which_god));
     vector<string> likes;
     vector<string> really_likes;
+    bool demigod = (you.religion == GOD_DEMI_GOD);
 
     // Unique/unusual piety gain methods first.
     switch (which_god)
@@ -1143,7 +1189,7 @@ string get_god_likes(god_type which_god)
     {
         if (!likes.empty())
         {
-            text += " likes it when ";
+            text += (demigod ? "" : " likes it when ");
             text += comma_separated_line(likes.begin(), likes.end());
             text += ".";
             if (!really_likes.empty())

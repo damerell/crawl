@@ -278,6 +278,13 @@ public:
 
     vector<demon_trait> demonic_traits;
 
+    int dg_passive_god;
+    int dg_small_abil;
+    int dg_small_god;
+    int dg_big_abil;
+    int dg_big_god;
+    bool dg_has_ancestor;
+
     int magic_contamination;
 
     FixedVector<uint32_t, NUM_WEAPONS> seen_weapon;
@@ -514,6 +521,9 @@ public:
     bool is_skeletal() const override;
 
     bool tengu_flight() const;
+
+    bool faerie_dragon_flight() const;
+
     int heads() const override;
 
     bool spellcasting_unholy() const;
@@ -547,7 +557,11 @@ public:
     kill_category kill_alignment() const override;
 
     bool has_spell(spell_type spell) const override;
-
+/*
+    bool dg_has_small();
+    bool dg_has_big();
+    bool dg_has_passives();
+*/
     string shout_verb(bool directed = false) const;
     int shout_volume() const;
 
@@ -1122,6 +1136,7 @@ bool invis_allowed(bool quiet = false, string *fail_reason = nullptr);
 bool flight_allowed(bool quiet = false, string *fail_reason = nullptr);
 void fly_player(int pow, bool already_flying = false);
 void float_player();
+void float_once();
 bool land_player(bool quiet = false);
 void player_open_door(coord_def doorpos);
 void player_close_door(coord_def doorpos);

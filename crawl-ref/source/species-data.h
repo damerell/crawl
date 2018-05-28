@@ -37,6 +37,26 @@ static const map<species_type, species_def> species_data =
       SK_BOWS, SK_CROSSBOWS, SK_SLINGS },
 } },
 
+{ SP_FAERIE_DRAGON, {
+    "FD",
+    "Faerie Dragon", "Faerie", "Faerie",
+    SPF_NO_HAIR,
+    0, -1, 2, 4,
+    MONS_ACID_DRAGON,
+    HT_LAND, US_ALIVE, SIZE_SMALL,
+    6, 11, 7, // 24
+    { STAT_INT, STAT_DEX }, 4,
+    { { MUT_SHIMMERING_SCALES, 1, 1 }, {MUT_FAERIE_DRAGON_FLIGHT, 1, 1 }, },
+    { "Your spells do not cause hunger and MP costs are reduced by 1.",
+      "Your bright wings attract enemies. (Stealth-)",
+      "You cannot fit into any form of body armour." },
+    { "magic attunement", "unstealthy", "unfitting armour" },
+    { JOB_AIR_ELEMENTALIST, JOB_FIRE_ELEMENTALIST, JOB_ICE_ELEMENTALIST,
+      JOB_CONJURER, JOB_EARTH_ELEMENTALIST, JOB_VENOM_MAGE, JOB_WIZARD,
+      JOB_NECROMANCER },
+    { SK_SHORT_BLADES, SK_MACES_FLAILS, SK_SLINGS },
+} },
+
 { SP_GNOLL, {
     "Gn",
     "Gnoll", nullptr, nullptr,
@@ -115,16 +135,17 @@ static const map<species_type, species_def> species_data =
     "Dg",
     "Demigod", "Divine", nullptr,
     SPF_NONE,
-    -2, 1, 2, 4,
+    -1, 0, 0, 3,
     MONS_DEMIGOD,
     HT_LAND, US_ALIVE, SIZE_MEDIUM,
-    11, 12, 11, // 34
+    10, 10, 10, // 30
     set<stat_type>(), 28, // No natural stat gain (double chosen instead)
-    { {MUT_HIGH_MAGIC, 1, 1} },
     {},
-    {},
-    { JOB_TRANSMUTER, JOB_CONJURER, JOB_FIRE_ELEMENTALIST, JOB_ICE_ELEMENTALIST,
-      JOB_AIR_ELEMENTALIST, JOB_EARTH_ELEMENTALIST },
+    { "You periodically gain divine abilities as you level." },
+    { "divine derivation" },
+    { JOB_GLADIATOR, JOB_WANDERER, JOB_SKALD, JOB_TRANSMUTER,
+      JOB_ARCANE_MARKSMAN, JOB_WIZARD, JOB_NECROMANCER,
+      JOB_ICE_ELEMENTALIST },
     { SK_MACES_FLAILS, SK_AXES, SK_POLEARMS, SK_LONG_BLADES, SK_STAVES,
       SK_BOWS, SK_CROSSBOWS, SK_SLINGS },
 } },

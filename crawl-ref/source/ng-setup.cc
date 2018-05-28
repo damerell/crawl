@@ -306,6 +306,12 @@ static void _give_items_skills(const newgame_def& ng)
         you.skills[SK_SHIELDS] = 0;
     }
 
+    if (you.species == SP_DEMIGOD)
+    {
+        you.religion = GOD_DEMI_GOD;
+        you.piety = 0;
+    }
+
     if (!you_worship(GOD_NO_GOD))
     {
         you.worshipped[you.religion] = 1;

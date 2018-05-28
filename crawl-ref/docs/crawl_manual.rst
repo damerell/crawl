@@ -1573,13 +1573,12 @@ Demigods
   they can be created by a number of processes, including magical experiments
   and the time-honoured practice of interplanar miscegenation.
 
-  Demigods look more or less like members of their mortal part's species, but
-  have excellent attributes (Str, Int, Dex) and are extremely robust; they can
-  also draw on great supplies of magical energy. On the downside, they advance
-  more slowly in experience than any other race, gain skills slightly less
-  quickly than Humans and, due to their status, cannot worship the various gods
-  and powers available to other races.
-
+  Demigods look more or less like members of their mortal part's species. They
+  have excellent attributes (Str, Int, Dex), but advance slowly in experience.
+  As a Demigod gains levels, some of their divine ancestry will periodically
+  reveal itself, granting godly traits and abilities. Due to their status,
+  Demigods cannot worship the various gods and powers available to other races.
+    
 Demonspawn
   Demonspawn are horrible half-mortal, half-infernal creatures - the flip side
   of the Demigods. Demonspawn can be created in any number of ways: magical
@@ -1738,6 +1737,22 @@ Gnolls
   dexterity to take advantage of every resource they find in the Dungeon. They
   also have powerful noses adapted to the Dungeon's scents, allowing them to
   easily locate where treasures lay hidden.
+  
+Faerie Dragons
+  Faerie Dragons are a small species of magically-attuned dragonkin with so
+  few living members remaining that many believe them extinct. They are very
+  intelligent, but are known to be brash and often overconfident when
+  confronted with  danger. Their shimmering scales and bright wings are
+  attractive, but have proven to be more bane than boon by drawing the
+  attention of the Dungeon's denizens.
+  
+  Most Faerie Dragons welcome confrontation and favour the use of destructive
+  spells to dispatch those who would challenge them. Their natural attunement
+  to magic reduces the MP cost of spells and negates any hunger generation.
+  Their scales to shimmer with energy that repels incoming attacks. They are
+  capable of continuous flight and gain a bonus to evasion while doing so.
+  Their small size furthers their ability to be evasive, but they're frail
+  and cannot wear any form of body armour.
 
 The Undead
 ========================================

@@ -1857,7 +1857,7 @@ int player_prot_life(bool calc_unid, bool temp, bool items)
 
     // Same here. Your piety status, and, hence, TSO's protection, is
     // something you can more or less control.
-    if (you_worship(GOD_SHINING_ONE))
+    if (you_worship(GOD_SHINING_ONE) || you.dg_passive_god == GOD_SHINING_ONE)
     {
         if (you.piety >= piety_breakpoint(1))
             pl++;
@@ -2147,7 +2147,7 @@ static int _player_evasion_bonuses()
     return evbonus;
 }
 
-// Player EV scaling for being flying tengu or swimming merfolk.
+// Player EV scaling for being flying tengu, flying faerie dragon, or swimming merfolk.
 static int _player_scale_evasion(int prescaled_ev, const int scale)
 {
     if (you.duration[DUR_PETRIFYING] || you.caught())
@@ -2166,6 +2166,13 @@ static int _player_scale_evasion(int prescaled_ev, const int scale)
     if (you.tengu_flight())
     {
         const int ev_bonus = max(1 * scale, prescaled_ev / 5);
+        return prescaled_ev + ev_bonus;
+    }
+
+    // Flying Faerie Dragons get a 10% evasion bonus.
+    if (you.faerie_dragon_flight())
+    {
+        const int ev_bonus = max(1 * scale, prescaled_ev / 10);
         return prescaled_ev + ev_bonus;
     }
 
@@ -2327,6 +2334,7 @@ int player_shield_class()
                ? you.get_mutation_level(MUT_LARGE_BONE_PLATES) * 400 + 400
                : 0);
 
+    shield += you.get_mutation_level(MUT_SHIMMERING_SCALES) * 1200;
     shield += qazlal_sh_boost() * 100;
     shield += tso_sh_boost() * 100;
     shield += you.wearing(EQ_AMULET_PLUS, AMU_REFLECTION) * 200;
@@ -2995,6 +3003,39 @@ void level_change(bool skip_attribute_increase)
                 _felid_extra_life();
                 break;
 
+            case SP_DEMIGOD:
+                if (you.experience_level == 5)
+                {
+                    demigod_get_passives();
+                    mprf(MSGCH_INTRINSIC_GAIN,
+                         "Some of your divine derivation reveals itself...");
+                    more();
+                    mprf(MSGCH_INTRINSIC_GAIN,
+                         "You sense a connection to %s.",
+                         god_name(static_cast<god_type>(you.dg_passive_god)).c_str());
+                }
+                if (you.experience_level == 9)
+                {
+                    demigod_get_small();
+                    mprf(MSGCH_INTRINSIC_GAIN,
+                         "Some of your divine derivation reveals itself...");
+                    more();
+                    mprf(MSGCH_INTRINSIC_GAIN,
+                         "You sense a connection to %s.",
+                         god_name(static_cast<god_type>(you.dg_small_god)).c_str());
+                }
+                if (you.experience_level == 13)
+                {
+                    demigod_get_big();
+                    mprf(MSGCH_INTRINSIC_GAIN,
+                         "Some of your divine derivation reveals itself...");
+                    more();
+                    mprf(MSGCH_INTRINSIC_GAIN,
+                         "You sense a connection to %s.",
+                         god_name(static_cast<god_type>(you.dg_big_god)).c_str());
+                }
+                break;
+
             default:
                 break;
             }
@@ -3012,7 +3053,7 @@ void level_change(bool skip_attribute_increase)
             _gain_and_note_hp_mp();
 
         xom_is_stimulated(12);
-        if (in_good_standing(GOD_HEPLIAKLQANA))
+        if (in_good_standing(GOD_HEPLIAKLQANA) || you.dg_passive_god == GOD_HEPLIAKLQANA)
             upgrade_hepliaklqana_ancestor();
 
         learned_something_new(HINT_NEW_LEVEL);
@@ -3174,6 +3215,16 @@ int player_stealth()
             stealth += STEALTH_PIP * 2;
         else if (you.hunger_state <= HS_HUNGRY)
             stealth += STEALTH_PIP;
+    }
+
+    //Faerie Dragons' bright wings reduce stealth.
+    if (you.species == SP_FAERIE_DRAGON
+        && (you.form == transformation::none
+            || you.form == transformation::appendage
+            || you.form == transformation::blade_hands
+            || you.form == transformation::dragon))
+    {
+        stealth -= STEALTH_PIP;
     }
 
     if (!you.airborne())
@@ -4799,8 +4850,9 @@ bool invis_allowed(bool quiet, string *fail_reason)
 
     if (you.haloed() && you.halo_radius() != -1)
     {
-        bool divine = you.attribute[ATTR_HEAVENLY_STORM] > 0 ||
-                you.religion == GOD_SHINING_ONE;
+        bool divine = you.attribute[ATTR_HEAVENLY_STORM] > 0
+                || you.religion == GOD_SHINING_ONE
+                || you.dg_passive_god == GOD_SHINING_ONE;
         bool weapon = player_equip_unrand(UNRAND_EOS);
         string reason;
 
@@ -4881,11 +4933,28 @@ void float_player()
     }
     else if (you.tengu_flight())
         mpr("You swoop lightly up into the air.");
+
+    else if (you.faerie_dragon_flight())
+        mpr("You flutter up into the air.");
+
     else
         mpr("You fly up into the air.");
 
-    if (you.species == SP_TENGU)
+    if (you.species == SP_TENGU || you.species == SP_FAERIE_DRAGON)
+
         you.redraw_evasion = true;
+}
+
+// Faerie Dragons start the game flying.
+void float_once()
+{
+    if (you.species != SP_FAERIE_DRAGON)
+    {
+        return;
+    }
+
+    you.attribute[ATTR_PERM_FLIGHT] = 1;
+    float_player();
 }
 
 void fly_player(int pow, bool already_flying)
@@ -4935,7 +5004,7 @@ bool land_player(bool quiet)
 
     if (!quiet)
         mpr("You float gracefully downwards.");
-    if (you.species == SP_TENGU)
+    if (you.species == SP_TENGU || you.species == SP_FAERIE_DRAGON)
         you.redraw_evasion = true;
 
     you.attribute[ATTR_FLIGHT_UNCANCELLABLE] = 0;
@@ -5094,6 +5163,8 @@ player::player()
     old_vehumet_gifts.clear();
     spell_no        = 0;
     vehumet_gifts.clear();
+    demigod_clear_passives();
+    demigod_clear_powers();
     chapter  = CHAPTER_ORB_HUNTING;
     royal_jelly_dead = false;
     transform_uncancellable = false;
@@ -5164,6 +5235,13 @@ player::player()
     temp_mutation.init(0);
     demonic_traits.clear();
     sacrifices.init(0);
+
+    dg_passive_god = 0;
+    dg_small_abil = 0;
+    dg_small_god = 0;
+    dg_big_abil = 0;
+    dg_big_god = 0;
+    dg_has_ancestor = false;
 
     magic_contamination = 0;
 
@@ -5627,6 +5705,7 @@ bool player::shielded() const
     return shield()
            || duration[DUR_DIVINE_SHIELD]
            || get_mutation_level(MUT_LARGE_BONE_PLATES) > 0
+           || get_mutation_level(MUT_SHIMMERING_SCALES) > 0
            || qazlal_sh_boost() > 0
            || attribute[ATTR_BONE_ARMOUR] > 0
            || you.wearing(EQ_AMULET_PLUS, AMU_REFLECTION) > 0
@@ -5674,7 +5753,37 @@ int player::missile_deflection() const
 
     return 0;
 }
+/*
+bool player::dg_has_small()
+{
+    if (dg_small_abil != 0)
+    {
+        demigod_small_abil();
+        return true;
+    }
+    return false;
+}
 
+bool player::dg_has_big()
+{
+    if (dg_big_abil != 0)
+    {
+        demigod_big_abil();
+        return true;
+    }
+    return false;
+}
+
+bool player::dg_has_passives()
+{
+    if (dg_passive_god != 0)
+    {
+        demigod_passives();
+        return true;
+    }
+    return false;
+}
+*/
 void player::ablate_deflection()
 {
     if (attribute[ATTR_DEFLECT_MISSILES])
@@ -5947,6 +6056,8 @@ int player::base_ac(int scale) const
               // +1, +2, +3
     AC += get_mutation_level(MUT_IRIDESCENT_SCALES, mutation_activity_type::FULL) * 200;
               // +2, +4, +6
+    AC += get_mutation_level(MUT_SHIMMERING_SCALES, mutation_activity_type::FULL) * 600;
+              // +6
 #if TAG_MAJOR_VERSION == 34
     AC += get_mutation_level(MUT_ROUGH_BLACK_SCALES, mutation_activity_type::FULL)
           ? -100 + get_mutation_level(MUT_ROUGH_BLACK_SCALES, mutation_activity_type::FULL) * 300 : 0;
@@ -6442,13 +6553,19 @@ bool player::permanent_flight() const
 bool player::racial_permanent_flight() const
 {
     return get_mutation_level(MUT_TENGU_FLIGHT) >= 2
-        || get_mutation_level(MUT_BIG_WINGS);
+        || get_mutation_level(MUT_BIG_WINGS)
+        || get_mutation_level(MUT_FAERIE_DRAGON_FLIGHT);
 }
 
+ // Only Tengu and Faerie Dragons get perks for flying.
 bool player::tengu_flight() const
 {
-    // Only Tengu get perks for flying.
     return species == SP_TENGU && airborne();
+}
+
+bool player::faerie_dragon_flight() const
+{
+    return species == SP_FAERIE_DRAGON && airborne();
 }
 
 /**
