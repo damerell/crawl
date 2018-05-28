@@ -1411,6 +1411,7 @@ static void tag_construct_you(writer &th)
     marshallInt(th, you.dg_small_god);
     marshallInt(th, you.dg_big_abil);
     marshallInt(th, you.dg_big_god);
+    marshallBoolean(th, you.dg_has_ancestor);
 
     marshallInt(th, you.zigs_completed);
     marshallByte(th, you.zig_max);
@@ -2445,6 +2446,7 @@ static void tag_read_you(reader &th)
     you.dg_small_god              = unmarshallInt(th);
     you.dg_big_abil               = unmarshallInt(th);
     you.dg_big_god                = unmarshallInt(th);
+    you.dg_has_ancestor           = unmarshallBoolean(th);
 #if TAG_MAJOR_VERSION == 34
     if (th.getMinorVersion() < TAG_MINOR_XP_SCALING)
     {

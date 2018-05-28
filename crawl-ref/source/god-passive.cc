@@ -196,7 +196,7 @@ vector<god_passive> god_passives[] =
 
     // Yredelemnul
     {
-        {  3, passive_t::nightvision, "can NOW see well in the dark" },
+        {  3, passive_t::nightvision, "can NOW see well in the dark", "", true },
     },
 
     // Xom
@@ -337,17 +337,17 @@ vector<god_passive> god_passives[] =
     // Ashenzari
     {
         { -1, passive_t::want_curses, "prefer cursed items" },
-        { -1, passive_t::detect_portals, "sense portals" },
-        { -1, passive_t::identify_items, "sense the properties of items" },
-        {  0, passive_t::auto_map, "have improved mapping abilities" },
-        {  0, passive_t::detect_montier, "sense threats" },
-        {  0, passive_t::detect_items, "sense items" },
+        { -1, passive_t::detect_portals, "sense portals", "", true },
+        { -1, passive_t::identify_items, "sense the properties of items", "", true },
+        {  0, passive_t::auto_map, "have improved mapping abilities", "", true },
+        {  0, passive_t::detect_montier, "sense threats", "", true },
+        {  0, passive_t::detect_items, "sense items", "", true },
         {  0, passive_t::search_traps,
-              "are NOW better at searching for traps" },
+              "are NOW better at searching for traps", "", true },
         {  2, passive_t::bondage_skill_boost,
               "get a skill boost from cursed items" },
-        {  3, passive_t::sinv, "are NOW clear of vision" },
-        {  4, passive_t::clarity, "are NOW clear of mind" },
+        {  3, passive_t::sinv, "are NOW clear of vision", "", true },
+        {  4, passive_t::clarity, "are NOW clear of mind", "", true },
     },
 
     // Dithmenos
@@ -472,9 +472,11 @@ void demigod_get_passives()
     vector<int> which_god;
     // TEMP FIXME currently hardcoded list, should fix -- Realz
     which_god.push_back(GOD_SHINING_ONE);
+    which_god.push_back(GOD_YREDELEMNUL);
     which_god.push_back(GOD_VEHUMET);
     which_god.push_back(GOD_MAKHLEB);
     which_god.push_back(GOD_CHEIBRIADOS);
+    which_god.push_back(GOD_ASHENZARI);
     which_god.push_back(GOD_DITHMENOS);
     which_god.push_back(GOD_RU);
     which_god.push_back(GOD_QAZLAL);
@@ -508,6 +510,8 @@ void demigod_passives()
 
     if (you.dg_passive_god == GOD_CHEIBRIADOS)
         _demigod_cheibriados_passive();
+
+    redraw_screen();
 }
 
 void demigod_berserk()

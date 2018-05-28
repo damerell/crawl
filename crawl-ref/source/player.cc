@@ -2989,24 +2989,27 @@ void level_change(bool skip_attribute_increase)
                     demigod_get_passives();
                     mprf(MSGCH_INTRINSIC_GAIN,
                          "Some of your divine derivation reveals itself...");
+                    more();
                     mprf(MSGCH_INTRINSIC_GAIN,
                          "You sense a connection to %s.",
                          god_name(static_cast<god_type>(you.dg_passive_god)).c_str());
                 }
-                if (you.experience_level == 10)
+                if (you.experience_level == 9)
                 {
                     demigod_get_small();
                     mprf(MSGCH_INTRINSIC_GAIN,
                          "Some of your divine derivation reveals itself...");
+                    more();
                     mprf(MSGCH_INTRINSIC_GAIN,
                          "You sense a connection to %s.",
                          god_name(static_cast<god_type>(you.dg_small_god)).c_str());
                 }
-                if (you.experience_level == 15)
+                if (you.experience_level == 13)
                 {
                     demigod_get_big();
                     mprf(MSGCH_INTRINSIC_GAIN,
                          "Some of your divine derivation reveals itself...");
+                    more();
                     mprf(MSGCH_INTRINSIC_GAIN,
                          "You sense a connection to %s.",
                          god_name(static_cast<god_type>(you.dg_big_god)).c_str());
@@ -4817,9 +4820,9 @@ bool invis_allowed(bool quiet, string *fail_reason)
 
     if (you.haloed() && you.halo_radius() != -1)
     {
-        bool divine = you.attribute[ATTR_HEAVENLY_STORM] > 0 ||
-                you.religion == GOD_SHINING_ONE ||
-                you.dg_passive_god == GOD_SHINING_ONE;
+        bool divine = you.attribute[ATTR_HEAVENLY_STORM] > 0
+                || you.religion == GOD_SHINING_ONE
+                || you.dg_passive_god == GOD_SHINING_ONE;
         bool weapon = player_equip_unrand(UNRAND_EOS);
         string reason;
 
@@ -5191,6 +5194,7 @@ player::player()
     dg_small_god = 0;
     dg_big_abil = 0;
     dg_big_god = 0;
+    dg_has_ancestor = false;
 
     magic_contamination = 0;
 

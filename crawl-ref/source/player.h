@@ -283,6 +283,7 @@ public:
     int dg_small_god;
     int dg_big_abil;
     int dg_big_god;
+    bool dg_has_ancestor;
 
     int magic_contamination;
 

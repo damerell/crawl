@@ -133,9 +133,9 @@ vector<god_power> god_powers[NUM_GODS] =
       { 2, ABIL_YRED_INJURY_MIRROR, "mirror injuries on your foes" },
       { 3, ABIL_YRED_ANIMATE_DEAD, "animate legions of the dead" },
       { 3, "Yredelemnul will gift you servants as you gain piety.",
-           "Yredelemnul will no longer gift you servants." },
+           "Yredelemnul will no longer gift you servants.", true },
       { 4, ABIL_YRED_DRAIN_LIFE, "drain ambient life force", "", true },
-      { 5, ABIL_YRED_ENSLAVE_SOUL, "enslave living souls", "", true },
+      { 5, ABIL_YRED_ENSLAVE_SOUL, "enslave living souls" },
     },
 
     // Xom
@@ -258,9 +258,9 @@ vector<god_power> god_powers[NUM_GODS] =
       { 2, "The more cursed you are, the more Ashenzari supports your skills.",
            "Ashenzari no longer supports your skills." },
       { 3, "Ashenzari reveals the unseen.",
-           "Ashenzari no longer reveals the unseen." },
+           "Ashenzari no longer reveals the unseen.", true },
       { 4, "Ashenzari keeps your mind clear.",
-           "Ashenzari no longer keeps your mind clear." },
+           "Ashenzari no longer keeps your mind clear.", true },
       { 5, ABIL_ASHENZARI_TRANSFER_KNOWLEDGE,
            "Ashenzari helps you to reconsider your skills.",
            "Ashenzari no longer helps you to reconsider your skills." },
@@ -436,8 +436,11 @@ void demigod_small_abil()
 
                 vector<ability_type> abilities = get_god_abilities();
                 for (ability_type abil : abilities)
+                {
                     you.start_train.insert(abil_skill(abil));
+                }
                 update_can_train();
+				redraw_screen();
 
                 return;
             }
@@ -456,8 +459,14 @@ void demigod_get_big()
                 && power.abil != ABIL_NON_ABILITY
                 && god != you.dg_passive_god
                 && god != you.dg_small_god
-                && power.rank >= 4)
-                    possible_powers.push_back(power);
+                && power.rank >= 4
+                //TEMP FIXME No abils that anti-combo with Yred passive
+                // Hardcoded, bad? Add bool to powers instead - Realz
+                && !(you.dg_passive_god == GOD_YREDELEMNUL
+                    && power.abil == ABIL_TSO_CLEANSING_FLAME)
+                && !(you.dg_passive_god == GOD_YREDELEMNUL
+                    && power.abil == ABIL_QAZLAL_DISASTER_AREA))
+                        possible_powers.push_back(power);
         }
     }
     int size_possible = possible_powers.size();
@@ -482,16 +491,19 @@ void demigod_big_abil()
                 god_powers[GOD_DEMI_GOD].push_back(power);
                 if (power.abil == ABIL_LUGONU_ABYSS_ENTER)
                 {
-                    for (auto& enter_abyss : god_powers[GOD_LUGONU])
+                    for (auto& exit_abyss : god_powers[GOD_LUGONU])
                     {
-                        if (enter_abyss.abil == ABIL_LUGONU_ABYSS_EXIT)
-                            god_powers[GOD_DEMI_GOD].push_back(power);
+                        if (exit_abyss.abil == ABIL_LUGONU_ABYSS_EXIT)
+                            god_powers[GOD_DEMI_GOD].push_back(exit_abyss);
                     }
                 }
                 vector<ability_type> abilities = get_god_abilities();
                 for (ability_type abil : abilities)
+                {
                     you.start_train.insert(abil_skill(abil));
+                }
                 update_can_train();
+                redraw_screen();
 
                 return;
             }
@@ -509,11 +521,19 @@ void demigod_non_abils()
     }
     if (you.dg_passive_god == GOD_HEPLIAKLQANA)
     {
-        for (auto& power : god_powers[GOD_HEPLIAKLQANA])
+        for (auto& hep_needs : god_powers[GOD_HEPLIAKLQANA])
         {
-            if (power.abil == ABIL_HEPLIAKLQANA_RECALL
-                || power.abil == ABIL_HEPLIAKLQANA_IDENTITY)
-                    god_powers[GOD_DEMI_GOD].push_back(power);
+            if (hep_needs.abil == ABIL_HEPLIAKLQANA_RECALL
+                || hep_needs.abil == ABIL_HEPLIAKLQANA_IDENTITY)
+                    god_powers[GOD_DEMI_GOD].push_back(hep_needs);
+        }
+    }
+    if (you.dg_passive_god == GOD_YREDELEMNUL)
+    {
+        for (auto& yred_recall : god_powers[GOD_YREDELEMNUL])
+        {
+            if (yred_recall.abil == ABIL_YRED_RECALL_UNDEAD_SLAVES)
+                god_powers[GOD_DEMI_GOD].push_back(yred_recall);
         }
     }
 }
@@ -1047,7 +1067,10 @@ int yred_random_servants(unsigned int threshold, bool force_hostile)
 
     mgen_data mg(mon_type, !force_hostile ? BEH_FRIENDLY : BEH_HOSTILE,
                  you.pos(), MHITYOU);
-    mg.set_summoned(!force_hostile ? &you : 0, 0, 0, GOD_YREDELEMNUL);
+    if (you.dg_passive_god == GOD_YREDELEMNUL)
+        mg.set_summoned(!force_hostile ? &you : 0, 0, 0, GOD_DEMI_GOD);
+    else
+        mg.set_summoned(!force_hostile ? &you : 0, 0, 0, GOD_YREDELEMNUL);
 
     if (force_hostile)
         mg.non_actor_summoner = "the anger of Yredelemnul";
@@ -1760,7 +1783,9 @@ bool is_yred_undead_slave(const monster& mon)
 {
     return mon.alive() && mon.holiness() & MH_UNDEAD
            && mon.attitude == ATT_FRIENDLY
-           && mons_is_god_gift(mon, GOD_YREDELEMNUL);
+           && (mons_is_god_gift(mon, GOD_YREDELEMNUL)
+           || (mons_is_god_gift(mon, GOD_DEMI_GOD)
+                && you.dg_passive_god == GOD_YREDELEMNUL));
 }
 
 bool is_orcish_follower(const monster& mon)
@@ -1794,7 +1819,7 @@ static bool _has_jelly()
 
 bool is_follower(const monster& mon)
 {
-    if (you_worship(GOD_YREDELEMNUL))
+    if (you_worship(GOD_YREDELEMNUL) || you.dg_passive_god == GOD_YREDELEMNUL)
         return is_yred_undead_slave(mon);
     else if (will_have_passive(passive_t::convert_orcs))
         return is_orcish_follower(mon);
@@ -1856,7 +1881,12 @@ mgen_data hepliaklqana_ancestor_gen_data()
         (monster_type)you.props[HEPLIAKLQANA_ALLY_TYPE_KEY].get_int() :
         MONS_ANCESTOR;
     mgen_data mg(type, BEH_FRIENDLY, you.pos(), MHITYOU, MG_AUTOFOE);
-    mg.set_summoned(&you, 0, 0, GOD_HEPLIAKLQANA);
+
+    if (you.dg_passive_god == GOD_HEPLIAKLQANA)
+        mg.set_summoned(&you, 0, 0, GOD_DEMI_GOD);
+    else
+        mg.set_summoned(&you, 0, 0, GOD_HEPLIAKLQANA);
+
     mg.hd = _hepliaklqana_ally_hd();
     mg.hp = hepliaklqana_ally_hp();
     mg.extra_flags |= MF_NO_REWARD;
@@ -2196,6 +2226,13 @@ bool do_god_gift(bool forced)
 
         case GOD_VEHUMET:
             success = _handle_veh_gift(forced);
+            break;
+        case GOD_DEMI_GOD:
+            if (you.dg_passive_god == GOD_YREDELEMNUL)
+                success = _give_yred_gift(forced);
+
+            if (you.dg_passive_god == GOD_VEHUMET)
+                success = _handle_veh_gift(forced);
             break;
         }                       // switch (you.religion)
     }                           // End of gift giving.
@@ -3236,9 +3273,11 @@ static bool _god_rejects_loveless(god_type god)
     case GOD_YREDELEMNUL:
         return true;
     case GOD_DEMI_GOD:
-        if (you.dg_passive_god == GOD_HEPLIAKLQANA)
-            return true;
-        return false;
+        if (you.dg_passive_god == GOD_HEPLIAKLQANA
+            || you.dg_passive_god == GOD_YREDELEMNUL)
+                return true;
+        else
+            return false;
     default:
         return false;
     }
@@ -3650,6 +3689,8 @@ static void _join_hepliaklqana()
 // TEMP FIXME run if demigod got Hep passive -- Realz
 void _demigod_hepliaklqana_passive()
 {
+    if (you.dg_has_ancestor)
+        return;
     // initial setup.
     if (!you.props.exists(HEPLIAKLQANA_ALLY_NAME_KEY))
     {
@@ -3664,9 +3705,10 @@ void _demigod_hepliaklqana_passive()
     // Complimentary ancestor upon joining.
     const mgen_data mg = hepliaklqana_ancestor_gen_data();
     delayed_monster(mg);
-    simple_god_message(make_stringf(" forms a fragment of your life essence"
+    simple_god_message(make_stringf("A fragment of your life essence forms"
                                     " into the memory of your ancestor, %s!",
                                     mg.mname.c_str()).c_str());
+    you.dg_has_ancestor = true;
 }
 
 /// Setup when joining the gelatinous groupies of Jiyva.
@@ -4724,7 +4766,8 @@ static void _place_delayed_monsters()
             if (you_worship(GOD_YREDELEMNUL)
                 || you_worship(GOD_HEPLIAKLQANA)
                 || have_passive(passive_t::convert_orcs)
-                || (you.dg_passive_god == GOD_HEPLIAKLQANA))
+                || you.dg_passive_god == GOD_HEPLIAKLQANA
+                || you.dg_passive_god == GOD_YREDELEMNUL)
             {
                 add_companion(mon);
             }

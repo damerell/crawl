@@ -102,18 +102,18 @@ static string _describe_favour(god_type which_god)
 
     if (you.religion == GOD_DEMI_GOD)
     {
-        string list_related_gods = "";
+        string related_gods = "";
 
         if (you.dg_passive_god != 0)
-            list_related_gods += god_name(static_cast<god_type>(you.dg_passive_god));
+            related_gods += god_name(static_cast<god_type>(you.dg_passive_god));
 
         if (you.dg_small_god != 0)
-            list_related_gods += (", " + god_name(static_cast<god_type>(you.dg_small_god)));
+            related_gods += (", " + god_name(static_cast<god_type>(you.dg_small_god)));
 
         if (you.dg_big_god != 0)
-            list_related_gods += (", " + god_name(static_cast<god_type>(you.dg_big_god)));
+            related_gods += (", " + god_name(static_cast<god_type>(you.dg_big_god)));
 
-        return list_related_gods;
+        return related_gods;
     }
 
     const string godname = god_name(which_god);
@@ -978,6 +978,11 @@ static formatted_string _describe_god_powers(god_type which_god)
                 halo_size > 5 ? " large" :
                 halo_size > 3 ? "" :
                                 " small");
+        }
+        if (you.dg_passive_god == GOD_ASHENZARI)
+        {
+            have_any = true;
+            desc.cprintf("You are provided with a bounty of information.\n");
         }
         if (you.dg_passive_god == GOD_CHEIBRIADOS)
         {

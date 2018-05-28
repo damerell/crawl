@@ -1924,8 +1924,8 @@ void yred_make_enslaved_soul(monster* mon, bool force_hostile)
         mon->props[CUSTOM_SPELLS_KEY] = true;
 
     name_zombie(*mon, orig);
-
     mons_make_god_gift(*mon, GOD_YREDELEMNUL);
+
     add_companion(mon);
 
     mon->attitude = !force_hostile ? ATT_FRIENDLY : ATT_HOSTILE;
