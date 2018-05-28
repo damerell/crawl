@@ -255,8 +255,8 @@ static const char *divine_title[][8] =
         "Young Dragon",     "Red Sash",               "Golden Sash",              "Sifu"},
 
     // Demigod -- descendant of the gods theme
-    {"Dormant",          "Nescient",             "Spark",              "Confident",
-        "Awoken",           "Ascendant",            "Transcendent",       "Prime"},
+    {"Dormant",          "Nescient",             "Confident",               "Divergent",
+        "Spark",             "Awoken",               "Ascendant",                "Prime"},
 
 };
 COMPILE_CHECK(ARRAYSZ(divine_title) == NUM_GODS);
