@@ -13,7 +13,6 @@
 #include <cstdlib>
 #include <cstring>
 #include <functional>
-#include <random>
 #include <sstream>
 
 #include "ability.h"
@@ -95,7 +94,7 @@ vector<god_power> god_powers[NUM_GODS] =
     { { 1, ABIL_ZIN_RECITE, "recite Zin's Axioms of Law" },
       { 2, ABIL_ZIN_VITALISATION, "call upon Zin for vitalisation", "", true },
       { 3, ABIL_ZIN_IMPRISON, "call upon Zin to imprison the lawless", "", true },
-      { 5, ABIL_ZIN_SANCTUARY, "call upon Zin to create a sanctuary", "", true},
+      { 5, ABIL_ZIN_SANCTUARY, "call upon Zin to create a sanctuary", "", true },
       { 6, "Zin will cleanse your potions of mutation.",
            "Zin will no longer cleanse your potions of mutation." },
       {-1, ABIL_ZIN_DONATE_GOLD, "donate money to Zin" },
@@ -1769,7 +1768,6 @@ void mons_make_god_gift(monster& mon, god_type god)
              god_name(mon.god).c_str(),
              god_name(god).c_str());
     }
-
     mon.god = god;
     mon.flags |= MF_GOD_GIFT;
 }
@@ -1895,23 +1893,7 @@ mgen_data hepliaklqana_ancestor_gen_data()
         = you.props[HEPLIAKLQANA_ALLY_GENDER_KEY].get_int();
     return mg;
 }
-/*
-mgen_data demigod_ancestor_gen_data()
-{
-    const monster_type type = you.props.exists(HEPLIAKLQANA_ALLY_TYPE_KEY) ?
-        (monster_type)you.props[HEPLIAKLQANA_ALLY_TYPE_KEY].get_int() :
-        MONS_ANCESTOR;
-    mgen_data mg(type, BEH_FRIENDLY, you.pos(), MHITYOU, MG_AUTOFOE);
-    mg.set_summoned(&you, 0, 0, GOD_DEMI_GOD);
-    mg.hd = _hepliaklqana_ally_hd();
-    mg.hp = hepliaklqana_ally_hp();
-    mg.extra_flags |= MF_NO_REWARD;
-    mg.mname = hepliaklqana_ally_name();
-    mg.props[MON_GENDER_KEY]
-        = you.props[HEPLIAKLQANA_ALLY_GENDER_KEY].get_int();
-    return mg;
-}
-*/
+
 /// Print a message for an ancestor's *something* being gained.
 static void _regain_memory(const monster &ancestor, string memory)
 {
@@ -3686,7 +3668,6 @@ static void _join_hepliaklqana()
                                     mg.mname.c_str()).c_str());
 }
 
-// TEMP FIXME run if demigod got Hep passive -- Realz
 void _demigod_hepliaklqana_passive()
 {
     if (you.dg_has_ancestor)
@@ -3793,7 +3774,6 @@ static void _join_cheibriados()
     notify_stat_change();
 }
 
-// TEMP FIXME run if demigod got chei passives -- Realz
 void _demigod_cheibriados_passive()
 {
     simple_god_message("Your attributes grow as your "

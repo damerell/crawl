@@ -470,7 +470,7 @@ int rank_for_passive(passive_t passive)
 void demigod_get_passives()
 {
     vector<int> which_god;
-    // TEMP FIXME currently hardcoded list, should fix -- Realz
+    //TEMP FIXME hardcoded list. Improve? - Realz
     which_god.push_back(GOD_SHINING_ONE);
     which_god.push_back(GOD_YREDELEMNUL);
     which_god.push_back(GOD_VEHUMET);

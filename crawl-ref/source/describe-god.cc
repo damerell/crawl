@@ -952,7 +952,6 @@ static formatted_string _describe_god_powers(god_type which_god)
         break;
 
     case GOD_DEMI_GOD:
-        //TEMP FIXME special case a bunch of shit here -- Realz
         if (you.dg_passive_god == GOD_SHINING_ONE)
         {
             have_any = true;

@@ -524,7 +524,7 @@ static const pair<god_type, dungeon_feature_type> _god_altars[] =
     { GOD_WU_JIAN, DNGN_ALTAR_WU_JIAN },
     {
     //GOD_DEMI_GOD does not pair to an altar
-	},
+    },
     { GOD_ECUMENICAL, DNGN_ALTAR_ECUMENICAL },
 };
 
