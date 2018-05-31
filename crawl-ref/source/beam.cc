@@ -3783,7 +3783,10 @@ void bolt::affect_player()
             drop_item = false;
         }
     }
-
+    // Demigods don't get hurt by their own Cleansing Flame.
+    if (flavour == BEAM_HOLY && YOU_KILL(thrower)
+        && demigod_has_power(ABIL_TSO_CLEANSING_FLAME))
+            hurted = 0;
     // Sticky flame.
     if (origin_spell == SPELL_STICKY_FLAME
         || origin_spell == SPELL_STICKY_FLAME_RANGE)

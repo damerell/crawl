@@ -140,6 +140,7 @@ void demigod_big_abil();
 void demigod_get_small();
 void demigod_get_big();
 void demigod_non_abils();
+bool demigod_has_power(ability_type abil);
 void _demigod_hepliaklqana_passive();
 void _demigod_cheibriados_passive();
 bool cloud_immune_allies();
