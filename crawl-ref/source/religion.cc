@@ -537,6 +537,11 @@ void demigod_non_abils()
     }
 }
 
+bool demigod_has_power(ability_type abil)
+{
+    return you.dg_big_abil == abil || you.dg_small_abil == abil;
+}
+
 void demigod_clear_powers()
 {
     god_powers[GOD_DEMI_GOD].clear();
