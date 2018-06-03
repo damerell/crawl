@@ -312,6 +312,12 @@ static void _give_items_skills(const newgame_def& ng)
         you.piety = 0;
     }
 
+    if (you.species == SP_FAERIE_DRAGON)
+    {
+        you.attribute[ATTR_PERM_FLIGHT] = true;
+        float_player();
+    }
+
     if (!you_worship(GOD_NO_GOD))
     {
         you.worshipped[you.religion] = 1;
