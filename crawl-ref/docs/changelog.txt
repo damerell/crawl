@@ -40,12 +40,13 @@ Changes swiped from other variants
 ----------------------------------
 bcrawl:
 Ash curses items for free, but uncursing costs piety.
-Stoat Soup then reduces the "items cursed" element of Ash piety gain on low D
-levels in a way that gives similar piety gain to a vanilla character who found
-the average number of RC scrolls.
-This prevents you cursing all your stuff very early and getting lots
-of bonus piety obviating the uncursing penalty.
-Even on low D levels, higher bondage levels give some extra piety gain.
+ Stoat Soup then reduces the "items cursed" element of Ash piety gain on low D
+ levels in a way that gives similar piety gain to a vanilla character who found
+ the average number of RC scrolls.
+ This prevents you cursing all your stuff very early and getting lots
+ of bonus piety obviating the uncursing penalty.
+ Even on low D levels, higher bondage levels give some extra piety gain.
+Small species cannot use morningstars and eveningstars.
 
 Vanilla changes messed around with
 ----------------------------------
