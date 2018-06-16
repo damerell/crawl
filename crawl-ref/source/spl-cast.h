@@ -72,7 +72,7 @@ enum class spret
 #define IOOD_MID "iood_mid"
 #define IOOD_FLAWED "iood_flawed"
 #define IOOD_TPOS "iood_tpos"
-#define IOOD_ORBAGEDDON "iood_orbageddon"
+#define IOOD_UNDOING "iood_undoing"
 
 #define fail_check() if (fail) return spret::fail
 

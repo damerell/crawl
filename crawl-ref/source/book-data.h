@@ -352,7 +352,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_LEHUDIBS_CRYSTAL_SPEAR,
     SPELL_GLACIATE,
     SPELL_FIRE_STORM,
-    SPELL_ORBAGEDDON,
+    SPELL_ISKENDERUNS_UNDOING,
 },
 
 {   // Grand Grimoire
