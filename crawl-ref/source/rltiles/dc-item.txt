@@ -997,6 +997,7 @@ misc_box MISC_BOX_OF_BEASTS
 %rim 0
 misc_sack MISC_SACK_OF_SPIDERS
 misc_phantom_mirror MISC_PHANTOM_MIRROR
+misc_disc MISC_DISC_OF_STORMS
 misc_zigfig MISC_ZIGGURAT
 misc_deck MISC_DECK
 %start
