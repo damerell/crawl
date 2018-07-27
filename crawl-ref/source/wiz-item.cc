@@ -1505,6 +1505,7 @@ static void _debug_rap_stats(FILE *ostat)
         "ARTP_FRAGILE",
         "ARTP_SHIELDING",
         "ARTP_WARDING",
+        "ARTP_HARM",
     };
     COMPILE_CHECK(ARRAYSZ(rap_names) == ARTP_NUM_PROPERTIES);
 

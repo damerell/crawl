@@ -597,6 +597,9 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, const item_def &item,
             // Note there is no restriction on adding/removing rN/MR to scarves
             // since the scarf of warding will retain its unique "Ward"
             return (item.sub_type != ARM_SCARF);
+        case ARTP_HARM:
+            return item_class != OBJ_JEWELLERY && extant_props[ARTP_DRAIN];
+            // only get harm with *Drain
         default:
             return true;
     }
@@ -733,6 +736,8 @@ static const artefact_prop_data artp_data[] =
       nullptr, nullptr, 0, 0 },
     { "SH", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 }, // ARTP_SHIELDING,
     { "Ward", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_WARDING
+    { "Harm", ARTP_VAL_BOOL, 0, // ARTP_HARM,
+        []() {return 1;}, nullptr, 0, 0},
 };
 COMPILE_CHECK(ARRAYSZ(artp_data) == ARTP_NUM_PROPERTIES);
 // weights sum to 1000
