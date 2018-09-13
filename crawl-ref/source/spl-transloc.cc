@@ -1038,6 +1038,7 @@ static void _attract_actor(const actor* agent, actor* victim,
         return;
     }
 
+    const coord_def starting_pos = victim->pos();
     for (int i = 0; i < strength; i++)
     {
         ray.advance();
@@ -1057,7 +1058,7 @@ static void _attract_actor(const actor* agent, actor* victim,
         else if (!victim->is_habitable(newpos))
             break;
         else
-            victim->move_to_pos(newpos, false);
+            victim->move_to_pos(newpos);
 
         if (auto mons = victim->as_monster())
         {
@@ -1067,6 +1068,12 @@ static void _attract_actor(const actor* agent, actor* victim,
 
         if (victim->pos() == pos)
             break;
+    }
+    if (starting_pos != victim->pos())
+    {
+        victim->apply_location_effects(starting_pos);
+        if (victim->is_monster())
+            mons_relocated(victim->as_monster());
     }
 }
 
