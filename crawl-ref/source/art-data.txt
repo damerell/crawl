@@ -167,13 +167,14 @@ COLOUR: BLACK
 
 NAME:    Singing Sword
 OBJ:     OBJ_WEAPONS/WPN_BROADSWORD
+INSCRIP: sonic wave
 PLUS:    +7
 COLOUR:  ETC_GOLD
 TILE:    spwpn_singing_sword
 TILE_EQ: singing_sword
 VALUE:   1000
-BRAND:   SPWPN_VORPAL
 BOOL:    special
+BRAND:   SPWPN_VORPAL
 
 NAME:    Wrath of Trog
 OBJ:     OBJ_WEAPONS/WPN_BATTLEAXE
