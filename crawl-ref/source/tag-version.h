@@ -337,7 +337,7 @@ struct save_version
 
     bool is_compatible() const
     {
-        return (valid() && !is_ancient() && !is_future());
+        return valid() && !is_ancient() && !is_future();
     }
 
     bool is_current() const
