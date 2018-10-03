@@ -2315,7 +2315,6 @@ void bolt_parent_init(const bolt &parent, bolt &child)
     child.colour         = parent.colour;
 
     child.flavour        = parent.flavour;
-    child.origin_spell   = parent.origin_spell;
 
     // We don't copy target since that is often overriden.
     child.thrower        = parent.thrower;
@@ -2751,7 +2750,7 @@ void bolt::affect_ground()
             if (beh == BEH_FRIENDLY)
                 beh = BEH_GOOD_NEUTRAL;
 
-            const god_type god = agent() ? agent()->deity() : GOD_NO_GOD;
+            const god_type god = agent()->deity();
 
             if (create_monster(mgen_data(MONS_BALLISTOMYCETE,
                                          beh,
@@ -2958,8 +2957,7 @@ void bolt::affect_place_explosion_clouds()
 // A little helper function to handle the calling of ouch()...
 void bolt::internal_ouch(int dam)
 {
-    monster* monst = nullptr;
-    monst = monster_by_mid(source_id);
+    monster* monst = monster_by_mid(source_id);
 
     const char *what = aux_source.empty() ? name.c_str() : aux_source.c_str();
 
@@ -3333,11 +3331,10 @@ bool bolt::misses_player()
         dprf(DIAG_BEAM, "Beamshield: hit: %d, block %d", testhit, block);
         if ((testhit < block && hit != AUTOMATIC_HIT) || omnireflected)
         {
-            bool penet = false;
-
-            const string refl_name = name.empty() && origin_spell ?
-                                     spell_title(origin_spell) :
-                                     name;
+            const string refl_name = name.empty() &&
+                                     origin_spell != SPELL_NO_SPELL ?
+                                        spell_title(origin_spell) :
+                                        name;
 
             const item_def *shield = you.shield();
             if (is_reflectable(you))
@@ -3361,8 +3358,7 @@ bool bolt::misses_player()
                 finish_beam();
             }
             you.shield_block_succeeded(agent());
-            if (!penet)
-                return true;
+            return true;
         }
 
         // Some training just for the "attempt".
