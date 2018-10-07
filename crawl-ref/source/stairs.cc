@@ -840,6 +840,7 @@ void floor_transition(dungeon_feature_type how,
     else
         maybe_update_stashes();
 
+    autotoggle_autopickup(false);
     request_autopickup();
 }
 
