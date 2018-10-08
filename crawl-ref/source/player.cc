@@ -7011,6 +7011,9 @@ void player::paralyse(actor *who, int str, string source)
                                                : source;
     }
 
+    if (asleep())
+        you.awaken();
+
     mpr("You suddenly lose the ability to move!");
 
     paralysis = min(str, 13) * BASELINE_DELAY;
@@ -7034,6 +7037,10 @@ void player::petrify(actor *who, bool force)
         mpr("Your divine stamina protects you from petrification!");
         return;
     }
+
+    // Petrification always wakes you up
+    if (asleep())
+        you.awaken();
 
     if (petrifying())
     {
@@ -7535,6 +7542,14 @@ void player::put_to_sleep(actor*, int power, bool hibernate)
     if (duration[DUR_SLEEP_IMMUNITY])
     {
         mpr("You can't fall asleep again this soon!");
+        return;
+    }
+
+    if (duration[DUR_PARALYSIS]
+        || duration[DUR_PETRIFIED]
+        || duration[DUR_PETRIFYING])
+    {
+        mpr("You can't fall asleep in your current state!");
         return;
     }
 
