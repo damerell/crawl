@@ -653,13 +653,8 @@ monster_info::monster_info(const monster* m, int milev)
         i_ghost.damage = ghost.damage;
         props[KNOWN_MAX_HP_KEY] = (int)ghost.max_hp;
     }
-    // describe abnormal (branded) ghost weapons
-    if ((mons_is_pghost(type) || type == MONS_PANDEMONIUM_LORD)
-        && m->ghost->brand != SPWPN_NORMAL)
-    {
-        // describe abnormal (branded) ghost or pan lord weapons
-        props[SPECIAL_WEAPON_KEY] = m->ghost->brand;
-    }
+    if (m->has_ghost_brand())
+        props[SPECIAL_WEAPON_KEY] = m->ghost_brand();
 
     // book loading for player ghost and vault monsters
     spells.clear();
@@ -1703,15 +1698,24 @@ bool monster_info::has_spells() const
 
     const vector<mon_spellbook_type> books = get_spellbooks(*this);
 
+<<<<<<< HEAD
     // Random pan lords don't display their spells.
     if (books.size() == 0 || books[0] == MST_NO_SPELLS
         || type == MONS_PANDEMONIUM_LORD)
+=======
+    if (books.size() == 0 || books[0] == MST_NO_SPELLS)
+>>>>>>> aeb629af13... Various code cleanups for ghost_demon brands
     {
         return false;
     }
 
+<<<<<<< HEAD
     // Ghosts have a special book but may not have any spells anyways.
     if (books[0] == MST_GHOST)
+=======
+    // Ghosts / pan lords may have custom spell lists, so check spells directly
+    if (books[0] == MST_GHOST || type == MONS_PANDEMONIUM_LORD)
+>>>>>>> aeb629af13... Various code cleanups for ghost_demon brands
         return spells.size() > 0;
 
     return true;
