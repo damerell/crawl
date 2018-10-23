@@ -1698,24 +1698,13 @@ bool monster_info::has_spells() const
 
     const vector<mon_spellbook_type> books = get_spellbooks(*this);
 
-<<<<<<< HEAD
     // Random pan lords don't display their spells.
     if (books.size() == 0 || books[0] == MST_NO_SPELLS
         || type == MONS_PANDEMONIUM_LORD)
-=======
-    if (books.size() == 0 || books[0] == MST_NO_SPELLS)
->>>>>>> aeb629af13... Various code cleanups for ghost_demon brands
-    {
         return false;
-    }
 
-<<<<<<< HEAD
     // Ghosts have a special book but may not have any spells anyways.
     if (books[0] == MST_GHOST)
-=======
-    // Ghosts / pan lords may have custom spell lists, so check spells directly
-    if (books[0] == MST_GHOST || type == MONS_PANDEMONIUM_LORD)
->>>>>>> aeb629af13... Various code cleanups for ghost_demon brands
         return spells.size() > 0;
 
     return true;
