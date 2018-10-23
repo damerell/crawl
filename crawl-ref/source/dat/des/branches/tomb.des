@@ -531,7 +531,6 @@ SUBST:   T = ~ .
 : tomb_1_centre_setup(_G)
 SUBST:   t = ~ .:50
 #
-: set_feature_name("granite_statue", "sarcophagus")
 MAP
 ..ttttttttttc................ctt>
 ..ccccccccctc..3..........2..ct-t
