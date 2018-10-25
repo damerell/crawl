@@ -1619,16 +1619,17 @@ level_id generic_shaft_dest(coord_def pos, bool known = false)
 }
 
 /**
- * Get a number of traps to place on the current level.
+ * Get the number of traps for the current level.
  *
- * No traps are placed in either Temple or disconnected branches other than
- * Pandemonium. For other branches, we place 0-2 traps per level, averaged over
- * two dice. This value is increased for deeper levels; roughly one additional
- * trap for every 10 levels of absdepth, capping out at max 9 traps in a level.
+ * No traps effects occur in either Temple or disconnected branches other than
+ * Pandemonium. For other branches, this value starts at 1. It is increased for
+ * deeper levels; by one for every 10 levels of absdepth,
+ * capping out at max 9.
  *
+ * XXX in vanilla the randomness moved from here to dungeon.cc
  * @return  A number of traps to be placed.
 */
-int num_traps_for_place()
+int trap_rate_for_place()
 {
     if (player_in_branch(BRANCH_TEMPLE)
         || (!player_in_connected_branch()

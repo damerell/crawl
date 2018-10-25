@@ -3210,7 +3210,8 @@ static bool _shaft_known(int depth)
 
 static void _place_traps()
 {
-    const int num_traps = num_traps_for_place();
+    // XXX vanilla moved randomness from function to here
+    const int num_traps = trap_rate_for_place();
     int level_number = env.absdepth0;
 
     ASSERT(num_traps >= 0);
