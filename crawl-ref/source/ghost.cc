@@ -301,7 +301,7 @@ void ghost_demon::init_player_ghost(bool actual_ghost,monster_type slayer_type)
 
     name   = you.your_name;
     attempts = 0;
-    max_hp = min(((2 * (1+get_real_hp(false))) / 3), MAX_GHOST_HP);
+    max_hp = min(((2 * (1+get_real_hp(false, false))) / 3), MAX_GHOST_HP);
     ev     = min(((2 * (1+you.evasion(EV_IGNORE_HELPLESS))) / 3),
                  MAX_GHOST_EVASION);
     ac     = (2 * (1+you.armour_class())) / 3;
