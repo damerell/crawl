@@ -2191,7 +2191,7 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
     case DNGN_METAL_WALL:
         if (what)
             *what = "metal wall";
-        // fall through
+        // fall-through
     case DNGN_GRATE:
         if (what && *what == nullptr)
             *what = "iron grate";
@@ -2215,16 +2215,15 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
         }
         break;
 
-    // Stone doors and arches
+    // Stone arches and doors
     case DNGN_OPEN_DOOR:
     case DNGN_CLOSED_DOOR:
     case DNGN_RUNED_DOOR:
     case DNGN_SEALED_DOOR:
         // Doors always blow up, stone arches never do (would cause problems).
         if (what)
-            *what = "door";
+            *what = "doorframe";
         should_destroy_wall = true;
-
         // fall-through
     case DNGN_STONE_ARCH:
         if (what && *what == nullptr)
