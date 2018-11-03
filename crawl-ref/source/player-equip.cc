@@ -1276,9 +1276,19 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld,
         break;
 
     case AMU_THE_GOURMAND:
-        // What's this supposed to achieve? (jpeg)
-        you.duration[DUR_GOURMAND] = 0;
-        mpr("You feel a craving for the dungeon's cuisine.");
+        if (you.species == SP_VAMPIRE
+         || you_foodless() //Mummy or Lich
+         || you.get_mutation_level(MUT_HERBIVOROUS) == 3) //Spriggan
+         {
+            mpr("After a brief, frighteningly intense craving, your appetite remains unchanged.");
+         }
+        else if (you.species == SP_GHOUL) { // Already healed by chunks
+            mpr("You already crave flesh to an excessive degree.");
+        } else {
+            mpr("You feel a craving for the dungeon's cuisine.");
+            // What's this supposed to achieve? (jpeg)
+            you.duration[DUR_GOURMAND] = 0;
+        }
         break;
 
     case AMU_REGENERATION:
