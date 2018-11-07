@@ -1944,10 +1944,10 @@ bool safe_discharge(coord_def where, vector<const actor *> &exclude)
     return true;
 }
 
-spret cast_discharge(int pow, const actor &agent, bool fail)
+spret cast_discharge(int pow, const actor &agent, bool fail, bool prompt)
 {
     vector<const actor *> exclude;
-    if (agent.is_player() && !safe_discharge(you.pos(), exclude))
+    if (agent.is_player() && prompt && !safe_discharge(you.pos(), exclude))
         return spret::abort;
 
     fail_check();
