@@ -210,6 +210,7 @@ const vector<GameOption*> game_options::build_options_list()
         new BoolGameOption(SIMPLE_NAME(travel_key_stop), true),
         new BoolGameOption(SIMPLE_NAME(dump_on_save), true),
         new BoolGameOption(SIMPLE_NAME(rest_wait_both), false),
+        new BoolGameOption(SIMPLE_NAME(rest_wait_ancestor), false),
         new BoolGameOption(SIMPLE_NAME(cloud_status), !is_tiles()),
         new BoolGameOption(SIMPLE_NAME(wall_jump_prompt), false),
         new BoolGameOption(SIMPLE_NAME(wall_jump_move), true),
@@ -838,7 +839,7 @@ void game_options::set_default_activity_interrupts()
         "interrupt_travel = interrupt_butcher, hungry, hit_monster, "
                             "sense_monster, pb_miscast",
         "interrupt_run = interrupt_travel, message, pb_miscast",
-        "interrupt_rest = interrupt_run, full_hp, full_mp, pb_miscast",
+        "interrupt_rest = interrupt_run, full_hp, full_mp, pb_miscast, ancestor_hp", 
 
         // Stair ascents/descents cannot be interrupted except by
         // teleportation. Attempts to interrupt the delay will just
