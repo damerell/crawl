@@ -194,6 +194,7 @@ bool monster::add_ench(const mon_enchant &ench)
         || ench.ench == ENCH_HEXED)
     {
         align_avatars(true);
+        remove_summons();
     }
     return true;
 }

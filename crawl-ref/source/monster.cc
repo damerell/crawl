@@ -6743,8 +6743,7 @@ void monster::align_avatars(bool force_friendly)
     if (new_att == ATT_NEUTRAL || new_att == ATT_STRICT_NEUTRAL
         || new_att == ATT_GOOD_NEUTRAL)
     {
-        remove_avatars();
-        return;
+        return; // remove_summons called by caller
     }
 
     monster* avatar = find_spectral_weapon(this);
@@ -6762,15 +6761,40 @@ void monster::align_avatars(bool force_friendly)
     }
 }
 
-void monster::remove_avatars()
+/**
+ * Remove this monsters summons. Any monsters summoned by this monster will be
+ * abjured and any spectral weapon or battlesphere avatars they have will be
+ * ended.
+ *
+ * @param check_attitude If true, only remove summons/avatars whose attitude
+ *                       differs from the the monster.
+ */
+void monster::remove_summons(bool check_attitude)
 {
     monster* avatar = find_spectral_weapon(this);
-    if (avatar)
+    if (avatar && (!check_attitude ||
+                   (attitude != avatar->attitude) &&
+                   (temp_attitude() != avatar->attitude)))
         end_spectral_weapon(avatar, false, false);
 
     avatar = find_battlesphere(this);
-    if (avatar)
+    if (avatar && (!check_attitude ||
+                   (attitude != avatar->attitude) &&
+                   (temp_attitude() != avatar->attitude)))
         end_battlesphere(avatar, false);
+
+    for (monster_iterator mi; mi; ++mi)
+    {
+        int sumtype = 0;
+
+        if ((!check_attitude || attitude != mi->attitude)
+            && mi->summoner == mid
+            && (mi->is_summoned(nullptr, &sumtype)
+                || sumtype == MON_SUMM_CLONE))
+        {
+            mi->del_ench(ENCH_ABJ);
+        }
+    }
 }
 
 /**
