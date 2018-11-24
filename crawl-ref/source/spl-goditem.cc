@@ -153,6 +153,15 @@ static int _pacification_sides(const monster_type mc, int pow)
 }
 
 /**
+ * Pan lords and player ghosts are beyond Elyvilon's light
+ */
+static int _pacification_hp(monster_type mc)
+{
+    return mons_is_pghost(mc) || mc == MONS_PANDEMONIUM_LORD ? 1000
+        : mons_avg_hp(mc);
+}
+
+/**
  * Try to pacify the given monster. Aborts if that's clearly impossible.
  *
  * @param mon           The monster to be pacified, potentially.
@@ -177,7 +186,7 @@ static spret _try_to_pacify(monster &mon, int healed, int pow,
 
     fail_check();
 
-    const int mon_hp = mons_avg_hp(mon.type);
+    const int mon_hp = _pacification_hp(mon.type);
 
     if (_pacification_sides(mon.type, pow) < mon_hp)
     {
@@ -270,7 +279,7 @@ bool heal_monster(monster& patient, int amount)
 int _pacify_chance(const monster_info& mi, const int pow, int scale)
 {
     const int sides = _pacification_sides(mi.type, pow);
-    const int target = mons_avg_hp(mi.type);
+    const int target = _pacification_hp(mi.type);
 
     if (sides <= target)
         return 0;
@@ -285,7 +294,7 @@ vector<string> _desc_pacify_chance(const monster_info& mi, const int pow)
 
     if (mi.intel() <= I_BRAINLESS)
         descs.push_back("mindless");
-    else if (_pacification_sides(mi.type, pow) <= mons_avg_hp(mi.type))
+    else if (_pacification_sides(mi.type, pow) <= _pacification_hp(mi.type))
         descs.push_back("uninterested");
     else
     {
