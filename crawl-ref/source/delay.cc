@@ -1132,10 +1132,12 @@ static inline bool _monster_warning(activity_interrupt_type ai,
         return false;
     else
     {
+        // XXX: This needs to be here to ensure correct messaging for
+        // autoexplore, even though the correct place to process it is
+        // seen_monster
         ash_id_monster_equipment(mon);
         mark_mon_equipment_seen(mon);
-        do_conversions(mon);
-
+        
         string text = getMiscString(mon->name(DESC_DBNAME) + " title");
         if (text.empty())
             text = mon->full_name(DESC_A);

@@ -636,6 +636,8 @@ void seen_monster(monster* mons)
     item_def* weapon = mons->weapon();
     if (weapon && is_range_weapon(*weapon))
         mons->flags |= MF_SEEN_RANGED;
+
+    // id equipment (do this every time we see them, it may have changed)
     mark_mon_equipment_seen(mons);
 
     // Monster was viewed this turn
@@ -661,6 +663,9 @@ void seen_monster(monster* mons)
         }
         take_note(Note(NOTE_SEEN_MONSTER, mons->type, 0, name));
     }
+
+    // attempt any god conversions on first sight
+    do_conversions(mons);
 
     if (!(mons->flags & MF_TSO_SEEN))
     {
