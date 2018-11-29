@@ -287,9 +287,9 @@ static void _swim_or_move_energy(monster& mon)
     mon.lose_energy(mons_is_swimming(mon) ? EUT_SWIM : EUT_MOVE);
 }
 
-static bool _unfriendly_or_insane(const monster& mon)
+static bool _unfriendly_or_impaired(const monster& mon)
 {
-    return !mon.wont_attack() || mon.has_ench(ENCH_INSANE);
+    return !mon.wont_attack() || mon.has_ench(ENCH_INSANE) || mon.confused();
 }
 
 // Check up to eight grids in the given direction for whether there's a
@@ -314,7 +314,7 @@ static bool _ranged_allied_monster_in_dir(monster* mon, coord_def p)
         {
             // Hostile monsters of normal intelligence only move aside for
             // monsters of the same type.
-            if (_unfriendly_or_insane(*mon)
+            if (_unfriendly_or_impaired(*mon)
                 && mons_genus(mon->type) != mons_genus(ally->type))
             {
                 return false;
@@ -349,7 +349,7 @@ static bool _allied_monster_at(monster* mon, coord_def a, coord_def b,
 
         // Hostile monsters of normal intelligence only move aside for
         // monsters of the same genus.
-        if (_unfriendly_or_insane(*mon)
+        if (_unfriendly_or_impaired(*mon)
             && mons_genus(mon->type) != mons_genus(ally->type))
         {
             continue;
@@ -639,7 +639,7 @@ static void _handle_movement(monster* mons)
                 && (_allied_monster_at(mons, coord_def(-mmov.x, -1),
                                        coord_def(-mmov.x, 0),
                                        coord_def(-mmov.x, 1))
-                    || _unfriendly_or_insane(*mons)
+                    || !mons->wont_attack()
                        && _ranged_allied_monster_in_dir(mons,
                                                         coord_def(-mmov.x, 0))))
             {
@@ -656,7 +656,7 @@ static void _handle_movement(monster* mons)
                 && (_allied_monster_at(mons, coord_def(-1, -mmov.y),
                                        coord_def(0, -mmov.y),
                                        coord_def(1, -mmov.y))
-                    || _unfriendly_or_insane(*mons)
+                    || !mons->wont_attack()
                        && _ranged_allied_monster_in_dir(mons,
                                                         coord_def(0, -mmov.y))))
             {
@@ -674,7 +674,7 @@ static void _handle_movement(monster* mons)
                     && (_allied_monster_at(mons, coord_def(-mmov.x, -1),
                                            coord_def(-mmov.x, 0),
                                            coord_def(-mmov.x, 1))
-                        ||  _unfriendly_or_insane(*mons)
+                        ||  !mons->wont_attack()
                            && _ranged_allied_monster_in_dir(mons,
                                                 coord_def(-mmov.x, -mmov.y))))
                 {
@@ -685,7 +685,7 @@ static void _handle_movement(monster* mons)
                      && (_allied_monster_at(mons, coord_def(-1, -mmov.y),
                                             coord_def(0, -mmov.y),
                                             coord_def(1, -mmov.y))
-                         || _unfriendly_or_insane(*mons)
+                         || !mons->wont_attack()
                             && _ranged_allied_monster_in_dir(mons,
                                                 coord_def(-mmov.x, -mmov.y))))
             {
@@ -1650,7 +1650,7 @@ void handle_monster_move(monster* mons)
         return;
 
     const bool disabled = crawl_state.disables[DIS_MON_ACT]
-                          && _unfriendly_or_insane(*mons);
+                          && _unfriendly_or_impaired(*mons);
 
     int old_energy      = mons->speed_increment;
     int non_move_energy = min(entry->energy_usage.move,
@@ -1882,34 +1882,12 @@ void handle_monster_move(monster* mons)
         // Calculates mmov based on monster target.
         _handle_movement(mons);
 
-        // Confused monsters sometimes stumble about instead of acting.
+        // Confused monsters sometimes stumble about instead of moving with
+        // purpose.
         if ((mons_is_confused(*mons) && !one_chance_in(3)) || mons->type == MONS_THORN_LOTUS)
         {
             set_random_target(mons);
             _confused_move_dir(mons);
-
-            // OK, mmov determined.
-            const coord_def newcell = mmov + mons->pos();
-            monster* enemy = monster_at(newcell);
-            if (enemy
-                && newcell != mons->pos()
-                && !is_sanctuary(mons->pos()))
-            {
-                if (fight_melee(mons, enemy))
-                {
-                    mmov.reset();
-                    DEBUG_ENERGY_USE("fight_melee()");
-                    return;
-                }
-                else
-                {
-                    // FIXME: None of these work!
-                    // Instead run away!
-                    if (mons->add_ench(mon_enchant(ENCH_FEAR)))
-                        behaviour_event(mons, ME_SCARE, 0, newcell);
-                    return;
-                }
-            }
         }
     }
     if (!mons->asleep() && !mons->submerged())
@@ -2010,7 +1988,7 @@ void handle_monster_move(monster* mons)
         {
             ASSERT(!crawl_state.game_is_arena());
 
-            if (_unfriendly_or_insane(*mons)
+            if (_unfriendly_or_impaired(*mons)
                 && !mons->has_ench(ENCH_CHARM)
                 && !mons->has_ench(ENCH_HEXED)
                 && !mons->withdrawn())
@@ -2992,6 +2970,11 @@ bool mon_can_move_to_pos(const monster* mons, const coord_def& delta,
     if (feat_is_endless(target_grid))
         return false;
 
+    // A confused monster will happily go wherever it can, regardless of
+    // consequences.
+    if (mons->confused() && mons->can_pass_through(targ))
+        return true;
+
     if (mons_avoids_cloud(mons, targ))
         return false;
 
@@ -3146,7 +3129,7 @@ bool mon_can_move_to_pos(const monster* mons, const coord_def& delta,
     if (mons->foe != MHITYOU
         && targ == you.pos()
         && (mons->foe != MHITNOT || mons->is_patrolling())
-        && !_unfriendly_or_insane(*mons))
+        && !_unfriendly_or_impaired(*mons))
     {
         return false;
     }
@@ -3779,7 +3762,7 @@ static bool _monster_move(monster* mons)
         if (monster* targ = monster_at(mons->pos() + mmov))
         {
             if (mons_aligned(mons, targ)
-                && !mons->has_ench(ENCH_INSANE) &&
+                && !(mons->has_ench(ENCH_INSANE) || mons->confused()) &&
                 !((mons->type == MONS_PLAYER_GHOST) && (mons->neutral()))) {
                 bool takes_time = !(mons->type == MONS_WANDERING_MUSHROOM
                                     && targ->type == MONS_TOADSTOOL
@@ -3827,6 +3810,7 @@ static bool _monster_move(monster* mons)
         make_mons_stop_fleeing(mons);
     }
 
+    // This handles the chance for the monster to hit itself.
     if (mmov.x || mmov.y || (mons->confused() && one_chance_in(6)))
         return _do_move_monster(*mons, mmov);
 
