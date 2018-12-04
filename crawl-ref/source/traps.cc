@@ -1625,6 +1625,7 @@ level_id generic_shaft_dest(coord_def pos, bool known = false)
  * Pandemonium. For other branches, this value starts at 1. It is increased for
  * deeper levels; by one for every 10 levels of absdepth,
  * capping out at max 9.
+ * No traps in tutorial, sprint, and arena.
  *
  * XXX in vanilla the randomness moved from here to dungeon.cc
  * @return  A number of traps to be placed.
@@ -1633,7 +1634,10 @@ int trap_rate_for_place()
 {
     if (player_in_branch(BRANCH_TEMPLE)
         || (!player_in_connected_branch()
-            && !player_in_branch(BRANCH_PANDEMONIUM)))
+            && !player_in_branch(BRANCH_PANDEMONIUM))
+        || crawl_state.game_is_sprint()
+        || crawl_state.game_is_tutorial()
+        || crawl_state.game_is_arena())
     {
         return 0;
     }
