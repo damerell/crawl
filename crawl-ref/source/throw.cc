@@ -386,7 +386,8 @@ static int _get_dart_chance(const int hd)
 static bool _fire_choose_item_and_target(int& slot, dist& target,
                                          item_def& ihpix_shot,
                                          bool with_ihpix,
-                                         bool teleport = false)
+                                         bool teleport = false,
+                                         bool fired_normally = true)
 {
     fire_target_behaviour beh;
     const bool was_chosen = (slot != -1);
@@ -431,14 +432,18 @@ static bool _fire_choose_item_and_target(int& slot, dist& target,
         return false;
     }
 
-    you.redraw_quiver = true;
-    if (!beh.ihpix_armoury) {
-        you.m_quiver.on_item_fired(*beh.active_item(), beh.chosen_ammo);
-        slot = beh.m_slot;
+    // Always fired_normally with Ihp'ix
+    if (fired_normally) {
+        you.redraw_quiver = true;
+        if (!beh.ihpix_armoury) {
+            you.m_quiver.on_item_fired(*beh.active_item(), beh.chosen_ammo);
+            slot = beh.m_slot;
+        } else {
+            ihpix_shot = beh.ihpix_prospective;
+        }
     } else {
-        ihpix_shot = beh.ihpix_prospective;
+        slot = beh.m_slot;
     }
-
     return true;
 }
 
@@ -716,8 +721,14 @@ void throw_item_no_quiver()
         return;
     }
 
+    dist target;
+    item_def ihpix_shot; // won't get used, sigh
+    if (!_fire_choose_item_and_target(slot, target, ihpix_shot, false,
+                                      is_pproj_active(), false))
+        return;
+
     bolt beam;
-    throw_it(beam, slot, false);
+        throw_it(beam, slot, false, &target);
 }
 
 static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
