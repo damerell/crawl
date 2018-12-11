@@ -394,7 +394,7 @@ ways or reduce harm the user has suffered.
 deck of destruction
 
 A deck of magical cards most of which hurl death and destruction with
-wild abandon.
+wild abandon. Beware! The user's allies are not immune.
 %%%%
 deck of escape
 
