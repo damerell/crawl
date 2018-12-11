@@ -10,11 +10,13 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+#include <unordered_set>
 
 #include "abyss.h"
 #include "act-iter.h"
 #include "artefact.h"
 #include "attitude-change.h"
+#include "beam.h"
 #include "cloud.h"
 #include "coordit.h"
 #include "dactions.h"
@@ -73,6 +75,7 @@
 #include "traps.h"
 #include "uncancel.h"
 #include "view.h"
+#include "viewchar.h"
 #include "xom.h"
 
 using namespace ui;
@@ -2502,29 +2505,69 @@ static void _storm_card(int power, deck_rarity_type rarity)
 {
     const int power_level = _get_power_level(power, rarity);
 
-    _friendly(MONS_AIR_ELEMENTAL, 3);
+    wind_blast(&you, (power_level + 1) * 66, coord_def(), true);
+    redraw_screen(); // Update monster positions
 
-    wind_blast(&you, (power_level == 0) ? 100 : 200, coord_def(), true);
-
-    for (radius_iterator ri(you.pos(), 4, C_SQUARE, LOS_SOLID); ri; ++ri)
+    // 1-3, 4-6, 7-9
+    const int max_explosions = random_range((power_level * 3) + 1, (power_level + 1) * 3);
+    // Select targets based on simultaneously running max_explosions resivoir
+    // samples from the radius iterator over valid targets.
+    //
+    // Once the possible targets are drawn, the result is deduplicated into a
+    // set of targets.
+    vector<coord_def> target_draws (12, you.pos());
+    int valid_targets = 0;
+    for (radius_iterator ri(you.pos(), LOS_NO_TRANS, true); ri; ++ri)
     {
-        monster *mons = monster_at(*ri);
-
-        if (adjacent(*ri, you.pos()))
-            continue;
-
-        if (mons && mons->wont_attack())
-            continue;
-
-        if ((feat_has_solid_floor(grd(*ri))
-             || grd(*ri) == DNGN_DEEP_WATER)
-            && !cloud_at(*ri))
+        if (grid_distance(*ri, you.pos()) > 3 && !cell_is_solid(*ri))
         {
-            place_cloud(CLOUD_STORM, *ri,
-                        5 + (power_level + 1) * random2(10), & you);
+            ++valid_targets;
+            for (int i = 0; i < max_explosions; ++i)
+            {
+                if (one_chance_in(valid_targets))
+                    target_draws[i] = *ri;
+            }
         }
     }
 
+    unordered_set<coord_def> targets (target_draws.begin(), target_draws.end());
+    targets.erase(you.pos());
+
+    bool heard = false;
+    for (auto p : targets)
+    {
+        bolt beam;
+        beam.is_tracer         = false;
+        beam.is_explosion      = true;
+        beam.glyph             = dchar_glyph(DCHAR_FIRED_BURST);
+        beam.name              = "electrical discharge";
+        beam.aux_source        = "the storm";
+        beam.explode_noise_msg = "You hear a clap of thunder!";
+        beam.real_flavour      = beam.flavour;
+        beam.colour            = LIGHTCYAN;
+        beam.source_id         = MID_PLAYER;
+        beam.thrower           = KILL_YOU;
+        beam.is_explosion      = true;
+        beam.ex_size           = 3;
+        beam.damage            = dice_def(3, 9 + 9 * power_level);
+        beam.source = p;
+        beam.target = p;
+        beam.explode();
+        heard = heard || player_can_hear(p);
+    }
+    // Lots of loud bangs, even if everything is silenced get a message.
+    // Thunder comes after the animation runs.
+    if (targets.size() > 0)
+    {
+        vector<string> thunder_adjectives = { "mighty",
+                                              "violent",
+                                              "cataclysmic" };
+        mprf("You %s %s%s peal%s of thunder!",
+              heard ? "hear" : "feel",
+              targets.size() > 1 ? "" : "a ",
+              thunder_adjectives[power_level].c_str(),
+              targets.size() > 1 ? "s" : "");
+    }
 }
 
 static void _water_card(int power, deck_rarity_type rarity)
