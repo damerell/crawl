@@ -907,7 +907,7 @@ class StackFiveMenu : public Menu
     vector<uint8_t>& flags;
 public:
     StackFiveMenu(vector<card_type>& d, vector<uint8_t>& f)
-        : Menu(MF_NOSELECT | MF_ALWAYS_SHOW_MORE), draws(d), flags(f) {};
+        : Menu(MF_NOSELECT | MF_UNCANCEL | MF_ALWAYS_SHOW_MORE), draws(d), flags(f) {};
 };
 
 bool StackFiveMenu::process_key(int keyin)
@@ -940,8 +940,6 @@ bool StackFiveMenu::process_key(int keyin)
         items[i]->colour = WHITE;
         select_item_index(i, 1, false);
     }
-    else if (keyin == CK_ESCAPE)
-        return !crawl_state.seen_hups;
     else
         Menu::process_key(keyin);
     return true;
