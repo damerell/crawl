@@ -1548,11 +1548,8 @@ bool is_valid_shaft_level(bool known)
 
     const Branch &branch = branches[place.branch];
 
-    if (env.turns_on_level == -1
-        && branch.branch_flags & BFLAG_NO_SHAFTS)
-    {
+    if (branch.branch_flags & BFLAG_NO_SHAFTS)
         return false;
-    }
 
     // When generating levels, don't place an unknown shaft on the level
     // immediately above the bottom of a branch if that branch is
