@@ -53,7 +53,6 @@
 #define SAP_MAGIC_KEY "sap_magic_amount"
 #define TEMP_WATERWALK_KEY "temp_waterwalk"
 #define EMERGENCY_FLIGHT_KEY "emergency_flight"
-#define LAST_ACTION_WAS_MOVE_OR_REST_KEY "last_action_was_move_or_rest"
 #define RESIDUAL_HARM "residual_harm_int"
 #define XOM_GIFT_KEY "xom_timeout"
 #define XOM_PIETY_KEY "xom_piety"
