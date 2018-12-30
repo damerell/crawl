@@ -30,12 +30,12 @@
 
 static void _fuzz_direction(const actor *caster, monster& mon, int pow);
 
-spret_type cast_iood(actor *caster, int pow, bolt *beam, float vx, float vy,
+spret cast_iood(actor *caster, int pow, bolt *beam, float vx, float vy,
                      int foe, bool fail)
 {
     const bool is_player = caster->is_player();
     if (beam && is_player && !player_tracer(ZAP_IOOD, pow, *beam))
-        return SPRET_ABORT;
+        return spret::abort;
 
     fail_check();
 
@@ -50,7 +50,7 @@ spret_type cast_iood(actor *caster, int pow, bolt *beam, float vx, float vy,
     if (!mon)
     {
         mprf(MSGCH_ERROR, "Failed to spawn projectile.");
-        return SPRET_ABORT;
+        return spret::abort;
     }
 
     if (beam)
@@ -112,7 +112,7 @@ spret_type cast_iood(actor *caster, int pow, bolt *beam, float vx, float vy,
             mon->foe = foe;
     }
 
-    return SPRET_SUCCESS;
+    return spret::success;
 }
 
 /**

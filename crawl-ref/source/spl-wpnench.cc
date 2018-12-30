@@ -78,13 +78,13 @@ void start_weapon_brand(item_def &weapon, bool verbose) {
  * @param[in] fail          Whether you've already failed to cast.
  * @return                  Success, fail, or abort.
  */
-spret_type cast_excruciating_wounds(int power, bool fail)
+spret cast_excruciating_wounds(int power, bool fail)
 {
     if (you.permabuff[PERMA_EXCRU]) {
         mpr(you.permabuff_working(PERMA_EXCRU) ?
             "You stop infusing your attacks with pain." :
             "You stop attempting to infuse your attacks with pain.");
-        you.pb_off(PERMA_EXCRU, true); return SPRET_PERMACANCEL;
+        you.pb_off(PERMA_EXCRU, true); return spret::permacancel;
     } else {
         fail_check();
 // Suitable weapon checks moved to spl-util.cc
@@ -94,11 +94,11 @@ spret_type cast_excruciating_wounds(int power, bool fail)
             mpr ("You will soon be infusing your attacks with pain.");
         }
         start_weapon_brand(weapon);
-        you.pb_on(PERMA_EXCRU); return SPRET_SUCCESS;
+        you.pb_on(PERMA_EXCRU); return spret::success;
     }
 }
 
-spret_type cast_confusing_touch(int power, bool fail)
+spret cast_confusing_touch(int power, bool fail)
 {
     fail_check();
     msg::stream << you.hands_act("begin", "to glow ")
@@ -110,5 +110,5 @@ spret_type cast_confusing_touch(int power, bool fail)
                          you.duration[DUR_CONFUSING_TOUCH]),
                      20, nullptr);
 
-    return SPRET_SUCCESS;
+    return spret::success;
 }

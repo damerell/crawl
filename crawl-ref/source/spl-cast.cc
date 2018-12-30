@@ -920,8 +920,8 @@ bool cast_a_spell(bool check_range, spell_type spell)
     const bool staff_energy = player_energy();
     you.last_cast_spell = spell;
 
-    const spret_type cast_result = your_spells(spell, 0, !permacancel);
-    if (cast_result == SPRET_ABORT)
+    const spret cast_result = your_spells(spell, 0, !permacancel);
+    if (cast_result == spret::abort)
     {
         crawl_state.zero_turns_taken();
         // Return the MP since the spell is aborted.
@@ -932,8 +932,8 @@ bool cast_a_spell(bool check_range, spell_type spell)
     }
 
     if (!permacancel) {
-        practise_casting(spell, cast_result == SPRET_SUCCESS);
-        if (cast_result == SPRET_SUCCESS)
+        practise_casting(spell, cast_result == spret::success);
+        if (cast_result == spret::success)
         {
             did_god_conduct(DID_SPELL_CASTING, 1 + random2(5));
             count_action(CACT_CAST, spell);
@@ -961,7 +961,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
     }
     // You get a free pass if your fire spell miscasts, to avoid simultaneous
     // miscasts
-    if ((cast_result == SPRET_SUCCESS) && (you.permabuff_working(PERMA_ROF))) {
+    if ((cast_result == spret::success) && (you.permabuff_working(PERMA_ROF))) {
         const spschools_type typeflags = get_spell_disciplines(spell);
         if (typeflags & SPTYP_FIRE) {
             permabuff_fail_check
@@ -1139,7 +1139,7 @@ static void _try_monster_cast(spell_type spell, int powc,
 }
 #endif // WIZARD
 
-static spret_type _do_cast(spell_type spell, int powc, const dist& spd,
+static spret _do_cast(spell_type spell, int powc, const dist& spd,
                            bolt& beam, god_type god, bool fail);
 
 /**
@@ -1394,11 +1394,11 @@ vector<string> desc_success_chance(const monster_info& mi, int pow, bool evoked,
  *
  * @param evoked_item   The wand the spell was evoked from if applicable, or
                         nullptr.
- * @return SPRET_SUCCESS if spell is successfully cast for purposes of
- * exercising, SPRET_FAIL otherwise, or SPRET_ABORT if the player cancelled
+ * @return spret::success if spell is successfully cast for purposes of
+ * exercising, spret::fail otherwise, or spret::abort if the player cancelled
  * the casting.
  **/
-spret_type your_spells(spell_type spell, int powc, bool allow_fail,
+spret your_spells(spell_type spell, int powc, bool allow_fail,
                        const item_def* const evoked_item)
 {
     ASSERT(!crawl_state.game_is_arena());
@@ -1413,7 +1413,7 @@ spret_type your_spells(spell_type spell, int powc, bool allow_fail,
     // [dshaligram] Any action that depends on the spellcasting attempt to have
     // succeeded must be performed after the switch.
     if (!wiz_cast && _spellcasting_aborted(spell, !allow_fail))
-        return SPRET_ABORT;
+        return spret::abort;
 
     const unsigned int flags = get_spell_flags(spell);
 
@@ -1501,7 +1501,7 @@ spret_type your_spells(spell_type spell, int powc, bool allow_fail,
             args.self = CONFIRM_NONE;
         args.get_desc_func = additional_desc;
         if (!spell_direction(spd, beam, &args))
-            return SPRET_ABORT;
+            return spret::abort;
 
         beam.range = range;
 
@@ -1512,11 +1512,11 @@ spret_type your_spells(spell_type spell, int powc, bool allow_fail,
             else
                 canned_msg(MSG_UNTHINKING_ACT);
 
-            return SPRET_ABORT;
+            return spret::abort;
         }
 
         if (spd.isMe() && spell == SPELL_INVISIBILITY && !invis_allowed())
-            return SPRET_ABORT;
+            return spret::abort;
     }
 
     if (evoked_item)
@@ -1549,7 +1549,7 @@ spret_type your_spells(spell_type spell, int powc, bool allow_fail,
     else
 #endif
     if (evoked_item && evoked_item->charges == 0)
-        return SPRET_FAIL;
+        return spret::fail;
     else if (allow_fail)
     {
         fail = failure_check(spell, false);
@@ -1563,11 +1563,11 @@ spret_type your_spells(spell_type spell, int powc, bool allow_fail,
 
     const bool old_target = actor_at(beam.target);
 
-    spret_type cast_result = _do_cast(spell, powc, spd, beam, god, fail);
+    spret cast_result = _do_cast(spell, powc, spd, beam, god, fail);
 
     switch (cast_result)
     {
-    case SPRET_SUCCESS:
+    case spret::success:
     {
         const int demonic_magic = you.get_mutation_level(MUT_DEMONIC_MAGIC);
 
@@ -1592,31 +1592,30 @@ spret_type your_spells(spell_type spell, int powc, bool allow_fail,
             dithmenos_shadow_spell(&beam, spell);
         }
         _spellcasting_side_effects(spell, god, !allow_fail);
-        return SPRET_SUCCESS;
+        return spret::success;
     }
-    case SPRET_FAIL:
+    case spret::fail:
     {
 #if TAG_MAJOR_VERSION == 34
         if (antimagic)
-            return SPRET_FAIL;
+            return spret::fail;
 #endif
 
         apply_miscast(spell, fail, true);
-        return SPRET_FAIL;
+        return spret::fail;
     }
 
-    case SPRET_ABORT:
-        return SPRET_ABORT;
-    case SPRET_PERMACANCEL:
-        return SPRET_PERMACANCEL;
-
-    case SPRET_NONE:
+    case spret::abort:
+        return spret::abort;
+    case spret::permacancel:
+        return spret::permacancel;
+    case spret::none:
 #ifdef WIZARD
         if (you.wizard && !allow_fail && is_valid_spell(spell)
             && (flags & SPFLAG_MONSTER))
         {
             _try_monster_cast(spell, powc, spd, beam);
-            return SPRET_SUCCESS;
+            return spret::success;
         }
 #endif
 
@@ -1628,22 +1627,22 @@ spret_type your_spells(spell_type spell, int powc, bool allow_fail,
         else
             mprf(MSGCH_ERROR, "Invalid spell!");
 
-        return SPRET_ABORT;
+        return spret::abort;
     }
 
-    return SPRET_SUCCESS;
+    return spret::success;
 }
 
-// Returns SPRET_SUCCESS, SPRET_ABORT, SPRET_FAIL
-// or SPRET_NONE (not a player spell).
-static spret_type _do_cast(spell_type spell, int powc, const dist& spd,
+// Returns spret::success, spret::abort, spret_type::fail
+// or spret::none (not a player spell).
+static spret _do_cast(spell_type spell, int powc, const dist& spd,
                            bolt& beam, god_type god, bool fail)
 {
     const coord_def target = spd.isTarget ? beam.target : you.pos() + spd.delta;
     if (spell == SPELL_FREEZE || spell == SPELL_VAMPIRIC_DRAINING)
     {
         if (!adjacent(you.pos(), target))
-            return SPRET_ABORT;
+            return spret::abort;
     }
 
     switch (spell)
@@ -1671,14 +1670,14 @@ static spret_type _do_cast(spell_type spell, int powc, const dist& spd,
 
     // Demonspawn ability, no failure.
     case SPELL_CALL_DOWN_DAMNATION:
-        return cast_smitey_damnation(powc, beam) ? SPRET_SUCCESS : SPRET_ABORT;
+        return cast_smitey_damnation(powc, beam) ? spret::success : spret::abort;
 
     // LOS spells
 
     // Beogh ability, no failure.
     case SPELL_SMITING:
-        return cast_smiting(powc, monster_at(target)) ? SPRET_SUCCESS
-                                                      : SPRET_ABORT;
+        return cast_smiting(powc, monster_at(target)) ? spret::success
+                                                      : spret::abort;
 
     case SPELL_AIRSTRIKE:
         return cast_airstrike(powc, spd, fail);
@@ -1969,11 +1968,16 @@ static spret_type _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_POISONOUS_VAPOURS:
         return cast_poisonous_vapours(powc, spd, fail);
 
+    // non-player spells that have a zap, but that shouldn't be called (e.g
+    // because they will crash as a player zap).
+    case SPELL_DRAIN_LIFE:
+        return spret::none;
+
     default:
         if (spell_removed(spell))
         {
             mpr("Sorry, this spell is gone!");
-            return SPRET_ABORT;
+            return spret::abort;
         }
         break;
     }
@@ -1986,7 +1990,7 @@ static spret_type _do_cast(spell_type spell, int powc, const dist& spd,
                        fail);
     }
 
-    return SPRET_NONE;
+    return spret::none;
 }
 
 // _tetrahedral_number: returns the nth tetrahedral number.
