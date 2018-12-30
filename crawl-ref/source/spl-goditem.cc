@@ -157,20 +157,20 @@ static int _pacifiable_hp(const monster &mon, int healing)
  * @param healed        The amount of healing the pacification attempt uses.
  * @param max_healed    The most healing the player could have rolled.
  * @param fail          Whether the healing invocation has failed (and will
- *                      return SPRET_FAILED after targeting checks finish).
+ *                      return spret::failED after targeting checks finish).
  * @return              Whether the pacification effect was aborted
- *                      (SPRET_ABORT) or the invocation failed (SPRET_FAIL);
- *                      returns SPRET_SUCCESS otherwise, regardless of whether
+ *                      (spret::abort) or the invocation failed (spret::fail);
+ *                      returns spret::success otherwise, regardless of whether
  *                      the target was actually pacified.
  */
-static spret_type _try_to_pacify(monster &mon, int healed, int max_healed,
+static spret _try_to_pacify(monster &mon, int healed, int max_healed,
                                  bool fail)
 {
     const string illegal_reason = unpacifiable_reason(mon);
     if (!illegal_reason.empty())
     {
         mpr(illegal_reason);
-        return SPRET_ABORT;
+        return spret::abort;
     }
 
     fail_check();
@@ -183,7 +183,7 @@ static spret_type _try_to_pacify(monster &mon, int healed, int max_healed,
         dprf("mon hp %d", mon_hp);
         mprf("%s is completely unfazed by your meager offer of peace.",
              mon.name(DESC_THE).c_str());
-        return SPRET_SUCCESS;
+        return spret::abort;
     }
 
     const int pacified_hp = random2(_pacifiable_hp(mon, healed));
@@ -193,7 +193,7 @@ static spret_type _try_to_pacify(monster &mon, int healed, int max_healed,
         // not even close.
         mprf("The light of Elyvilon fails to reach %s.",
              mon.name(DESC_THE).c_str());
-        return SPRET_SUCCESS;
+        return spret::success;
     }
 
     if (pacified_hp < mon_hp)
@@ -201,7 +201,7 @@ static spret_type _try_to_pacify(monster &mon, int healed, int max_healed,
         // closer! ...but not quite.
         mprf("The light of Elyvilon almost touches upon %s.",
              mon.name(DESC_THE).c_str());
-        return SPRET_SUCCESS;
+        return spret::success;
     }
 
     // we did it!
@@ -231,7 +231,7 @@ static spret_type _try_to_pacify(monster &mon, int healed, int max_healed,
     mons_pacify(mon, ATT_NEUTRAL);
 
     heal_monster(mon, healed);
-    return SPRET_SUCCESS;
+    return spret::success;
 }
 
 /**
@@ -266,7 +266,7 @@ static vector<string> _desc_mindless(const monster_info& mi)
         return {};
 }
 
-spret_type cast_healing(int pow, int max_pow, bool fail)
+spret cast_healing(int pow, int max_pow, bool fail)
 {
     const int healed = pow + roll_dice(2, pow) - 2;
     const int max_healed = (3 * max_pow) - 2;
@@ -284,11 +284,11 @@ spret_type cast_healing(int pow, int max_pow, bool fail)
     direction(spd, args);
 
     if (!spd.isValid)
-        return SPRET_ABORT;
+        return spret::abort;
     if (cell_is_solid(spd.target))
     {
         canned_msg(MSG_NOTHING_THERE);
-        return SPRET_ABORT;
+        return spret::abort;
     }
 
     monster* mons = monster_at(spd.target);
@@ -297,7 +297,7 @@ spret_type cast_healing(int pow, int max_pow, bool fail)
         canned_msg(MSG_NOTHING_THERE);
         // This isn't a cancel, to avoid leaking invisible monster
         // locations.
-        return SPRET_SUCCESS;
+        return spret::success;
     }
 
     if (_mons_hostile(mons))
@@ -308,7 +308,7 @@ spret_type cast_healing(int pow, int max_pow, bool fail)
     if (!heal_monster(*mons, healed))
         canned_msg(MSG_NOTHING_HAPPENS);
 
-    return SPRET_SUCCESS;
+    return spret::success;
 }
 
 /// Effects that occur when the player is debuffed.
@@ -1315,11 +1315,11 @@ void cleansing_flame(int pow, int caster, coord_def where,
     beam.explode();
 }
 
-spret_type cast_random_effects(int pow, bolt& beam, bool fail)
+spret cast_random_effects(int pow, bolt& beam, bool fail)
 {
     bolt tracer = beam;
     if (!player_tracer(ZAP_DEBUGGING_RAY, 200, tracer, LOS_RADIUS))
-        return SPRET_ABORT;
+        return spret::abort;
 
     fail_check();
 
@@ -1341,5 +1341,5 @@ spret_type cast_random_effects(int pow, bolt& beam, bool fail)
 
     zapping(zap, pow, beam, false);
 
-    return SPRET_SUCCESS;
+    return spret::success;
 }

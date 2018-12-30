@@ -51,13 +51,13 @@ enum spflag_type
                                                  // hostiles present
 };
 
-enum spret_type
+enum class spret
 {
-    SPRET_ABORT = 0,            // should be left as 0
-    SPRET_FAIL,
-    SPRET_SUCCESS,
-    SPRET_PERMACANCEL,          // Use no MP, minimal time
-    SPRET_NONE,                 // spell was not handled
+    abort = 0,            // should be left as 0
+    fail,
+    success,
+    permacancel,          // Use no MP, minimal time
+    none,                 // spell was not handled
 };
 
 #define IOOD_X "iood_x"
@@ -73,7 +73,7 @@ enum spret_type
 #define IOOD_FLAWED "iood_flawed"
 #define IOOD_TPOS "iood_tpos"
 
-#define fail_check() if (fail) return SPRET_FAIL
+#define fail_check() if (fail) return spret::fail
 
 void surge_power(const int enhanced);
 void surge_power_wand(const int mp_cost);
@@ -106,7 +106,7 @@ int hex_success_chance(const int mr, int powc, int scale,
 class targeter;
 vector<string> desc_success_chance(const monster_info& mi, int pow, bool evoked,
                                    targeter* hitfunc);
-spret_type your_spells(spell_type spell, int powc = 0, bool allow_fail = true,
+spret your_spells(spell_type spell, int powc = 0, bool allow_fail = true,
                        const item_def* const evoked_item = nullptr);
 
 extern const char *fail_severity_adjs[];
