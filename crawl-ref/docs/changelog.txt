@@ -87,7 +87,7 @@ Gooncrawl:
 * Iskenderun's Undoing - cast 8 orbs of destruction at once.
 * Haste spell returns as level 9.
 
-Stone Soup 0.23 (up to 0.23-a0-459-ge787970)
+Stone Soup 0.23 (up to 0.23-a0-642-g3120c2f5)
 --------------------------------------------
 
 Branches, Environment
@@ -115,6 +115,8 @@ Gods
   - The targeter displays pacification chance.
 * Exploration-based piety is no longer granted for the Temple, deep water, or
   lava.
+* Qazlal's cloud immunity is extended to elementals created with Elemental
+Force
 
 Interface
 ---------
@@ -123,6 +125,8 @@ Interface
 * WebTiles users can use a "Forgot Password" link to reset their password
   via a link sent to their registration email address. This feature is not yet
   enabled on most official servers.
+* New display_chars: cloud_weak, cloud_fading, and cloud_terminal display cloud
+  duration in console; a long available to tiles players.
 
 Items
 -----
@@ -144,8 +148,13 @@ Items
   - Unrandarts with melee effects that could anger nearby allies give a proper
     warning.
   - The robe of Clouds is now +3 {+Thunder rCloud rElec}, providing evocable
-    storm clouds in place of its old mist.
-  - The storm bow no longer occasionally creates rain clouds.
+    storm clouds in place of its old mist
+  - The storm bow no longer occasionally creates rain clouds
+  - The skin of Zhor gains SInv and a passive Metabolic Englaciation effect
+
+Lua
+---
+* The custom `require` used in clua and dlua has been renamed `crawl_require`
 
 Monsters
 --------
