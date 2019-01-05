@@ -2692,7 +2692,7 @@ int battlesphere_max_charges() {
 // If you're editing this, check vehumet_supports_spell in god-abil.cc?
 bool battlesphere_can_mirror(spell_type spell)
 {
-    return (spell_typematch(spell, SPTYP_CONJURATION)
+    return (spell_typematch(spell, spschool::conjuration)
            && spell_to_zap(spell) != NUM_ZAPS)
            || spell == SPELL_FREEZE
            || spell == SPELL_STICKY_FLAME

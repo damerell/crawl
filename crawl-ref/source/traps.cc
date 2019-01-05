@@ -915,7 +915,7 @@ void trap_def::trigger(actor& triggerer)
             if (!trig_knows)
                 xom_is_stimulated(25);
 
-            MiscastEffect(&you, nullptr, ZOT_TRAP_MISCAST, SPTYP_RANDOM,
+            MiscastEffect(&you, nullptr, ZOT_TRAP_MISCAST, spschool::random,
                            3, name(DESC_A));
         }
         else if (m)
@@ -951,7 +951,7 @@ void trap_def::trigger(actor& triggerer)
                     mprf("The power of Zot is invoked against %s!",
                          targ->name(DESC_THE).c_str());
                 }
-                MiscastEffect(targ, nullptr, ZOT_TRAP_MISCAST, SPTYP_RANDOM,
+                MiscastEffect(targ, nullptr, ZOT_TRAP_MISCAST, spschool::random,
                               3, "the power of Zot");
             }
         }
