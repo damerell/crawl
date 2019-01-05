@@ -524,34 +524,34 @@ static int _spell_enhancement(spell_type spell)
     const spschools_type typeflags = get_spell_disciplines(spell);
     int enhanced = 0;
 
-    if (typeflags & SPTYP_CONJURATION)
+    if (typeflags & spschool::conjuration)
         enhanced += player_spec_conj();
 
-    if (typeflags & SPTYP_HEXES)
+    if (typeflags & spschool::hexes)
         enhanced += player_spec_hex();
 
-    if (typeflags & SPTYP_CHARMS)
+    if (typeflags & spschool::charms)
         enhanced += player_spec_charm();
 
-    if (typeflags & SPTYP_SUMMONING)
+    if (typeflags & spschool::summoning)
         enhanced += player_spec_summ();
 
-    if (typeflags & SPTYP_POISON)
+    if (typeflags & spschool::poison)
         enhanced += player_spec_poison();
 
-    if (typeflags & SPTYP_NECROMANCY)
+    if (typeflags & spschool::necromancy)
         enhanced += player_spec_death();
 
-    if (typeflags & SPTYP_FIRE)
+    if (typeflags & spschool::fire)
         enhanced += player_spec_fire();
 
-    if (typeflags & SPTYP_ICE)
+    if (typeflags & spschool::ice)
         enhanced += player_spec_cold();
 
-    if (typeflags & SPTYP_EARTH)
+    if (typeflags & spschool::earth)
         enhanced += player_spec_earth();
 
-    if (typeflags & SPTYP_AIR)
+    if (typeflags & spschool::air)
         enhanced += player_spec_air();
 
     if (you.form == transformation::shadow)
@@ -964,7 +964,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
     // miscasts
     if ((cast_result == spret::success) && (you.permabuff_working(PERMA_ROF))) {
         const spschools_type typeflags = get_spell_disciplines(spell);
-        if (typeflags & SPTYP_FIRE) {
+        if (typeflags & spschool::fire) {
             permabuff_fail_check
                 (PERMA_ROF,
                  "You lose control of your ring of flames.");
@@ -2388,7 +2388,7 @@ int failure_check(spell_type spell, bool perma, bool justcheck) {
             god_speaks(GOD_SIF_MUNA, "You feel a surge of divine spite.");
             // This will cause failure and increase the miscast effect.
             spfl = -you.penance[GOD_SIF_MUNA];
-        } else if (spell_typematch(spell, SPTYP_NECROMANCY)
+        } else if (spell_typematch(spell, spschool::necromancy)
                    && !you_worship(GOD_KIKUBAAQUDGHA)
                    && you.penance[GOD_KIKUBAAQUDGHA]
                    && one_chance_in(20)) {
@@ -2400,7 +2400,7 @@ int failure_check(spell_type spell, bool perma, bool justcheck) {
                 // And you thought you'd Necromutate your way out of penance...
                 // The spell still goes through, but you get a miscast anyway.
                 MiscastEffect(&you, nullptr, GOD_MISCAST + GOD_KIKUBAAQUDGHA,
-                              SPTYP_NECROMANCY,
+                              spschool::necromancy,
                               (you.experience_level / 2) +
                               (spell_difficulty(spell) * 2),
                               random2avg(88, 3), "the malice of Kikubaaqudgha");
@@ -2417,7 +2417,7 @@ int failure_check(spell_type spell, bool perma, bool justcheck) {
                 // And you thought you'd Fire Storm your way out of penance...
                 // The spell still goes through, but you get a miscast anyway.
                 MiscastEffect(&you, nullptr, GOD_MISCAST + GOD_VEHUMET,
-                              SPTYP_CONJURATION,
+                              spschool::conjuration,
                               (you.experience_level / 2) +
                               (spell_difficulty(spell) * 2),
                               random2avg(88, 3), "the malice of Vehumet");

@@ -540,7 +540,7 @@ public:
     int action_energy(energy_use_type et, bool countswim = true) const;
 
     bool do_shaft() override;
-    bool has_spell_of_type(spschool_flag_type discipline) const;
+    bool has_spell_of_type(spschool discipline) const;
 
     void bind_melee_flags();
     void bind_spell_flags();

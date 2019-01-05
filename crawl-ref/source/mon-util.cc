@@ -869,7 +869,7 @@ bool mons_is_fiery(const monster& mon)
            || mon.has_attack_flavour(AF_PURE_FIRE)
            || mon.has_attack_flavour(AF_STICKY_FLAME)
            || mon.has_attack_flavour(AF_FIREBRAND)
-           || mon.has_spell_of_type(SPTYP_FIRE);
+           || mon.has_spell_of_type(spschool::fire);
 }
 
 bool mons_is_projectile(monster_type mc)
@@ -3771,7 +3771,7 @@ static bool _ms_ranged_spell(spell_type monspell, bool attack_only = false,
                              bool ench_too = true)
 {
     // summoning spells are usable from ranged, but not direct attacks.
-    if (spell_typematch(monspell, SPTYP_SUMMONING)
+    if (spell_typematch(monspell, spschool::summoning)
         || monspell == SPELL_CONJURE_BALL_LIGHTNING)
     {
         return !attack_only;
@@ -3781,7 +3781,7 @@ static bool _ms_ranged_spell(spell_type monspell, bool attack_only = false,
 
     // buffs & escape spells aren't considered 'ranged'.
     if (testbits(flags, spflag::selfench)
-        || spell_typematch(monspell, SPTYP_CHARMS)
+        || spell_typematch(monspell, spschool::charms)
         || testbits(flags, spflag::escape)
         || monspell == SPELL_BLINK_OTHER_CLOSE)
     {
@@ -3789,11 +3789,11 @@ static bool _ms_ranged_spell(spell_type monspell, bool attack_only = false,
     }
 
     // conjurations are attacks.
-    if (spell_typematch(monspell, SPTYP_CONJURATION))
+    if (spell_typematch(monspell, spschool::conjuration))
         return true;
 
     // hexes that aren't conjurations or summons are enchantments.
-    if (spell_typematch(monspell, SPTYP_HEXES))
+    if (spell_typematch(monspell, spschool::hexes))
         return !attack_only && ench_too;
 
     switch (monspell)

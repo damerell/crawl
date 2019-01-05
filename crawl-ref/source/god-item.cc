@@ -483,7 +483,7 @@ bool is_evil_spell(spell_type spell)
 
     if (flags & spflag::unholy)
         return true;
-    return bool(disciplines & SPTYP_NECROMANCY)
+    return bool(disciplines & spschool::necromancy)
            && !bool(flags & spflag::not_evil);
 }
 
@@ -512,7 +512,7 @@ bool is_fiery_spell(spell_type spell)
 {
     const spschools_type disciplines = get_spell_disciplines(spell);
 
-    return bool(disciplines & SPTYP_FIRE);
+    return bool(disciplines & spschool::fire);
 }
 
 /**
