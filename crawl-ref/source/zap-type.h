@@ -91,5 +91,6 @@ enum zap_type
     ZAP_SONIC_WAVE,
     ZAP_UNDOING_EXPLOSION,
     ZAP_NECROTISE,
+    ZAP_THROW_PIE,
     NUM_ZAPS
 };
