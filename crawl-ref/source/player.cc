@@ -7686,7 +7686,7 @@ bool player::malmutate(const string &reason)
     return false;
 }
 
-bool player::polymorph(int pow)
+bool player::polymorph(int pow, bool allow_immobile)
 {
     ASSERT(!crawl_state.game_is_arena());
 
@@ -7695,20 +7695,26 @@ bool player::polymorph(int pow)
 
     transformation f = transformation::none;
 
-    // Be unreliable over lava. This is not that important as usually when
-    // it matters you'll have temp flight and thus that pig will fly (and
-    // when flight times out, we'll have roasted bacon).
+    vector<transformation> forms = {
+        transformation::bat,
+        transformation::wisp,
+        transformation::pig,
+        transformation::porcupine,
+    };
+    if (allow_immobile)
+    {
+        forms.emplace_back(transformation::tree);
+        forms.emplace_back(transformation::fungus);
+    }
+
     for (int tries = 0; tries < 3; tries++)
     {
-        f = random_choose(transformation::bat,
-                          transformation::fungus,
-                          transformation::pig,
-			  transformation::porcupine,
-                          transformation::tree,
-                          transformation::wisp);
+        f = forms[random2(forms.size())];
+
         // need to do a dry run first, as Zin's protection has a random factor
         if (transform(pow, f, true, true))
             break;
+
         f = transformation::none;
     }
 
