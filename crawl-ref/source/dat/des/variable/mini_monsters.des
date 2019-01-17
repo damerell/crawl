@@ -6792,11 +6792,17 @@ KMONS:   N = Rupert / vampire knight, vampire knight / nothing
 KMONS:   O = Asterion / ancient champion, ancient champion / nothing
 KMONS:   P = Frederick / draconian knight, draconian knight / nothing
 KMONS:   Q = Sojobo / tengu reaver, tengu reaver / nothing
+KMONS:   P = Sojobo / tengu reaver, tengu reaver / nothing
+: if crawl.one_chance_in(50) then
+KMONS:   S = dancing weapon ; singing sword
+KITEM:   s = singing sword
+: else
 KMONS:   S = dancing weapon ; long sword good_item | good_item great sword | \
                               demon blade good_item | claymore good_item | \
                               broadsword good_item
 KITEM:   s = long sword good_item / good_item great sword / \
              demon blade good_item / claymore good_item / broadsword good_item
+: end
 KMONS:   o = orc warrior / orc knight w:5
 KMONS:   e = deep elf knight
 NSUBST:  k = 4:k / 2 = k. / *:.
