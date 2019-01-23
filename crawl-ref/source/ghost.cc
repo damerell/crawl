@@ -787,7 +787,6 @@ static const set<branch_type> ghosts_banned =
 bool ghost_demon::ghost_eligible()
 {
     return !crawl_state.game_is_tutorial()
-        && !Options.seed
 //        && (!player_in_branch(BRANCH_DUNGEON) || you.depth > 1)
         && ghosts_banned.count(you.where_are_you) == 0;
 }
