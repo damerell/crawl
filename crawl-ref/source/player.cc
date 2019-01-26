@@ -6800,9 +6800,9 @@ bool player::permanent_flight() const
 
 bool player::racial_permanent_flight() const
 {
-    return get_mutation_level(MUT_TENGU_FLIGHT) >= 2
+    return get_mutation_level(MUT_TENGU_FLIGHT)
         || get_mutation_level(MUT_BIG_WINGS)
-        || get_mutation_level(MUT_FAERIE_DRAGON_FLIGHT);
+	|| get_mutation_level(MUT_FAERIE_DRAGON_FLIGHT);
 }
 
  // Only Tengu get perks for flying.
