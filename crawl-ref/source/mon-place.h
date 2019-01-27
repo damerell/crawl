@@ -122,6 +122,8 @@ void debug_bands();
 
 bool place_ghost(monster &foe, mid_t ghost_mid);
 
+void replace_boris();
+
 // Active monster band may influence gear generation on band followers.
 extern band_type active_monster_band;
 
