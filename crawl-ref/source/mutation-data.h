@@ -1939,6 +1939,15 @@ static const mutation_def mut_data[] =
     
     };
 
+{ MUT_ACID_RESISTANCE, 0, 1, mutflag::good, true,
+  "acid resistance",
+
+  {"You are resistant to acid. (rCorr)", "", ""},
+  {"You feel resistant to acid.", "",  ""},
+  {"You feel less resistant to acid.", "", ""},
+},
+};
+
 static const mutation_category_def category_mut_data[] =
 {
   { RANDOM_MUTATION, "any"},
