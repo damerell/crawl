@@ -1937,8 +1937,6 @@ static const mutation_def mut_data[] =
   {"Your appearance returns to normal.","",""},
   },
     
-    };
-
 { MUT_ACID_RESISTANCE, 0, 1, mutflag::good, true,
   "acid resistance",
 
