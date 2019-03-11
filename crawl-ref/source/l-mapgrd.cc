@@ -20,7 +20,7 @@ static int mapgrd_get(lua_State *ls)
     if (!map)
         return 0;
 
-    int column = luaL_checkint(ls, 2);
+    int column = luaL_safe_checkint(ls, 2);
 
     mapcolumn *mapref = clua_new_userdata<mapcolumn>(ls, MAPGRD_COL_METATABLE);
     mapref->map = map;
@@ -39,7 +39,7 @@ static char* mapgrd_glyph(lua_State *ls, int &col, int &row)
     mapcolumn *mapc = (mapcolumn *)luaL_checkudata(ls, 1, MAPGRD_COL_METATABLE);
     if (!mapc)
         return nullptr;
-    row = luaL_checkint(ls, 2);
+    row = luaL_safe_checkint(ls, 2);
     col = mapc->col;
 
     map_lines &lines = mapc->map->map;
