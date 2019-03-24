@@ -728,9 +728,11 @@ void ghost_demon::find_extra_ghosts(vector<ghost_demon> &gs)
 }
 
 /// Returns the number of ghosts allowed on the specified level.
+// This function doesn't really do anything in Stoat Soup but leave it alone
+// in cast I change my mind later
 int ghost_demon::max_ghosts_per_level(int absdepth)
 {
-    return absdepth < 10 ? 1 : MAX_GHOSTS;
+    return 1; // absdepth < 10 ? 1 : MAX_GHOSTS;
 }
 
 static const set<branch_type> ghosts_banned =

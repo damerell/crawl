@@ -60,6 +60,7 @@
 #include "mon-behv.h"
 #include "mon-death.h"
 #include "mon-place.h"
+#include "mon-transit.h"
 #include "notes.h"
 #include "output.h"
 #include "place.h"
@@ -1267,6 +1268,10 @@ static void _make_level(dungeon_feature_type stair_taken,
     tile_clear_flavour();
     env.tile_names.clear();
 
+// Chance increased because they're harder to use up & might never appear
+    if (ghost_demon::ghost_eligible() && one_chance_in(2))
+        load_ghosts(ghost_demon::max_ghosts_per_level(env.absdepth0), true);
+
     // XXX: This is ugly.
     bool dummy;
     dungeon_feature_type stair_type = static_cast<dungeon_feature_type>(
@@ -1277,8 +1282,6 @@ static void _make_level(dungeon_feature_type stair_taken,
     _clear_env_map();
     builder(true, stair_type);
 
-    if (ghost_demon::ghost_eligible() && one_chance_in(3))
-        load_ghosts(ghost_demon::max_ghosts_per_level(env.absdepth0), true);
     env.turns_on_level = 0;
     // sanctuary
     env.sanctuary_pos  = coord_def(-1, -1);
@@ -2096,6 +2099,8 @@ bool load_ghosts(int max_ghosts, bool creating_level)
     int placed_ghosts = 0;
 
     // Translate ghost to monster and place.
+    // A lot of this could be rewritten since we are only loading one ghost 
+    // ever but why bother, I might change my mind
     while (!loaded_ghosts.empty() && placed_ghosts < max_ghosts)
     {
         monster * const mons = get_free_monster();
@@ -2105,7 +2110,7 @@ bool load_ghosts(int max_ghosts, bool creating_level)
         mons->set_new_monster_id();
         mons->set_ghost(loaded_ghosts[0]);
         mons->type = MONS_PLAYER_GHOST;
-        mons->ghost_init();
+        mons->ghost_init(false);
 
         loaded_ghosts.erase(loaded_ghosts.begin());
         placed_ghosts++;
@@ -2119,6 +2124,8 @@ bool load_ghosts(int max_ghosts, bool creating_level)
             _ghost_dprf("Placed ghost is not MONS_PLAYER_GHOST, but %s",
                  mons->name(DESC_PLAIN, true).c_str());
         }
+        add_monster_to_limbo(mons);
+        
     }
 
     if (placed_ghosts < max_ghosts)

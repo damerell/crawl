@@ -526,3 +526,16 @@ void wizard_extract_limbo() {
         }
     }
 }
+
+bool is_limbo_mons(std::function <bool (const monster &mons)> test) {
+    m_transit_list &limhere = limbo_monsters[level_id::current()];
+    if (limhere.empty()) {
+        return false;
+    } 
+    for (auto i = limhere.begin(); i != limhere.end(); ++i) {
+        if (test(i->mons)) {
+            return true;
+        }
+    }
+    return false;
+}

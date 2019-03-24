@@ -6954,7 +6954,8 @@ static vector<ghost_demon> tag_read_ghost(reader &th)
     vector<ghost_demon> result;
     int nghosts = unmarshallShort(th);
 
-    if (nghosts < 1 || nghosts > MAX_GHOSTS)
+    // legacy bones files might have >1 ghost
+    if (nghosts < 1)
     {
         string error = "Bones file has an invalid ghost count (" +
                                                     to_string(nghosts) + ")";

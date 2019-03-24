@@ -39,6 +39,7 @@
 #include "mon-pick.h"
 #include "mon-poly.h"
 #include "mon-tentacle.h"
+#include "mon-transit.h"
 #include "options.h"
 #include "random.h"
 #include "religion.h"
@@ -1596,6 +1597,13 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
         gozag_set_bribe(mon);
     }
 
+    if ((!summoned) && (mon->attitude == ATT_HOSTILE) &&
+        (is_limbo_mons([&](const monster &mons)
+                       { return (mons.ghost && 
+                                 (mons.ghost->slayer == mon->type)); }))) {
+        mpr("Matched ghost to monster " + mons_type_name(mon->type, 
+                                                           DESC_PLAIN));
+    }
     return mon;
 }
 

@@ -65,6 +65,6 @@ typedef map<level_id, m_limbo_list> monsters_in_limbo;
 extern monsters_in_limbo limbo_monsters;
 
 void add_monster_to_limbo(monster *m);
-// probably something to interrogate the monsters in limbo
 bool extract_monster_from_limbo(mid_t mid, const coord_def &pos);
 void wizard_extract_limbo();
+bool is_limbo_mons(std::function <bool (const monster &mons)> test);
