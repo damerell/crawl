@@ -4325,7 +4325,8 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
         if (mons.ghost->slayer != MONS_NO_MONSTER) {
             inf.body << "Slain by " << 
                 mons_type_name(mons.ghost->slayer,DESC_A) <<
-                ", it craves vengeance.\n";
+                ", it craves vengeance.\n"
+                "It bears you no particular rancour, but may attack anything that stands in its way.";
         }
         break;
 

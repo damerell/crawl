@@ -239,7 +239,7 @@ void follower::load_mons_items()
             items[i].clear();
 }
 
-monster* follower::place(const coord_def *defined_pos) {
+monster* follower::place(const coord_def *defined_pos, bool exact_pos) {
     ASSERT(mons.alive());
 
     monster *m = get_free_monster();
@@ -249,7 +249,10 @@ monster* follower::place(const coord_def *defined_pos) {
     // Copy the saved data.
     *m = mons;
 
-    if ((defined_pos && m->find_home_near_place(*defined_pos)) ||
+    // if you set exact_pos and not defined_pos, green demons fly out your nose
+    if ((exact_pos && defined_pos && m->move_to_pos(*defined_pos)) ||
+        (!exact_pos && 
+         (defined_pos && m->find_home_near_place(*defined_pos))) ||
         (m->find_home_anywhere())) {
 #if TAG_MAJOR_VERSION == 34
         // fix up some potential cloned monsters for beogh chars.
@@ -495,14 +498,17 @@ void add_monster_to_limbo(monster *m) {
     m->destroy_inventory();
     monster_cleanup(m);
 }
-bool extract_monster_from_limbo(mid_t mid, const coord_def &pos) {
+bool extract_monster_from_limbo(mid_t mid, const coord_def &pos, 
+                                bool exact_pos) {
     m_transit_list &limhere = limbo_monsters[level_id::current()];
     if (limhere.empty()) {
         mprf(MSGCH_ERROR, "BUG: Attempted to remove monster from limbo; no monsters in limbo.");
         return false;
     }
     for (auto i = limhere.begin(); i != limhere.end(); ++i) {
-        if (i->mons.mid == mid && i->place(&pos)) {
+        // follower::place doesn't always put it exactly here? It does if pos
+        // is otherwise OK, and we check that in place_ghost().
+        if (i->mons.mid == mid && i->place(&pos, exact_pos)) {
             monster* new_mon = monster_by_mid(i->mons.mid);
             new_mon->apply_location_effects(new_mon->pos());
             limhere.erase(i);
@@ -519,7 +525,8 @@ void wizard_extract_limbo() {
     if (limhere.empty()) {
         mpr("No monsters in limbo.");
     } else {
-        if (extract_monster_from_limbo(limhere.begin()->mons.mid,you.pos())) {
+        if (extract_monster_from_limbo(limhere.begin()->mons.mid,you.pos(),
+                                       false)) {
             mpr("That seemed to work.");
         } else {
             mpr("That seemed not to work.");
@@ -527,15 +534,15 @@ void wizard_extract_limbo() {
     }
 }
 
-bool is_limbo_mons(std::function <bool (const monster &mons)> test) {
+mid_t is_limbo_mons(std::function <bool (const monster &mons)> test) {
     m_transit_list &limhere = limbo_monsters[level_id::current()];
     if (limhere.empty()) {
-        return false;
+        return MID_NOBODY; // which had better keep being 0
     } 
     for (auto i = limhere.begin(); i != limhere.end(); ++i) {
         if (test(i->mons)) {
-            return true;
+            return i->mons.mid;
         }
     }
-    return false;
+    return MID_NOBODY;
 }

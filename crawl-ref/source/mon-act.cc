@@ -50,6 +50,7 @@
 #include "mon-project.h"
 #include "mon-speak.h"
 #include "mon-tentacle.h"
+#include "mon-transit.h"
 #include "nearby-danger.h"
 #include "religion.h"
 #include "rot.h"
@@ -2294,8 +2295,32 @@ static void _post_monster_move(monster* mons)
             }
     }
 
+    mid_t ghost;
+    if (mons->props.exists("ghost_hated") &&  
+        mons->attitude == ATT_HOSTILE &&
+        div_rand_round(mons->hit_points, 2 * mons->max_hit_points) &&
+        !(mons->petrifying() || mons->paralysed() || mons->petrified() || 
+          mons->asleep() || mons->is_patrolling() || 
+          mons_is_wandering(*mons)) &&
+        // Arguably this next check should be in place_ghost but I want to
+        // avoid repeated calls to trans_wall_blocking for no reason
+        (ghost = is_limbo_mons([&](const monster &spook)
+        { if (spook.ghost) {
+                actor* foe = spook.get_foe();
+                if (!foe) return true;
+                // We could also check the ghost_targetted prop here but let's
+                // not gratuitously rule out >1 ghost
+                if (foe == mons) return true;
+            } 
+          return false;
+        })) &&
+        you.see_cell_no_trans(mons->pos())) {
+        place_ghost(*mons,ghost);
+    }
+
     if (mons->type != MONS_NO_MONSTER && mons->hit_points < 1)
         monster_die(*mons, KILL_MISC, NON_MONSTER);
+    
 }
 
 priority_queue<pair<monster *, int>,
