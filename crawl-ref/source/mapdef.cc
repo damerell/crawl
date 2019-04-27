@@ -4906,12 +4906,16 @@ int str_to_ego(object_class_type item_type, string ego_str)
         "frost",
         "poisoned",
         "curare",
+#if TAG_MAJOR_VERSION == 34
         "returning",
+#endif
         "chaos",
         "penetration",
         "dispersal",
+#if TAG_MAJOR_VERSION == 34
         "exploding",
         "steel",
+#endif
         "silver",
 #if TAG_MAJOR_VERSION == 34
         "paralysis",
