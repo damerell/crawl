@@ -632,8 +632,6 @@ static fire_type _str_to_fire_types(const string &str)
         return FIRE_DART;
     else if (str == "net")
         return FIRE_NET;
-    else if (str == "return" || str == "returning")
-        return FIRE_RETURNING;
     else if (str == "inscribed")
         return FIRE_INSCRIBED;
 
@@ -1073,7 +1071,7 @@ void game_options::reset_options()
     fire_items_start       = 0;           // start at slot 'a'
 
     // Clear fire_order and set up the defaults.
-    set_fire_order("launcher, return, "
+    set_fire_order("launcher,"
                    "javelin / tomahawk / stone / rock / net / dart, "
                    "inscribed",
                    false, false);
