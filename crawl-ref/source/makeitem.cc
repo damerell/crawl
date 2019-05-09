@@ -544,7 +544,7 @@ static special_missile_type _determine_missile_brand(const item_def& item,
                                     35, SPMSL_STEEL,
                                     nw, SPMSL_NORMAL);
         break;
-    case MI_TOMAHAWK:
+    case MI_BOOMERANG:
         rc = random_choose_weighted(60, SPMSL_STEEL,
                                     30, SPMSL_DISPERSAL,
                                     nw, SPMSL_NORMAL);
@@ -596,7 +596,7 @@ bool is_missile_brand_ok(int type, int brand, bool strict)
 
     case SPMSL_BLINDING:
         // possible on ex-pies
-        return type == MI_DART || (type == MI_TOMAHAWK && !strict);
+        return type == MI_DART || (type == MI_BOOMERANG && !strict);
 
     default:
         if (type == MI_DART)
@@ -621,20 +621,20 @@ bool is_missile_brand_ok(int type, int brand, bool strict)
     case SPMSL_POISONED:
         return false;
     case SPMSL_CHAOS:
-        return type == MI_TOMAHAWK || type == MI_JAVELIN;
+        return type == MI_BOOMERANG || type == MI_JAVELIN;
     case SPMSL_PENETRATION:
         return type == MI_JAVELIN;
     case SPMSL_DISPERSAL:
-        return type == MI_TOMAHAWK;
+        return type == MI_BOOMERANG;
 #if TAG_MAJOR_VERSION == 34
     case SPMSL_RETURNING:
-        return type == MI_JAVELIN || type == MI_TOMAHAWK;
+        return type == MI_JAVELIN || type == MI_BOOMERANG;
     case SPMSL_EXPLODING:
-        return type == MI_TOMAHAWK;
+        return type == MI_BOOMERANG;
     case SPMSL_SILVER: // deliberate fall through
 #endif
     case SPMSL_STEEL:
-        return type == MI_JAVELIN || type == MI_TOMAHAWK;
+        return type == MI_JAVELIN || type == MI_BOOMERANG;
     default: break;
     }
 
@@ -661,7 +661,7 @@ static void _generate_missile_item(item_def& item, int force_type,
                                    12, MI_BOLT,
                                    12, MI_SLING_BULLET,
                                    10, MI_DART,
-                                   3,  MI_TOMAHAWK,
+                                   3,  MI_BOOMERANG,
                                    2,  MI_JAVELIN,
                                    1,  MI_THROWING_NET,
                                    1,  MI_LARGE_ROCK);
@@ -691,7 +691,7 @@ static void _generate_missile_item(item_def& item, int force_type,
     }
 
     // Reduced quantity if special.
-    if (item.sub_type == MI_JAVELIN || item.sub_type == MI_TOMAHAWK
+    if (item.sub_type == MI_JAVELIN || item.sub_type == MI_BOOMERANG
         || (item.sub_type == MI_DART && get_ammo_brand(item) != SPMSL_POISONED)
         || get_ammo_brand(item) == SPMSL_RETURNING)
     {

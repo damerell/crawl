@@ -663,7 +663,7 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     }
 
     returning = item.base_type == OBJ_MISSILES
-        && item.sub_type == MI_TOMAHAWK;
+        && item.sub_type == MI_BOOMERANG;
 
     if (item.base_type == OBJ_MISSILES
         && get_ammo_brand(item) == SPMSL_EXPLODING)
@@ -1193,13 +1193,16 @@ bool mons_throw(monster* mons, bolt &beam, int msl, bool teleport)
 
         // Only print a message if you can see the target or the thrower.
         // Otherwise we get "The weapon returns whence it came from!" regardless.
-        if (you.see_cell(beam.target) || you.can_see(*mons))
-        {
-            msg::stream << "The weapon returns "
-                        << (you.can_see(*mons)?
-                              ("to " + mons->name(DESC_THE))
-                            : "from whence it came")
-                        << "!" << endl;
+        if (you.see_cell(beam.target) || you.can_see(*mons)) {
+            // if not, it was probably killed by a reflected boomerang
+            // and this message is confusing
+            if (mons->alive()) {
+                msg::stream << "The weapon returns "
+                            << (you.can_see(*mons)?
+                                ("to " + mons->name(DESC_THE))
+                                : "from whence it came")
+                            << "!" << endl;
+            }
         }
 
         // Player saw the item return.
