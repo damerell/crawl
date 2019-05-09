@@ -1500,7 +1500,8 @@ static string _describe_ammo(const item_def &item)
         case SPMSL_DISPERSAL:
             description += "It will cause any target it hits to blink, with a "
                            "tendency towards blinking further away from the "
-                           "one who " + threw_or_fired + " it.";
+                           "one who " + threw_or_fired + " it. It will be "
+                           "destroyed on impact.";
             break;
         case SPMSL_STEEL:
             description += "It deals increased damage compared to normal ammo.";

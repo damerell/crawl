@@ -3515,7 +3515,7 @@ colour_t item_def::missile_colour() const
             return RED;
         case MI_THROWING_NET:
             return MAGENTA;
-        case MI_TOMAHAWK:
+        case MI_BOOMERANG:
             return GREEN;
         case NUM_SPECIAL_MISSILES:
         default:
