@@ -27,6 +27,7 @@
 #include "chardump.h"
 #include "cloud.h"
 #include "coordit.h"
+#include "describe.h"
 #include "directn.h"
 #include "dbg-maps.h"
 #include "dbg-scan.h"
@@ -3251,7 +3252,7 @@ static void _place_traps()
             ts.reveal();
         ts.prepare_ammo();
         env.trap[ts.pos] = ts;
-        dprf("placed a trap");
+        dprf("placed a %s trap", trap_name(type).c_str());
     }
 
     if (player_in_branch(BRANCH_SPIDER))
@@ -5892,8 +5893,8 @@ static void _place_specific_trap(const coord_def& where, trap_spec* spec,
 
     while (spec_type >= NUM_TRAPS
 #if TAG_MAJOR_VERSION == 34
-           || spec_type == TRAP_DART || spec_type == TRAP_GAS
-           || spec_type == TRAP_SHADOW || spec_type == TRAP_SHADOW_DORMANT
+               || spec_type == TRAP_NEEDLE || spec_type == TRAP_GAS
+               || spec_type == TRAP_SHADOW || spec_type == TRAP_SHADOW_DORMANT
 #endif
            || !is_valid_shaft_level(known) && spec_type == TRAP_SHAFT)
     {
@@ -5907,6 +5908,7 @@ static void _place_specific_trap(const coord_def& where, trap_spec* spec,
                        : DNGN_UNDISCOVERED_TRAP;
     t.prepare_ammo(charges);
     env.trap[where] = t;
+    dprf("placed a %s trap", trap_name(spec_type).c_str());
 }
 
 /**
