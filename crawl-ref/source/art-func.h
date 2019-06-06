@@ -1068,6 +1068,8 @@ static void _ORDER_melee_effects(item_def* item, actor* attacker,
                 mpr(msg);
             defender->hurt(attacker, silver_dam);
         }
+        else if (dam > 0)
+            defender->hurt(attacker, 1 + random2(dam) / 3);
     }
 }
 
