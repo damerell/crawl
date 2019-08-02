@@ -866,7 +866,15 @@ bool cast_a_spell(bool check_range, spell_type spell)
             crawl_state.zero_turns_taken();
             return false;
         }
-
+        // check_range being stretched a bit here
+        if (!you.permabuff[PERMA_INFUSION] && check_range &&
+            (you.max_magic_points <= spell_mana(SPELL_INFUSION))) {
+            mpr("You would have no MP left to infuse your attacks with. "
+                "(Use <w>Z</w> to cast anyway.)");
+            crawl_state.zero_turns_taken();
+            return false;
+        }
+        
         if (you.undead_state() == US_ALIVE && !you_foodless()
             && you.hunger <= spell_hunger(spell))
         {
