@@ -1300,6 +1300,11 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
         if (orb_limits_translocation(temp))
             return "the Orb prevents this spell from working.";
 
+    case SPELL_INFUSION:
+        if (!prevent && temp && !you.permabuff[PERMA_INFUSION] && 
+            (you.max_magic_points <= spell_mana(SPELL_INFUSION))) {
+            return "you would have no MP left to infuse your attacks with.";
+        } 
     default:
         break;
     }
