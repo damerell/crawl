@@ -503,8 +503,8 @@ void rakshasa_clone_fineff::fire()
     ASSERT(rakshasa);
 
     // Using SPELL_NO_SPELL to prevent overwriting normal clones
-    cast_phantom_mirror(rakshasa, rakshasa, 50, SPELL_NO_SPELL);
-    cast_phantom_mirror(rakshasa, rakshasa, 50, SPELL_NO_SPELL);
+    cast_phantom_mirror(rakshasa, rakshasa, 75, SPELL_NO_SPELL);
+    cast_phantom_mirror(rakshasa, rakshasa, 75, SPELL_NO_SPELL);
     rakshasa->lose_energy(EUT_SPELL);
 
     if (you.can_see(*rakshasa))
