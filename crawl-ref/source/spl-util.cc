@@ -1644,11 +1644,17 @@ void permabuff_track(int pb) {
     }
 }
 
+bool permabuff_uses_charms_reserve(permabuff_type pb) {
+    return (pb != PERMA_REGEN) && (pb != PERMA_BATTLESPHERE);
+}
+
 int nominal_duration(spell_type spell) {
+    // These are in turns, not auts. We keep the maximum iff high spellpower
+    // has other significant benefits.
     int pow;
     switch (spell) {
     case SPELL_INFUSION:
-        return min(100,8 + calc_spell_power(spell, true));
+        return min(100, 8 + calc_spell_power(spell, true));
 // you.increase_duration(DUR_INFUSION,  8 + roll_dice(2, pow), 100);
     case SPELL_SONG_OF_SLAYING:
         return 20 + (calc_spell_power(spell, true) / 2);
@@ -1681,6 +1687,9 @@ int nominal_duration(spell_type spell) {
         return min(50, 6 +  (calc_spell_power(spell, true)/5));
         // you.increase_duration(DUR_FIRE_SHIELD,
         //  6 + (power / 10) + (random2(power) / 5), 50,
+    case SPELL_BATTLESPHERE:
+        return min(50, 7 + calc_spell_power(spell, true));
+        //abj.duration = min(abj.duration + (7 + roll_dice(2, pow)) * 10, 500);
     default:
         return 0;
     }

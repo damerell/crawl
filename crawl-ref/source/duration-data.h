@@ -567,6 +567,22 @@ static const duration_def duration_data[] =
 				"teleporting" :
 				"able to teleport"));
 		      }}}}}},
+    { DUR_BATTLESPHERE, 
+      YELLOW, "-Sphere",
+      "battlesphere suppressed", "",
+      "Your battlesphere has been dispelled", D_EXPIRES,
+      {{ "", []() {
+		  if (_recheck_perma(PERMA_BATTLESPHERE)) {
+		      if (you.permabuff_could(PERMA_BATTLESPHERE)) {
+			  if (!you.permabuff_working(PERMA_BATTLESPHERE)) {
+			      mprf(MSGCH_DURATION, 
+				   "You are able to summon a battlesphere.");
+// This avoids a message if you're about to get one when it pops into being
+			  } else if (you.props[BS_CHARGE_RESERVE].get_int()
+				     == 0) {
+			      mprf(MSGCH_DURATION, 
+				   "You will conjure a battlesphere when you are able to.");
+			  }}}}}}},
     { DUR_FORESTED,
       GREEN, "Forest",
       "", "forested",
@@ -742,7 +758,6 @@ static const duration_def duration_data[] =
     { DUR_MISLED, 0, "", "", "old misled", "", D_NO_FLAGS},
     { DUR_NAUSEA, 0, "", "", "old nausea", "", D_NO_FLAGS},
     { DUR_TEMP_MUTATIONS, 0, "", "", "old temporary mutations", "", D_NO_FLAGS},
-    { DUR_BATTLESPHERE, 0, "", "", "old battlesphere", "", D_NO_FLAGS},
     { DUR_RETCHING, 0, "", "", "old retching", "", D_NO_FLAGS},
     { DUR_SPIRIT_HOWL, 0, "", "", "old spirit howl", "", D_NO_FLAGS},
     { DUR_SONG_OF_SHIELDING, 0, "", "", "old song of shielding", "", D_NO_FLAGS},

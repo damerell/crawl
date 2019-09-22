@@ -59,6 +59,10 @@ Regen status
 You regenerate health at an unnaturally fast rate. This is only shown for
 temporary regeneration.
 %%%%
+-Regen status
+
+Your magical regeneration has been temporarily suppressed.
+%%%%
 RMsl status
 
 You repel missiles, improving your chance to evade them. This effect, if
@@ -70,6 +74,10 @@ DMsl status
 You deflect missiles, greatly improving your chance to evade them. This effect,
 if provided by a spell, has a chance to be temporarily suppressed with every
 projectile it deflects; it otherwise lasts indefinitely.
+%%%%
+-DMsl status
+
+You are temporarily unable to magically deflect missiles.
 %%%%
 Touch status
 
@@ -145,6 +153,14 @@ Exh status
 
 You are exhausted, and are unable to activate divine powers that cause
 exhaustion until the status expires.
+%%%%
+Excru status
+
+Your weapon has been branded to cause excruciating pain to living creatures.
+%%%%
+-Excru status
+
+You are temporarily unable to brand your weapon with pain.
 %%%%
 Slow status
 
@@ -279,6 +295,10 @@ DChan status
 You are channeling the dead, causing some living creatures killed in your
 vicinity to be raised as spectral servants.
 %%%%
+-DChan status
+
+You are temporarily unable to use Death Channel.
+%%%%
 Vit status
 
 You are divinely vitalised, providing protection from poison, confusion,
@@ -290,6 +310,10 @@ RoF status
 You are surrounded by a ring of flame clouds, increasing the power of
 your fire magic and giving protection from fire but also making you
 much more susceptible to cold attacks which are not intercepted by the clouds.
+%%%%
+-RoF status
+
+You are temporarily unable to surround yourself with a ring of flames.
 %%%% 
 MR/2 status
 
@@ -400,6 +424,10 @@ Shroud status
 You are bending space around yourself, providing protection from some attacks
 in melee.
 %%%%
+-Shroud status
+
+Your distorting shroud has been temporarily destroyed.
+%%%%
 Disjoin status
 
 You are destabilizing space around yourself, causing nearby monsters to be
@@ -410,10 +438,18 @@ Infus status
 Your melee attacks are infused with magical energy, and will drain your
 reserves of magic to deal additional damage whenever an enemy is hit.
 %%%%
+-Infus status
+
+You are temporarily unable to infuse your melee attacks with magical energy.
+%%%%
 Slay status
 
 You are singing a Song of Slaying, providing bonuses to your ranged and melee
 attacks which increase every time you slay a foe in combat.
+%%%%
+-Slay status
+
+You are temporarily unable to sing a song of slaying.
 %%%%
 Toxic status
 
@@ -438,6 +474,10 @@ PProj status
 
 You are teleporting fired or thrown missiles directly to their targets with
 increased accuracy, at the cost of a small amount of magic for each missile.
+%%%%
+-PProj status
+
+You are temporarily unable to teleport projectiles directly to their targets.
 %%%%
 Forest status
 
@@ -798,3 +838,6 @@ Water status
 
 Your control over your magic has been sapped.
 %%%%
+-Sphere status
+
+You are temporarily unable to summon a battlesphere.

@@ -137,9 +137,9 @@ bool spell_no_hostile_in_range(spell_type spell);
 bool spell_is_soh_breath(spell_type spell);
 const vector<spell_type> *soh_breath_spells(spell_type spell);
 
-// has_permabuff doesn't complain if it's not a permabuff, it just returns false
 permabuff_type permabuff_is(spell_type spell); // sigh
 bool is_permabuff(spell_type spell);
 void permabuff_track(int pb);
+bool permabuff_uses_charms_reserve(permabuff_type pb);
 
 int nominal_duration(spell_type spell);

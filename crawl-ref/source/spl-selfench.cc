@@ -28,6 +28,7 @@
 #include "showsymb.h"
 #include "spl-transloc.h"
 #include "spl-util.h"
+#include "spl-summoning.h"
 #include "spl-wpnench.h"
 #include "stringutil.h"
 #include "transform.h"
@@ -103,7 +104,10 @@ spret_type deflection(int pow, bool fail)
         if (you.props.exists(DMSL_RECHARGE) &&
             you.props[DMSL_RECHARGE].get_int()) {
             you.props.erase(DMSL_RECHARGE); 
-            you.increase_duration(DUR_DEFLECT_MISSILES, 25, 25);
+// Why 25 for SoG and DMsl but 10 for Regeneration? I dunno but I guess it
+// is because Regen will recharge faster if you have lots of MP anyway, so
+// preemptively cancelling it is less attractive?
+            you.increase_duration(DUR_DEFLECT_MISSILES, 25, 50);
         }
         you.pb_off(PERMA_DMSL); return SPRET_PERMACANCEL;
     } else {
@@ -120,7 +124,7 @@ spret_type cast_regen(int pow, bool fail)
     if (you.permabuff[PERMA_REGEN]) {
         mpr("Your skin stops crawling.");
                 // This stops HOM dropping and recasting to refill the reserve
-        you.increase_duration(DUR_REGENERATION, 10, 25);
+        you.increase_duration(DUR_REGENERATION, 10, 50);
         you.pb_off(PERMA_REGEN); return SPRET_PERMACANCEL;
     } else {
         fail_check();
@@ -293,7 +297,7 @@ spret_type cast_shroud_of_golubria(int pow, bool fail)
         if (you.props.exists(SHROUD_RECHARGE) &&
             you.props[SHROUD_RECHARGE].get_int()) {
             you.props.erase(SHROUD_RECHARGE); 
-            you.increase_duration(DUR_SHROUD_OF_GOLUBRIA, 25, 25);
+            you.increase_duration(DUR_SHROUD_OF_GOLUBRIA, 25, 50);
         }
         you.pb_off(PERMA_SHROUD); return SPRET_PERMACANCEL;
     } else {
@@ -350,13 +354,16 @@ void spell_drop_permabuffs(bool turn_off, bool end_durs, bool increase_durs,
     }
 }
 
+// Why is this in spl-selfench? Hysterical raisins
 bool permabuff_fail_check(permabuff_type pb, const string &message, 
                           bool ignoredur) {
     permabuff_track(pb);
     spell_type spell = permabuff_spell[pb];
-    if (one_chance_in((BASELINE_DELAY * nominal_duration(spell)) /
-                      (max(1, you.time_taken) * pb_dur_fudge[pb])) ||
-        ignoredur) {
+    if (ignoredur ||
+        one_chance_in((pb == PERMA_BATTLESPHERE) ?
+                      battlesphere_max_charges() :
+                      (BASELINE_DELAY * nominal_duration(spell)) /
+                      (max(1, you.time_taken) * pb_dur_fudge[pb]))) {
         int fail = failure_check(spell, true);
         if (fail) {
             mprf(MSGCH_DURATION, "%s", message.c_str());

@@ -64,6 +64,7 @@
 #include "skills.h"
 #include "spl-damage.h"
 #include "spl-selfench.h"
+#include "spl-summoning.h"
 #include "spl-transloc.h"
 #include "spl-wpnench.h"
 #include "spl-util.h"
@@ -4082,12 +4083,11 @@ int get_real_mp(bool include_items, bool count_frozen)
                 if (enp >= cost) {
                     enp -= cost;
                     you.mp_frozen += cost;
-                    if (j != PERMA_REGEN) {
+                    if (permabuff_uses_charms_reserve((permabuff_type) j)) {
                         you.charms_reserve_size += cost * 100;
                     }
                 } else {
-                    // don't make this a pb_off because it will calc_mp !
-                    you.permabuff[j] = false; someoff = true;
+                    you.pb_off((permabuff_type) j, false); someoff = true;
                     you.increase_duration(permabuff_durs[j], 25);
                 }
             }
@@ -5196,19 +5196,17 @@ string player::permabuff_whynot(permabuff_type pb) {
         return "you are buggily enchanted";
     }
 }
-// These functions handle routine on/offs for permabuffs. They don't take 
-// account of Regeneration having special reserve handling, the reason being,
-// I'm about to change that
+// These functions handle routine on/offs for permabuffs. 
 void player::pb_on(permabuff_type pb) {
     permabuff[pb] = true;
-    if (pb != PERMA_REGEN) {
+    if (permabuff_uses_charms_reserve(pb)) {
         charms_reserve += spell_mana(permabuff_spell[pb]) * 100;
     }
     calc_mp();
 }
-void player::pb_off(permabuff_type pb) {
+void player::pb_off(permabuff_type pb, bool recalcmp) {
     permabuff[pb] = false;
-    if (charms_reserve_size && (pb != PERMA_REGEN)) {
+    if (recalcmp && charms_reserve_size && permabuff_uses_charms_reserve(pb)) {
         charms_reserve -= 
             (spell_mana(permabuff_spell[pb]) * 100 * charms_reserve) /
             charms_reserve_size;
@@ -5217,7 +5215,11 @@ void player::pb_off(permabuff_type pb) {
         you.props.exists(ORIGINAL_BRAND_KEY)) {
         end_weapon_brand(*you.weapon(), true);
     }
-    calc_mp();
+    monster* battlesphere = find_battlesphere(&you);
+    if ((pb == PERMA_BATTLESPHERE) && battlesphere) {
+        end_battlesphere(battlesphere, false, true);
+    }
+    if (recalcmp) calc_mp();
 }
 // This is similar to, but not the same as, can_cast_spells - eg the latter
 // doesn't check for being paralysed, petrified, &c

@@ -1723,9 +1723,18 @@ bool mons_can_use_stairs(const monster& mon, dungeon_feature_type stair)
     if (!mons_class_can_use_stairs(mon.type))
         return false;
 
-    // Summons can't use stairs.
-    if (mon.has_ench(ENCH_ABJ) || mon.has_ench(ENCH_FAKE_ABJURATION))
-        return false;
+    // Summons can't use stairs. Except your battlesphere to reduce dissipate/
+    // resummon spam. It's a buff, but the alternative is a nerf compared to
+    // being able to recast immediately after taking stairs.
+    // Don't let enemy spheres do it because we can't check the summoner came
+    if (mon.has_ench(ENCH_ABJ) || mon.has_ench(ENCH_FAKE_ABJURATION)) {
+        if ((mon.type == MONS_BATTLESPHERE) && 
+            (mon.summoner == MID_PLAYER)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     if (mon.has_ench(ENCH_FRIENDLY_BRIBED)
         && (feat_is_branch_entrance(stair) || feat_is_branch_exit(stair)

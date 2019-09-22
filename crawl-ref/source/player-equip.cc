@@ -758,7 +758,7 @@ static void _unequip_weapon_effect(item_def& real_item, bool showMsgs,
                 end_weapon_brand(real_item, true);
                 // This duration fiddled with at random again
                 // No need for a maximum because you can't stack it
-                you.increase_duration(DUR_EXCRUCIATING_WOUNDS,
+                you.increase_duration(DUR_EXCRUCIATING_WOUNDS, 
                                       10 + roll_dice(2,5));
             }
         }

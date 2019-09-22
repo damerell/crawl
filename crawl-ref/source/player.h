@@ -927,6 +927,7 @@ public:
 
     bool clear_far_engulf() override;
 
+//has_permabuff doesn't complain if it's not a permabuff, it just returns false
     bool has_permabuff(spell_type spell);
     bool permabuff_working(permabuff_type permabuff);
     bool permabuff_could(permabuff_type permabuff);
@@ -934,7 +935,7 @@ public:
     string permabuff_whynot(permabuff_type permabuff);
     bool has_any_permabuff();
     void pb_on(permabuff_type pb);
-    void pb_off(permabuff_type pb);
+    void pb_off(permabuff_type pb, bool recalcmp = true);
     // If called with a specific PB, checks for conditions particular to that
     // PB. Which there aren't any of right now, but I might think of some.
     bool can_renew_pbs(permabuff_type pb = PERMA_NO_PERMA);
