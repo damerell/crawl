@@ -775,8 +775,13 @@ Iskenderun's Battlesphere spell
 Conjures a small globe of magical energy linked to the caster's own magical
 reserves. While the battlesphere cannot take independent action, it will fire
 volleys of energy at the caster's enemies in sync with its creator's own
-destructive conjurations. With increasing power, the battlesphere lasts longer
-and deals more damage per volley.
+destructive conjurations. 
+
+When used by the player, the battlesphere's energy reserves are
+replenished by the player's MP regeneration. With increasing power,
+the battlesphere can be replenished more easily and deals more damage
+per volley. If you cannot see your battlesphere and would otherwise be
+about to replenish a charge, you will recall it to your side.
 %%%%
 Iskenderun's Mystic Blast spell
 

@@ -13,8 +13,10 @@ enum permabuff_type {
 	PERMA_EXCRU,
 	PERMA_DCHAN,
 	PERMA_ROF,
+	PERMA_BATTLESPHERE,
 	PERMA_FIRST_PERMA = PERMA_INFUSION,
-	PERMA_LAST_PERMA = PERMA_ROF,
+	// Don't FORGET TO CHANGE THIS, David
+	PERMA_LAST_PERMA = PERMA_BATTLESPHERE,
     };
 
 static const duration_type permabuff_durs[] = {
@@ -28,6 +30,7 @@ static const duration_type permabuff_durs[] = {
     DUR_EXCRUCIATING_WOUNDS,
     DUR_DEATH_CHANNEL,
     DUR_FIRE_SHIELD, // bah
+    DUR_BATTLESPHERE,
 };
 
 static const spell_type permabuff_spell[] = {
@@ -41,11 +44,13 @@ static const spell_type permabuff_spell[] = {
     SPELL_EXCRUCIATING_WOUNDS,
     SPELL_DEATH_CHANNEL,
     SPELL_RING_OF_FLAMES,
+    SPELL_BATTLESPHERE,
 };
 
 // These PBs charge you MP regeneration based on their nominal duration.
-// Others don't - Regen has its own MP reservoir.
-// They all charge you hunger, however
+// Others don't - Regen has its own MP reservoir, and Isk's Battlesphere
+// charges you for charges.
+// They all charge you hunger, however.
 static const permabuff_type pb_ordinary_mpregen[] = {
     PERMA_INFUSION,
     PERMA_SHROUD,
@@ -75,4 +80,6 @@ static const int pb_dur_fudge[] = {
     2, // excru
     1, // DChan - 1 because you might get many kills in a turn
     1, // rof - short duration, cast before unloading
+    2, // battlesphere (but doesn't do anything because miscast frequency is
+       // done per-charge)
 };

@@ -433,6 +433,51 @@ bool fill_status_info(int status, status_info& inf)
         break;
     }
 
+    case STATUS_BATTLESPHERE: {
+        if (you.permabuff[PERMA_BATTLESPHERE] &&
+            !you.duration[DUR_BATTLESPHERE]) {
+            monster* battlesphere = find_battlesphere(&you);
+            if (battlesphere && battlesphere->battlecharge && 
+                you.can_see(*battlesphere)) {
+                inf.short_text = "battlesphere";
+                inf.long_text = "You have conjured a battlesphere.";
+                break;
+            }
+            inf.light_text = "Sphere";
+            if (you.permabuff_working(PERMA_BATTLESPHERE)) {
+                inf.light_colour = BLUE;
+                if (!battlesphere) {
+                    inf.short_text = "conjuring battlesphere";
+                    inf.long_text = 
+                        "You are going to conjure a new battlesphere.";
+                } else if (!battlesphere->battlecharge) {
+                    inf.short_text = "battlesphere recharging";
+                    inf.long_text = 
+                        "Your battlesphere has no charges.";
+                } else if (!you.can_see(*battlesphere)) {
+                    inf.light_colour = LIGHTBLUE;
+                    inf.short_text = "battlesphere out of sight";
+                    inf.long_text = 
+                        "You will soon recall your battlesphere.";
+                }
+            } else {
+                inf.light_colour = DARKGREY;
+                inf.short_text = "no battlesphere";
+                inf.long_text = 
+                    "You would conjure a battlesphere, but " +
+                    you.permabuff_whynot(PERMA_BATTLESPHERE) + ".";
+            }
+        }
+        break;
+    }
+    case DUR_BATTLESPHERE: {
+        if (!you.permabuff[PERMA_BATTLESPHERE]) {
+            inf.light_colour = DARKGREY;
+            inf.long_text = "If you recast Iskenderun's Battlesphere, it will not take effect immediately.";
+        }
+        break;
+    }
+
     case STATUS_REPEL_MISSILES:
         _describe_repel_missiles(inf);
         break;

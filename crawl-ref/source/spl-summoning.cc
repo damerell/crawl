@@ -53,6 +53,7 @@
 #include "religion.h"
 #include "rot.h"
 #include "shout.h"
+#include "spl-selfench.h"
 #include "spl-util.h"
 #include "spl-wpnench.h"
 #include "spl-zap.h"
@@ -2517,81 +2518,82 @@ monster* find_battlesphere(const actor* agent)
 
 spret_type cast_battlesphere(actor* agent, int pow, god_type god, bool fail)
 {
-    fail_check();
-
-    monster* battlesphere;
-    if (agent->is_player() && (battlesphere = find_battlesphere(&you)))
-    {
-        bool recalled = false;
-        if (!you.can_see(*battlesphere))
-        {
-            coord_def empty;
-            if (find_habitable_spot_near(agent->pos(), MONS_BATTLESPHERE, 3, false, empty)
-                && battlesphere->move_to_pos(empty))
-            {
-                recalled = true;
+    monster* battlesphere = 0;
+    if (agent->is_player()) {
+        if (you.permabuff[PERMA_BATTLESPHERE]) {
+            battlesphere = find_battlesphere(&you);
+            if (battlesphere) {
+                mpr("You dispel your battlesphere.");
+            } else {
+                mpr("You will not summon another battlesphere.");
             }
+            you.pb_off(PERMA_BATTLESPHERE); 
+            you.increase_duration(DUR_BATTLESPHERE, 10, 50);
+            return SPRET_PERMACANCEL;
+        } else {
+            fail_check();
+            you.pb_on(PERMA_BATTLESPHERE);
         }
-
-        if (recalled)
-        {
-            mpr("You recall your battlesphere and imbue it with additional"
-                " charge.");
-        }
-        else
-            mpr("You imbue your battlesphere with additional charge.");
-
-        battlesphere->battlecharge = min(20, (int) battlesphere->battlecharge
-                                              + 4 + random2(pow + 10) / 10);
-
-        // Increase duration
-        mon_enchant abj = battlesphere->get_ench(ENCH_FAKE_ABJURATION);
-        abj.duration = min(abj.duration + (7 + roll_dice(2, pow)) * 10, 500);
-        battlesphere->update_ench(abj);
-    }
-    else
-    {
-        ASSERT(!find_battlesphere(agent));
-        mgen_data mg (MONS_BATTLESPHERE,
-                      agent->is_player() ? BEH_FRIENDLY
-                                         : SAME_ATTITUDE(agent->as_monster()),
-                      agent->pos(), agent->mindex());
-        mg.set_summoned(agent, 0, SPELL_BATTLESPHERE, god);
-        mg.hd = 1 + div_rand_round(pow, 11);
-        battlesphere = create_monster(mg);
-
-        if (battlesphere)
-        {
-            int dur = min((7 + roll_dice(2, pow)) * 10, 500);
-            battlesphere->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, 1, 0, dur));
-            battlesphere->summoner = agent->mid;
-            agent->props["battlesphere"].get_int() = battlesphere->mid;
-
-            if (agent->is_player())
-                mpr("You conjure a globe of magical energy.");
-            else
-            {
-                if (you.can_see(*agent) && you.can_see(*battlesphere))
-                {
-                    simple_monster_message(*agent->as_monster(),
-                                           " conjures a globe of magical energy!");
-                }
-                else if (you.can_see(*battlesphere))
-                    simple_monster_message(*battlesphere, " appears!");
-                battlesphere->props["band_leader"].get_int() = agent->mid;
-            }
-            battlesphere->battlecharge = 4 + random2(pow + 10) / 10;
-            battlesphere->foe = agent->mindex();
-            battlesphere->target = agent->pos();
-        }
-        else if (agent->is_player() || you.can_see(*agent))
+    } 
+    bool worked = false;
+    if (!agent->is_player() || you.permabuff_working(PERMA_BATTLESPHERE)) {
+        worked = setup_battlesphere(agent, pow, god, battlesphere);
+    } 
+    if (!worked) {
+        if (agent->is_player()) {
+            mpr("You will soon conjure a battlesphere.");
+            you.props[BS_CHARGE_RESERVE] = 4 + random2(pow + 10) / 10;
+        } else if (you.can_see(*agent)) {
             canned_msg(MSG_NOTHING_HAPPENS);
+        }
     }
-
     return SPRET_SUCCESS;
 }
+bool setup_battlesphere(actor* agent, int pow, god_type god, 
+			monster* battlesphere, int recast) {
+    ASSERT(!find_battlesphere(agent));
+    mgen_data mg (MONS_BATTLESPHERE,
+                  agent->is_player() ? BEH_FRIENDLY
+                  : SAME_ATTITUDE(agent->as_monster()),
+                  agent->pos(), agent->mindex());
+    mg.set_summoned(agent, 0, SPELL_BATTLESPHERE, god);
+    mg.hd = 1 + div_rand_round(pow, 11);
+    battlesphere = create_monster(mg);
+    if (battlesphere)
+    {
+        int dur = agent->is_player() ? INFINITE_DURATION :
+            min((7 + roll_dice(2, pow)) * 10, 500);
+        battlesphere->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, 1, 0, dur));
+        battlesphere->summoner = agent->mid;
+        agent->props["battlesphere"].get_int() = battlesphere->mid;
+        
+        if (agent->is_player()) {
+            mpr(recast ? "You conjure another battlesphere." :
+                "You conjure a globe of magical energy.");
+            you.props[BS_CHARGE_RESERVE] = 0;
+        }
+        else
+        {
+            if (you.can_see(*agent) && you.can_see(*battlesphere))
+            {
+                simple_monster_message(*agent->as_monster(),
+                                       " conjures a globe of magical energy!");
+            }
+            else if (you.can_see(*battlesphere))
+                simple_monster_message(*battlesphere, " appears!");
+            battlesphere->props["band_leader"].get_int() = agent->mid;
+        }
+        battlesphere->battlecharge = recast ? recast : 
+            (agent->is_player() ? battlesphere_max_charges() :
+             4 + random2(pow + 10) / 10);
+        battlesphere->foe = agent->mindex();
+        battlesphere->target = agent->pos();
+        return true;
+    }
+    return false;
+}
 
-void end_battlesphere(monster* mons, bool killed)
+void end_battlesphere(monster* mons, bool killed, bool silent)
 {
     // Should only happen if you dismiss it in wizard mode, I think
     if (!mons)
@@ -2601,31 +2603,44 @@ void end_battlesphere(monster* mons, bool killed)
     if (agent)
         agent->props.erase("battlesphere");
 
+    if (agent && agent->is_player()) {
+        you.props[BS_CHARGE_RESERVE] = you.props[BS_CHARGE_COUNTUP] = 0;
+    }
     if (!killed)
     {
-        if (agent && agent->is_player())
-        {
-            if (you.can_see(*mons))
+        if (!silent) {
+            if (agent && agent->is_player())
             {
-                if (mons->battlecharge == 0)
+                if (you.can_see(*mons))
                 {
-                    mpr("Your battlesphere expends the last of its energy"
-                        " and dissipates.");
+                    mpr("Your battlesphere wavers and loses cohesion.");
                 }
                 else
-                    mpr("Your battlesphere wavers and loses cohesion.");
+                    mpr("You feel your bond with your battlesphere wane.");
             }
-            else
-                mpr("You feel your bond with your battlesphere wane.");
+            else if (you.can_see(*mons))
+                simple_monster_message(*mons, " dissipates.");
         }
-        else if (you.can_see(*mons))
-            simple_monster_message(*mons, " dissipates.");
-
         if (!cell_is_solid(mons->pos()))
             place_cloud(CLOUD_MAGIC_TRAIL, mons->pos(), 3 + random2(3), mons);
 
         monster_die(*mons, KILL_RESET, NON_MONSTER);
     }
+}
+
+int battlesphere_charge_cost(bool includefailurerate) {
+    spell_type spell = SPELL_BATTLESPHERE;
+    int successrate = includefailurerate ? 
+        (100 - (min(90,failure_rate_to_int(raw_spell_fail(spell))))) :
+        100;
+    return 1 + (100000 * spell_mana(spell) / 
+                (successrate *
+                 (45 + (calc_spell_power(spell, true) / 2))));
+}
+// An intentional change from vanilla where you can puff it up to 20 if you
+// like, but in practice you don't.
+int battlesphere_max_charges() {
+    return (4 + (calc_spell_power(SPELL_BATTLESPHERE, true) + 10) / 20);
 }
 
 bool battlesphere_can_mirror(spell_type spell)
@@ -2810,8 +2825,7 @@ bool fire_battlesphere(monster* mons)
 
     bool used = false;
 
-    if (mons->props.exists("firing") && mons->battlecharge > 0)
-    {
+    if (mons->props.exists("firing") && (mons->battlecharge > 0)) {
         if (mons->props.exists("tracking"))
         {
             if (mons->pos() == mons->props["tracking_target"].get_coord())
@@ -2876,14 +2890,35 @@ bool fire_battlesphere(monster* mons)
                      beam.target)
                     != beam.path_taken.end()))
         {
+            if (agent->is_player()) {
+                if (permabuff_fail_check
+                    (PERMA_BATTLESPHERE, 
+                     "You lose control of your battlesphere.")) {
+                    end_battlesphere(mons, false, true);
+                    return false;
+                } else {
+// HP are not recalculated. The player is never going to complain if it has a
+// few too many, and if it has too few, either it'll die and correct the 
+// situation or it won't and who cares? It's not like battlespheres often get
+// outright killed.
+                    mons->set_hit_dice
+                        (1 + div_rand_round
+                         (calc_spell_power(SPELL_BATTLESPHERE, true), 11));
+                    dprf(DIAG_PERMABUFF,"Battlesphere now has %d HD", 
+                         mons->get_hit_dice());
+                } 
+            }
             beam.thrower = (agent->is_player()) ? KILL_YOU : KILL_MON;
             simple_monster_message(*mons, " fires!");
             beam.fire();
 
             used = true;
             // Decrement # of volleys left and possibly expire the battlesphere.
-            if (--mons->battlecharge == 0)
-                end_battlesphere(mons, false);
+            if (--mons->battlecharge == 0) {
+                if (!agent && !agent->is_player()) {
+                    end_battlesphere(mons, false);
+                }
+            }
 
             mons->props.erase("firing");
         }

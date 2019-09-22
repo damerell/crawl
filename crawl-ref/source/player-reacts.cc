@@ -924,8 +924,8 @@ static void _handle_emergency_flight()
 
 // cjo: Handles player hp and mp regeneration. If the counter
 // you.hit_points_regeneration is over 100, a loop restores 1 hp and decreases
-// the counter by 100 (so you can regen more than 1 hp per turn). If the counter
-// is below 100, it is increased by a variable calculated from delay,
+// the counter by 100 (so you can regen more than 1 hp per turn). If the 
+// counter is below 100, it is increased by a variable calculated from delay,
 // BASELINE_DELAY, and your regeneration rate. MP regeneration happens
 // similarly, but the countup depends on delay, BASELINE_DELAY, and
 // you.max_magic_points
@@ -1112,42 +1112,75 @@ static void _regenerate_hp_and_mp(int delay)
             }
         }
 // The order in which permabuffs get to divert MPreg is kind of arbitrary
+// but I think the scheme is that ones with independent reserves of their own
+// go here to ensure the reserve is ~full when MP are full, because the player
+// cannot inspect the state of the reserve.
+        bool needs_regen = false; bool needs_battlesphere = false;
+        int divert = (mp_regen_countup * you.magic_points) /
+            max(you.max_magic_points,1);
         int regen_size = 100 * spell_mana(SPELL_REGENERATION);
-        if (you.permabuff_working(PERMA_REGEN) &&
-            you.can_renew_pbs() &&
-            (!you.confused()) &&
-            (you.props[REGEN_RESERVE].get_int() < regen_size)) {
-            int divert = (mp_regen_countup * you.magic_points) /
-                max(you.max_magic_points,1);
-            you.props[REGEN_RESERVE].get_int() += divert;
+        monster* battlesphere = find_battlesphere(&you);
+        if (you.can_renew_pbs()) {
+            needs_regen = (you.permabuff_working(PERMA_REGEN) &&
+                           (you.props[REGEN_RESERVE].get_int() < regen_size));
+// The ordering of things in permabuff_notworking is getting pretty fragile
+// one of these days we'll have to redo them as flags
+            needs_battlesphere = 
+                ((you.permabuff_working(PERMA_BATTLESPHERE) ||
+                  (you.permabuff_notworking(PERMA_BATTLESPHERE) == 
+                   PB_DURATION)) &&
+                 (you.props[BS_CHARGE_RESERVE].get_int() < 
+                  (BS_RESUMMON_CHARGE)));
+            if (battlesphere) {
+                if (you.can_see(*battlesphere) &&
+                    ((you.props[BS_CHARGE_RESERVE].get_int()
+                      + battlesphere->battlecharge)
+                     >= battlesphere_max_charges())) {
+                    needs_battlesphere = false;
+                }
+            }
+        }
+        if (needs_regen) {
+            int regdivert = needs_battlesphere ? 
+                div_rand_round(divert, 2) : divert;
+            divert -= regdivert;
+            you.props[REGEN_RESERVE].get_int() += regdivert;
             dprf(DIAG_PERMABUFF,"Regeneration diverted %d, reserve %d.",
-                 divert, you.props[REGEN_RESERVE].get_int());
+                 regdivert, you.props[REGEN_RESERVE].get_int());
 // Because first checked if it was <, can't go way over if a FD untransforms
             if (you.props[REGEN_RESERVE].get_int() > regen_size) {
-                divert -= (you.props[REGEN_RESERVE].get_int() - regen_size);
+                regdivert -= (you.props[REGEN_RESERVE].get_int() - regen_size);
                 you.props[REGEN_RESERVE].get_int() = regen_size;
             }
+            mp_regen_countup -= regdivert;
+            you.props[MP_TO_CHARMS].get_int() += regdivert;
+        }
+        if (needs_battlesphere) {
+            you.props[BS_CHARGE_COUNTUP].get_int() += divert;
+            dprf(DIAG_PERMABUFF,"Battlesphere diverted %d, countup %d.",
+                 divert, you.props[BS_CHARGE_COUNTUP].get_int());
             mp_regen_countup -= divert;
             you.props[MP_TO_CHARMS].get_int() += divert;
         }
-        if (you.charms_reserve < (you.charms_reserve_size)) {
-            int divert = div_rand_round
+        if ((mp_regen_countup > 0) &&
+            (you.charms_reserve < (you.charms_reserve_size))) {
+            int finaldivert = div_rand_round
                           ((mp_regen_countup * 
                             (you.charms_reserve_size - you.charms_reserve)),
                            ((you.charms_reserve_size - you.charms_reserve) +
                             100 * (you.max_magic_points - you.magic_points)));
                 dprf(DIAG_PERMABUFF, 
                      "Diverted %d of leftover regen %d (%d/%d)",
-                     divert, mp_regen_countup, you.charms_reserve,
+                     finaldivert, mp_regen_countup, you.charms_reserve,
                      you.charms_reserve_size);
-            you.charms_reserve += divert; mp_regen_countup -= divert;
+            you.charms_reserve += finaldivert; mp_regen_countup -= finaldivert;
             if (you.charms_reserve > you.charms_reserve_size) {
                 int corr = you.charms_reserve - you.charms_reserve_size;
                 dprf(DIAG_PERMABUFF, "Correction %d", corr);
-                mp_regen_countup += corr; divert -= corr; 
+                mp_regen_countup += corr; finaldivert -= corr; 
                 you.charms_reserve -= corr;
             }
-            you.props[MP_TO_CHARMS].get_int() += divert;
+            you.props[MP_TO_CHARMS].get_int() += finaldivert;
         }
     }
     if (you.magic_points < you.max_magic_points) {
@@ -1166,6 +1199,113 @@ static void _regenerate_hp_and_mp(int delay)
     ASSERT_RANGE(you.magic_points_regeneration, 0, 100);
 
     update_mana_regen_amulet_attunement();
+}
+
+static void _permabuff_bookkeeping(int delay) {
+    for (int pb = PERMA_FIRST_PERMA; pb <= PERMA_LAST_PERMA; pb++) {
+        you.perma_benefit[pb] = max(0,(you.perma_benefit[pb]-delay));
+    }
+    int song = you.props[SONG_OF_SLAYING_KEY].get_int();
+    if (song) {
+        int dur = nominal_duration(SPELL_SONG_OF_SLAYING);
+        dur *= BASELINE_DELAY; dur /= delay;
+        you.props["song_decay"].get_int() += div_rand_round ((150 * song),
+                                                             dur);
+        if (you.props["song_decay"].get_int() > 100) {
+            you.props[SONG_OF_SLAYING_KEY].get_int()--;
+            you.props["song_decay"].get_int()-= 100;
+        }
+    }
+    if (you.props.exists(SHROUD_RECHARGE) && 
+        (you.props[SHROUD_RECHARGE].get_int() <= 0) &&
+        (you.permabuff_notworking(PERMA_SHROUD) >= PB_WORKING)) {
+        if (permabuff_fail_check
+            (PERMA_SHROUD, 
+             "You fail to reconstruct your distorting shroud.")) {
+            you.props[SHROUD_RECHARGE] = 
+                spell_mana(SPELL_SHROUD_OF_GOLUBRIA) * 100;
+        } else {
+            mprf(MSGCH_DURATION, 
+                 "You reconstruct your distorting shroud.");
+            you.props.erase(SHROUD_RECHARGE);
+        }
+    }
+    if (you.props.exists(DMSL_RECHARGE) &&
+        (you.props[DMSL_RECHARGE].get_int() <= 0) &&
+        (you.permabuff_notworking(PERMA_DMSL) >= PB_WORKING)) {
+        int fail = failure_check(SPELL_DEFLECT_MISSILES, true);
+        if (fail) {
+            mpr("You try to deflect missiles again, but fail.");
+            apply_miscast(SPELL_DEFLECT_MISSILES, fail, false);
+            you.props[DMSL_RECHARGE] = 
+                spell_mana(SPELL_DEFLECT_MISSILES) * 100;
+        } else {
+            mpr("You feel safe from missiles again.");
+            you.props.erase(DMSL_RECHARGE);
+        }
+    }
+    // Why is this here? I don't know
+    if (you.permabuff_working(PERMA_EXCRU) &&
+        !you.props.exists(ORIGINAL_BRAND_KEY)) {
+        start_weapon_brand(*you.weapon());
+    } else if (!you.permabuff_working(PERMA_EXCRU) &&
+               you.props.exists(ORIGINAL_BRAND_KEY) &&
+               you.weapon()) {
+        end_weapon_brand(*you.weapon(), true);
+    } 
+    monster* battlesphere = find_battlesphere(&you);
+    if (battlesphere && !you.permabuff_working(PERMA_BATTLESPHERE)) {
+        mpr("Your battlesphere dissipates because " + 
+            you.permabuff_whynot(PERMA_BATTLESPHERE) + ".");
+        end_battlesphere(battlesphere, false, true);
+        battlesphere = 0;
+    }
+    while (you.props[BS_CHARGE_COUNTUP].get_int() >=
+           battlesphere_charge_cost()) {
+        you.props[BS_CHARGE_RESERVE].get_int() += 1;
+        you.props[BS_CHARGE_COUNTUP].get_int() 
+            -= battlesphere_charge_cost();
+    }
+
+    if (you.can_renew_pbs()) {
+        if (you.props[BS_CHARGE_RESERVE].get_int() >= 1) {
+            if (battlesphere) {
+                if (!you.can_see(*battlesphere)) {
+                    if (you.props.exists(BS_RECALL_TIME)) {
+                        if ((you.elapsed_time - 
+                             you.props[BS_RECALL_TIME].get_int())
+                            > 27) {
+                            coord_def empty;
+                            if (find_habitable_spot_near(you.pos(), 
+                                                         MONS_BATTLESPHERE,
+                                                         3, false, empty)
+                                && battlesphere->move_to_pos(empty)) {
+                                you.props[BS_CHARGE_RESERVE].get_int() -= 1;
+                                mpr("You recall your battlesphere.");
+                                you.props.erase(BS_RECALL_TIME);
+                            }
+                        }
+                    } else {
+                        you.props[BS_RECALL_TIME] = you.elapsed_time;
+                    }
+                } else {
+                    you.props.erase(BS_RECALL_TIME);
+                    battlesphere->battlecharge += 
+                        you.props[BS_CHARGE_RESERVE].get_int();
+                    dprf(DIAG_PERMABUFF,"Battlesphere gains charge, has %d",
+                         battlesphere->battlecharge);
+                    you.props[BS_CHARGE_RESERVE] = 0;
+                }
+            } else if (you.permabuff_working(PERMA_BATTLESPHERE) &&
+                       (you.props[BS_CHARGE_RESERVE].get_int() 
+                        >= BS_RESUMMON_CHARGE)) {
+                setup_battlesphere(&you, 
+                                   calc_spell_power(SPELL_BATTLESPHERE,true),
+                                   GOD_NO_GOD, battlesphere, 
+                                   you.props[BS_CHARGE_RESERVE].get_int());
+            }
+        }
+    }
 }
 
 void player_reacts()
@@ -1272,57 +1412,8 @@ void player_reacts()
     
     _regenerate_hp_and_mp(you.time_taken);
     
-    for (int pb = PERMA_FIRST_PERMA; pb <= PERMA_LAST_PERMA; pb++) {
-        you.perma_benefit[pb] = max(0,(you.perma_benefit[pb]-you.time_taken));
-    }
-    int song = you.props[SONG_OF_SLAYING_KEY].get_int();
-    if (song) {
-        int dur = nominal_duration(SPELL_SONG_OF_SLAYING);
-        dur *= BASELINE_DELAY; dur /= you.time_taken;
-        you.props["song_decay"].get_int() += div_rand_round ((150 * song),
-                                                             dur);
-        if (you.props["song_decay"].get_int() > 100) {
-            you.props[SONG_OF_SLAYING_KEY].get_int()--;
-            you.props["song_decay"].get_int()-= 100;
-        }
-    }
-    if (you.props.exists(SHROUD_RECHARGE) && 
-        (you.props[SHROUD_RECHARGE].get_int() <= 0) &&
-        (you.permabuff_notworking(PERMA_SHROUD) >= PB_WORKING)) {
-        if (permabuff_fail_check
-            (PERMA_SHROUD, 
-             "You fail to reconstruct your distorting shroud.")) {
-            you.props[SHROUD_RECHARGE] = 
-                spell_mana(SPELL_SHROUD_OF_GOLUBRIA) * 100;
-        } else {
-            mprf(MSGCH_DURATION, 
-                 "You reconstruct your distorting shroud.");
-            you.props.erase(SHROUD_RECHARGE);
-        }
-    }
-    if (you.props.exists(DMSL_RECHARGE) &&
-        (you.props[DMSL_RECHARGE].get_int() <= 0) &&
-        (you.permabuff_notworking(PERMA_DMSL) >= PB_WORKING)) {
-        int fail = failure_check(SPELL_DEFLECT_MISSILES, true);
-        if (fail) {
-            mpr("You try to deflect missiles again, but fail.");
-            apply_miscast(SPELL_DEFLECT_MISSILES, fail, false);
-            you.props[DMSL_RECHARGE] = 
-                spell_mana(SPELL_DEFLECT_MISSILES) * 100;
-        } else {
-            mpr("You feel safe from missiles again.");
-            you.props.erase(DMSL_RECHARGE);
-        }
-    }
-    // Why is this here? I don't know
-    if (you.permabuff_working(PERMA_EXCRU) &&
-        !you.props.exists(ORIGINAL_BRAND_KEY)) {
-        start_weapon_brand(*you.weapon());
-    } else if (!you.permabuff_working(PERMA_EXCRU) &&
-               you.props.exists(ORIGINAL_BRAND_KEY) &&
-               you.weapon()) {
-        end_weapon_brand(*you.weapon(), true);
-    } 
+    _permabuff_bookkeeping(you.time_taken);
+
     dec_disease_player(you.time_taken);
     if (you.duration[DUR_POISONING])
         handle_player_poison(you.time_taken);

@@ -3094,13 +3094,16 @@ static string _player_spell_desc(spell_type spell)
                               (raw_spell_fail(spell))));
         int32_t adjcost = (10000 * spell_mana(spell)) / 
             (nominal_duration(spell) * succ);
-        int costdiff = adjcost - basecost;
-        if (adjcost > 0) {
+        if ((adjcost > 0) || (spell == SPELL_BATTLESPHERE)) {
             if (spell == SPELL_REGENERATION) {
                 description << 
                     make_stringf
                     ("To regenerate at full speed, this spell would need %d.%02d MP per turn",
                      adjcost / 100, adjcost %100);
+            } else if (spell == SPELL_BATTLESPHERE) {
+                adjcost = battlesphere_charge_cost();
+                basecost = battlesphere_charge_cost(false);
+                description << make_stringf("It costs you %d.%02d MP to add one charge to the battlesphere", adjcost / 100, adjcost %100);
             } else {
                 description << 
                     make_stringf
@@ -3108,12 +3111,13 @@ static string _player_spell_desc(spell_type spell)
                      adjcost / 100, adjcost %100);
             }
             if (adjcost > basecost) {
+                int costdiff = adjcost - basecost;
                 description <<
                     make_stringf
-                    (", %d.%02d MP of which is caused by your spell failure chance.",
+                    (", %d.%02d MP of which is caused by your spell failure chance.\n",
                      costdiff / 100, costdiff % 100);
             } else {
-                description << ".";
+                description << ".\n";
             }            
         }
     }

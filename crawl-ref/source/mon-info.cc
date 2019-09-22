@@ -2027,9 +2027,11 @@ vector<monster_info_func> init_monster_info_funcs() {
     toret.push_back({"infested", "infested", 
                 [](const monster_info &mi, bool newconditions) {
                 return newconditions && mi.is(MB_INFESTATION); }});
+// This is usually a useless-to-misleading thing to know about battlespheres
     toret.push_back({"wandering", "wandering", 
                 [](const monster_info &mi, bool newconditions) {
-                return (mi.is(MB_WANDERING) 
+                return (mi.is(MB_WANDERING)
+                        && (mi.type != MONS_BATTLESPHERE)
                         && mi.attitude != ATT_STRICT_NEUTRAL); }});
     toret.push_back({"drowning", "drowning", 
                 [](const monster_info &mi, bool newconditions) {

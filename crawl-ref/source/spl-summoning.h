@@ -23,6 +23,12 @@
 // How many aut until the next doom hound pops out of doom howl?
 #define NEXT_DOOM_HOUND_KEY "next_doom_hound"
 
+// Battlesphere props
+#define BS_CHARGE_RESERVE "battlesphere_charge_reserve"
+#define BS_CHARGE_COUNTUP "battlesphere_charge_countup"
+#define BS_RESUMMON_CHARGE 4
+#define BS_RECALL_TIME "battlesphere_recall_aut"
+
 spret_type cast_summon_butterflies(int pow, god_type god = GOD_NO_GOD,
                                    bool fail = false);
 spret_type cast_summon_small_mammal(int pow, god_type god, bool fail);
@@ -100,7 +106,11 @@ void do_aura_of_abjuration(int delay);
 
 monster* find_battlesphere(const actor* agent);
 spret_type cast_battlesphere(actor* agent, int pow, god_type god, bool fail);
-void end_battlesphere(monster* mons, bool killed);
+bool setup_battlesphere(actor* agent, int pow, god_type god, 
+			monster* battlesphere, int recast = 0);
+void end_battlesphere(monster* mons, bool killed, bool silent = false);
+int battlesphere_charge_cost(bool includefailurerate = true); // in 1/100 MP
+int battlesphere_max_charges();
 bool battlesphere_can_mirror(spell_type spell);
 bool aim_battlesphere(actor* agent, spell_type spell, int powc, bolt& beam);
 bool trigger_battlesphere(actor* agent, bolt& beam);
