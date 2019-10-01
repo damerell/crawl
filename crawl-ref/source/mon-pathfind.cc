@@ -445,10 +445,20 @@ bool monster_pathfind::traversable(const coord_def& p)
 // its preferred habit and capability of flight or opening doors.
 bool monster_pathfind::mons_traversable(const coord_def& p)
 {
-    return mons_can_traverse(*mons, p, traverse_in_sight)
-            || mons->can_cling_to_walls()
-               && cell_is_clingable(pos)
-               && cell_can_cling_to(pos, p);
+    if (cell_is_runed(p))
+        return false;
+    
+    if (mons_can_traverse(*mons, p, traverse_in_sight)) return true;
+    
+    if (!mons->is_habitable(p))
+        return false;
+
+    if (mons->can_cling_to_walls()
+        && cell_is_clingable(p)
+        && mons->can_pass_through_feat(grd(p))
+        && cell_can_cling_to(pos, p)) return true;
+
+    return false;
 }
 
 int monster_pathfind::travel_cost(coord_def npos)
