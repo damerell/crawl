@@ -4613,7 +4613,7 @@ _Ilsuiw_common_
 
 @The_monster@ whispers @to_foe@, "Come on in, the water's fine."
 
-@The_monster@ sings a [strange|haunting] [sea-chanty|melody].
+@The_monster@ sings a [strange|haunting] [sea shanty|melody].
 
 VISUAL:@The_monster@ runs @possessive@ fingers through @possessive@ long green hair.
 %%%%
