@@ -1332,11 +1332,14 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
  * @return                The colour to highlight the spell.
  */
 int spell_highlight_by_utility(spell_type spell, int default_colour,
-                               bool transient, bool memcheck)
+                               bool transient, bool memcheck, 
+                               bool permacancel)
 {
     // If your god hates the spell, that overrides all other concerns.
-    if (god_hates_spell(spell, you.religion)
-        || is_good_god(you.religion) && you.spellcasting_unholy())
+    // unless you're cancelling a permabuff
+    if (!permacancel && 
+        (god_hates_spell(spell, you.religion) || 
+         is_good_god(you.religion) && you.spellcasting_unholy()))
     {
         return COL_FORBIDDEN;
     }

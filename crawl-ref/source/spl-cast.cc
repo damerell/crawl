@@ -118,12 +118,13 @@ static string _spell_base_description(spell_type spell, bool casting)
 {
     ostringstream desc;
 
-    int highlight =  spell_highlight_by_utility(spell, COL_UNKNOWN, casting);
+    bool permacancel = (casting && is_permabuff(spell) && 
+                        you.permabuff[permabuff_is(spell)]);
+    int highlight =  spell_highlight_by_utility(spell, COL_UNKNOWN, casting,
+                                                false, permacancel);
 
     desc << "<" << colour_to_str(highlight) << ">" << left;
 
-    bool permacancel = (casting && is_permabuff(spell) && 
-                        you.permabuff[permabuff_is(spell)]);
     string title = permacancel ?
         make_stringf("Dispel %s", spell_title(spell)) :
         spell_title(spell);
@@ -155,12 +156,13 @@ static string _spell_extra_description(spell_type spell, bool casting)
 {
     ostringstream desc;
 
-    int highlight =  spell_highlight_by_utility(spell, COL_UNKNOWN, casting);
+    bool permacancel = (casting && is_permabuff(spell) && 
+                        you.permabuff[permabuff_is(spell)]);
+    int highlight =  spell_highlight_by_utility(spell, COL_UNKNOWN, casting,
+                                                false, permacancel);
 
     desc << "<" << colour_to_str(highlight) << ">" << left;
 
-    bool permacancel = (casting && is_permabuff(spell) && 
-                        you.permabuff[permabuff_is(spell)]);
     string title = permacancel ?
         make_stringf("Dispel %s", spell_title(spell)) :
         spell_title(spell);
