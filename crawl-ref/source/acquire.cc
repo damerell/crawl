@@ -1439,9 +1439,18 @@ int acquirement_create_item(object_class_type class_wanted,
             }
         }
         // Eliminate the "distortion from acquirement" hilarity
-        if ((get_weapon_brand(acq_item) == SPWPN_DISTORTION) &&
-            (agent != GOD_XOM)) {
-            set_ident_flags(acq_item, ISFLAG_KNOW_TYPE);
+        if (agent != GOD_XOM) {
+            if (get_weapon_brand(acq_item) == SPWPN_DISTORTION) {
+                set_ident_flags(acq_item, ISFLAG_KNOW_TYPE);
+            }
+            if (is_artefact(acq_item)) {
+                if (artefact_property(acq_item, ARTP_CONTAM)) {
+                    artefact_learn_prop(acq_item, ARTP_CONTAM);
+                }
+                if (artefact_property(acq_item, ARTP_FRAGILE)) {
+                    artefact_learn_prop(acq_item, ARTP_FRAGILE);
+                }
+            }
         }
 
         // Last check: don't acquire items your god hates.
