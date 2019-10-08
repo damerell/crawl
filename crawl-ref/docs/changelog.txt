@@ -29,8 +29,8 @@ Permabuffs:
  breath, and don't make any noise. Deflect Missiles and Shroud of
  Golubria automagically restore themselves when enemy attacks break
  them.
-When you acquire or are (non-Xom) god gifted a weapon of distortion, it
-is identified as such automatically.
+When you acquire or are (non-Xom) god gifted a weapon of distortion or item
+that is *Contam/*Fragile, it is identified as such automatically.
 
 Changes swiped from other variants
 ----------------------------------
