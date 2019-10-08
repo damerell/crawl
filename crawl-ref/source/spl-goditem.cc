@@ -609,7 +609,8 @@ static int _selectively_remove_curse(const string &pre_msg)
     ASSERT(you_worship(GOD_ASHENZARI));
 
     int items_uncursed = 0;
-
+    int avail_items = 1 + ((you.piety - 10) / 8);
+    
     while (1)
     {
         if (!any_items_of_type(OSEL_CURSED_WORN) && items_uncursed)
@@ -626,10 +627,12 @@ static int _selectively_remove_curse(const string &pre_msg)
             "extremely large"
         };
         const string prompt_msg =
-            make_stringf("Uncurse which item? (Current piety cost: %s)",
+            make_stringf("Uncurse what? (Current piety cost: %s; piety for %d more item%s.)",
                          items_uncursed > 4
-                             ? "extremely large"
-                             : piety_cost_descriptions[items_uncursed]);
+                         ? "extremely large"
+                         : piety_cost_descriptions[items_uncursed],
+                         avail_items,
+                         avail_items > 1 ? "s" : "");
         int item_slot = prompt_invent_item(prompt_msg.c_str(), MT_INVLIST,
                                            OSEL_CURSED_WORN, OPER_ANY,
                                            invprompt_flag::escape_only);
@@ -652,6 +655,9 @@ static int _selectively_remove_curse(const string &pre_msg)
 
         do_uncurse_item(item, false);
         items_uncursed += 1;
+        if (!--avail_items) {
+            return items_uncursed;
+        }
     }
 }
 
@@ -663,17 +669,25 @@ bool remove_curse(bool alreadyknown, const string &pre_msg)
         if (items_uncursed)
         {
             // It costs piety to uncurse items with Ash
-            int base_piety_cost = 6 * items_uncursed;
+            // This was '6', plus the standard randomisation formula for god 
+            // abilities, but that makes it impossible to calculate how many 
+            // uncurses can be done. '8' is a slight bonus to uncursing one
+            // item, a slight malus to uncursing more. Sorry.
+            int real_piety_cost = 8 * items_uncursed;
 
-            // Apply the standard randomisation formula for god abilities
-            int real_piety_cost = base_piety_cost
-                                  + random2((base_piety_cost + 1) / 2 + 1);
+            // Why 10? 5 triggers the hint.
+            int piety_floor = min(10, (int) you.piety);
+            // This'll break if lose_piety gets more fancy than a point of
+            // hysteresis, sigh.
+            real_piety_cost = min(real_piety_cost, (you.piety - piety_floor));
+            
             lose_piety(real_piety_cost);
 
             const char *piety_adverb = real_piety_cost <= 10 ? "slightly " :
                                        real_piety_cost <= 20 ? "" :
                                        real_piety_cost <= 30 ? "significantly "
                                                              : "dramatically ";
+            // lies if you were already at the floor but I don't care
             mprf("Your piety has %sdecreased.", piety_adverb);
 
             ash_check_bondage();
