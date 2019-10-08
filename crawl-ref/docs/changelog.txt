@@ -32,6 +32,17 @@ Permabuffs:
 When you acquire or are (non-Xom) god gifted a weapon of distortion, it
 is identified as such automatically.
 
+Changes swiped from other variants
+----------------------------------
+bcrawl:
+Ash curses items for free, but uncursing costs piety.
+Stoat Soup then reduces the "items cursed" element of Ash piety gain on low D
+levels in a way that gives similar piety gain to a vanilla character who found
+the average number of RC scrolls.
+This prevents you cursing all your stuff very early and getting lots
+of bonus piety obviating the uncursing penalty.
+Even on low D levels, higher bondage levels give some extra piety gain.
+
 Vanilla changes messed around with
 ----------------------------------
 * Zin cures mutations on a gift timeout, so cannot be used to lock in a good

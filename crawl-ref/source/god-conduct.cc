@@ -2,6 +2,7 @@
 
 #include "god-conduct.h"
 
+#include "env.h"
 #include "fight.h"
 #include "god-abil.h" // ru sac key
 #include "god-item.h" // is_*_spell
@@ -917,8 +918,19 @@ static like_map divine_likes[] =
             {
                 const int level = denom; // also = piety
                 const int base_gain = 8; // base gain per dungeon level
+                int max_by_depth = 4;
+                // absdepth counts from 0
+                if (env.absdepth0 <= 15) {
+                    max_by_depth = 
+                        div_rand_round 
+                        (4 * 2 * (you.bondage_level + env.absdepth0 - 1), 30);
+                    max_by_depth = max(0, max_by_depth);
+                }
                 // levels: x1, x1.25, x1.5, x1.75, x2
-                piety = base_gain + base_gain * you.bondage_level / 4;
+                piety = base_gain + 
+                base_gain * min((int) you.bondage_level, max_by_depth) / 4;
+//                mprf("At depth %d, max_by depth %d, bound %d, piety %d",
+//                     env.absdepth0, max_by_depth, you.bondage_level, piety);
                 denom = level;
             }
         } },
