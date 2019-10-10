@@ -31,6 +31,7 @@ Permabuffs:
  them.
 When you acquire or are (non-Xom) god gifted a weapon of distortion or item
 that is *Contam/*Fragile, it is identified as such automatically.
+Formicids cannot cast Swiftness.
 
 Changes swiped from other variants
 ----------------------------------
