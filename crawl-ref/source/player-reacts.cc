@@ -1290,6 +1290,13 @@ static void _permabuff_bookkeeping(int delay) {
                     }
                 } else {
                     you.props.erase(BS_RECALL_TIME);
+// This next bit avoids buggy behaviour when a battlesphere with no charges
+// then gains one, which can't happen in vanilla
+                    if (battlesphere->battlecharge == 0) {
+                        battlesphere->props.erase("firing");
+                        battlesphere->props.erase("firing_target");
+                        battlesphere->props.erase("foe");
+                    }
                     battlesphere->battlecharge += 
                         you.props[BS_CHARGE_RESERVE].get_int();
                     dprf(DIAG_PERMABUFF,"Battlesphere gains charge, has %d",
