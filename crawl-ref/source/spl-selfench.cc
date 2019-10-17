@@ -94,13 +94,8 @@ spret_type ice_armour(int pow, bool fail)
 spret_type deflection(int pow, bool fail)
 {
     if (you.permabuff[PERMA_DMSL]) {
+        bool wasworking = you.permabuff_working(PERMA_DMSL);
         const int orig_defl = you.missile_deflection();
-        mprf("You are %s.",
-             !you.permabuff_working(PERMA_DMSL) ?
-             "no longer attempting to deflect missiles" : 
-             (you.missile_deflection() < orig_defl ? 
-              "less protected from missiles" :
-              "no longer protected from missiles by your spell"));
         if (you.props.exists(DMSL_RECHARGE) &&
             you.props[DMSL_RECHARGE].get_int()) {
             you.props.erase(DMSL_RECHARGE); 
@@ -109,7 +104,16 @@ spret_type deflection(int pow, bool fail)
 // preemptively cancelling it is less attractive?
             you.increase_duration(DUR_DEFLECT_MISSILES, 25, 50);
         }
-        you.pb_off(PERMA_DMSL); return SPRET_PERMACANCEL;
+        you.pb_off(PERMA_DMSL); 
+        mprf("You are %s.",
+             !wasworking ?
+             "no longer attempting to deflect missiles" : 
+             (you.missile_deflection() < orig_defl ? 
+              "less protected from missiles" :
+              // I don't think you can currently get this message since the
+              // spell is the only way to get DMsl
+              "no longer protected from missiles by your spell"));
+        return SPRET_PERMACANCEL;
     } else {
         fail_check();
         mpr (you.duration[DUR_DEFLECT_MISSILES] ? 
