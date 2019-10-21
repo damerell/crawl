@@ -41,6 +41,7 @@
 #include "mutation.h"
 #include "ouch.h"
 #include "prompt.h"
+#include "religion.h"
 #include "shout.h"
 #include "spl-summoning.h"
 #include "spl-util.h"
@@ -1778,6 +1779,7 @@ spret cast_ignition(const actor *agent, int pow, bool fail)
         beam_actual.ex_size       = 0;
         beam_actual.is_explosion  = true;
         beam_actual.loudness      = 0;
+        beam_actual.origin_spell  = SPELL_IGNITION;
         beam_actual.apply_beam_conducts();
 
 #ifdef DEBUG_DIAGNOSTICS
@@ -1790,8 +1792,12 @@ spret cast_ignition(const actor *agent, int pow, bool fail)
         {
             for (adjacent_iterator ai(pos); ai; ++ai)
             {
-                if (cell_is_solid(*ai))
+                if (cell_is_solid(*ai)
+                    && (!beam_actual.can_affect_wall(*ai)
+                        || you_worship(GOD_FEDHAS)))
+                {
                     continue;
+                }
 
                 actor *act = actor_at(*ai);
 
