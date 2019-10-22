@@ -974,6 +974,7 @@ map<skill_type, int8_t> ash_get_boosted_skills(eq_type type)
             boost[item_attack_skill(*wpn)] = bondage;
         }
         // Staves that have a melee effect, powered by evocations.
+        // which is to say almost all of them aside from some unrands
         if (staff_uses_evocations(*wpn))
         {
             boost[SK_EVOCATIONS] = 1;

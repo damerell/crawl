@@ -1974,6 +1974,11 @@ bool staff_uses_evocations(const item_def &item)
     case STAFF_DEATH:
     case STAFF_AIR:
     case STAFF_EARTH:
+    case STAFF_CONJURATION:
+    case STAFF_SUMMONING:
+    case STAFF_ENERGY:
+    case STAFF_WIZARDRY:
+    case STAFF_POWER:
         return true;
     default:
         return false;

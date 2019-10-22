@@ -32,6 +32,7 @@ Permabuffs:
 When you acquire or are (non-Xom) god gifted a weapon of distortion or item
 that is *Contam/*Fragile, it is identified as such automatically.
 Formicids cannot cast Swiftness.
+All magical staves do some kind of bonus damage in melee based on spell skills.
 
 Changes swiped from other variants
 ----------------------------------

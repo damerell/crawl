@@ -2278,14 +2278,65 @@ void melee_attack::apply_staff_damage()
         break;
 
     case STAFF_SUMMONING:
-    case STAFF_POWER:
+        special_damage = staff_damage(SK_SUMMONINGS);
+        special_damage = apply_defender_ac(special_damage);
+
+        if (special_damage > 0)
+        {
+            special_damage_message =
+                make_stringf(
+                    "%s disrupt%s %s!",
+                    attacker->name(DESC_THE).c_str(),
+                    attacker->is_player() ? "" : "s",
+                    defender->name(DESC_THE).c_str());
+        }
+        break;
+    case STAFF_POWER: {
+        bool usedmp = false;
+        special_damage = staff_damage(SK_SPELLCASTING);
+        if (attacker->is_player()) {
+            if (enough_mp(1, true, false)) {
+                usedmp = true;
+            }
+        } else {
+            special_damage = apply_defender_ac(special_damage);
+        }
+
+        if (special_damage > 0)
+        {
+            if (usedmp) {
+                dec_mp(1);
+            }
+            special_damage_message =
+                make_stringf(
+                    "%s zap%s %s with raw power!",
+                    attacker->name(DESC_THE).c_str(),
+                    attacker->is_player() ? "" : "s",
+                    defender->name(DESC_THE).c_str());
+        }
+        break;
+    }
     case STAFF_CONJURATION:
-#if TAG_MAJOR_VERSION == 34
-    case STAFF_ENCHANTMENT:
-#endif
     case STAFF_ENERGY:
     case STAFF_WIZARDRY:
+        special_damage = staff_damage((weapon->sub_type == STAFF_CONJURATION) ?
+                                      SK_CONJURATIONS : SK_SPELLCASTING);
+        special_damage = apply_defender_ac(special_damage);
+
+        if (special_damage > 0)
+        {
+            special_damage_message =
+                make_stringf(
+                    "%s zap%s %s with raw magic!",
+                    attacker->name(DESC_THE).c_str(),
+                    attacker->is_player() ? "" : "s",
+                    defender->name(DESC_THE).c_str());
+        }
         break;
+#if TAG_MAJOR_VERSION == 34
+    case STAFF_ENCHANTMENT:
+        break;
+#endif
 
     default:
         die("Invalid staff type: %d", weapon->sub_type);
