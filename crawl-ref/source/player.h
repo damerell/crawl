@@ -1048,8 +1048,8 @@ int player_res_poison(bool calc_unid = true, bool temp = true,
                       bool items = true);
 int player_res_magic(bool calc_unid = true, bool temp = true);
 
-int player_shield_class();
-int player_displayed_shield_class();
+int player_shield_class(bool incap = true);
+int player_displayed_shield_class(bool incap = true);
 bool player_omnireflects();
 
 int player_spec_air();

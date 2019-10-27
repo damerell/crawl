@@ -2329,14 +2329,12 @@ int player_wizardry(spell_type spell)
  * Exactly twice the value displayed to players, for legacy reasons.
  * @return      The player's current SH value.
  */
-int player_shield_class()
+int player_shield_class(bool incap)
 {
     int shield = 0;
+    incap = incap && you.incapacitated();
 
-    if (you.incapacitated())
-        return 0;
-
-    if (you.shield())
+    if (you.shield() && !incap)
     {
         const item_def& item = you.inv[you.equip[EQ_SHIELD]];
         int size_factor = (you.body_size(PSIZE_TORSO) - SIZE_MEDIUM)
@@ -2371,6 +2369,10 @@ int player_shield_class()
                : 0);
 
     shield += you.get_mutation_level(MUT_SHIMMERING_SCALES) * 1200;
+    // After getting only the mutation SH if incapacitated.
+    if (incap) {
+        shield /= 2;
+    }
     shield += qazlal_sh_boost() * 100;
     shield += tso_sh_boost() * 100;
     shield += you.wearing(EQ_AMULET_PLUS, AMU_REFLECTION) * 200;
@@ -2385,9 +2387,9 @@ int player_shield_class()
  * Exactly half the internal value, for legacy reasons.
  * @return      The SH value to be displayed.
  */
-int player_displayed_shield_class()
+int player_displayed_shield_class(bool incap)
 {
-    return player_shield_class() / 2;
+    return player_shield_class(incap) / 2;
 }
 
 /**
