@@ -873,10 +873,13 @@ static void _print_stats_ac(int x, int y)
 
     // SH: (two lines lower)
     text_col = HUD_VALUE_COLOUR;
-    if (you.incapacitated() && you.shielded())
-        text_col = RED;
-    else if (_boosted_sh())
+    if (you.incapacitated() && you.shielded()) {
+        if (player_shield_class(true) != player_shield_class(false)) {
+            text_col = RED;
+        }
+    } else if (_boosted_sh()) {
         text_col = LIGHTBLUE;
+    }
 
     string sh = make_stringf("%2d ", player_displayed_shield_class());
     textcolour(text_col);

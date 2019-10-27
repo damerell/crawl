@@ -1369,7 +1369,9 @@ bool attack::attack_shield_blocked(bool verbose)
     if (defender == attacker)
         return false; // You can't block your own attacks!
 
-    if (defender->incapacitated())
+    // Players can retain some SH from gods, jewellery
+    if (defender->incapacitated() && 
+        (!defender->is_player() || (player_shield_class() == 0)))
         return false;
 
     const int con_block = random2(attacker->shield_bypass_ability(to_hit)
