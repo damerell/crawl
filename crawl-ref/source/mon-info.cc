@@ -1873,6 +1873,9 @@ vector<monster_info_func> init_monster_info_funcs() {
     toret.push_back({"empowered", "empowered", 
                 [](const monster_info &mi, bool newconditions) { 
                 return newconditions && mi.is(MB_EMPOWERED_SPELLS); }});
+    toret.push_back({"mesmerising", "mesmerising", 
+                [](const monster_info &mi, bool newconditions) { 
+                return newconditions && mi.is(MB_MESMERIZING); }});
     toret.push_back({"charged", "charged", 
                 [](const monster_info &mi, bool newconditions) { 
                 return newconditions && mi.is(MB_FULLY_CHARGED); }});
