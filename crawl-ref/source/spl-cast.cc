@@ -126,7 +126,8 @@ static string _spell_base_description(spell_type spell, bool casting)
     desc << "<" << colour_to_str(highlight) << ">" << left;
 
     string title = permacancel ?
-        make_stringf("Dispel %s", spell_title(spell)) :
+        (spell == SPELL_BATTLESPHERE ? "Dispel Battlesphere" :
+         make_stringf("Dispel %s", spell_title(spell))) :
         spell_title(spell);
     // spell name
     desc << chop_string(title, 30);
@@ -164,7 +165,8 @@ static string _spell_extra_description(spell_type spell, bool casting)
     desc << "<" << colour_to_str(highlight) << ">" << left;
 
     string title = permacancel ?
-        make_stringf("Dispel %s", spell_title(spell)) :
+        (spell == SPELL_BATTLESPHERE ? "Dispel Battlesphere" :
+         make_stringf("Dispel %s", spell_title(spell))) :
         spell_title(spell);
     // spell name
     desc << chop_string(title, 30);
