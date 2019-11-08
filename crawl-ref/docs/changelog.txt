@@ -1,52 +1,53 @@
 Stoat Soup 0.22
 ---------------
 
-High elves and mountain dwarves are back, and joined by faerie dragons.
-Skills with low apts are not turned on by default with manual training.
-If you hit 'M' with an empty library, you are told how many slots you have.
-Royal jellies are mostly now honeycombs, but there is one out there to find.
-Troves no longer ask for identify scrolls, or piety from Ru-ites.
-The monster list provides considerably more information about monsters,
- both in that information is provided when more than one monster of a given
- type is visible and that more things are documented. No more getting whacked
- with polearms unexpectedly?
-You are optionally warned before entering, or when forcedly transported to, the
-last level in a branch.
-Added the Triceratops, a Swamp unique who is not remotely cute and cuddly.
-Wear-ID amulets with impunity:
- The amulet of harm does not drain you. However, when you take one off, you
- continue to take extra damage until fully healed and some time has passed,
- so it still can't be usefully swapped mid-fight.
- The amulet of faith only starts to increase piety gain after a random amount
- of piety has been gained while wearing it - on average, 3 points. However, it
- drains at most 1/5 of your piety on removal, and cannot drain more piety than
- was gained while wearing it.
-Permabuffs:
- Infusion, Song of Slaying, Shroud of Golubria, Regeneration, Portal
- Projectile, Deflect Missiles, Excruciating Wounds, Death Channel,
- Ring of Flames, and Isk's Battlesphere last forever. If you can't see
- any monsters, you mutter the words of the Song of Slaying under your
- breath, and don't make any noise. Deflect Missiles and Shroud of
- Golubria automagically restore themselves when enemy attacks break
- them.
-When you acquire or are (non-Xom) god gifted a weapon of distortion or item
-that is *Contam/*Fragile, it is identified as such automatically.
-Formicids cannot cast Swiftness.
-All magical staves do some kind of bonus damage in melee based on spell skills.
-When incapacitated, you still lose SH from a shield, but keep half of mutation-
-based SH and all god/jewellery SH.
+* High elves and mountain dwarves are back, and joined by faerie dragons.
+* Skills with low apts are not turned on by default with manual training.
+* If you hit 'M' with an empty library, you are told how many slots you have.
+* Royal jellies are mostly now honeycombs, but there is one out there to find.
+* Troves no longer ask for identify scrolls, or piety from Ru-ites.
+* The monster list provides considerably more information about monsters,
+  both in that information is provided when more than one monster of a given
+  type is visible and that more things are documented. No more getting whacked
+  with polearms unexpectedly?
+* You are optionally warned before entering, or when forcedly transported to,
+  the last level in a branch.
+* Added the Triceratops, a Swamp unique who is not remotely cute and cuddly.
+* Wear-ID amulets with impunity:
+  The amulet of harm does not drain you. However, when you take one off, you
+  continue to take extra damage until fully healed and some time has passed,
+  so it still can't be usefully swapped mid-fight.
+  The amulet of faith only starts to increase piety gain after a random amount
+  of piety has been gained while wearing it - on average, 3 points. However, it
+  drains at most 1/5 of your piety on removal, and cannot drain more piety than
+  was gained while wearing it.
+* Permabuffs:
+  Infusion, Song of Slaying, Shroud of Golubria, Regeneration, Portal
+  Projectile, Deflect Missiles, Excruciating Wounds, Death Channel,
+  Ring of Flames, and Isk's Battlesphere last forever. If you can't see
+  any monsters, you mutter the words of the Song of Slaying under your
+  breath, and don't make any noise. Deflect Missiles and Shroud of
+  Golubria automagically restore themselves when enemy attacks break
+  them.
+* When you acquire or are (non-Xom) god gifted a weapon of distortion or item
+  that is *Contam/*Fragile, it is identified as such automatically.
+* Formicids cannot cast Swiftness.
+* All magical staves do some kind of bonus damage in melee based on spell
+  skills. 
+* When incapacitated, you still lose SH from a shield, but keep half of
+  mutation-based SH and all god/jewellery SH.
 
 Changes swiped from other variants
 ----------------------------------
 bcrawl:
-Ash curses items for free, but uncursing costs piety.
- Stoat Soup then reduces the "items cursed" element of Ash piety gain on low D
- levels in a way that gives similar piety gain to a vanilla character who found
- the average number of RC scrolls.
- This prevents you cursing all your stuff very early and getting lots
- of bonus piety obviating the uncursing penalty.
- Even on low D levels, higher bondage levels give some extra piety gain.
-Small species cannot use morningstars and eveningstars.
+* Ash curses items for free, but uncursing costs piety.
+  Stoat Soup then reduces the "items cursed" element of Ash piety gain on low D
+  levels in a way that gives similar piety gain to a vanilla character who
+  found the average number of RC scrolls.
+  This prevents you cursing all your stuff very early and getting lots
+  of bonus piety obviating the uncursing penalty.
+  Even on low D levels, higher bondage levels give some extra piety gain.
+* Small species cannot use morningstars and eveningstars.
 
 Vanilla changes messed around with
 ----------------------------------
