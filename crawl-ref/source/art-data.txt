@@ -912,13 +912,13 @@ VALUE:   400
 
 # TAG_MAJOR_VERSION == 34
 NAME:    amulet of Cekugob
-OBJ:     OBJ_JEWELLERY/AMU_ACROBAT
+OBJ:     OBJ_JEWELLERY/AMU_GOURMAND
 COLOUR:  ETC_SILVER
 TILE:    urand_cekugob
 AC:      1
 EV:      1
 LIFE:    2
-BOOL:    elec, poison, notelep, nogen
+BOOL:    elec, poison, notelep
 
 NAME:    amulet of the Four Winds
 OBJ:     OBJ_JEWELLERY/AMU_NOTHING
