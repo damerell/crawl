@@ -49,6 +49,9 @@ bcrawl:
   Even on low D levels, higher bondage levels give some extra piety gain.
 * Small species cannot use morningstars and eveningstars.
 
+Gooncrawl:
+* Restore boulder beetles.
+
 Vanilla changes messed around with
 ----------------------------------
 * Zin cures mutations on a gift timeout, so cannot be used to lock in a good
