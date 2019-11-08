@@ -455,7 +455,6 @@ TILE_EQ: crossbow_fire
 VALUE:   800
 BOOL:    evil
 
-# TAG_MAJOR_VERSION == 34
 NAME:    sword of the Doom Knight
 OBJ:     OBJ_WEAPONS/WPN_GREAT_SWORD
 PLUS:    +13
@@ -464,7 +463,7 @@ TILE:    urand_doom_knight
 TILE_EQ: doom_knight
 BRAND:   SPWPN_PAIN
 MAGIC:   1
-BOOL:    nospell, nogen
+BOOL:    nospell
 
 NAME:    morningstar "Eos"
 OBJ:     OBJ_WEAPONS/WPN_MORNINGSTAR

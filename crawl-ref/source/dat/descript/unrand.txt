@@ -177,7 +177,6 @@ An unholy crossbow, forged in the fires of Gehenna. It imbues the bolts it
 fires with the raw power of its namesake, causing a burst of damnation on
 impact irresistible by any mortal armour.
 %%%%
-# TAG_MINOR_VERSION == 34
 sword of the Doom Knight
 
 An adamantine great sword. Its first wielder was a worshipper of Yredelemnul
