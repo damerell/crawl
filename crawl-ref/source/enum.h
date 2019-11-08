@@ -179,7 +179,6 @@ public:
     EXPANDMACRO(DEF_BITFIELD_OPERATORS(fieldT, __VA_ARGS__, ))
 // The trailing comma suppresses "ISO C99 requires rest arguments to be used"
 
-// The rest of this file should probably move elsewhere
 // normal tile size in px
 enum
 {
