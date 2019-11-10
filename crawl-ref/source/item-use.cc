@@ -761,7 +761,8 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
             else
             {
                 // Singular hand should have already been handled above.
-                mprf("You'd need three %s to do that!",
+                mprf("You'd need %s %s to do that!",
+                     (you.species == SP_FORMICID ? "more" : "three"),
                      you.hand_name(true).c_str());
             }
         }
