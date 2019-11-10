@@ -424,7 +424,6 @@ static void _populate_jewel_intrinsic_artps(const item_def &item,
     }
 }
 
-
 /**
  * Fill out the inherent ARTPs corresponding to a given item.
  *
@@ -590,6 +589,12 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, const item_def &item,
             return item_class != OBJ_ARMOUR
                    && (item_class != OBJ_JEWELLERY
                        || jewellery_is_amulet(item));
+        case ARTP_FIRE:
+        case ARTP_COLD:
+            // Scarves only have "of resistance" rF/rC
+            // Note there is no restriction on adding/removing rN/MR to scarves
+            // since the scarf of warding will retain its unique "Ward"
+            return (item.sub_type != ARM_SCARF);
         default:
             return true;
     }
@@ -724,6 +729,7 @@ static const artefact_prop_data artp_data[] =
     { "Fragile", ARTP_VAL_BOOL, 25, // ARTP_FRAGILE,
         nullptr, []() { return 1; }, 0, 0 },
     { "SH", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 }, // ARTP_SHIELDING,
+    { "Ward", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_WARDING
 };
 COMPILE_CHECK(ARRAYSZ(artp_data) == ARTP_NUM_PROPERTIES);
 // weights sum to 1000
@@ -850,7 +856,11 @@ static void _get_randart_properties(const item_def &item,
     // things get spammy. Extra "good" properties will be used to enhance
     // properties only, not to add more distinct properties. There is still a
     // small chance of >4 properties.
-    const int max_properties = 4 + one_chance_in(20) + one_chance_in(40);
+    int max_properties = 4 + one_chance_in(20) + one_chance_in(40);
+    // Scarves can get a lot of stuff out the door...
+    if ((item_class == OBJ_ARMOUR) && (item.sub_type == ARM_SCARF)) {
+        max_properties--;
+    }
     int enhance = 0;
     if (good + bad > max_properties)
     {
@@ -871,6 +881,16 @@ static void _get_randart_properties(const item_def &item,
     if (item_class == OBJ_WEAPONS)
         _add_randart_weapon_brand(item, item_props);
 
+    // Handle scarves
+    if ((item_class == OBJ_ARMOUR) && (item.sub_type == ARM_SCARF)) {
+        const special_armour_type ego = generate_armour_ego(item);
+        if (ego == SPARM_WARDING) {
+            item_props[ARTP_MAGIC_RESISTANCE] = item_props[ARTP_WARDING] = 
+                item_props[ARTP_NEGATIVE_ENERGY] = 1;
+        } else {
+            item_props[ARTP_BRAND] = ego;
+        }
+    }
     // randomly pick properties from the list, choose an appropriate value,
     // then subtract them from the good/bad/enhance count as needed
     // the 'enhance' count is not guaranteed to be used.
@@ -1405,6 +1425,7 @@ int get_unrandart_num(const char *name)
 static bool _randart_is_redundant(const item_def &item,
                                    artefact_properties_t &proprt)
 {
+    // Not adding random rF/rC to scarves was handled elsewhere
     if (item.base_type != OBJ_JEWELLERY)
         return false;
 

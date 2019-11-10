@@ -2446,6 +2446,9 @@ int get_armour_life_protection(const item_def &arm, bool check_artp)
     if (get_armour_ego_type(arm) == SPARM_POSITIVE_ENERGY)
         res += 1;
 
+    if (get_armour_ego_type(arm) == SPARM_WARDING)
+        res += 1;
+
     if (check_artp && is_artefact(arm))
         res += artefact_property(arm, ARTP_NEGATIVE_ENERGY);
 
@@ -2463,6 +2466,8 @@ int get_armour_res_magic(const item_def &arm, bool check_artp)
 
     // check for ego resistance
     if (get_armour_ego_type(arm) == SPARM_MAGIC_RESISTANCE)
+        res += MR_PIP;
+    if (get_armour_ego_type(arm) == SPARM_WARDING)
         res += MR_PIP;
 
     if (check_artp && is_artefact(arm))

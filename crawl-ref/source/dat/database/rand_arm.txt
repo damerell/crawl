@@ -393,7 +393,7 @@ the Unbroken
 
 Exclusion
 
-Repulsion
+# Repulsion removed since there are now randart scarves of repulsion
 
 Inviolability
 

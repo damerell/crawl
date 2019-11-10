@@ -286,6 +286,8 @@ static vector<string> _randart_propnames(const item_def& item,
     // list the following in rough order of importance
     const property_annotators propanns[] =
     {
+        // To let us fake up it being a base type
+        { ARTP_WARDING,               prop_note::plain },
         // (Generally) negative attributes
         // These come first, so they don't get chopped off!
         { ARTP_PREVENT_SPELLCASTING,  prop_note::plain },
@@ -425,7 +427,12 @@ static vector<string> _randart_propnames(const item_def& item,
                 break;
             }
             case prop_note::plain: // e.g. rPois or SInv
-                work << artp_name(ann.prop);
+                if ((ann.prop == ARTP_WARDING) && !no_comma) {
+                    // bit of a bodge!
+                    work << artp_name(ann.prop) << ",";
+                } else {
+                    work << artp_name(ann.prop);
+                }
                 break;
             }
             propnames.push_back(work.str());
@@ -564,6 +571,8 @@ static string _randart_descrip(const item_def &item)
         { ARTP_SLOW, "It may slow you when you take damage.", false},
         { ARTP_FRAGILE, "It will be destroyed if unequipped.", false },
         { ARTP_SHIELDING, "It affects your SH (%d).", false},
+        { ARTP_WARDING, 
+          "It can protect you from hostile summoned creatures.", false},
     };
 
     // Give a short description of the base type, for base types with no
@@ -1741,6 +1750,10 @@ static string _describe_armour(const item_def &item, bool verbose)
 
         case SPARM_CLOUD_IMMUNE:
             description += "It completely protects its wearer from the effects of clouds.";
+            break;
+
+        case SPARM_WARDING:
+            description += "It can protect you from hostile summoned creatures, and also increases your resistance to hostile enchantments and negative energy.";
             break;
         }
     }

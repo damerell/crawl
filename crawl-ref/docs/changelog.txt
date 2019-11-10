@@ -76,6 +76,10 @@ Vanilla changes messed around with
 * ghosts still roam the dungeon, but now they know who killed them, and
   emerge as neutral monsters seeking vengeance.
 * Labyrinth loot unchanged; minotaurs got armour, javs, +20 MR.
+* Some removed artifacts are unremoved - Cekugob, Doom Knight, Eternal Torment,
+  Hat of the High Council.
+* Scarves can be artifacts, always based on a normal scarf ego. Add a new
+  scarf of warding, which gives rN+, MR+, and the old warding effect.
 
 Vanilla changes not made
 ------------------------
