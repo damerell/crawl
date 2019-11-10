@@ -3749,8 +3749,12 @@ tileidx_t tileidx_known_brand(const item_def &item)
     else if (item.base_type == OBJ_ARMOUR)
     {
         const int brand = get_armour_ego_type(item);
-        if (brand != SPARM_NORMAL)
+        if (brand != SPARM_NORMAL) {
             return TILE_BRAND_ARM_FIRST + get_armour_ego_type(item) - 1;
+        } else if ((item.sub_type == ARM_SCARF) && is_artefact(item) &&
+                   (artefact_property(item, ARTP_MAGIC_RESISTANCE) == true)) {
+            return TILE_BRAND_ARM_WARDING;
+        }
     }
     else if (item.base_type == OBJ_MISSILES)
     {

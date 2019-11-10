@@ -1920,6 +1920,7 @@ int player_prot_life(bool calc_unid, bool temp, bool items)
 
         // armour (checks body armour only)
         pl += you.wearing_ego(EQ_ALL_ARMOUR, SPARM_POSITIVE_ENERGY);
+        pl += you.wearing_ego(EQ_ALL_ARMOUR, SPARM_WARDING);
 
         // pearl dragon counts
         const item_def *body_armour = you.slot_item(EQ_BODY_ARMOUR);
@@ -6605,6 +6606,8 @@ int player_res_magic(bool calc_unid, bool temp)
 
     // ego armours
     rm += MR_PIP * you.wearing_ego(EQ_ALL_ARMOUR, SPARM_MAGIC_RESISTANCE,
+                                   calc_unid);
+    rm += MR_PIP * you.wearing_ego(EQ_ALL_ARMOUR, SPARM_WARDING,
                                    calc_unid);
 
     // rings of magic resistance

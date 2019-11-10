@@ -72,6 +72,7 @@ my %field_type = (
     TYPE     => "str",
     UNIDED   => "bool",
     VALUE    => "num",
+    WARDING  => "bool",
 
     TILE     => "str",
     TILE_EQ  => "str",
@@ -491,6 +492,7 @@ my @art_order = (
     "BASE_DELAY", "HP", "CLARITY", "BASE_ACC", "BASE_DAM", "\n",
     "RMSL", "FOG", "REGEN", "unused", "NO_UPGRADE", "RCORR", "\n",
     "RMUT", "unused", "CORRODE", "DRAIN", "SLOW", "FRAGILE", "\n",
+    "unused", "WARDING", "\n",
     "}",
 
     "equip_func", "unequip_func", "world_reacts_func", "melee_effects_func",

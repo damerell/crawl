@@ -566,6 +566,7 @@ const char* armour_ego_name(const item_def& item, bool terse)
         case SPARM_ARCHERY:           return "archery";
         case SPARM_REPULSION:         return "repulsion";
         case SPARM_CLOUD_IMMUNE:      return "cloud immunity";
+        case SPARM_WARDING:           return "warding";
         default:                      return "bugginess";
         }
     }
@@ -598,8 +599,9 @@ const char* armour_ego_name(const item_def& item, bool terse)
         case SPARM_REFLECTION:        return "reflect";
         case SPARM_SPIRIT_SHIELD:     return "Spirit";
         case SPARM_ARCHERY:           return "archery";
-        case SPARM_REPULSION:         return "repulsion";
-        case SPARM_CLOUD_IMMUNE:      return "cloud immunity";
+        case SPARM_REPULSION:         return "RMsl";
+        case SPARM_CLOUD_IMMUNE:      return "CldImm";
+        case SPARM_WARDING:           return "Ward rN+ MR+";
         default:                      return "buggy";
         }
     }

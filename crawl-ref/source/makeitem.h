@@ -21,6 +21,8 @@ jewellery_type get_random_amulet_type();
 void item_set_appearance(item_def &item);
 
 bool is_weapon_brand_ok(int type, int brand, bool strict);
+special_armour_type generate_armour_ego(const item_def& item, 
+					int item_level = 0);
 bool is_armour_brand_ok(int type, int brand, bool strict);
 bool is_missile_brand_ok(int type, int brand, bool strict);
 

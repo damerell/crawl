@@ -716,10 +716,10 @@ static void _generate_missile_item(item_def& item, int force_type,
         item.quantity = 1 + random2(7) + random2(10) + random2(10) + random2(12);
 }
 
+// Vanilla disables it on scarves. We keep this function to aid future merging.
 static bool _armour_disallows_randart(int sub_type)
 {
-    // Scarves are never randarts.
-    return sub_type == ARM_SCARF;
+    return false;
 }
 
 static bool _try_make_armour_artefact(item_def& item, int force_type,
@@ -820,7 +820,8 @@ static special_armour_type _generate_armour_type_ego(armour_type type,
         return random_choose_weighted(1, SPARM_SPIRIT_SHIELD,
                                       1, SPARM_RESISTANCE,
                                       1, SPARM_REPULSION,
-                                      1, SPARM_CLOUD_IMMUNE);
+                                      1, SPARM_CLOUD_IMMUNE,
+                                      1, SPARM_WARDING);
 
     case ARM_CLOAK:
         return random_choose(SPARM_POISON_RESISTANCE,
@@ -895,7 +896,7 @@ static special_armour_type _generate_armour_type_ego(armour_type type,
  *                      otherwise, an ego appropriate to the item.
  *                      May be SPARM_NORMAL.
  */
-static special_armour_type _generate_armour_ego(const item_def& item,
+special_armour_type generate_armour_ego(const item_def& item,
                                                 int item_level)
 {
     if (item.brand != SPARM_NORMAL)
@@ -997,6 +998,7 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
 
     case SPARM_REPULSION:
     case SPARM_CLOUD_IMMUNE:
+    case SPARM_WARDING:
         return type == ARM_SCARF;
 
     case NUM_SPECIAL_ARMOURS:
@@ -1133,7 +1135,6 @@ static void _generate_armour_item(item_def& item, bool allow_uniques,
         }
     }
 
-
     // Fall back to an ordinary item if artefacts not allowed for this type.
     if (item_level == ISPEC_RANDART && _armour_disallows_randart(item.sub_type))
         item_level = ISPEC_GOOD_ITEM;
@@ -1179,7 +1180,7 @@ static void _generate_armour_item(item_def& item, bool allow_uniques,
         {
             // Brand is set as for "good" items.
             set_item_ego_type(item, OBJ_ARMOUR,
-                _generate_armour_ego(item, 2 + 2 * env.absdepth0));
+                generate_armour_ego(item, 2 + 2 * env.absdepth0));
         }
 
         item.plus -= 1 + random2(3);
@@ -1187,11 +1188,11 @@ static void _generate_armour_item(item_def& item, bool allow_uniques,
         if (item_level == ISPEC_BAD)
             do_curse_item(item);
     }
-    // Scarves always get an ego.
+    // Scarves always get an ego (randarts elsewhere)
     else if (item.sub_type == ARM_SCARF)
     {
         set_item_ego_type(item, OBJ_ARMOUR,
-                          _generate_armour_ego(item, item_level));
+                          generate_armour_ego(item, item_level));
     }
     else if ((forced_ego || item.sub_type == ARM_HAT
                     || x_chance_in_y(51 + item_level, 250))
@@ -1210,7 +1211,7 @@ static void _generate_armour_item(item_def& item, bool allow_uniques,
         {
             // ...an ego item, in fact.
             set_item_ego_type(item, OBJ_ARMOUR,
-                              _generate_armour_ego(item, item_level));
+                              generate_armour_ego(item, item_level));
 
             if (get_armour_ego_type(item) == SPARM_PONDEROUSNESS)
                 item.plus += 3 + random2(8);
@@ -2054,7 +2055,7 @@ void reroll_brand(item_def &item, int item_level)
         item.brand = _determine_missile_brand(item, item_level);
         break;
     case OBJ_ARMOUR:
-        item.brand = _generate_armour_ego(item, item_level);
+        item.brand = generate_armour_ego(item, item_level);
         break;
     default:
         die("can't reroll brands of this type");

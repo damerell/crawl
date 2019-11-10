@@ -60,7 +60,9 @@ function ch_stash_search_annotate_item(it)
   end
 
   if it.ego_type_terse ~= "" and it.ego_type_terse ~= "unknown" then
-    if it.class(true) == "jewellery" then
+    if it.ego_type_terse == "Spirit" then
+      annot = annot .. "{Spirit} {spirit shield} {guardian spirit} "
+    elseif it.class(true) == "jewellery" then
       annot = annot .. "{" .. it.ego_type_terse
       if it.ego_type_terse == "Ice" then
         annot = annot .. " rC+ rF-"
@@ -76,8 +78,24 @@ function ch_stash_search_annotate_item(it)
         end
       end
       annot = annot .. "} "
+    elseif it.ego_type_terse == "CldImm" then
+      annot = annot .. "{CldImm} {cloud immunity} "
+    elseif it.ego_type_terse == "RMsl" then
+      annot = annot .. "{RMsl} {repulsion} "
+    elseif it.ego_type_terse == "Ward" then
+      annot = annot .. "{Ward} {warding} "
     else
       annot = annot .. "{" .. it.ego_type_terse .. "} "
+    end
+-- bit of a kludge
+  elseif it.artefact then
+    artprops = it.artprops
+    if artprops then
+      for artprop, quan in pairs(artprops) do 
+        if artprop == "Ward" then
+          annot = annot .. "{Ward} {warding} "
+        end
+      end
     end
   end
 

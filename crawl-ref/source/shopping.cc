@@ -184,6 +184,10 @@ int artefact_value(const item_def &item)
     if (prop[ ARTP_CLARITY ])
         ret += 20;
 
+    // Less than 7x here because the rN and MR are charged separately
+    if (prop[ ARTP_WARDING ])
+        ret += 10;
+
     return (ret > 0) ? ret : 0;
 }
 
@@ -341,6 +345,10 @@ unsigned int item_value(item_def item, bool ident)
             case SPARM_RESISTANCE:
                 valued += 250;
                 break;
+            
+            case SPARM_WARDING:
+                valued += 150;
+                break;
 
             case SPARM_COLD_RESISTANCE:
             case SPARM_DEXTERITY:
@@ -362,6 +370,7 @@ unsigned int item_value(item_def item, bool ident)
             case SPARM_POISON_RESISTANCE:
             case SPARM_REFLECTION:
             case SPARM_SPIRIT_SHIELD:
+            case SPARM_CLOUD_IMMUNE:
                 valued += 20;
                 break;
 

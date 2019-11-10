@@ -2458,6 +2458,9 @@ static vector<formatted_string> _get_overview_resistances(
     const int rspir = you.spirit_shield(calc_unid);
     out += _resist_composer("Spirit", cwidth, rspir) + "\n";
 
+    const int rward = you.warding(calc_unid);
+    out += _resist_composer("Warding", cwidth, rward) + "\n";
+
     const item_def *sh = you.shield();
     const int reflect = you.reflection(calc_unid)
                         || sh && shield_reflects(*sh);
