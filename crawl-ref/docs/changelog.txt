@@ -31,7 +31,7 @@ Stoat Soup 0.22
   them.
 * When you acquire or are (non-Xom) god gifted a weapon of distortion or item
   that is *Contam/*Fragile, it is identified as such automatically.
-* Formicids cannot cast Swiftness.
+* Formicids cannot cast Swiftness, but can use giant clubs.
 * All magical staves do some kind of bonus damage in melee based on spell
   skills. 
 * When incapacitated, you still lose SH from a shield, but keep half of

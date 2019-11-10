@@ -371,7 +371,7 @@ static const map<species_type, species_def> species_data =
     { { MUT_ANTENNAE, 3, 1 }, },
     { "You cannot be hasted, slowed, berserked, paralysed or teleported.",
       "You can dig through walls and to a lower floor.",
-      "Your four strong arms can wield two-handed weapons with a shield." },
+      "Your four strong arms can wield any weapon, usually with a shield." },
     { "permanent stasis", "dig shafts and tunnels", "four strong arms" },
     { JOB_FIGHTER, JOB_HUNTER, JOB_ABYSSAL_KNIGHT, JOB_ARCANE_MARKSMAN,
       JOB_EARTH_ELEMENTALIST, JOB_VENOM_MAGE },

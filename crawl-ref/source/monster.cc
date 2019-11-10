@@ -593,6 +593,8 @@ bool monster::could_wield(const item_def &item, bool ignore_brand,
         return false;
 
     // Wimpy monsters (e.g. kobolds, goblins) can't use halberds, etc.
+    // Technically we should allow monster formicids GC/GSC here but there
+    // aren't any...
     if (is_weapon(item) && !is_weapon_wieldable(item, body_size()))
         return false;
 

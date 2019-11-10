@@ -332,10 +332,15 @@ item_def *player::weapon(int /* which_attack */) const
 // Give hands required to wield weapon.
 hands_reqd_type player::hands_reqd(const item_def &item, bool base) const
 {
-    if (species == SP_FORMICID)
-        return HANDS_ONE;
-    else
+    if (you.species == SP_FORMICID) {
+        if (is_giant_club_type(item.sub_type)) {
+            return HANDS_TWO;
+        } else {
+            return HANDS_ONE;
+        }
+    } else {
         return actor::hands_reqd(item, base);
+    }
 }
 
 bool player::can_wield(const item_def& item, bool ignore_curse,
@@ -402,9 +407,11 @@ bool player::could_wield(const item_def &item, bool ignore_brand,
         return false;
     }
 
-    const size_type bsize = body_size(PSIZE_TORSO, ignore_transform);
+    size_type bsize = body_size(PSIZE_TORSO, ignore_transform);
+    // SGT says this is OK...
+    if (species == SP_FORMICID) bsize = (size_type) (1+ (int) bsize);
     // Small species wielding large weapons...
-    if (!is_weapon_wieldable(item, bsize))
+    if (!is_weapon_wieldable(item, bsize)) 
     {
         if (!quiet)
             mpr("That's too large for you to wield.");
