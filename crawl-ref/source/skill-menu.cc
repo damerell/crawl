@@ -797,6 +797,7 @@ void SkillMenu::init_experience()
             }
         you.auto_training = false;
         reset_training();
+        you.clear_training_targets();
 
         for (int i = 0; i < NUM_SKILLS; ++i)
         {
