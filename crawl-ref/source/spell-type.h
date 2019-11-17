@@ -465,5 +465,6 @@ enum spell_type : int
     SPELL_GRASPING_ROOTS,
     SPELL_SONIC_WAVE,
     SPELL_WARNING_FLASH,
+    SPELL_NOXIOUS_BOG,
     NUM_SPELLS
 };

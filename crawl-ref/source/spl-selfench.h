@@ -49,3 +49,6 @@ void spell_drop_permabuffs(bool turn_off, bool end_durs, bool increase_durs,
 			   bool voluntary);
 bool permabuff_fail_check(permabuff_type pb, const string &message, 
 			  bool ignoredur = false);
+
+spret cast_noxious_bog(int pow, bool fail);
+void noxious_bog_cell(coord_def p);

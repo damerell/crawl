@@ -13,6 +13,7 @@
 #include "art-enum.h"
 #include "coordit.h" // radius_iterator
 #include "delay.h"
+#include "env.h"
 #include "god-conduct.h"
 #include "god-passive.h"
 #include "hints.h"
@@ -30,6 +31,7 @@
 #include "spl-summoning.h"
 #include "spl-wpnench.h"
 #include "stringutil.h"
+#include "terrain.h"
 #include "transform.h"
 #include "tilepick.h"
 #include "view.h"
@@ -402,4 +404,30 @@ bool permabuff_fail_check(permabuff_type pb, const string &message,
         }
     }
     return false;
+}
+
+spret cast_noxious_bog(int pow, bool fail)
+{
+    fail_check();
+    flash_view_delay(UA_PLAYER, LIGHTGREEN, 100);
+
+    if (!you.duration[DUR_NOXIOUS_BOG])
+        mpr("You begin spewing toxic sludge!");
+    else
+        mpr("Your toxic spew intensifies!");
+
+    you.props[NOXIOUS_BOG_KEY] = pow;
+    you.increase_duration(DUR_NOXIOUS_BOG, 5 + random2(pow / 10), 24);
+    return spret::success;
+}
+
+void noxious_bog_cell(coord_def p)
+{
+    if (grd(p) == DNGN_DEEP_WATER || grd(p) == DNGN_LAVA)
+        return;
+
+    const int turns = 10
+                    + random2avg(you.props[NOXIOUS_BOG_KEY].get_int() / 20, 2);
+    temp_change_terrain(p, DNGN_TOXIC_BOG, turns * BASELINE_DELAY,
+            TERRAIN_CHANGE_BOG, you.as_monster());
 }
