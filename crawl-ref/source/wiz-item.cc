@@ -721,6 +721,14 @@ static void _forget_item(item_def &item)
     for (it = chain.begin(); it != chain.end(); it++) {
         _forget_item(*it);
     }
+    if (is_artefact(item))
+    {
+        ASSERT(item.props.exists(KNOWN_PROPS_KEY));
+        CrawlVector &known = item.props[KNOWN_PROPS_KEY].get_vector();
+        ASSERT(known.size() == ART_PROPERTIES);
+        for (vec_size i = 0; i < ART_PROPERTIES; i++)
+            known[i] = static_cast<bool>(false);
+    }
 }
 
 void wizard_unidentify_pack()
