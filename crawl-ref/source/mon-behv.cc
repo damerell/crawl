@@ -940,15 +940,15 @@ static bool _mons_check_foe(monster* mon, const coord_def& p,
 
     monster* foe = monster_at(p);
     return foe && foe != mon
-           && (mon->has_ench(ENCH_INSANE)
-               || foe->friendly() != friendly
-               || neutral && !foe->neutral())
+           && (foe->friendly() != friendly
+               || neutral && !foe->neutral()
+               || mon->has_ench(ENCH_INSANE))
            && (ignore_sight || mon->can_see(*foe))
            && !foe->is_projectile()
            && summon_can_attack(mon, p)
            && (friendly || !is_sanctuary(p))
            && !mons_is_firewood(*foe)
-           || mon->has_ench(ENCH_INSANE) && p == you.pos();
+           || p == you.pos() && mon->has_ench(ENCH_INSANE);
 }
 
 // Choose random nearest monster as a foe.
