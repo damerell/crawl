@@ -1808,6 +1808,9 @@ int player_spec_fire()
 
     if (you.permabuff_working(PERMA_ROF)) sf++;
 
+    if (player_equip_unrand(UNRAND_ELEMENTAL_STAFF))
+        sf++;
+
     return sf;
 }
 
@@ -1821,6 +1824,9 @@ int player_spec_cold()
     // rings of ice:
     sc += you.wearing(EQ_RINGS, RING_ICE);
 
+    if (player_equip_unrand(UNRAND_ELEMENTAL_STAFF))
+        sc++;
+
     return sc;
 }
 
@@ -1831,6 +1837,9 @@ int player_spec_earth()
     // Staves
     se += you.wearing(EQ_STAFF, STAFF_EARTH);
 
+    if (player_equip_unrand(UNRAND_ELEMENTAL_STAFF))
+        se++;
+
     return se;
 }
 
@@ -1840,6 +1849,9 @@ int player_spec_air()
 
     // Staves
     sa += you.wearing(EQ_STAFF, STAFF_AIR);
+
+    if (player_equip_unrand(UNRAND_ELEMENTAL_STAFF))
+        sa++;
 
     return sa;
 }
