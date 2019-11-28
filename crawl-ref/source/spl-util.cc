@@ -461,7 +461,13 @@ bool spell_harms_area(spell_type spell)
 // for Xom acting (more power = more likely to grab his attention) {dlb}
 int spell_mana(spell_type which_spell)
 {
-    return _seekspell(which_spell)->level - you.get_mutation_level(MUT_MAGIC_ATTUNEMENT);
+    int cost = _seekspell(which_spell)->level - you.get_mutation_level(MUT_MAGIC_ATTUNEMENT);
+    if ((cost == 0) && !is_permabuff(which_spell) && 
+        (you.get_mutation_level(MUT_MAGIC_ATTUNEMENT) > 0) &&
+        (!there_are_monsters_nearby(true, true, false))) {
+        cost = 1;
+    }
+    return cost;
 }
 
 // applied in naughties (more difficult = higher level knowledge = worse)

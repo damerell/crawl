@@ -1761,12 +1761,18 @@ Faerie Dragons
   attractive, but have proven to be more bane than boon by drawing the
   attention of the Dungeon's denizens.
   
-  Most Faerie Dragons welcome confrontation and favour the use of destructive
-  spells to deal with enemies who challenge them. Their natural attunement to
-  magic reduces the MP cost of spells and negates any hunger generation. Their
-  scales shimmer with energy that repels incoming attacks and their bright
-  wings enable continuous flight. Faerie Dragons are small and evasive, but
-  they're frail and cannot wear any form of body armour.
+  Most Faerie Dragons welcome confrontation and favour the use of
+  destructive spells to deal with enemies who challenge them. Their
+  natural attunement to magic reduces the MP cost of spells and
+  negates any hunger generation. Their scales shimmer with energy that
+  repels incoming attacks and their bright wings enable continuous
+  flight. Faerie Dragons are small and evasive, but they're frail and
+  cannot wear any form of body armour.
+
+  The reduction in the cost of spells can only reduce the cost of a
+  level 1 spell to 0 MP if there are monsters in view. Faerie Dragons
+  are aggressive creatures, and need a focus for their aggression to
+  perform at their best.
 
 Dwarves
 ========================================
