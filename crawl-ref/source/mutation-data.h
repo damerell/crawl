@@ -1914,7 +1914,7 @@ static const mutation_def mut_data[] =
 { MUT_MAGIC_ATTUNEMENT, 0, 1, mutflag::good, true,
   "magic attunement",
 
-  {"Your spells do not cause hunger; their MP costs are reduced by 1.", "", ""},
+  {"Your spells do not cause hunger; their MP costs are reduced by 1 (to a minimum of 1 if there are no threatening monsters in view).", "", ""},
   {"", "", ""},
   {"", "", ""},
 },
