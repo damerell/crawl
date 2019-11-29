@@ -195,6 +195,8 @@ tileidx_t tileidx_feature_base(dungeon_feature_type feat)
         return TILE_DNGN_SHALLOW_WATER;
     case DNGN_OPEN_SEA:
         return TILE_DNGN_OPEN_SEA;
+    case DNGN_TOXIC_BOG:
+        return TILE_DNGN_TOXIC_BOG;
     case DNGN_FLOOR:
     case DNGN_UNDISCOVERED_TRAP:
         return TILE_FLOOR_NORMAL;
