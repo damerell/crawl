@@ -617,34 +617,6 @@ static const vector<chaos_effect> chaos_effects = {
         "polymorph", 2, _is_chaos_polyable, BEAM_POLYMORPH,
     },
     {
-        "shifter", 1, [](const actor &defender)
-        {
-            const monster *mon = defender.as_monster();
-            return _is_chaos_polyable(defender)
-                   && mon && !mon->is_shapeshifter()
-                   && defender.holiness() & MH_NATURAL;
-        },
-        BEAM_NONE, [](attack &attack) {
-            monster* mon = attack.defender->as_monster();
-            ASSERT(_is_chaos_polyable(*attack.defender));
-            ASSERT(mon);
-            ASSERT(!mon->is_shapeshifter());
-
-            const bool obvious_effect = you.can_see(*attack.defender);
-            mon->add_ench(one_chance_in(3) ? ENCH_GLOWING_SHAPESHIFTER
-                                           : ENCH_SHAPESHIFTER);
-            // Immediately polymorph monster, just to make the effect obvious.
-            monster_polymorph(mon, RANDOM_MONSTER);
-
-            // Xom loves it if this happens!
-            const int friend_factor = mon->friendly() ? 1 : 2;
-            const int glow_factor   = mon->has_ench(ENCH_SHAPESHIFTER) ? 1 : 2;
-            xom_is_stimulated(64 * friend_factor * glow_factor);
-
-            return obvious_effect;
-        },
-    },
-    {
         "miscast", 20, nullptr, BEAM_NONE, [](attack &attack) {
 
             const int HD = attack.defender->get_hit_dice();

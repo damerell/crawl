@@ -36,6 +36,9 @@ Stoat Soup 0.22
   skills. 
 * When incapacitated, you still lose SH from a shield, but keep half of
   mutation-based SH and all god/jewellery SH.
+* Weapons of chaos cannot turn monsters into shapeshifters. This is a rare
+  effect, but would almost always stiff you if it hit in the early game;
+  weapons of chaos are bad enough already.
 
 Changes swiped from other variants
 ----------------------------------
