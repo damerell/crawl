@@ -584,11 +584,13 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, const item_def &item,
             return item_class != OBJ_WEAPONS
                    || get_weapon_brand(item) != SPWPN_ANTIMAGIC;
             // not quite as interesting on armour, since you swap it less
+        case ARTP_CURSE:
+            return item_class != OBJ_ARMOUR;
             // rings have 2 slots, so little swap pressure
         case ARTP_FRAGILE:
             return item_class != OBJ_ARMOUR
-                   && (item_class != OBJ_JEWELLERY
-                       || jewellery_is_amulet(item));
+                && (item_class != OBJ_JEWELLERY
+                    || jewellery_is_amulet(item));
         case ARTP_FIRE:
         case ARTP_COLD:
             // Scarves only have "of resistance" rF/rC
@@ -692,7 +694,8 @@ static const artefact_prop_data artp_data[] =
     { "Slay", ARTP_VAL_ANY, 30,     // ARTP_SLAYING,
       []() { return 2 + random2(2); },
       []() { return -(2 + random2(3) + random2(3)); }, 3, 2 },
-    { "*Curse", ARTP_VAL_POS, 0, nullptr, nullptr, 0 }, // ARTP_CURSE,
+    { "*Curse", ARTP_VAL_POS, 25, // ARTP_CURSE,
+      nullptr, []() { return 1; }, 0, 0 }, 
     { "Stlth", ARTP_VAL_ANY, 40,    // ARTP_STEALTH,
         _gen_good_res_artp, _gen_bad_res_artp, 0, 0 },
     { "MP", ARTP_VAL_ANY, 15,       // ARTP_MAGICAL_POWER,
@@ -726,8 +729,8 @@ static const artefact_prop_data artp_data[] =
         nullptr, []() { return 1; }, 0, 0 },
     { "*Slow", ARTP_VAL_BOOL, 25, // ARTP_SLOW,
         nullptr, []() { return 1; }, 0, 0 },
-    { "Fragile", ARTP_VAL_BOOL, 25, // ARTP_FRAGILE,
-        nullptr, []() { return 1; }, 0, 0 },
+    { "Fragile", ARTP_VAL_BOOL, 0, // ARTP_FRAGILE,
+      nullptr, nullptr, 0, 0 },
     { "SH", ARTP_VAL_ANY, 0, nullptr, nullptr, 0, 0 }, // ARTP_SHIELDING,
     { "Ward", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_WARDING
 };
@@ -984,14 +987,16 @@ static bool _init_artefact_properties(item_def &item)
     prop.init(0);
     _get_randart_properties(item, prop);
 
+    // The continue here was a legacy of ARTP_CURSE turning up on randarts
+    // and having >1 permissible value some of which meant "start cursed but
+    // throw away". This is how I couldn't generate ARTP_CURSED divine gifts?
     for (int i = 0; i < ART_PROPERTIES; i++)
     {
+        rap[i] = static_cast<short>(prop[i]);
         if (i == ARTP_CURSE && prop[i])
         {
             do_curse_item(item);
-            continue;
         }
-        rap[i] = static_cast<short>(prop[i]);
     }
 
 
