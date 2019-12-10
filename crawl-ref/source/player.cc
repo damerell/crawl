@@ -1265,7 +1265,7 @@ int player_hunger_rate(bool temp)
                                         you.time_taken);
             }
             hunger += div_rand_round(charge, 100);
-            dprf("Hunger for %d - %d", pb, charge);
+            dprf(DIAG_PERMABUFF, "Hunger for %d - %d", pb, charge);
         }
     }
     if (you.species == SP_VAMPIRE)
