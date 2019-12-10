@@ -123,6 +123,12 @@ bool rakshasa_clone_fineff::mergeable(const final_effect &fe) const
     return o && att == o->att && def == o->def && posn == o->posn;
 }
 
+bool abjuration_fineff::mergeable(const final_effect &fe) const {
+    const abjuration_fineff *o =
+        dynamic_cast<const abjuration_fineff *>(&fe);
+    return o && def == o->def;
+}
+
 void mirror_damage_fineff::merge(const final_effect &fe)
 {
     const mirror_damage_fineff *mdfe =
@@ -173,6 +179,13 @@ void shock_serpent_discharge_fineff::merge(const final_effect &fe)
     power += ssdfe->power;
 }
 
+void abjuration_fineff::merge(const final_effect &fe) {
+    const abjuration_fineff *afe =
+        dynamic_cast<const abjuration_fineff *>(&fe);
+    ASSERT(afe);
+    power += afe->power;
+}
+    
 void mirror_damage_fineff::fire()
 {
     actor *attack = attacker();
@@ -547,6 +560,43 @@ void infestation_death_fineff::fire()
             mprf("%s bursts from %s!", scarab->name(DESC_A, true).c_str(),
                                        name.c_str());
         }
+    }
+}
+
+void abjuration_fineff::fire() {
+    actor *abjuree = defender();
+    if (!abjuree || !abjuree->alive()) return;
+// I regret the duplication of a bunch of _abjuration but we want it to work
+// slightly differently & it's already semi-duplicated in mon-cast.cc
+
+// This is * 4; the * 12 from spl-summoning.cc but a / 3 fudge factor to make
+// for a relatively weak effect.
+    const int abjdur = power * 4;
+    int duration;
+    monster* mon = defender()->as_monster();
+    ASSERT(mon->is_summoned(&duration));
+    int sockage = max(fuzz_value(abjdur, 60, 30), 40);
+    dprf("%s abj: dur: %d, abj: %d",
+         mon->name(DESC_PLAIN).c_str(), duration, sockage);
+
+    bool shielded = false;
+    // TSO and Trog's abjuration protection.                                
+    if (mons_is_god_gift(*mon, GOD_SHINING_ONE)) {
+        sockage = sockage * (30 - mon->get_hit_dice()) / 45;
+        if (sockage < duration) {
+            shielded = true;
+        }
+    } else if (mons_is_god_gift(*mon, GOD_TROG)) {
+        sockage = sockage * 8 / 15;
+        if (sockage < duration)
+        {
+            shielded = true;
+        }
+    }
+    mon_enchant abj = mon->get_ench(ENCH_ABJ);
+    if (!mon->lose_ench_duration(abj, sockage)) {
+        simple_monster_message(*mon, shielded ? " shudders slightly." :
+                               " shudders.");
     }
 }
 

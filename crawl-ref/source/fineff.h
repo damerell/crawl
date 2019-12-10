@@ -337,4 +337,21 @@ protected:
     string name;
 };
 
+class abjuration_fineff : public final_effect { 
+ public:
+    bool mergeable(const final_effect &a) const override;
+    void merge(const final_effect &a) override;
+    void fire() override;
+
+    static void schedule(const actor *abjuree, int pow) {
+	final_effect::schedule(new abjuration_fineff(abjuree, pow));
+    }
+ protected:
+ abjuration_fineff(const actor *abjuree, int pow) 
+ : final_effect(0, abjuree, coord_def()), power(pow)
+	{
+	}
+    int power;
+};
+
 void fire_final_effects();
