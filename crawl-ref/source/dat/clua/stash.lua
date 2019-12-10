@@ -81,7 +81,7 @@ function ch_stash_search_annotate_item(it)
     elseif it.ego_type_terse == "CldImm" then
       annot = annot .. "{CldImm} {cloud immunity} "
     elseif it.ego_type_terse == "RMsl" then
-      annot = annot .. "{RMsl} {repulsion} "
+      annot = annot .. "{RMsl} {repulsion} {repel missiles} "
     elseif it.ego_type_terse == "Ward" then
       annot = annot .. "{Ward} {warding} "
     else
