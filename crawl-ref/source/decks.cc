@@ -104,7 +104,7 @@ deck_archetype deck_of_emergency =
 {
     { CARD_TOMB,       {5, 5, 5} },
     { CARD_BANSHEE,    {5, 5, 5} },
-    { CARD_EXILE,      {0, 1, 2} },
+    { CARD_EXILE,      {2, 3, 4} },
     { CARD_ALCHEMIST,  {5, 5, 5} },
     { CARD_ELIXIR,     {5, 5, 5} },
     { CARD_CLOUD,      {5, 5, 5} },
@@ -1526,18 +1526,15 @@ static void _exile_card(int power, deck_rarity_type rarity)
 
     for (int i = 0; i < 1 + extra_targets; ++i)
     {
-        // Pick a random monster nearby to banish (or yourself).
+        // Pick a random monster nearby to banish.
         monster* mon_to_banish = choose_random_nearby_monster(1);
 
         // Bonus banishments only banish monsters.
         if (i != 0 && !mon_to_banish)
             continue;
 
-        if (!mon_to_banish) // Banish yourself!
-        {
-            banished("drawing a card");
+        if (!mon_to_banish)
             break;              // Don't banish anything else.
-        }
         else
             mon_to_banish->banish(&you);
     }
