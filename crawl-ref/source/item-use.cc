@@ -2954,11 +2954,7 @@ void read_scroll(item_def& scroll)
             // IDing scrolls. (Not an interesting ID game mechanic!)
         }
 
-        if (!alreadyknown)
-            run_uncancel(UNC_ACQUIREMENT, AQ_SCROLL);
-        else
-            cancel_scroll = !acquirement(OBJ_RANDOM, AQ_SCROLL, false, nullptr,
-                    false, true);
+        run_uncancel(UNC_ACQUIREMENT, AQ_SCROLL);
         break;
 
     case SCR_FEAR:
