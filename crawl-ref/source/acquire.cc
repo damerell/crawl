@@ -33,6 +33,7 @@
 #include "macro.h"
 #include "message.h"
 #include "output.h"
+#include "options.h"
 #include "prompt.h"
 #include "randbook.h"
 #include "random.h"
@@ -1653,8 +1654,9 @@ bool AcquireMenu::acquire_selected()
     update_help();
     const formatted_string old_more = more;
     more = formatted_string::parse_string(make_stringf(
-               "<%s>Acquire this item? (y/N)</%s>\n",
+               "<%s>Acquire this item? (%s/N)</%s>\n",
                col.c_str(),
+               Options.easy_confirm == CONFIRM_NONE_EASY ? "Y" : "y",
                col.c_str()));
     more += old_more;
     update_more();
@@ -1673,7 +1675,7 @@ bool AcquireMenu::acquire_selected()
         canned_msg(MSG_SOMETHING_APPEARS);
     else
         canned_msg(MSG_NOTHING_HAPPENS);
-    acq_items.empty();
+    acq_items.clear();
     return false;
 }
 
@@ -1751,6 +1753,7 @@ static void _make_acquirement_items()
 
     vector<object_class_type> chosen_classes;
     const int num_wanted = 4;
+    const int num_wanted = min(4, (int) rand_acq_classes.size());
     shuffle_array(rand_acq_classes);
     for (int i = 0 ; i < num_wanted ; i++)
         chosen_classes.emplace_back(rand_acq_classes[i]);
@@ -1789,7 +1792,11 @@ bool acquirement_menu()
     AcquireMenu acq_menu(acq_items);
     acq_menu.show();
 
-    you.props.erase(ACQUIRE_ITEMS_KEY);
-
-    return true;
+    if (acq_items.empty())
+    {
+        you.props.erase(ACQUIRE_ITEMS_KEY);
+        return true;
+    }
+    else
+        return false;
 }

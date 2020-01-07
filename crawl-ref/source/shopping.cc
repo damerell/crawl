@@ -33,6 +33,7 @@
 #include "menu.h"
 #include "message.h"
 #include "notes.h"
+#include "options.h"
 #include "output.h"
 #include "place.h"
 #include "player.h"
@@ -1194,10 +1195,11 @@ void ShopMenu::purchase_selected()
         return;
     }
     more = formatted_string::parse_string(make_stringf(
-               "<%s>Purchase items%s for %d gold? (y/N)</%s>\n",
+               "<%s>Purchase items%s for %d gold? (%s/N)</%s>\n",
                col.c_str(),
                buying_from_list ? " in shopping list" : "",
                cost,
+               Options.easy_confirm == easy_confirm_type::none ? "Y" : "y",
                col.c_str()));
     more += old_more;
     update_more();
