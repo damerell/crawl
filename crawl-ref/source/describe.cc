@@ -2952,7 +2952,7 @@ static string _player_spell_stats(const spell_type spell)
 
     const string schools = spell_schools_string(spell);
     description +=
-        make_stringf("        School%s: %s",
+        make_stringf("    School%s: %s",
                      schools.find("/") != string::npos ? "s" : "",
                      schools.c_str());
 
@@ -2962,11 +2962,24 @@ static string _player_spell_stats(const spell_type spell)
         return description; // all other info is player-dependent
     }
 
-    const string failure = failure_rate_to_string(raw_spell_fail(spell));
-    description += make_stringf("        Fail: %s", failure.c_str());
+    string failure = failure_rate_to_string(raw_spell_fail(spell));
+    string length(description.length() + 3, ' ');
+    description += make_stringf("    Fail: %s", failure.c_str());
+    string brilldesc = (you.duration[DUR_BRILLIANCE] ? 
+                        "Without brilliance: " : 
+                        "With brilliance: ");
+    // I'm not super happy with this but the alternative is altering about
+    // a zillion function prototypes and having vanilla patches not apply
+    you.props["brill_toggle"] = true;
+    failure = failure_rate_to_string(raw_spell_fail(spell));
+    description += "\n" + length +  brilldesc + failure.c_str();
+    you.props["brill_toggle"] = false;
 
     description += "\n\nPower : ";
     description += spell_power_string(spell);
+    you.props["brill_toggle"] = true;
+    description += "    " + brilldesc + spell_power_string(spell);
+    you.props["brill_toggle"] = false;
     description += "\nRange : ";
     description += spell_range_string(spell);
     description += "\nHunger: ";

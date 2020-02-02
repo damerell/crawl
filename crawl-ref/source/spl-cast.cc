@@ -317,7 +317,8 @@ static int _apply_spellcasting_success_boosts(spell_type spell, int chance)
     if (wizardry > 0)
       fail_reduce = fail_reduce * 6 / (7 + wizardry);
 
-    if (you.duration[DUR_BRILLIANCE])
+    if (((bool) you.duration[DUR_BRILLIANCE]) ^ 
+        you.props["brill_toggle"].get_bool()) 
         fail_reduce = fail_reduce / 2;
 
     // Hard cap on fail rate reduction.
@@ -473,7 +474,8 @@ int calc_spell_power(spell_type spell, bool apply_intel, bool fail_rate_check,
     {
         // Brilliance boosts spell power a bit (equivalent to three
         // spell school levels).
-        if (you.duration[DUR_BRILLIANCE])
+        if (((bool) you.duration[DUR_BRILLIANCE]) ^ 
+            you.props["brill_toggle"].get_bool())
             power += 600;
 
         if (apply_intel)

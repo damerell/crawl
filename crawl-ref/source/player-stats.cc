@@ -423,7 +423,8 @@ static int _int_modifier(bool innate_only)
 
     if (!innate_only)
     {
-        if (you.duration[DUR_BRILLIANCE])
+        if (((bool)you.duration[DUR_BRILLIANCE]) ^ 
+            you.props["brill_toggle"].get_bool())
             result += 5;
 
         if (you.duration[DUR_DIVINE_STAMINA])

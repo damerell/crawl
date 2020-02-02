@@ -40,6 +40,8 @@ Stoat Soup 0.22
 * Weapons of chaos cannot turn monsters into shapeshifters. This is a rare
   effect, but would almost always stiff you if it hit in the early game;
   weapons of chaos are bad enough already.
+* When viewing information on a single spell, you will be told the failure
+  chance and spellpower with brilliance.
 
 Changes swiped from other variants
 ----------------------------------
