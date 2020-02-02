@@ -7050,7 +7050,7 @@ static ghost_demon unmarshallGhost(reader &th)
         ghost.slayer = MONS_NO_MONSTER;
     else
 #endif
-    ghost.slayer = unmarshallMonType(th);
+        ghost.slayer = unmarshallMonType(th);
     if (ghost.slayer == MONS_PLAYER_GHOST) {
         ghost.slayer = MONS_NO_MONSTER;
     }

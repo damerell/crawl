@@ -47,6 +47,7 @@
 #include "mapmark.h"
 #include "message.h"
 #include "mon-abil.h"
+#include "mon-act.h"
 #include "mon-behv.h"
 #include "mon-gear.h"
 #include "mon-place.h"
@@ -2849,7 +2850,7 @@ item_def* monster_die(monster& mons, killer_type killer,
 
     if (corpse && _reaping(&mons))
         corpse = nullptr;
-    
+
     // I wonder if it is more likely that some non-killing KILL_FOO will
     // be added to the game, breaking this, or that if I do it the other
     // way around some killing KILL_FOO will be added?
@@ -2857,17 +2858,19 @@ item_def* monster_die(monster& mons, killer_type killer,
         for (monster_iterator mi; mi; ++mi) {
             if (mi->props.exists(ORIGINAL_FOE) && 
                 (mi->props[ORIGINAL_FOE].get_int() == mons.mindex())) {
-                mi->props[ORIGINAL_FOE] = MGHOSTKILLED;
-                if (you.can_see(**mi)) {
-                    monster_info ginfo(*mi);
-                    take_note(Note(NOTE_GHOST_REVENGE, 0, 0, 
-                                   mi->full_name(DESC_A).c_str(),
-                                   mons.full_name(DESC_A).c_str()));
-                    string milestone = 
-                        "witnessed the revenge of the ghost of ";
-                    milestone += get_ghost_description(ginfo, true) + ".";
-                    // maybe a new milestone type?
-                    mark_milestone("ghost", milestone);
+                if (!ghost_retarget(**mi)) {
+                    mi->props[ORIGINAL_FOE] = MGHOSTKILLED;
+                    if (you.can_see(**mi)) {
+                        monster_info ginfo(*mi);
+                        take_note(Note(NOTE_GHOST_REVENGE, 0, 0, 
+                                       mi->full_name(DESC_A).c_str(),
+                                       mons.full_name(DESC_A).c_str()));
+                        string milestone = 
+                            "witnessed the revenge of the ghost of ";
+                        milestone += get_ghost_description(ginfo, true) + ".";
+                        // maybe a new milestone type?
+                        mark_milestone("ghost", milestone);
+                    }
                 }
             }
         }

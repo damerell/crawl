@@ -1403,6 +1403,8 @@ static void _pre_monster_move(monster& mons)
         // It is intentional that if a ghost's original foe is shafted
         // it will wander for a bit before giving up
         unsigned int original_foe = mons.props[ORIGINAL_FOE].get_int();
+        // We don't ghost_retarget here because the original foe already
+        // changed; it's done in mon-death.cc
         if (original_foe == MGHOSTKILLED) {
             if (you.can_see(mons)) {
                 mprf("%s fades from view, its vengeance complete.",
@@ -1420,12 +1422,14 @@ static void _pre_monster_move(monster& mons)
                 (!(foe = mons.get_foe())) ||
                 (!(foe_mons = foe->as_monster())) ||
                 (!foe_mons->alive())) {
-                if (you.can_see(mons)) {
-                    mprf("%s fades from view, wailing with frustration.",
-                         mons.name(DESC_THE).c_str());
-                    remove_unique_annotation(&mons);
+                if (!ghost_retarget(mons)) {
+                    if (you.can_see(mons)) {
+                        mprf("%s fades from view, wailing with frustration.",
+                             mons.name(DESC_THE).c_str());
+                        remove_unique_annotation(&mons);
+                    }
+                    add_monster_to_limbo(&mons); return;
                 }
-                add_monster_to_limbo(&mons); return;
             } else if (grid_distance(mons.pos(),mons.get_foe()->pos()) > 
                        2 * LOS_MAX_RANGE) {
                 if (you.can_see(mons)) {
@@ -2341,8 +2345,9 @@ static void _post_monster_move(monster* mons)
     mid_t ghost;
     if (mons->props.exists("ghost_hated") &&  
         mons->attitude == ATT_HOSTILE &&
-        (random2(20) < get_tension(GOD_NO_GOD)) &&
-        div_rand_round(mons->hit_points, 2 * mons->max_hit_points) &&
+        (random2(40) < get_tension(GOD_NO_GOD)) &&
+        div_rand_round((2 * mons->hit_points) - mons->max_hit_points, 
+                       mons->max_hit_points) &&
         !(mons->petrifying() || mons->paralysed() || mons->petrified() || 
           mons->asleep() || mons->is_patrolling() || 
           mons_is_wandering(*mons)) &&
