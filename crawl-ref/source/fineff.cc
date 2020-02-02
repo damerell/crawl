@@ -15,6 +15,7 @@
 #include "directn.h"
 #include "english.h"
 #include "env.h"
+#include "ghost.h"
 #include "god-abil.h"
 #include "libutil.h"
 #include "message.h"
@@ -384,6 +385,8 @@ static void _do_merge_masses(monster* initial_mass, monster* merge_to)
     // might have been resting or something.
     merge_to->behaviour = initial_mass->behaviour;
     merge_to->foe = initial_mass->foe;
+
+    merge_ghost_check(initial_mass, merge_to);
 
     behaviour_event(merge_to, ME_EVAL);
 

@@ -764,7 +764,7 @@ int ghost_demon::max_ghosts_per_level(int absdepth)
 // an ice cave is different to being stuck in one with a hostile ghost.
 // Lab left in because of the high probability of a free pass on the minotaur
 static const set<branch_type> ghosts_banned =
-            { BRANCH_LABYRINTH, BRANCH_TEMPLE };
+            { BRANCH_LABYRINTH };
 
 
 /// Is the current location eligible for ghosts?
@@ -874,4 +874,42 @@ int ghost_rank_to_level(const int rank)
     default:
         die("Bad ghost rank %d", rank);
     }
+}
+
+// When slimes, starcursed, crawling corpses merge, ghosts hate the merged
+// creature if they hated either constituent creature.
+void merge_ghost_check(monster* mons, monster* merge_to) {
+    if (mons->props.exists("ghost_target")) {
+        mons->props.erase("ghost_target");
+        merge_to->props["ghost_target"] = true;
+        for (monster_iterator mi; mi; ++mi) {
+            if (mi->props.exists(ORIGINAL_FOE) && 
+                (mi->props[ORIGINAL_FOE].get_int() == 
+                 mons->mindex())) {
+                mi->props[ORIGINAL_FOE] = merge_to->mindex();
+                if (mi->foe == mons->mindex()) {
+                    mi->foe = merge_to->mindex();
+                }
+            }
+        }
+    }
+}
+// If we hated a splitting creature and it's gone, look around for another one
+bool ghost_retarget(monster& mons) {
+    if ((mons.ghost->slayer == MONS_SLIME_CREATURE) ||
+        (mons.ghost->slayer == MONS_STARCURSED_MASS)) {
+        for (monster_iterator mi; mi; ++mi) {
+            if (mi->type == mons.ghost->slayer) {
+                if (mons.can_see(**mi)) {
+                    if (mons.foe == mons.props[ORIGINAL_FOE].get_int()) {
+                        mons.foe = mi->mindex();
+                    }
+                    mons.props[ORIGINAL_FOE] = mi->mindex();
+                    mi->props["ghost_target"] = true;
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }

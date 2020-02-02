@@ -519,7 +519,6 @@ bool extract_monster_from_limbo(mid_t mid, const coord_def &pos,
             update_monsters_in_view();
             return true;
         }
-        return false;
     }
     mprf(MSGCH_ERROR, "BUG: Attempted to remove nonexistent monster %d from limbo.",mid);
     return false;

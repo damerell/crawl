@@ -30,6 +30,7 @@
 #include "exclude.h"
 #include "fight.h"
 #include "fprop.h"
+#include "ghost.h"
 #include "item-prop.h"
 #include "items.h"
 #include "libutil.h"
@@ -277,6 +278,7 @@ static void _lose_turn(monster* mons, bool has_gone)
 // abomination.
 static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
 {
+    merge_ghost_check(crawlie, merge_to);
     const int orighd = merge_to->get_experience_level();
     int addhd = crawlie->get_experience_level();
 
@@ -414,6 +416,7 @@ static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
 // initial_slime is the one that gets killed off by this process.
 static void _do_merge_slimes(monster* initial_slime, monster* merge_to)
 {
+    merge_ghost_check(initial_slime, merge_to);
     // Combine enchantment durations.
     merge_ench_durations(*initial_slime, *merge_to);
 
