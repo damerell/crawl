@@ -557,6 +557,10 @@ void mark_mon_equipment_seen(const monster *mons)
                 item.flags |= ISFLAG_KNOW_TYPE;
         }
     }
+    // This causes summoned monsters with distortion weapons to show up in
+    // in the monster info list. Hopefully it doesn't have any harmful side
+    // effects.
+    update_monster_pane();
 }
 
 

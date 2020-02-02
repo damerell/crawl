@@ -1935,6 +1935,14 @@ vector<monster_info_func> init_monster_info_funcs() {
     toret.push_back({"pinned", "pinned", 
                 [](const monster_info &mi, bool newconditions) {
                 return mi.is(MB_PINNED); }});
+    toret.push_back({"distortion", "distortion", 
+                [](const monster_info &mi, bool newconditions) {
+                if (mi.itemuse() >= MONUSE_STARTING_EQUIPMENT) {
+                    const item_def* weapon = mi.inv[MSLOT_WEAPON].get();
+                    if (weapon && 
+                        get_weapon_brand(*weapon) == SPWPN_DISTORTION)
+                        return newconditions; }
+                return false; }});
     toret.push_back({"polearm","polearms", 
                 [](const monster_info &mi, bool newconditions) {
                 if (mi.itemuse() >= MONUSE_STARTING_EQUIPMENT) {
