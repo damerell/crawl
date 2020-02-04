@@ -269,14 +269,16 @@ static void _tweak_randart(item_def &item)
 
         char choice;
         char buf[80];
-        
-        if (choice_num < 26) {
+
+        if (choice_num < 26)
             choice = 'A' + choice_num;
-        } else if (choice_num < 52) {
-            choice = 'a' + choice_num - 26;
-        } else {
-            choice = '-'; // Too many choices!
+        else if (choice_num < 'A' - '0' + 26)
+        {
+            // 0-9 then :;<=>?@ . Any higher would collide with letters.
+            choice = '0' + choice_num - 26;
         }
+        else
+            choice = '-'; // Too many choices!
 
         snprintf(buf, sizeof(buf), "%s) %s%-6s%s ",
                 choice == '<' ? "<<" : string(1, choice).c_str(),
@@ -292,15 +294,15 @@ static void _tweak_randart(item_def &item)
 
     mprf(MSGCH_PROMPT, "Change which field? ");
 
-    int keyin = get_ch();
+    int keyin = toalower(get_ch());
     unsigned int  choice;
 
-    if (isaalpha(keyin)) {
-        choice = keyin - 'A';
-        if (choice >= 26) {
-            choice = 26 + keyin - 'a';
-        }
-    } else {
+    if (isaalpha(keyin))
+        choice = keyin - 'a';
+    else if (keyin >= '0' && keyin < 'A')
+        choice = keyin - '0' + 26;
+    else
+    {
         canned_msg(MSG_OK);
         return;
     }
