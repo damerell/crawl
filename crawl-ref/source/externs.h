@@ -548,7 +548,7 @@ struct item_def
     {
         // These must all be the same size!
         short plus2;        ///< legacy/generic name for this union
-        short used_count;   ///< the # of times a deck was used.
+        short used_count;   ///< the # of times a deck or wand was used.
                             //   negative for stacked deck. #remaining
         short net_placed;   ///< is this throwing net trapping something?
         short skill_points; ///< # of skill points a manual gives
@@ -572,11 +572,17 @@ struct item_def
                                    /// random cosmetics. 0 = uninitialized
     short          quantity;       ///< number of items
     iflags_t       flags;          ///< item status flags
-    int turnspotted;               ///< copied from the monster
-
+    union
+    {
+        // These must all be the same size!
+	int turnspotted;               ///< copied from the monster
+	int expected_charges; /// for an unIDed wand
+	                        /// doubled because it uses 1.5 average
+    };
     /// The location of the item. Items in player inventory are indicated by
     /// pos (-1, -1), items in monster inventory by (-2, -2), and items
     /// in shops by (0, y) for y >= 5.
+    /// items (ie, wands, for now) in chains are -3, -3
     coord_def pos;
     /// For floor items, index in the mitm array of the next item in the
     /// pile. NON_ITEM for the last item in a pile. For items in player
@@ -901,3 +907,14 @@ struct cglyph_t
 };
 
 typedef FixedArray<bool, NUM_OBJECT_CLASSES, MAX_SUBTYPES> id_arr;
+
+struct wandfacts {
+    bool allIDed;
+    bool noneIDed;
+    int num_wands;
+    int numIDed;
+    int min_charges;
+    int expected_charges;
+    int max_charges;
+    int actual_charges;
+};

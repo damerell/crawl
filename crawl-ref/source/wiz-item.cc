@@ -716,6 +716,11 @@ static void _forget_item(item_def &item)
     unset_ident_flags(item, ISFLAG_IDENT_MASK);
     item.flags &= ~(ISFLAG_SEEN | ISFLAG_HANDLED | ISFLAG_THROWN
                     | ISFLAG_DROPPED | ISFLAG_NOTED_ID | ISFLAG_NOTED_GET);
+    CrawlVector &chain = item.props[CHAIN_VECTOR].get_vector();
+    CrawlVector::iterator it;
+    for (it = chain.begin(); it != chain.end(); it++) {
+        _forget_item(*it);
+    }
 }
 
 void wizard_unidentify_pack()

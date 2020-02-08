@@ -146,6 +146,8 @@ string item_def::name(description_level_type descrip, bool terse, bool ident,
     if (descrip == DESC_NONE)
         return "";
 
+    int nominal_quan = (base_type != OBJ_WANDS) ? quantity :
+        get_wand_facts(*this).num_wands;
     ostringstream buff;
 
     const string auxname = name_aux(descrip, terse, ident, with_inscription,
@@ -205,7 +207,7 @@ string item_def::name(description_level_type descrip, bool terse, bool ident,
             break;
         }
     }
-    else if (quantity > 1 || always_plural)
+    else if (nominal_quan > 1 || always_plural)
     {
         switch (descrip)
         {
@@ -224,9 +226,9 @@ string item_def::name(description_level_type descrip, bool terse, bool ident,
             && descrip != DESC_DBNAME && !always_plural)
         {
             if (quantity_in_words)
-                buff << number_in_words(quantity) << " ";
+                buff << number_in_words(nominal_quan) << " ";
             else
-                buff << quantity << " ";
+                buff << nominal_quan << " ";
         }
     }
     else
@@ -1683,6 +1685,14 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
 
     ostringstream buff;
 
+    int nominal_quan = quantity; 
+    // Initialising this just eats a compiler warning 
+    wandfacts facts = { true, true, 0, 0, 0, 0, 0, 0 };
+    if (base_type == OBJ_WANDS) {
+        facts = get_wand_facts(*this);
+        nominal_quan = facts.num_wands;
+    }
+
     switch (base_type)
     {
     case OBJ_WEAPONS:
@@ -1829,12 +1839,32 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
                  << " wand";
         }
 
-        if (dbname)
+        if (dbname) 
             break;
 
-        if (know_type && charges > 0)
-            buff << " (" << charges << ")";
-
+        if (ident) {
+            buff << " (" << facts.actual_charges <<
+                (facts.actual_charges > 1 ? " charges)" : " charge)");
+        } else if (pos == ITEM_IN_MONSTER_INVENTORY) {
+            // XXX don't show charges
+            break;
+        } else if (know_type) {
+// I dunno that know_type is right here but you can't be told the max charges
+// if you don't know the type
+            buff << " (";
+            if (facts.allIDed) {
+                buff << facts.actual_charges <<
+                    (facts.actual_charges > 1 ? " charges)" : " charge)");
+            } else {
+                if (!facts.noneIDed) {
+                    buff << facts.numIDed << " identified; ";
+                }
+                buff << facts.min_charges << "-" <<
+                    facts.max_charges << " charges, average " <<
+                    (facts.expected_charges + 1) / 2 << ")";
+            }
+        }
+        
         break;
 
     case OBJ_POTIONS:
@@ -2127,7 +2157,7 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
     }
 
     // One plural to rule them all.
-    if (need_plural && quantity > 1 && !basename && !qualname)
+    if (need_plural && nominal_quan > 1 && !basename && !qualname)
         buff.str(pluralise(buff.str()));
 
     // debugging output -- oops, I probably block it above ... dang! {dlb}
@@ -2136,7 +2166,7 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
         buff << "bad item (cl:" << static_cast<int>(base_type)
              << ",ty:" << item_typ << ",pl:" << plus
              << ",pl2:" << used_count << ",sp:" << special
-             << ",qu:" << quantity << ")";
+             << ",qu:" << nominal_quan << ")";
     }
 
     return buff.str();
@@ -2550,8 +2580,10 @@ static void _add_fake_item(object_class_type base, int sub,
     ptmp->quantity  = 1;
     ptmp->rnd       = 1;
 
-    if (base == OBJ_WANDS && sub != NUM_WANDS)
+    if (base == OBJ_WANDS && sub != NUM_WANDS) {
         ptmp->charges = wand_charge_value(ptmp->sub_type);
+        ptmp->expected_charges = 1 + wand_charge_value(ptmp->sub_type);
+    }
     else if (base == OBJ_GOLD)
         ptmp->quantity = 18;
     else if (ptmp->is_type(OBJ_FOOD, FOOD_CHUNK))
