@@ -1121,6 +1121,7 @@ static void _mons_fire_wand(monster& mons, item_def &wand, bolt &beem,
         {
             mons.props["wand_known"] = true;
             mons.flags |= MF_SEEN_RANGED;
+            wand.expected_charges -= 2; wand.used_count++;
         }
     }
 

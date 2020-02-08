@@ -1461,6 +1461,11 @@ spret_type your_spells(spell_type spell, int powc, bool allow_fail,
             title += make_stringf(" <lightgrey>(%s)</lightgrey>",
                 _spell_failure_rate_description(spell).c_str());
         }
+        if (evoked_item
+            && !item_ident(*evoked_item, ISFLAG_KNOW_PLUSES, false))
+        {
+            title += " <lightred>(will waste charges)</lightred>";
+        }
 
         direction_chooser_args args;
         args.hitfunc = hitfunc.get();

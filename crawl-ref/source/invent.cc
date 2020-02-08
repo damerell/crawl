@@ -2134,6 +2134,12 @@ void identify_inventory()
         {
             set_ident_type(item, true);
             set_ident_flags(item, ISFLAG_IDENT_MASK);
+            CrawlVector &chain = item.props[CHAIN_VECTOR].get_vector();
+            CrawlVector::iterator it;
+            for (it = chain.begin(); it != chain.end(); it++) {
+                set_ident_type(*it, true);
+                set_ident_flags(*it, ISFLAG_IDENT_MASK);
+            }
         }
     }
 }

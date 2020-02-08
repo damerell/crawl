@@ -2414,7 +2414,18 @@ static bool _identify(bool alreadyknown, const string &pre_msg, int &link)
         mpr(pre_msg);
 
     set_ident_type(item, true);
-    set_ident_flags(item, ISFLAG_IDENT_MASK);
+    if (fully_identified(item, false)) {
+        CrawlVector &chain = item.props[CHAIN_VECTOR].get_vector();
+        CrawlVector::iterator it;
+        for (it = chain.begin(); it != chain.end(); it++) {
+            if (!fully_identified(*it, false)) {
+                set_ident_flags(*it, ISFLAG_IDENT_MASK);
+                break;
+            }
+        }
+    } else {
+        set_ident_flags(item, ISFLAG_IDENT_MASK);
+    }
 
     // Output identified item.
     mprf_nocap("%s", menu_colour_item_name(item, DESC_INVENTORY_EQUIP).c_str());

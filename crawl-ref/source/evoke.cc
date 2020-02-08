@@ -449,6 +449,9 @@ void zap_wand(int slot)
         return;
     }
 
+    // Will waste charges.
+    const bool wasteful = !item_ident(wand, ISFLAG_KNOW_PLUSES, false);
+
     int power = (15 + you.skill(SK_EVOCATIONS, 7) / 2) * (mp_cost + 9) / 9;
 
     const spell_type spell =
@@ -471,13 +474,44 @@ void zap_wand(int slot)
 
     // Take off a charge.
     wand.charges--;
+    wand.expected_charges -= 2;
+    wand.used_count++;
+
+    // And a few more, if you didn't know the wand's charges.
+    int wasted_charges = 0;
+    if (wasteful)
+    {
+#ifdef DEBUG_DIAGNOSTICS
+        const int initial_charge = wand.plus;
+#endif
+
+        wasted_charges = 1 + random2(2); //1-2
+        wand.charges = max(0, wand.charges - wasted_charges);
+        wand.expected_charges -= 3;
+        wand.used_count++;
+
+        dprf("Wasted %d charges (wand %d -> %d)", wasted_charges,
+             initial_charge, wand.charges);
+        mpr("Evoking this partially-identified wand wasted a few charges.");
+    }
 
     if (wand.charges == 0)
     {
         ASSERT(in_inventory(wand));
 
-        mpr("The now-empty wand crumbles to dust.");
-        dec_inv_item_quantity(wand.link, 1);
+        if (remove_item_from_chain(wand)) {
+            mpr("One of these wands is now empty; it crumbles to dust.");
+        } else {
+            mpr("The now-empty wand crumbles to dust.");
+            dec_inv_item_quantity(wand.link, 1);
+        }
+    } else if (!item_ident(wand, ISFLAG_KNOW_PLUSES, false) && 
+               (you.skill_rdiv(SK_EVOCATIONS) > random2(27))) {
+        mpr("Your skill with magical items lets you calculate "
+            "the power of this device...");
+        mprf("This wand has %d charge%s left.",
+             wand.plus, wand.plus == 1 ? "" : "s");
+        set_ident_flags(wand, ISFLAG_KNOW_PLUSES);
     }
 
     practise_evoking(1);

@@ -67,10 +67,11 @@ bool item_is_stationary(const item_def &item) PURE;
 bool item_is_stationary_net(const item_def &item) PURE;
 
 // ident:
-bool item_ident(const item_def &item, iflags_t flags) PURE;
+bool item_ident(const item_def &item, iflags_t flags, 
+		bool checkchain = true) PURE;
 void set_ident_flags(item_def &item, iflags_t flags);
 void unset_ident_flags(item_def &item, iflags_t flags);
-bool fully_identified(const item_def &item) PURE;
+bool fully_identified(const item_def &item, bool checkchain = true) PURE;
 
 // item descriptions:
 void     set_equip_desc(item_def &item, iflags_t flags);
