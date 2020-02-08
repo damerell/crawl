@@ -379,6 +379,26 @@ int wand_mp_cost()
     return min(you.magic_points, you.get_mutation_level(MUT_MP_WANDS) * 3);
 }
 
+static bool _does_wand_crumble(item_def& wand) {
+    if (wand.charges == 0) {
+        ASSERT(in_inventory(wand));
+
+        if (remove_item_from_chain(wand)) {
+            mpr("One of these wands is now empty; it crumbles to dust.");
+        } else {
+            if (item_ident(wand, ISFLAG_KNOW_PLUSES)) {
+                mpr("The now-empty wand crumbles to dust.");
+            } else {
+                mpr("This wand is now empty; it crumbles to dust.");
+            }
+            dec_inv_item_quantity(wand.link, 1);
+        }
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void zap_wand(int slot)
 {
     if (inv_count() < 1)
@@ -445,9 +465,12 @@ void zap_wand(int slot)
 
     if (wand.charges <= 0)
     {
-        mpr("This wand has no charges.");
+        mprf(MSGCH_ERROR, "BUG: this wand has no charges.");
         return;
     }
+
+    // Can waste charges.
+    const bool wasteful = !item_ident(wand, ISFLAG_KNOW_PLUSES, false);
 
     int power = (15 + you.skill(SK_EVOCATIONS, 7) / 2) * (mp_cost + 9) / 9;
 
@@ -471,14 +494,40 @@ void zap_wand(int slot)
 
     // Take off a charge.
     wand.charges--;
+    wand.expected_charges -= 2;
+    wand.used_count++;
 
-    if (wand.charges == 0)
-    {
-        ASSERT(in_inventory(wand));
+    if (!_does_wand_crumble(wand)) {
+        // And a few more, if you didn't know the wand's charges.
+        int wasted_charges = 0;
+        if (wasteful) {
+            // You need at least 1 Evo because otherwise I'd have to add a
+            // function for "any effective skill at all" to make the message
+            // may/will waste charges correct SIGH
+            if (you.skill(SK_EVOCATIONS) && 
+                (you.skill_rdiv(SK_EVOCATIONS) > random2(27))) {
+                mpr("Your skill with magical items lets you calculate "
+                    "the power of this device...");
+                mprf("This wand has %d charge%s left.",
+                     wand.plus, wand.plus == 1 ? "" : "s");
+                set_ident_flags(wand, ISFLAG_KNOW_PLUSES);
+            } else {
+#ifdef DEBUG_DIAGNOSTICS
+                const int initial_charge = wand.plus;
+#endif
+                wasted_charges = 1 + random2(2); //1-2
+                wand.charges = max(0, wand.charges - wasted_charges);
+                wand.expected_charges -= 3;
+                wand.used_count++;
 
-        mpr("The now-empty wand crumbles to dust.");
-        dec_inv_item_quantity(wand.link, 1);
+                dprf("Wasted %d charges (wand %d -> %d)", wasted_charges,
+                     initial_charge, wand.charges);
+                mpr("Evoking this partially-identified wand wasted a few charges.");
+                _does_wand_crumble(wand);
+            }
+        }
     }
+
 
     practise_evoking(1);
     count_action(CACT_EVOKE, EVOC_WAND);

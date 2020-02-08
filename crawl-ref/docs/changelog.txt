@@ -1,3 +1,14 @@
+Stoat Soup 0.23
+---------------
+
+Vanilla changes messed around with
+----------------------------------
+* Wands stack as in 0.20, but are identified by scrolls or Evocations as
+  in 0.19, with unIDed use wasting charges. The maximum charges on clouds
+  and scattershot was increased to compensate. The reduction vanilla made
+  in wand charges that effectively compensated for never wasting any was
+  not made, but their additional reduction in digging charges was.
+
 Stoat Soup 0.22
 ---------------
 

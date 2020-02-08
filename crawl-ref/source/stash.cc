@@ -83,7 +83,14 @@ string stash_annotate_item(const char *s, const item_def *item, bool exclusive)
     }
 
     // Include singular form (slice of pizza vs slices of pizza).
-    if (item->quantity > 1)
+    int nominal_quan = item->quantity; 
+    wandfacts facts = { true, true, 0, 0, 0, 0, 0, 0 };
+    if (item->base_type == OBJ_WANDS) {
+        facts = get_wand_facts(*item);
+        nominal_quan = facts.num_wands;
+    }
+
+    if (nominal_quan > 1)
     {
         text += " {";
         text += item->name(DESC_QUALNAME);

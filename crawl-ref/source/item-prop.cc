@@ -1065,9 +1065,17 @@ static bool _is_affordable(const item_def &item)
 //
 // Item identification status:
 //
-bool item_ident(const item_def &item, iflags_t flags)
+bool item_ident(const item_def &item, iflags_t flags, bool checkchain)
 {
-    return (item.flags & flags) == flags;
+    bool retval = (item.flags & flags) == flags;
+    if (checkchain && item.props.exists(CHAIN_VECTOR)) {
+        const CrawlVector &chain = item.props[CHAIN_VECTOR].get_vector();
+        CrawlVector::const_iterator it;
+        for (it = chain.begin(); it != chain.end(); it++) {
+            retval &= ((it->get_item().flags & flags) == flags);
+        }
+    }
+    return retval;
 }
 
 void set_ident_flags(item_def &item, iflags_t flags)
@@ -1152,11 +1160,13 @@ static iflags_t _full_ident_mask(const item_def& item)
 #endif
     case OBJ_SCROLLS:
     case OBJ_POTIONS:
-    case OBJ_WANDS:
         flagset = ISFLAG_KNOW_TYPE;
         break;
     case OBJ_STAVES:
         flagset = ISFLAG_KNOW_TYPE | ISFLAG_KNOW_CURSE;
+        break;
+    case OBJ_WANDS:
+        flagset = (ISFLAG_KNOW_TYPE | ISFLAG_KNOW_PLUSES);
         break;
     case OBJ_JEWELLERY:
         flagset = (ISFLAG_KNOW_CURSE | ISFLAG_KNOW_TYPE);
@@ -1185,9 +1195,9 @@ static iflags_t _full_ident_mask(const item_def& item)
     return flagset;
 }
 
-bool fully_identified(const item_def& item)
+bool fully_identified(const item_def& item, bool checkchain)
 {
-    return item_ident(item, _full_ident_mask(item));
+    return item_ident(item, _full_ident_mask(item), checkchain);
 }
 
 //
@@ -1571,10 +1581,11 @@ int wand_charge_value(int type)
     {
     case WAND_CLOUDS:
     case WAND_SCATTERSHOT:
-        return 9;
+        return 12;
 
     case WAND_ICEBLAST:
     case WAND_ACID:
+    case WAND_DIGGING:
         return 15;
 
     default:
