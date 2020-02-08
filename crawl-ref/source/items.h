@@ -9,6 +9,8 @@
 #include "god-type.h"
 #include "mon-inv-type.h"
 
+#define CHAIN_VECTOR "chain_vector"
+
 // Ways to get items, other than finding them on the ground or looting them
 // from slain monsters.
 enum item_source_type
@@ -159,6 +161,12 @@ object_class_type get_random_item_mimic_type();
 
 bool maybe_identify_base_type(item_def &item);
 int count_movable_items(int obj);
+
+void add_item_to_chain(item_def &chain, item_def &item);
+// return true if the chain has anything left
+bool remove_item_from_chain(item_def &item);
+void cycle_wand_to_front(item_def &item);
+wandfacts get_wand_facts(item_def wand);
 
 // stack_iterator guarantees validity so long as you don't manually
 // mess with item_def.link: i.e., you can kill the item you're

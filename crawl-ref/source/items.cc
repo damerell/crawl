@@ -1187,6 +1187,7 @@ bool origin_describable(const item_def &item)
            && !is_stackable_item(item)
            && item.quantity == 1
            && item.base_type != OBJ_CORPSES
+           && item.base_type != OBJ_WANDS
            && (item.base_type != OBJ_FOOD || item.sub_type != FOOD_CHUNK);
 }
 
@@ -1985,7 +1986,7 @@ static bool _merge_stackable_item_into_inv(const item_def &it, int quant_got,
  * not placed.
  * @param quiet             Whether to suppress pickup messages.
  */
-static bool _merge_wand_charges(const item_def &it, int &inv_slot, bool quiet)
+static bool _merge_wands(item_def &it, int &inv_slot, bool quiet)
 {
     for (inv_slot = 0; inv_slot < ENDOFPACK; inv_slot++)
     {
@@ -1994,18 +1995,19 @@ static bool _merge_wand_charges(const item_def &it, int &inv_slot, bool quiet)
         {
             continue;
         }
-
-        you.inv[inv_slot].charges += it.charges;
+        you.inv[inv_slot].inscription += 
+            ((you.inv[inv_slot].inscription.size() && it.inscription.size()) ?
+             " " : "") + it.inscription;
+        add_item_to_chain(you.inv[inv_slot], it);
 
         if (!quiet)
         {
 #ifdef USE_SOUND
             parse_sound(PICKUP_SOUND);
 #endif
-            mprf_nocap("%s (gained %d charge%s)",
-                        menu_colour_item_name(you.inv[inv_slot],
-                                                    DESC_INVENTORY).c_str(),
-                        it.charges, it.charges == 1 ? "" : "s");
+            mprf_nocap("%s",
+                 menu_colour_item_name(you.inv[inv_slot],
+                                       DESC_INVENTORY).c_str());
         }
 
         return true;
@@ -2104,7 +2106,6 @@ static int _place_item_in_free_slot(item_def &it, int quant_got,
     if (item.base_type == OBJ_WANDS)
     {
         set_ident_type(item, true);
-        set_ident_flags(item, ISFLAG_KNOW_PLUSES);
     }
 
     maybe_identify_base_type(item);
@@ -2195,7 +2196,7 @@ static bool _merge_items_into_inv(item_def &it, int quant_got,
 
     // attempt to merge into an existing stack, if possible
     if (it.base_type == OBJ_WANDS
-        && _merge_wand_charges(it, inv_slot, quiet))
+        && _merge_wands(it, inv_slot, quiet))
     {
         quant_got = 1;
         return true;
@@ -4742,7 +4743,7 @@ item_info get_item_info(const item_def& item)
         if (item_type_known(item))
         {
             ii.sub_type = item.sub_type;
-            ii.charges = item.charges;
+            ii.charges = (get_wand_facts(item).expected_charges + 1) / 2;
         }
         else
             ii.sub_type = NUM_WANDS;
@@ -5014,4 +5015,93 @@ bool maybe_identify_base_type(item_def &item)
 
     _identify_last_item(item);
     return true;
+}
+
+// NB the front/back thing here is wand-specific and if anything else starts
+// coming in chains, this would need reworked
+static void _add_one_item_to_chain(item_def &chain, item_def &item, 
+                                   bool recurse = true) {
+    CrawlVector &chainchain = chain.props[CHAIN_VECTOR].get_vector(); 
+    if (item.flags & ISFLAG_KNOW_PLUSES) {
+        chainchain.insert(0,item);
+        if (recurse && (!(chain.flags & ISFLAG_KNOW_PLUSES))) {
+            cycle_wand_to_front(chain);
+        }
+    } else {
+        chainchain.push_back(item);
+    }
+    item.pos = ITEM_IN_CHAIN; 
+    if (recurse) item.props.erase(CHAIN_VECTOR);
+}
+// I wonder if this needs to be a function, but it might get more complex later
+// haha yes of course it did
+// "newitem" is used here because the pickup code will eat the original item
+// For wands, it is known that if any wand is identified, the first wand in
+// chain is
+void add_item_to_chain(item_def &chain, item_def &item) {
+    CrawlVector &itemchain = item.props[CHAIN_VECTOR].get_vector();
+    while (!itemchain.empty()) {
+        _add_one_item_to_chain(chain, itemchain[itemchain.size() - 1]);
+        itemchain.pop_back();
+    }
+    item_def newitem = item;
+    _add_one_item_to_chain(chain, newitem);
+}
+
+// return true if the chain has anything left
+bool remove_item_from_chain(item_def &item) {
+    CrawlVector &chain = item.props[CHAIN_VECTOR].get_vector();
+    if (chain.size()) {
+        item_def new_item = chain[0]; new_item.pos = item.pos;
+        new_item.link = item.link; new_item.slot = item.slot;
+        new_item.inscription = item.inscription; new_item.props = item.props;
+        item = new_item; item.props[CHAIN_VECTOR].get_vector().erase(0);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void cycle_wand_to_front(item_def &item) {
+    if (get_wand_facts(item).noneIDed) {
+        mprf(MSGCH_ERROR, 
+             "BUG: cycle_wand_to_front called with entirely unIDed stack!");
+        return;
+    } 
+    do {
+        coord_def savedpos = item.pos;
+        _add_one_item_to_chain(item, item, false);
+        remove_item_from_chain(item);
+        item.pos = savedpos;
+    } while (!(item.flags & ISFLAG_KNOW_PLUSES));
+}
+
+static wandfacts _process_wand(item_def wand, wandfacts &facts) {
+    facts.num_wands++;
+    if (wand.flags & ISFLAG_KNOW_PLUSES) {
+        facts.noneIDed = false;
+        facts.numIDed++;
+        facts.min_charges += wand.charges; facts.max_charges += wand.charges;
+        facts.expected_charges += 2 * wand.charges;
+    } else {
+        facts.allIDed = false;
+        facts.min_charges += 1; 
+        facts.max_charges += (wand_charge_value(wand.sub_type) - 
+                              wand.used_count);
+        facts.expected_charges += max(2, wand.expected_charges);
+    }
+    facts.actual_charges += wand.charges;
+    return facts;
+}
+
+wandfacts get_wand_facts(item_def wand) {
+    ASSERT (wand.base_type == OBJ_WANDS);
+    wandfacts facts = { true, true, 0, 0, 0, 0, 0 };
+    _process_wand(wand, facts);
+    CrawlVector &chain = wand.props[CHAIN_VECTOR].get_vector();
+    CrawlVector::iterator it;
+    for (it = chain.begin(); it != chain.end(); it++) {
+        _process_wand(*it, facts);
+    }
+    return facts;
 }

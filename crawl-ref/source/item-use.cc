@@ -2414,7 +2414,27 @@ static bool _identify(bool alreadyknown, const string &pre_msg, int &link)
         mpr(pre_msg);
 
     set_ident_type(item, true);
-    set_ident_flags(item, ISFLAG_IDENT_MASK);
+    bool walkchain = ((item.base_type == OBJ_WANDS) &&
+                      (get_wand_facts(item).num_wands > 1) &&
+                      (get_wand_facts(item).noneIDed));
+    // If we could select it, but the top item is fully identified, it must
+    // be because there's a chain with an unIDed item attached.
+    // But we also walk the chain if it's an entirely unIDed stack
+    // so as to identify an unzapped wand.
+    // We are relying heavily here on the IDed-before-unIDed property of chains
+    if (fully_identified(item, false) || walkchain) {
+        CrawlVector &chain = item.props[CHAIN_VECTOR].get_vector();
+        CrawlVector::iterator it;
+        for (it = chain.begin(); it != chain.end(); it++) {
+            if (!fully_identified(*it, false)) {
+                set_ident_flags(*it, ISFLAG_IDENT_MASK);
+                if (walkchain) cycle_wand_to_front(item);
+                break;
+            }
+        }
+    } else {
+        set_ident_flags(item, ISFLAG_IDENT_MASK);
+    }
 
     // Output identified item.
     mprf_nocap("%s", menu_colour_item_name(item, DESC_INVENTORY_EQUIP).c_str());

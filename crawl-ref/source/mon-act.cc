@@ -1093,10 +1093,25 @@ static bool _setup_wand_beam(bolt& beem, monster& mons, const item_def& wand)
 static void _mons_fire_wand(monster& mons, item_def &wand, bolt &beem,
                             bool was_visible, bool niceWand)
 {
-    if (!simple_monster_message(mons, " zaps a wand."))
+    string zapaction = " zaps " + 
+        (mons.props["wand_known"].get_bool() ? 
+         mons.pronoun(PRONOUN_POSSESSIVE) + " " + wand.name(DESC_PLAIN) :
+         wand.name(DESC_A)) + ".";
+    if (!simple_monster_message(mons, zapaction.c_str()))
     {
         if (!silenced(you.pos()))
             mprf(MSGCH_SOUND, "You hear a zap.");
+    }
+
+    if (was_visible)
+    {
+        const int wand_type = wand.sub_type;
+        bool didntknow = !get_ident_type(OBJ_WANDS,wand_type);
+
+        set_ident_type(OBJ_WANDS, wand_type, true);
+        if (!mons.props["wand_known"].get_bool() && didntknow) {
+            mprf("It is %s.", wand.name(DESC_A).c_str());
+        }
     }
 
     // charge expenditure {dlb}
@@ -1106,12 +1121,6 @@ static void _mons_fire_wand(monster& mons, item_def &wand, bolt &beem,
 
     if (was_visible)
     {
-        const int wand_type = wand.sub_type;
-
-        set_ident_type(OBJ_WANDS, wand_type, true);
-        if (!mons.props["wand_known"].get_bool())
-            mprf("It is %s.", wand.name(DESC_A).c_str());
-
         if (wand.charges <= 0)
         {
             mons.props["wand_known"] = false;
@@ -1121,6 +1130,7 @@ static void _mons_fire_wand(monster& mons, item_def &wand, bolt &beem,
         {
             mons.props["wand_known"] = true;
             mons.flags |= MF_SEEN_RANGED;
+            wand.expected_charges -= 2; wand.used_count++;
         }
     }
 
