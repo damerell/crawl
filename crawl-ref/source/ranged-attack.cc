@@ -403,6 +403,9 @@ int ranged_attack::apply_damage_modifiers(int damage, int damage_max)
 
 bool ranged_attack::ignores_shield(bool verbose)
 {
+    if (defender->is_player() && player_omnireflects())
+        return false;
+
     if (is_penetrating_attack(*attacker, weapon, *projectile))
     {
         if (verbose)
