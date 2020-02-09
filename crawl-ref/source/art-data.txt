@@ -123,6 +123,7 @@
 
 # PLUS: The pluses of the artefact.
 
+#FALLBACK: make Gong a tower shield
 #####
 
 # Explanation of normal fields:
@@ -655,12 +656,12 @@ TILE:     urand_storm_bow
 TILE_EQ:  storm_bow
 BRAND:    SPWPN_ELECTROCUTION
 
-NAME:    large shield of Ignorance
-OBJ:     OBJ_ARMOUR/ARM_LARGE_SHIELD
+NAME:    pavise of Ignorance
+OBJ:     OBJ_ARMOUR/ARM_PAVISE
 PLUS:    +10
 COLOUR:  BROWN
 TILE:    urand_ignorance
-TILE_EQ: lshield_of_ignorance
+TILE_EQ: pavise_of_ignorance
 INT:     -4
 LIFE:    1
 
@@ -686,8 +687,8 @@ STEALTH:  1
 BOOL:     seeinv, fog
 
 # TAG_MAJOR_VERSION == 34
-NAME:    large shield "Bullseye"
-OBJ:     OBJ_ARMOUR/ARM_LARGE_SHIELD
+NAME:    pavise "Bullseye"
+OBJ:     OBJ_ARMOUR/ARM_PAVISE
 PLUS:    +15
 COLOUR:  RED
 TILE:    urand_bullseye

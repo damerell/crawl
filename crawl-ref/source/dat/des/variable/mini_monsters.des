@@ -1100,7 +1100,7 @@ MONS:   harpy, basilisk, catoblepas
 KMONS:  P = withered plant
 ITEM:   shield ego:reflection ident:type / \
         buckler ego:reflection ident:type w:1 / \
-        large shield ego:reflection ident:type w:1
+        pavise ego:reflection ident:type w:1
 ITEM:   stone
 NSUBST: H = 4:G / 2:G. / *:e
 MAP
