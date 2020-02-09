@@ -3564,7 +3564,7 @@ colour_t item_def::armour_colour() const
             return LIGHTGREY;
         case ARM_CRYSTAL_PLATE_ARMOUR:
             return WHITE;
-        case ARM_SHIELD:
+        case ARM_KITE_SHIELD:
         case ARM_PAVISE:
         case ARM_BUCKLER:
             return CYAN;
