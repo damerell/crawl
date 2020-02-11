@@ -1100,7 +1100,7 @@ MONS:   harpy, basilisk, catoblepas
 KMONS:  P = withered plant
 ITEM:   kite shield ego:reflection ident:type / \
         buckler ego:reflection ident:type w:1 / \
-        pavise ego:reflection ident:type w:1
+        tower shield ego:reflection ident:type w:1
 ITEM:   stone
 NSUBST: H = 4:G / 2:G. / *:e
 MAP
@@ -6531,8 +6531,8 @@ DEPTH:   D:9-14
 TAGS:    no_monster_gen no_trap_gen transparent
 KMASK:   lw = opaque
 : if you.unrands("shield_of_resistance") then
-ITEM:    buckler randart no_pickup / shield randart no_pickup / \
-         large shield randart no_pickup
+ITEM:    buckler randart no_pickup / kite shield randart no_pickup / \
+         tower shield randart no_pickup
 : else
 ITEM:    shield_of_resistance no_pickup
 : end
@@ -6554,10 +6554,10 @@ ENDMAP
 NAME:    chequers_guarded_unrand_ignorance
 DEPTH:   D:7-12, Orc
 TAGS:    no_monster_gen no_trap_gen transparent
-: if you.unrands("large_shield_of_ignorance") then
-ITEM:    large shield randart no_pickup
+: if you.unrands("tower_shield_of_ignorance") then
+ITEM:    tower shield randart no_pickup
 : else
-ITEM:    large_shield_of_ignorance no_pickup
+ITEM:    tower_shield_of_ignorance no_pickup
 : end
 MONS:    orange crystal statue
 MAP
