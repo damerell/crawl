@@ -450,6 +450,25 @@ bool is_corpse_violating_spell(spell_type spell)
     return flags & SPFLAG_CORPSE_VIOLATING;
 }
 
+bool is_wizardly_item(const item_def& item, bool calc_unid)
+{
+    if ((calc_unid || item_brand_known(item))
+        && get_weapon_brand(item) == SPWPN_PAIN)
+    {
+        return true;
+    }
+
+    if (is_unrandom_artefact(item, UNRAND_WUCAD_MU)
+        || is_unrandom_artefact(item, UNRAND_MAJIN)
+        || is_unrandom_artefact(item, UNRAND_ELEMENTAL_STAFF)
+        || is_unrandom_artefact(item, UNRAND_OLGREB))
+    {
+        return true;
+    }
+
+    return item.base_type == OBJ_STAVES;
+}
+
 /**
  * Do the good gods hate use of this spell?
  *
@@ -524,14 +543,17 @@ vector<conduct_type> item_conducts(const item_def &item)
     if (item_is_spellbook(item))
         conducts.push_back(DID_SPELL_MEMORISE);
 
-    if (item.sub_type == BOOK_MANUAL && item_type_known(item)
-        && is_magic_skill((skill_type)item.plus))
+    if ((item.sub_type == BOOK_MANUAL && item_type_known(item)
+         && is_magic_skill((skill_type)item.plus)))
     {
         conducts.push_back(DID_SPELL_PRACTISE);
     }
 
     if (is_corpse_violating_item(item, false))
         conducts.push_back(DID_CORPSE_VIOLATION);
+
+    if (is_wizardly_item(item, false))
+        conducts.push_back(DID_WIZARDLY_ITEM);
 
     if (_is_potentially_hasty_item(item) || is_hasty_item(item, false))
         conducts.push_back(DID_HASTY);

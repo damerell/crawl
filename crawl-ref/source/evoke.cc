@@ -1846,6 +1846,7 @@ bool evoke_item(int slot, bool check_range)
             practise_evoking(1);
             count_action(CACT_EVOKE, STAFF_ENERGY, OBJ_STAVES);
 
+            did_god_conduct(DID_WIZARDLY_ITEM, 10);
             did_god_conduct(DID_CHANNEL, 1, true);
         }
         break;
