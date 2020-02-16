@@ -261,6 +261,7 @@ static bool _OLGREB_evoke(item_def *item, bool* did_work, bool* unevokable)
     dec_mp(4);
     make_hungry(50, false, true);
     practise_evoking(1);
+    did_god_conduct(DID_WIZARDLY_ITEM, 10);
 
     return false;
 }
@@ -466,6 +467,7 @@ static bool _WUCAD_MU_evoke(item_def *item, bool* did_work, bool* unevokable)
     {
         _wucad_backfire();
         did_god_conduct(DID_CHANNEL, 10, true);
+        did_god_conduct(DID_WIZARDLY_ITEM, 10);
         return false;
     }
 
@@ -477,6 +479,7 @@ static bool _WUCAD_MU_evoke(item_def *item, bool* did_work, bool* unevokable)
     *did_work = true;
     practise_evoking(1);
     did_god_conduct(DID_CHANNEL, 10, true);
+    did_god_conduct(DID_WIZARDLY_ITEM, 10);
 
     return false;
 }
