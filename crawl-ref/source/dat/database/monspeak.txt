@@ -853,7 +853,7 @@ VISUAL:@The_monster@ gnaws at a bone — where's that from?
 
 @hound@
 %%%%
-friendly hound Shoals
+friendly Shoals hound
 
 w:50
 @friendly hound@
@@ -1022,6 +1022,9 @@ default player ghost
 
 __NONE
 %%%%
+neutral silenced player ghost
+@silenced player ghost@
+%%%%
 silenced player ghost
 
 VISUAL:@The_monster@ stares at @foe@.
@@ -1032,6 +1035,9 @@ VISUAL:@The_monster@ points at @foe@ threateningly.
 w:5
 VISUAL:@The_monster@ stares at @foe@ while slowly dragging a finger across @possessive@ throat.
 ## END silenced player ghost ##
+%%%%
+neutral Fighting player ghost
+@Fighting player ghost@
 %%%%
 Fighting player ghost
 
@@ -1045,6 +1051,9 @@ VISUAL:@The_monster@ takes a fighting stance.
 
 @The_monster@ laughs, "And you think you're capable of finding the ORB? I had it, you know. Then I gave it away so I could steal it AGAIN."
 %%%%
+neutral Short Blades player ghost
+@Short Blades player ghost@
+%%%%
 Short Blades player ghost
 
 @The_monster@ says, "It's not the size of the blade that matters, it's how you use it."
@@ -1053,17 +1062,26 @@ Short Blades player ghost
 
 VISUAL:@The_monster@ flicks @possessive@ blade from hand to hand, faster than the eye can follow.
 %%%%
+neutral Long Blades player ghost
+@Long Blades player ghost@
+%%%%
 Long Blades player ghost
 
 VISUAL:@The_monster@ holds @possessive@ blade at the ready.
 
 @The_monster@ says, "Live by the sword, die by the sword."
 %%%%
+neutral Axes player ghost
+@Axes player ghost@
+%%%%
 Axes player ghost
 
 @The_monster@ mumbles, "They all look like pillowcases to me..."
 
 @The_monster@ says, "Try not to bleed too much."
+%%%%
+neutral Maces & Flails player ghost
+@Maces & Flails player ghost@
 %%%%
 Maces & Flails player ghost
 
@@ -1073,6 +1091,9 @@ VISUAL:@The_monster@ crushes a nearby insect and laughs.
 
 @The_monster@ says @to_foe@, "Crushing you to a pulp will hurt a lot. After that? Painless! I promise!"
 %%%%
+neutral Polearms player ghost
+@Polearms player ghost@
+%%%%
 Polearms player ghost
 
 @The_monster@ says, "One skewered @foe_genus@, coming right up."
@@ -1081,10 +1102,16 @@ Polearms player ghost
 
 @The_monster@ says @to_foe@, "Your head would complement my pike nicely."
 %%%%
+neutral Staves player ghost
+@Staves player ghost@
+%%%%
 Staves player ghost
 
 VISUAL:@The_monster@ twirls @possessive@ quarterstaff.
 
+%%%%
+neutral Slings player ghost
+@Slings player ghost@
 %%%%
 Slings player ghost
 
@@ -1094,11 +1121,17 @@ VISUAL:@The_monster@ whirls a spectral sling over @possessive@ head.
 
 @_generic_ranged_@
 %%%%
+neutral Bows player ghost
+@Bows player ghost@
+%%%%
 Bows player ghost
 
 @_generic_ranged_@
 
 @The_monster@ says, "Do you have an apple? I have a shot I want to try."
+%%%%
+neutral Crossbows player ghost
+@Crossbows player ghost@
 %%%%
 Crossbows player ghost
 
@@ -1106,11 +1139,17 @@ Crossbows player ghost
 
 VISUAL:@The_monster@ [struggles to reload|effortlessly reloads] @possessive@ weapon.
 %%%%
+neutral Throwing player ghost
+@Throwing player ghost@
+%%%%
 Throwing player ghost
 
 VISUAL:@The_monster@ glances around for something to throw.
 
 @_generic_ranged_@
+%%%%
+neutral Armour player ghost
+@Armour player ghost@
 %%%%
 Armour player ghost
 
@@ -1120,6 +1159,9 @@ Armour player ghost
 
 @The_monster@ says, "I am made of steel!"
 %%%%
+neutral Dodging player ghost
+@Dodging player ghost@
+%%%%
 Dodging player ghost
 
 @The_monster@ says, "Missed me!"
@@ -1127,6 +1169,9 @@ Dodging player ghost
 @The_monster@ ducks and says, "Too high!"
 
 @The_monster@ dodges and says, "Too slow!"
+%%%%
+neutral Stealth player ghost
+@Stealth player ghost@
 %%%%
 Stealth player ghost
 
@@ -1142,9 +1187,15 @@ VISUAL:For a moment, you lose track of @the_monster@.
 
 VISUAL:For a moment, @the_monster@ blends into the shadows.
 %%%%
+neutral Shields player ghost
+@Shields player ghost@
+%%%%
 Shields player ghost
 
 @The_monster@ says, "I can be hit, but I can't be hurt."
+%%%%
+neutral Unarmed Combat player ghost
+@Unarmed Combat player ghost@
 %%%%
 Unarmed Combat player ghost
 
@@ -1157,6 +1208,9 @@ VISUAL:@The_monster@ assumes a wrestling stance.
 @The_monster@ says, "I break bones and crack skulls... with my bare hands."
 
 VISUAL:@The_monster@ flexes @possessive@ fingers.
+%%%%
+neutral Spellcasting player ghost
+@Spellcasting player ghost@
 %%%%
 Spellcasting player ghost
 
@@ -1173,6 +1227,9 @@ VISUAL:@The_monster@'s fingertips begin to glow.
 VISUAL:@The_monster@ frowns in concentration.
 
 %%%%
+neutral Conjurations player ghost
+@Conjurations player ghost@
+%%%%
 Conjurations player ghost
 
 VISUAL:@The_monster@ takes aim.
@@ -1183,15 +1240,24 @@ VISUAL:@The_monster@ is bathed in the radiant lights of Iskenderun.
 
 VISUAL:Energy condenses in front of @the_monster@, but quickly dissipates.
 %%%%
+neutral Hexes player ghost
+@Hexes player ghost@
+%%%%
 Hexes player ghost
 
 @The_monster@ says @to_foe@, "You will soon be helpless to avoid my power."
 
 @The_monster@ says @to_foe@, "When I snap my fingers, you will think you are a chicken."
 %%%%
+neutral Charms player ghost
+@Charms player ghost@
+%%%%
 Charms player ghost
 
 @The_monster@ says, "If you think I look tough now, just wait!"
+%%%%
+neutral Summonings player ghost
+@Summonings player ghost@
 %%%%
 Summonings player ghost
 
@@ -1202,6 +1268,9 @@ VISUAL:@The_monster@ pulls a bunny out of @possessive@ hat.
 @The_monster@ points @at_foe@ and yells, "Attack!"
 
 @The_monster@ says, "It's nice to have friends."
+%%%%
+neutral Necromancy player ghost
+@Necromancy player ghost@
 %%%%
 Necromancy player ghost
 
@@ -1215,6 +1284,9 @@ Necromancy player ghost
 
 @The_monster@ says @to_foe@, "I need your bones for a spell of mine."
 %%%%
+neutral Translocations player ghost
+@Translocations player ghost@
+%%%%
 Translocations player ghost
 
 VISUAL:@The_monster@ flickers in and out of reality.
@@ -1223,11 +1295,17 @@ VISUAL:@The_monster@ is wreathed in a cloud of translocational energy.
 
 VISUAL:@The_monster@ blinks @at_foe@.
 %%%%
+neutral Transmutations player ghost
+@Transmutations player ghost@
+%%%%
 Transmutations player ghost
 
 VISUAL:@The_monster@ briefly looks inexplicably like a @_form_@.
 
 VISUAL:@The_monster@ briefly turns into a @_form_@ and back.
+%%%%
+neutral Fire Magic player ghost
+@Fire Magic player ghost@
 %%%%
 Fire Magic player ghost
 
@@ -1237,6 +1315,9 @@ Fire Magic player ghost
 
 @The_monster@ says @to_foe@, "Don't worry, you'll be warm in a moment."
 %%%%
+neutral Ice Magic player ghost
+@Ice Magic player ghost@
+%%%%
 Ice Magic player ghost
 
 VISUAL:A chill runs down your spine. @player_only@
@@ -1244,6 +1325,9 @@ VISUAL:A chill runs down your spine. @player_only@
 @The_monster@ says @to_foe@, "I hope the next monster to meet you likes frozen food!"
 
 @The_monster@ says @to_foe@, "An ice sculpture of you would look very nice here."
+%%%%
+neutral Air Magic player ghost
+@Air Magic player ghost@
 %%%%
 Air Magic player ghost
 
@@ -1253,6 +1337,9 @@ VISUAL:@The_monster@ is surrounded by a shower of sparks.
 
 @The_monster@ says, "Resistance is futile!"
 %%%%
+neutral Earth Magic player ghost
+@Earth Magic player ghost@
+%%%%
 Earth Magic player ghost
 
 @The_monster@ says, "A rolling stone gathers plenty of @foe_name@."
@@ -1260,6 +1347,9 @@ Earth Magic player ghost
 @The_monster@ says, "All of the earth is under my command."
 
 VISUAL:The earth trembles for a moment.
+%%%%
+neutral Poison Magic player ghost
+@Poison Magic player ghost@
 %%%%
 Poison Magic player ghost
 
@@ -1272,6 +1362,9 @@ Poison Magic player ghost
 @The_monster@ says @to_foe@, "Don't move, or the poison will kill you faster."
 
 @The_monster@ says @to_foe@, "I don't need to breathe anymore, but you do!"
+%%%%
+neutral Invocations player ghost
+@Invocations player ghost@
 %%%%
 Invocations player ghost
 
@@ -1287,11 +1380,17 @@ Invocations player ghost
 
 VISUAL:@The_monster@ prays.
 %%%%
+neutral Evocations player ghost
+@Evocations player ghost@
+%%%%
 Evocations player ghost
 
 @The_monster@ says @to_foe@, "Are you sure you're pointing that wand in the right direction?"
 
 @The_monster@ says, "I could kill you with a [stone|fan|lamp]."
+%%%%
+neutral Ashenzari player ghost
+@Ashenzari player ghost@
 %%%%
 Ashenzari player ghost
 
@@ -1306,17 +1405,26 @@ Ashenzari player ghost
 @The_monster@ says with laughter: "And yet I knew I would end up like that..."
 
 %%%%
+neutral Beogh player ghost
+@Beogh player ghost@
+%%%%
 Beogh player ghost
 
 @The_monster@ says, "I used to walk on water. Now I just fly over it."
 
 @The_monster@ says @to_foe@, "I don't need an army to kill you!"
 %%%%
+neutral Cheibriados player ghost
+@Cheibriados player ghost@
+%%%%
 Cheibriados player ghost
 
 @The_monster@ says @to_foe@, "What's the hurry? You'll die anyway."
 
 @The_monster@ says @to_foe@, "You can run, but you can't hide!"
+%%%%
+neutral Dithmenos player ghost
+@Dithmenos player ghost@
 %%%%
 Dithmenos player ghost
 
@@ -1326,6 +1434,9 @@ Dithmenos player ghost
 
 @The_monster@ says @to_foe@, "I walk in shadow, and soon so shall you."
 %%%%
+neutral Elyvilon player ghost
+@Elyvilon player ghost@
+%%%%
 Elyvilon player ghost
 
 @The_monster@ says @to_foe@, "In life, I might have healed you instead."
@@ -1333,6 +1444,9 @@ Elyvilon player ghost
 @The_monster@ says, "I thought violence couldn't solve anything, but it solved me."
 
 @The_monster@ muses, "Killing is much more fun than I thought it would be."
+%%%%
+neutral Fedhas player ghost
+@Fedhas player ghost@
 %%%%
 Fedhas player ghost
 
@@ -1344,6 +1458,9 @@ Fedhas player ghost
 
 @The_monster@ says, "Life goes in cycles. In a little while, you'll be reborn as a tapeworm."
 %%%%
+neutral Gozag player ghost
+@Gozag player ghost@
+%%%%
 Gozag player ghost
 
 VISUAL:@The_monster@ waves a bulging coin purse at you.
@@ -1352,6 +1469,9 @@ VISUAL:@The_monster@ waves a bulging coin purse at you.
 
 @The_monster@ says, "I guess you can't buy your way into a good afterlife."
 %%%%
+neutral Jiyva player ghost
+@Jiyva player ghost@
+%%%%
 Jiyva player ghost
 
 @The_monster@ says @to_foe@, "Still so attached to shiny items?"
@@ -1359,6 +1479,9 @@ Jiyva player ghost
 @The_monster@ says @to_foe@, "Foolish people, craving for loot."
 
 @The_monster@ says @to_foe@, "I didn't need trinkets in life, I don't need them now."
+%%%%
+neutral Kikubaaqudgha player ghost
+@Kikubaaqudgha player ghost@
 %%%%
 Kikubaaqudgha player ghost
 
@@ -1370,6 +1493,9 @@ Kikubaaqudgha player ghost
 
 @The_monster@ says @to_foe@, "You would make a fine zombie."
 %%%%
+neutral Lugonu player ghost
+@Lugonu player ghost@
+%%%%
 Lugonu player ghost
 
 # These first two only really make sense outside the Abyss
@@ -1378,6 +1504,9 @@ Lugonu player ghost
 @The_monster@ says, "What a barren place. A pity you won't get a chance to visit the Abyss!"
 
 @The_monster@ proudly claims, "A renegade god deserves renegade ghosts."
+%%%%
+neutral Makhleb player ghost
+@Makhleb player ghost@
 %%%%
 Makhleb player ghost
 
@@ -1389,17 +1518,26 @@ Makhleb player ghost
 
 @The_monster@ says @to_foe@, "First you will suffer, then you will die."
 %%%%
+neutral Nemelex Xobeh player ghost
+@Nemelex Xobeh player ghost@
+%%%%
 Nemelex Xobeh player ghost
 
 @The_monster@ tells you, "The cards don't hold a good future for you."
 
 @The_monster@ says @to_foe@, "I will deal out your death!"
 %%%%
+neutral Okawaru player ghost
+@Okawaru player ghost@
+%%%%
 Okawaru player ghost
 
 @The_monster@ says, "I was once a great warrior, and I still am!"
 
 @The_monster@ says, "Ah, a second chance to prove myself in battle!"
+%%%%
+neutral Pakellas player ghost
+@Pakellas player ghost@
 %%%%
 Pakellas player ghost
 
@@ -1409,6 +1547,9 @@ Pakellas player ghost
 
 @The_monster@ says, "Spells? Hah! My gadgets will show what real magic is!"
 %%%%
+neutral Qazlal player ghost
+@Qazlal player ghost@
+%%%%
 Qazlal player ghost
 
 @The_monster@ says, "A storm is coming..."
@@ -1416,6 +1557,9 @@ Qazlal player ghost
 @The_monster@ says, "Let nature run its course!"
 
 @The_monster@ says @to_foe@, "The earth shall destroy you!"
+%%%%
+neutral Ru player ghost
+@Ru player ghost@
 %%%%
 Ru player ghost
 
@@ -1427,11 +1571,17 @@ Ru player ghost
 
 @The_monster@ says @to_foe@, "First you will suffer, then you will die."
 %%%%
+neutral Sif Muna player ghost
+@Sif Muna player ghost@
+%%%%
 Sif Muna player ghost
 
 @The_monster@ says, "Death is but another step down the path of knowledge."
 
 @The_monster@ says, "I have plenty of time to study, now."
+%%%%
+neutral The Shining One player ghost
+@The Shining One player ghost@
 %%%%
 The Shining One player ghost
 
@@ -1447,11 +1597,17 @@ The Shining One player ghost
 
 @The_monster@ utters, "No lamp to guide me anymore..."
 %%%%
+neutral Trog player ghost
+@Trog player ghost@
+%%%%
 Trog player ghost
 
 @The_monster@ yells, "Who would have thought, even in death it is a pleasure to sever!"
 
 @The_monster@ screams in joy, "As in life, so in death: Kill! Kill!! Kill!!!"
+%%%%
+neutral Vehumet player ghost
+@Vehumet player ghost@
 %%%%
 Vehumet player ghost
 
@@ -1462,6 +1618,9 @@ Vehumet player ghost
 @The_monster@ boasts @to_foe@, "After taking care of you, I will research a spell that consumes the world."
 
 @The_monster@ threatens, "Do not fail me, O fires of Iskenderun!"
+%%%%
+neutral Xom player ghost
+@Xom player ghost@
 %%%%
 Xom player ghost
 
@@ -1479,6 +1638,9 @@ Xom player ghost
 
 @The_monster@ tries to make a funny facial expression.
 %%%%
+neutral Yredelemnul player ghost
+@Yredelemnul player ghost@
+%%%%
 Yredelemnul player ghost
 
 @The_monster@ says @to_foe@, "You will serve me forever."
@@ -1486,6 +1648,9 @@ Yredelemnul player ghost
 @The_monster@ says @to_foe@, "I shall make you my slave for eternity."
 
 @The_monster@ says @to_foe@, "First you will die, then you will suffer."
+%%%%
+neutral Zin player ghost
+@Zin player ghost@
 %%%%
 Zin player ghost
 
@@ -1521,6 +1686,9 @@ chortles
 chuckles
 
 guffaws
+%%%%
+neutral player ghost
+@player ghost@
 %%%%
 player ghost
 
