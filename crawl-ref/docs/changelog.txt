@@ -91,7 +91,14 @@ Vanilla changes not made
   where I forget to add new fire spells or effects to the list. Sorry.
 * Engulf still gives a movement penalty.
 
-Stone Soup 0.22.2 (20190306)
+Stone Soup 0.22.3 (20200322)
+--------------------------------
+
+Bugfix Release
+--------------
+* A remote code execution vulnerability has been patched.
+
+Stone Soup 0.22.2 (20190327)
 ----------------------------
 
 Bugfix Release

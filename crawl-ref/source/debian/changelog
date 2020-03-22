@@ -1,3 +1,13 @@
+crawl (2:0.22.3-1) UNRELEASED; urgency=high
+
+  * Security bugfix release.
+ -- Aidan Holm <aidanholm@gmail.com>  Sun, 22 Mar 2020 12:49:07 +0800
+
+crawl (2:0.22.2-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+ -- advil <rawlins@gmail.com>  Wed, 27 Mar 2019 21:22:21 -0400
+
 crawl (2:0.22.1-1) UNRELEASED; urgency=low
 
   * New upstream release.
