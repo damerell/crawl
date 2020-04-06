@@ -460,13 +460,13 @@ bool attack::distortion_affects_defender()
         NONE
     };
 
-    const disto_effect choice = random_choose_weighted(33, SMALL_DMG,
-                                                       22, BIG_DMG,
+    const disto_effect choice = random_choose_weighted(35, SMALL_DMG,
+                                                       25, BIG_DMG,
                                                        5,  BANISH,
-                                                       15, BLINK,
-                                                       10, TELE_INSTANT,
-                                                       10, TELE_DELAYED,
-                                                       5,  NONE);
+                                                       20, BLINK,
+                                                       13,  NONE,
+                                                       1, TELE_INSTANT,
+                                                       1, TELE_DELAYED);
 
     if (simu && !(choice == SMALL_DMG || choice == BIG_DMG))
         return false;
@@ -506,7 +506,7 @@ bool attack::distortion_affects_defender()
                 canned_msg(MSG_STRANGE_STASIS);
             return false;
         }
-
+        
         if (choice == TELE_INSTANT)
             teleport_fineff::schedule(defender);
         else
