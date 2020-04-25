@@ -300,6 +300,11 @@ windowmanager-sdl.o \
 glwrapper-ogl.o \
 fontwrapper-ft.o
 
+# XXX this is here because we pulled a change that added it to TEST_OBJECTS
+# and I don't want it to get lost - DJSD
+TEST_OBJECTS = \
+catch2-tests/test_files.o
+
 WEBTILES_OBJECTS = \
 tileweb.o \
 tileweb-text.o
