@@ -70,6 +70,7 @@ Changes swiped from other variants
 bcrawl:
 * Chaos Knights are always Xom's playthings.
 * Irradiate discourages repeated casts with Sap Magic.
+* Gourmand heals you when eating chunks.
 Gooncrawl:
 * Malmutate is gone, replaced with Corrupt Body, a weaker Corrupting Pulse.
   OOFs got a new stat draining malmutate and Corrupt Body.

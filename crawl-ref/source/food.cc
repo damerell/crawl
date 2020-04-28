@@ -440,6 +440,29 @@ static hunger_state_t _max_chunk_state()
     return ((hunger_state_t)(player_chunk_affinity() + ((int)HS_HUNGRY)));
 }
 
+static bool _auto_eat_chunks()
+{
+    bool eating_heals = false;
+    if (you.species == SP_GHOUL)
+    {
+        if (player_rotted())
+            return true;
+        eating_heals = true;
+    }
+    else if (you.undead_state())
+        return false;
+    else if (you.wearing(EQ_AMULET, AMU_THE_GOURMAND) && you.species != SP_DEEP_DWARF)
+        eating_heals = true;
+
+    if (you.hunger_state <= HS_NEAR_STARVING)
+        return true;
+
+    if (eating_heals)
+        return you.hp < (you.hp_max * (Options.rest_wait_percent - 12) + 99) / 100;
+    
+    return true;
+}
+
 /** Make the prompt for chunk eating/corpse draining.
  *
  *  @param only_auto Don't actually make a prompt: if there are
@@ -514,12 +537,7 @@ int prompt_eat_chunks(bool only_auto)
             string item_name = menu_colour_item_name(*item, DESC_A);
 
             const bool bad = is_bad_food(*item);
-
-            // Allow undead to use easy_eat, but not auto_eat, since the player
-            // might not want to drink blood as a vampire and might want to save
-            // chunks as a ghoul. Ghouls can auto_eat if they have rotted hp.
-            const bool no_auto = you.undead_state()
-                && !(you.species == SP_GHOUL && player_rotted());
+            bool no_auto = !_auto_eat_chunks();
 
             // If this chunk is safe to eat, just do so without prompting.
             if (easy_eat && !bad && i_feel_safe() && !(only_auto && no_auto))
@@ -571,17 +589,14 @@ int prompt_eat_chunks(bool only_auto)
     return 0;
 }
 
-static const char *_chunk_flavour_phrase(bool likes_chunks)
+static const char *_chunk_flavour_phrase(bool likes_chunks, int gourmand)
 {
     const char *phrase = "tastes terrible.";
 
-    if (you.species == SP_GHOUL)
-        phrase = "tastes great!";
-    else if (likes_chunks)
+    if (likes_chunks)
         phrase = "tastes great.";
     else
     {
-        const int gourmand = you.duration[DUR_GOURMAND];
         if (gourmand >= GOURMAND_MAX)
         {
             phrase = one_chance_in(1000) ? "tastes like chicken!"
@@ -678,6 +693,12 @@ static void _eat_chunk(item_def& food)
     int age           = you.elapsed_time - food.turnspotted;
     bool suppress_msg = false; // do we display the chunk nutrition message?
     bool do_eat       = false;
+    
+    int gourmand = 0;
+    if (you.species == SP_GHOUL)
+        gourmand = GOURMAND_MAX;
+    else
+        gourmand = min(you.duration[DUR_GOURMAND], GOURMAND_MAX);
 
     switch (chunk_effect)
     {
@@ -697,14 +718,15 @@ static void _eat_chunk(item_def& food)
 
     case CE_CLEAN:
     {
-        if (you.species == SP_GHOUL)
+        int hp_amt = 1 + random2avg(5 + you.experience_level, 3);
+        hp_amt = (hp_amt * gourmand) / GOURMAND_MAX;
+        if (hp_amt && you.species != SP_DEEP_DWARF)
         {
             suppress_msg = true;
-            const int hp_amt = 1 + random2avg(5 + you.experience_level, 3);
             _heal_from_food(hp_amt);
         }
 
-        mprf("This raw flesh %s", _chunk_flavour_phrase(likes_chunks));
+        mprf("This raw flesh %s", _chunk_flavour_phrase(likes_chunks, gourmand));
         do_eat = true;
         break;
     }
