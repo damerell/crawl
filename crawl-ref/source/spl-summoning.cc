@@ -906,8 +906,8 @@ spret cast_conjure_ball_lightning(int pow, god_type god, bool fail)
 
     const int how_many = min(5, 2 + pow / 100 + random2(pow / 50 + 1));
 
-    mgen_data cbl(MONS_BALL_LIGHTNING, BEH_FRIENDLY, you.pos());
-    cbl.set_summoned(&you, 0, SPELL_CONJURE_BALL_LIGHTNING, god);
+    mgen_data cbl =_pal_data(MONS_BALL_LIGHTNING, 0, god,
+                             SPELL_CONJURE_BALL_LIGHTNING);
     cbl.hd = 5 + div_rand_round(pow, 20);
 
     for (int i = 0; i < how_many; ++i)
@@ -917,10 +917,9 @@ spret cast_conjure_ball_lightning(int pow, god_type god, bool fail)
             success = true;
             ball->add_ench(ENCH_SHORT_LIVED);
 
-// Avoid ball lightnings without targets always moving towards (0,0)
-// Watch out for vanilla commit f879fa1a088c8bd37124143aa648d68bae9a3b6c
-// making conjured ball lightnings hug the player with no target in view
-            if (true) set_random_target(ball); // canary
+            // Avoid ball lightnings without targets always moving towards (0,0)
+            if (!(ball->get_foe() && ball->get_foe()->is_monster()))
+                set_random_target(ball);
         }
     }
 
@@ -3496,4 +3495,11 @@ int count_summons(const actor *summoner, spell_type spell)
     }
 
     return count;
+}
+
+// This function was improved in f879fa1a088c8bd37124143aa648d68bae9a3b6c
+// but added 48bd468c4c3696c5f1f289e7936284dd5b13ab88.
+// We took the CBL bit of f879. Beware of cherry-picking into the 48bd4 vers.
+spret cast_foxfire(int pow, god_type god, bool fail) {
+    return spret::abort;
 }

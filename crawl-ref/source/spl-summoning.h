@@ -139,3 +139,6 @@ void summoned_monster(const monster* mons, const actor* caster,
 bool summons_are_capped(spell_type spell);
 int summons_limit(spell_type spell);
 int count_summons(const actor *summoner, spell_type spell);
+
+// Canary for later commits
+spret cast_foxfire(int pow, god_type god, bool fail);
