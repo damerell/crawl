@@ -420,7 +420,9 @@ void crawl_view_geometry::init_geometry()
     {
         winner = &lay_mlist;
     }
+#ifndef USE_TILE_LOCAL
     ASSERT(winner->valid);
+#endif
 
     msgp    = winner->msgp;
     msgsz   = winner->msgsz;
