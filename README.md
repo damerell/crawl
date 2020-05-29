@@ -24,16 +24,16 @@ There is also an ingame list of frequently asked questions which you can access 
 
 #### Internet Play
 
-You can play Crawl online, competing with other players or watching them. Click "Play Online Now!" on [the Crawl homepage](https://crawl.develz.org/) to find your closest server. You can play in your browser or over SSH.
+You can play Crawl online, competing with other players or watching them. [General instructions on how to play](https://crawl.develz.org/wordpress/howto) come from the vanilla developers; we have [a page](http://crawl.montres.org.uk/about.html) mentioning places you can play Stoat Soup online.
 
 #### Offline Play
 
-Both classical ASCII and tiles (GUI) versions of Crawl are available to [download for Linux, Windows and OS X](https://crawl.develz.org/download.htm).
+To play Stoat Soup offline you will have to compile it yourself, I regret.
 
 ## Community
 
 ### Web
-Our official homepage is [https://crawl.develz.org](https://crawl.develz.org/). You can find online play, offline downloads, a community forum and the development bug tracker/wiki.
+Stone Soup's official homepage is [https://crawl.develz.org](https://crawl.develz.org/). You can find online play, offline downloads, a community forum and the development bug tracker/wiki.
 
 ### IRC
 Chat with fellow crawlers in [##crawl on irc.freenode.net](https://webchat.freenode.net/?channels=##crawl), or talk development in [##crawl-dev](https://webchat.freenode.net/?channels=##crawl-dev).
@@ -47,7 +47,7 @@ of ways to do so:
 
 At any time, there will be bugs -- finding and reporting them is a great help.
 Many of the online servers host the regularly updated development version. Bugs
-should be reported to [our bug tracker](https://crawl.develz.org/mantis/). Besides pointing out bugs, new ideas on how to improve interface or gameplay are welcome. These can be added to [the development wiki](https://crawl.develz.org/wiki/).
+should be reported to [our bug tracker](https://crawl.develz.org/mantis/) - if you can verify they are present in vanilla Stone Soup.
 
 ### Map making
 Crawl creates levels by combining many hand-made (but often randomised) maps, known as *vaults*. Making them is fun and
