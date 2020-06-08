@@ -788,6 +788,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
     case ENCH_DAZED:
         if (!quiet && alive())
                 simple_monster_message(*this, " is no longer dazed.");
+        invalidate_agrid(true);
         break;
 
     case ENCH_INNER_FLAME:

@@ -1006,7 +1006,10 @@ A scroll that reveals the surroundings of the one who reads it.
 %%%%
 scroll of noise
 
-A prank scroll that creates a loud noise when read.
+A scroll that creates a loud noise when read; while normally this just
+attracts unwanted attention, loud noises can snap adventurers out of
+mesmerisation, and the magic of the scroll can overcome magical
+silence, ending it and dazing silent spectres.
 %%%%
 scroll of random uselessness
 

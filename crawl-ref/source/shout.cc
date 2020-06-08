@@ -816,7 +816,8 @@ bool noisy(int original_loudness, const coord_def& where,
     // sound of loudness 1 will hear the sound.
     const string noise_msg(msg? msg : "");
     _noise_grid.register_noise(
-        noise_t(where, noise_msg, (scaled_loudness + 1) * multiplier, who));
+        noise_t(where, noise_msg, (scaled_loudness + 1) * multiplier, who, 
+                fake_noise));
 
     // Some users of noisy() want an immediate answer to whether the
     // player heard the noise. The deferred noise system also means
@@ -1036,7 +1037,7 @@ void noise_grid::propagate_noise()
         {
             const noise_cell &cell(cells(p));
 
-            if (!cell.silent())
+            if (!cell.silent() || noises[cell.noise_id].fake_noise)
             {
                 apply_noise_effects(p,
                                     cell.noise_intensity_millis,
@@ -1058,7 +1059,8 @@ void noise_grid::propagate_noise()
                                 const coord_def next_position(p.x + xi,
                                                               p.y + yi);
                                 if (in_bounds(next_position)
-                                    && !silenced(next_position))
+                                    && (!silenced(next_position) ||
+                                        noises[cell.noise_id].fake_noise))
                                 {
                                     if (propagate_noise_to_neighbour(
                                             attenuation,
@@ -1378,6 +1380,9 @@ static void _actor_apply_noise(actor *act,
     {
         const int loudness = div_rand_round(noise_intensity_millis, 1000);
         act->check_awaken(loudness);
+        // The check for NF_SIREN was broken but also not needed - sirens
+        // are not even remotely that loud
+        you.beholders_check_noise(loudness, player_equip_unrand(UNRAND_DEMON_AXE));
     }
     else
     {

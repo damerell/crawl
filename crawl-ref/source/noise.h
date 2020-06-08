@@ -37,16 +37,20 @@ struct noise_t
 
     mid_t noise_producer_mid;
 
+    bool fake_noise; // cares nothing for silence
+
     noise_t(coord_def _noise_source = coord_def(),
             string _noise_player_msg = "",
             int _noise_intensity_millis = 0,
             mid_t _noise_producer_mid = MID_NOBODY,
+	    bool _fake_noise = false,
             uint16_t _flags = 0)
-        : noise_source(_noise_source),
-          noise_player_msg(_noise_player_msg),
-          noise_intensity_millis(_noise_intensity_millis),
-          noise_id(-1),
-          noise_producer_mid(_noise_producer_mid)
+    : noise_source(_noise_source),
+	noise_player_msg(_noise_player_msg),
+	noise_intensity_millis(_noise_intensity_millis),
+	noise_id(-1),
+	noise_producer_mid(_noise_producer_mid),
+	fake_noise(_fake_noise)
     {
     }
 
