@@ -8,6 +8,10 @@ Vanilla changes messed around with
   and scattershot was increased to compensate. The reduction vanilla made
   in wand charges that effectively compensated for never wasting any was
   not made, but their additional reduction in digging charges was.
+* Scrolls of noise break mesmerisation again; they also can be read while
+  silenced, decreasing the duration of you being silenced, turning off
+  Mennas's silence, and having an effect similar to holy word on silent
+  spectres (who, if dazed, are not silenced).
 
 Stoat Soup 0.22
 ---------------

@@ -2707,7 +2707,8 @@ string cannot_read_item_reason(const item_def &item)
     // the below only applies to scrolls. (it's easier to read books, since
     // that's just a UI/strategic thing.)
 
-    if (silenced(you.pos()))
+    if (silenced(you.pos()) && 
+        ((item.sub_type != SCR_NOISE) || !item_type_known(item)))
         return "Magic scrolls do not work when you're silenced!";
 
     // water elementals
@@ -2966,7 +2967,36 @@ void read_scroll(item_def& scroll)
         break;
 
     case SCR_NOISE:
-        noisy(25, you.pos(), "You hear a loud clanging noise!");
+        mprf (silenced(you.pos()) ?
+              "A loud clanging noise breaks through the magical silence!" :
+              "You hear a loud clanging noise!");
+        fake_noisy(25, you.pos());
+        if (you.duration[DUR_SILENCE]) {
+            you.duration[DUR_SILENCE] = 1;
+        }
+        // vexingly this is a bit like holy_word but not enough
+        for (radius_iterator ri(you.pos(), LOS_SOLID); ri; ++ri) {
+            if (monster* mons = monster_at(*ri)) {
+                if ((mons->silence_radius() > 0) ||
+                    (mons->type == MONS_SILENT_SPECTRE)) {
+                    if (mons->type == MONS_MENNAS) {
+                        mons->del_ench(ENCH_SILENCE);
+                    } else {
+                        int hploss = roll_dice(3, 15);
+                        simple_monster_message(*mons, 
+                                               " is blasted by the noise!");
+                        mons->hurt(&you, hploss, BEAM_MISSILE);
+                        if (mons->alive()) {
+                            mons->add_ench(mon_enchant(ENCH_DAZED, 0, &you,
+                                                       (10 + random2(10)) 
+                                                       * BASELINE_DELAY));
+                        }
+                        invalidate_agrid(true);
+                    }
+                    behaviour_event(mons, ME_ANNOY, &you);
+                }
+            }
+        }
         break;
 
     case SCR_SUMMONING:
