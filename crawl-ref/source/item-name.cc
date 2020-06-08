@@ -3318,8 +3318,6 @@ bool is_bad_item(const item_def &item, bool temp)
         case SCR_CURSE_JEWELLERY:
             return !have_passive(passive_t::want_curses);
 #endif
-        case SCR_NOISE:
-            return true;
         default:
             return false;
         }
@@ -3401,6 +3399,7 @@ bool is_dangerous_item(const item_def &item, bool temp)
         switch (item.sub_type)
         {
         case SCR_IMMOLATION:
+        case SCR_NOISE:
         case SCR_VULNERABILITY:
             return true;
         case SCR_TORMENT:
@@ -3535,7 +3534,8 @@ bool is_useless_item(const item_def &item, bool temp)
         return false;
 
     case OBJ_SCROLLS:
-        if (temp && silenced(you.pos()))
+        if (temp && silenced(you.pos()) && 
+            ((item.sub_type != SCR_NOISE) || !item_type_known(item)))
             return true; // can't use scrolls while silenced
 
         if (!item_type_known(item))

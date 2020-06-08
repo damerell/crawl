@@ -613,8 +613,9 @@ monster_info::monster_info(const monster* m, int milev)
             mb.set(flag);
     }
 
-    if (type == MONS_SILENT_SPECTRE)
+    if ((type == MONS_SILENT_SPECTRE) && (!m->has_ench(ENCH_DAZED))) {
         mb.set(MB_SILENCING);
+    }
 
     if (you.beheld_by(*m))
         mb.set(MB_MESMERIZING);
