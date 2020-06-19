@@ -34,6 +34,11 @@ Vanilla changes messed around with
   monster you hit when martially attacking >1 monster gets an accuracy penalty.
 * The "corpse sense" given to necromancers is also given to Yred worshippers.
 
+Changes swiped from other variants
+----------------------------------
+bcrawl:
+* Chaos Knights are always Xom's playthings.
+
 Stoat Soup 0.22 "Spirits of the Dead"
 -------------------------------------
 

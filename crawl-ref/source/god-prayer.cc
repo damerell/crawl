@@ -89,10 +89,12 @@ static bool _pray_ecumenical_altar()
             mprf(MSGCH_GOD, "%s accepts your prayer!",
                             god_name(altar_god).c_str());
             you.turn_is_over = true;
-            if (!you_worship(altar_god))
+            if (!you_worship(altar_god)) {
+                you.props["joined faded"] = true;
                 join_religion(altar_god);
-            else
+            } else {
                 return true;
+            }
         }
 
         if (you_worship(GOD_RU))

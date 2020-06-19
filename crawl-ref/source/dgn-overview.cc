@@ -438,6 +438,8 @@ static string _print_altars_for_gods(const vector<god_type>& gods,
             colour = "magenta";
         else if (you_worship(god))
             colour = "yellow";
+        else if (god == GOD_XOM && you.char_class == JOB_CHAOS_KNIGHT)
+            colour = (has_altar_been_seen ? "lightgreen" : "green");
         else if (god_likes_your_god(god) && has_altar_been_seen)
             colour = "brown";
 

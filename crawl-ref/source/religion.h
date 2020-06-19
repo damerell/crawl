@@ -9,6 +9,7 @@
 #include "mgen-data.h"
 #include "player.h"
 #include "religion-enum.h"
+#include "xom.h"
 
 #define MAX_PIETY      200
 #define HALF_MAX_PIETY (MAX_PIETY / 2)
@@ -79,6 +80,10 @@ static inline bool you_worship(god_type god)
 static inline int player_under_penance(god_type god = you.religion)
 {
     return you.penance[god];
+}
+
+static inline bool xom_afflicted() {
+    return (you_worship(GOD_XOM) || you.char_class == JOB_CHAOS_KNIGHT);
 }
 
 /** Is the player in good (enough) standing with a particular god?

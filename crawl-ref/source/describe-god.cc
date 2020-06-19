@@ -517,6 +517,7 @@ static string _describe_god_wrath_causes(god_type which_god)
                    comma_separated_fn(begin(chaotic_gods), end(chaotic_gods),
                                       bind(god_name, placeholders::_1, false)) +
                    " are chaotic.)";
+
         default:
             return uppercase_first(god_name(which_god)) +
                    " does not appreciate abandonment, and will call down"
@@ -981,6 +982,12 @@ static formatted_string _god_overview_description(god_type which_god)
         desc.cprintf("%s", _describe_favour(which_god).c_str());
         if (which_god == GOD_ASHENZARI)
             desc.cprintf("\n%s", ash_describe_bondage(ETF_ALL, true).c_str());
+        if ((which_god != GOD_XOM) && (you.char_class == JOB_CHAOS_KNIGHT)) {
+            desc.textcolour(god_colour(GOD_XOM));
+            desc.cprintf("\nAdditionally, you are currently %s", 
+                         describe_xom_favour().c_str());
+            desc.textcolour(god_colour(which_god));
+        }
     }
     desc += _describe_god_powers(which_god);
     desc.cprintf("\n\n");
@@ -1186,9 +1193,12 @@ bool describe_god_with_join(god_type which_god)
     // This is somewhat brittle, but ensures that the UI doesn't resize when
     // switching between prompts.
     const string prompts[] = {
-        make_stringf("%sDo you wish to %sjoin this religion?",
-                service_fee.c_str(),
-                (you.worshipped[which_god]) ? "re" : ""),
+        make_stringf("%sDo you wish to %sjoin this religion?%s",
+                     service_fee.c_str(),
+                     (you.worshipped[which_god]) ? "re" : "",
+                     ((which_god != GOD_XOM) && 
+                      (you.char_class == JOB_CHAOS_KNIGHT) ? 
+                      " Xom will continue to toy with you." : "")),
         make_stringf("Are you sure you want to abandon %s?",
                 god_name(you.religion).c_str())
     };
@@ -1263,7 +1273,8 @@ bool describe_god_with_join(god_type which_god)
             return done = true;
         }
 
-        if (step == ABANDON || (step == JOIN && you_worship(GOD_NO_GOD)))
+        if (step == ABANDON || (step == JOIN
+                && (you_worship(GOD_NO_GOD) || (you_worship(GOD_XOM) && you.char_class == JOB_CHAOS_KNIGHT))))
             return done = join = true;
         step = static_cast<join_step_type>(step + 1);
 

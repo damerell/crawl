@@ -828,7 +828,9 @@ static void _set_penance(god_type god, int val)
 
 static void _set_wrath_penance(god_type god)
 {
-    _set_penance(god, initial_wrath_penance_for(god));
+    if ((god != GOD_XOM) || (you.char_class != JOB_CHAOS_KNIGHT)) {
+        _set_penance(god, initial_wrath_penance_for(god));
+    }
 }
 
 void inc_gift_timeout(int val)
@@ -2774,7 +2776,25 @@ void excommunication(bool voluntary, god_type new_god)
     you.wield_change = true;
     you.redraw_quiver = true;
 
-    mpr("You have lost your religion!");
+    if ((old_god != GOD_XOM) || (you.char_class != JOB_CHAOS_KNIGHT)) {
+        mpr("You have lost your religion!");
+    } 
+    if (xom_afflicted()) {
+        if (you.props.exists("joined faded")) {
+            xom_is_stimulated(100, XM_NORMAL, true, true);
+        } else if (old_god == GOD_XOM) {
+            xom_is_stimulated(15, XM_NORMAL, true, true);
+        } else if (god_hates_your_god(old_god, new_god)) {
+            if (new_god != GOD_XOM) {
+                xom_is_stimulated(50, XM_NORMAL, true, true);
+            } else {
+                xom_is_stimulated(15, XM_NORMAL, true, true);
+            }
+        } else {
+            god_speaks(GOD_XOM, "Xom snickers.");
+        }
+    }
+    you.props.erase("joined faded");
     // included in default force_more_message
 
     if (old_god == GOD_BEOGH)
@@ -3009,6 +3029,11 @@ void excommunication(bool voluntary, god_type new_god)
         you.attribute[ATTR_HEAVENLY_STORM] = 0;
         break;
 
+    case GOD_XOM:
+        you.props[XOM_GIFT_KEY] = you.gift_timeout;
+        you.props[XOM_PIETY_KEY] = old_piety;
+        break;
+
     default:
         break;
     }
@@ -3159,6 +3184,9 @@ bool player_can_join_god(god_type which_god)
     if (which_god == GOD_GOZAG && you.gold < gozag_service_fee())
         return false;
 
+    if (which_god == GOD_ZIN && you.char_class == JOB_CHAOS_KNIGHT)
+        return false;
+    
     if (you.get_mutation_level(MUT_NO_LOVE) && _god_rejects_loveless(which_god))
         return false;
 
@@ -3167,7 +3195,7 @@ bool player_can_join_god(god_type which_god)
     {
       return false;
     }
-
+    
     return _transformed_player_can_join_god(which_god);
 }
 
@@ -3776,6 +3804,21 @@ void god_pitch(god_type which_god)
                     }
                 }
             }
+        } else if (which_god == GOD_ZIN && 
+                   you.char_class == JOB_CHAOS_KNIGHT) {
+            // chapter is 3 trits, verse the next 4
+            int seed;
+            string recital; int attempts = 0;
+            do {
+                seed=81 * random2(27) + 27 + random2(27);
+                recital = zin_recite_text(seed, RECITE_CHAOTIC, -2);
+                attempts++;
+            } while ((recital.find("Xom") == recital.npos)
+                     && (attempts < 81));
+            recital = "\"" + recital + "\" (" + 
+                zin_recite_text(seed, RECITE_CHAOTIC, -1).c_str() + ")";
+            god_speaks(which_god, recital.c_str());
+            mpr("Those forever tainted by Xom's chaos can never worship Zin.");
         } else if (you.get_mutation_level(MUT_NO_LOVE)
                  && _god_rejects_loveless(which_god))
         {
@@ -3884,6 +3927,11 @@ bool god_hates_your_god(god_type god, god_type your_god)
     if (god == your_god)
         return false;
 
+    // Xom doesn't punish CKs who don't go to Zin (which should be impossible)
+    if (god == GOD_XOM) {
+        return (you.char_class != JOB_CHAOS_KNIGHT || your_god == GOD_ZIN);
+    }
+    
     // Non-good gods always hate your current god.
     if (!is_good_god(god))
         return true;
