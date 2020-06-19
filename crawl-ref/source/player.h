@@ -54,6 +54,8 @@
 #define EMERGENCY_FLIGHT_KEY "emergency_flight"
 #define LAST_ACTION_WAS_MOVE_OR_REST_KEY "last_action_was_move_or_rest"
 #define RESIDUAL_HARM "residual_harm_int"
+#define XOM_GIFT_KEY "xom_timeout"
+#define XOM_PIETY_KEY "xom_piety"
 
 // display/messaging breakpoints for penalties from Ru's MUT_HORROR
 #define HORROR_LVL_EXTREME  3

@@ -82,9 +82,11 @@ enum xom_event_type
 void xom_tick();
 void xom_is_stimulated(int maxinterestingness,
                        xom_message_type message_type = XM_NORMAL,
-                       bool force_message = false);
+                       bool force_message = false,
+		       bool evenifxomacting = false);
 void xom_is_stimulated(int maxinterestingness, const string& message,
-                       bool force_message = false);
+                       bool force_message = false,
+		       bool evenifxomacting = false);
 bool xom_is_nice(int tension = -1);
 const string describe_xom_favour();
 int xom_favour_rank();

@@ -543,6 +543,7 @@ static const char * const smite_text[][2] =
  *  @param seed       The seed to keep the book coherent between turns.
  *  @param prayertype One of the four recite types.
  *  @param step       -1: We're either starting or stopping, so we just want the passage name.
+                      -2: smoosh the three lines together
  *                    2/1/0: That many rounds are left. So, if step = 2, we want to show the passage #1/3.
  *  @returns the verse to be said this turn, or if step == -1, which verse it is.
  */
@@ -562,7 +563,17 @@ string zin_recite_text(const int seed, const int prayertype, int step)
         if (step > 3)
             step = 1;
     }
-    else
+    else if (step == -2) {
+        string out = zin_recite_text(seed, prayertype, 2) + 
+            zin_recite_text(seed, prayertype, 1) +
+            zin_recite_text(seed, prayertype, 0);
+        std::size_t pos;
+        do {
+            pos = out.find("......");
+            if (pos != out.npos) out.replace(pos, 6, " ");
+        } while (pos != out.npos);
+        return out;
+    } else 
     {
         const string bookname = (prayertype == RECITE_CHAOTIC)  ?  "Abominations" :
                                 (prayertype == RECITE_IMPURE)   ?  "Ablutions"    :
