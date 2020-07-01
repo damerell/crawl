@@ -3652,7 +3652,6 @@ int slaying_bonus(bool ranged, bool ignore_sos)
 
     if ((!ignore_sos) && (you.permabuff_working(PERMA_SONG))) {
         ret += you.props[SONG_OF_SLAYING_KEY].get_int();
-        permabuff_track(PERMA_SONG);
     }
     
     if (you.duration[DUR_HORROR])

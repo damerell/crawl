@@ -256,8 +256,7 @@ spret_type cast_song_of_slaying(int pow, bool fail)
 }
 
 void check_sos_miscast() {
-    if (you.permabuff_working(PERMA_SONG) &&
-        you.props[SONG_OF_SLAYING_KEY].get_int()) {
+    if (you.permabuff_working(PERMA_SONG)) {
         permabuff_fail_check(PERMA_SONG,
                              "You stumble over the syllables of your song.");
     }

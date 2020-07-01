@@ -71,15 +71,15 @@ static const int size_mpregen_pb = ARRAYSZ(pb_ordinary_mpregen);
 // If I don't know what the answer should be, it'll be '2'
 static const int pb_dur_fudge[] = {
     0,
-    2, // infusion
-    2, // shroud
-    2, // song
+    2, // infusion (MP can run out)
+    2, // shroud (fizzles early)
+    1, // song
     1, // regen
     1, // pproj
-    2, // dmsl
-    2, // excru
-    1, // DChan - 1 because you might get many kills in a turn
-    1, // rof - short duration, cast before unloading
+    2, // dmsl (not attacked all turns)
+    2, // excru (only fail checked if target actually hurt)
+    1, // DChan  (you might get many kills in a turn)
+    1, // rof (short duration, cast before unloading)
     2, // battlesphere (but doesn't do anything because miscast frequency is
        // done per-charge)
 };
