@@ -465,7 +465,9 @@ enum monster_type                      // menv[].type
     MONS_IRON_GIANT,
 #endif
     MONS_HUMAN,
+#if TAG_MAJOR_VERSION == 34
     MONS_SLAVE,
+#endif
     MONS_HELL_KNIGHT,
 #if TAG_MAJOR_VERSION > 34
     MONS_DEATH_KNIGHT,
@@ -567,9 +569,7 @@ enum monster_type                      // menv[].type
     MONS_CRIMSON_IMP,
     MONS_QUASIT,
     MONS_WHITE_IMP,
-#if TAG_MAJOR_VERSION == 34
     MONS_LEMURE,
-#endif
     MONS_UFETUBUS,
     MONS_IRON_IMP,
     MONS_SHADOW_IMP,
