@@ -61,6 +61,7 @@ enum NOTE_TYPES
 #endif
     NOTE_FOUND_UNRAND,          /* needs: item name (string) */
     NOTE_GHOST_REVENGE, /* needs: ghost name, victim name (string) */
+    NOTE_ACQUIRE_ITEM,
     NOTE_NUM_TYPES
 };
 
