@@ -303,11 +303,10 @@ spret_type cast_corpse_rot(bool fail)
         }
     }
     fail_check();
-    corpse_rot(&you);
-    return SPRET_SUCCESS;
+    return corpse_rot(&you);
 }
 
-void corpse_rot(actor* caster)
+spret_type corpse_rot(actor* caster)
 {
     // If there is no caster (god wrath), centre the effect on the player.
     const coord_def center = caster ? caster->pos() : you.pos();
@@ -340,8 +339,14 @@ void corpse_rot(actor* caster)
 
     if (saw_rot)
         mprf("You %s decay.", you.can_smell() ? "smell" : "sense");
-    else
-        canned_msg(MSG_NOTHING_HAPPENS);
+    else if (caster && caster->is_player())
+    {
+        // Abort the spell for players; monsters and wrath fail silently
+        mpr("There is nothing fresh enough to decay nearby.");
+        return SPRET_ABORT;
+    }
+
+    return SPRET_SUCCESS;
 }
 
 void holy_flames(monster* caster, actor* defender)

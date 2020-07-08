@@ -2328,7 +2328,23 @@ static spret_type _do_ability(const ability_def& abil, bool fail)
                      + random2avg(you.piety * BASELINE_DELAY, 2) / 10;
         break;
 
-    case ABIL_YRED_ANIMATE_REMAINS:
+    case ABIL_YRED_ANIMATE_REMAINS: {
+        bool found = false;
+        
+        for (stack_iterator si(you.pos(), true); si; ++si)
+        {
+            if (si->base_type == OBJ_CORPSES
+                && mons_class_can_be_zombified(si->mon_type))
+            {
+                found = true;
+            }
+        }
+        
+        if (!found)
+        {
+            mpr("There is nothing here that can be animated!");
+            return SPRET_ABORT;
+        }
         fail_check();
         canned_msg(MSG_ANIMATE_REMAINS);
         if (animate_remains(you.pos(), CORPSE_BODY, BEH_FRIENDLY,
@@ -2338,13 +2354,21 @@ static spret_type _do_ability(const ability_def& abil, bool fail)
             return SPRET_ABORT;
         }
         break;
+    }
 
-    case ABIL_YRED_ANIMATE_DEAD:
+    case ABIL_YRED_ANIMATE_DEAD: {
+        if (!animate_dead(&you, you.skill_rdiv(SK_INVOCATIONS) + 1,
+                          BEH_FRIENDLY, MHITYOU, &you, "",
+                          GOD_YREDELEMNUL, false)) {
+            mpr("There is nothing nearby to animate!");
+            return SPRET_ABORT;
+        }
         fail_check();
         canned_msg(MSG_CALL_DEAD);
         animate_dead(&you, you.skill_rdiv(SK_INVOCATIONS) + 1,
                      BEH_FRIENDLY, MHITYOU, &you, "", GOD_YREDELEMNUL);
         break;
+    }
 
     case ABIL_YRED_RECALL_UNDEAD_SLAVES:
         fail_check();
