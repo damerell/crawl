@@ -1895,6 +1895,12 @@ spret_type cast_animate_skeleton(god_type god, bool fail)
 
 spret_type cast_animate_dead(int pow, god_type god, bool fail)
 {
+    if (!animate_dead(&you, pow, BEH_FRIENDLY, MHITYOU, &you, "", god, false))
+    {
+        mpr("There is nothing nearby to animate!");
+        return SPRET_ABORT;
+    }
+
     fail_check();
     canned_msg(MSG_CALL_DEAD);
 
