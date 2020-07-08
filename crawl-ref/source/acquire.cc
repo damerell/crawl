@@ -671,22 +671,36 @@ static int _acquirement_misc_subtype(bool /*divine*/, int & /*quantity*/)
 
     const vector<pair<int, int> > choices =
     {
-        // These have charges, so give them a constant weight.
+        // The logic of weights here might best be called confused. Long ago
+        // (eg, commit fea44c3dc8e891ce0d88ceb56119ac38a3575356)
+        //  consumable ones had equal weights, the ones where only one was
+        // ever useful had a like weight, and stackable but non-consumable
+        // ones like the lamp of fire (the items in the stack recharged 
+        // independently) had double weight if you had not seen any.
+	// We now restore even weighting in Stoat Soup - DJSD
         {MISC_BOX_OF_BEASTS,
-                                       (NO_LOVE ?     0 :  7)},
+                                       (NO_LOVE ?     0 : 10)},
         {MISC_SACK_OF_SPIDERS,
-                                       (NO_LOVE ?     0 :  7)},
+                                       (NO_LOVE ?     0 : 10)},
         {MISC_PHANTOM_MIRROR,
-                                       (NO_LOVE ?     0 :  7)},
+                                       (NO_LOVE ?     0 : 10)},
         // The player never needs more than one.
         {MISC_LIGHTNING_ROD,
-            (you.seen_misc[MISC_LIGHTNING_ROD] ?      0 : 17)},
+            (you.seen_misc[MISC_LIGHTNING_ROD] ?      0 : 10)},
         {MISC_LAMP_OF_FIRE,
-            (you.seen_misc[MISC_LAMP_OF_FIRE] ?       0 : 17)},
+            (you.seen_misc[MISC_LAMP_OF_FIRE] ?       0 : 10)},
         {MISC_PHIAL_OF_FLOODS,
-            (you.seen_misc[MISC_PHIAL_OF_FLOODS] ?    0 : 17)},
+            (you.seen_misc[MISC_PHIAL_OF_FLOODS] ?    0 : 10)},
         {MISC_FAN_OF_GALES,
-            (you.seen_misc[MISC_FAN_OF_GALES] ?       0 : 17)},
+            (you.seen_misc[MISC_FAN_OF_GALES] ?       0 : 10)},
+        {MISC_LAMP_OF_FIRE,
+            (you.seen_misc[MISC_LAMP_OF_FIRE] ?       0 : 10)},
+        {MISC_PHIAL_OF_FLOODS,
+            (you.seen_misc[MISC_PHIAL_OF_FLOODS] ?    0 : 10)},
+        {MISC_FAN_OF_GALES,
+            (you.seen_misc[MISC_FAN_OF_GALES] ?       0 : 10)},
+        {MISC_STONE_OF_TREMORS,
+            (you.seen_misc[MISC_STONE_OF_TREMORS] ?   0 : 10)}
     };
 
     const int * const choice = random_choose_weighted(choices);
