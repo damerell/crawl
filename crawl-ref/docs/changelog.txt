@@ -12,6 +12,7 @@ Vanilla changes messed around with
   silenced, decreasing the duration of you being silenced, turning off
   Mennas's silence, and having an effect similar to holy word on silent
   spectres (who, if dazed, are not silenced).
+* The stone of tremors is restored.
 
 Stoat Soup 0.22
 ---------------
