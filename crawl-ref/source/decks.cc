@@ -2537,6 +2537,7 @@ static void _storm_card(int power, deck_rarity_type rarity)
     for (auto p : targets)
     {
         bolt beam;
+        beam.flavour           = BEAM_ELECTRICITY;
         beam.is_tracer         = false;
         beam.is_explosion      = true;
         beam.glyph             = dchar_glyph(DCHAR_FIRED_BURST);
