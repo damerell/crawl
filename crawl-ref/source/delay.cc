@@ -1107,9 +1107,13 @@ static inline bool _monster_warning(activity_interrupt_type ai,
     if (!you.can_see(*mon))
         return false;
 
-    // Disable message for summons.
-    if (mon->is_summoned() && !delay)
+    // Disable message for summons - but do mark their gear seen so disto will
+    // show up immediately in the monster pane
+    if (mon->is_summoned() && !delay) {
+        mark_mon_equipment_seen(mon);
+        update_monster_pane();
         return false;
+    }
 
     if (at.context == SC_ALREADY_SEEN || at.context == SC_UNCHARM)
     {
