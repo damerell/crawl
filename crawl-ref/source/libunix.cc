@@ -856,7 +856,7 @@ int num_to_lines(int num)
     return num;
 }
 
-void clrscr()
+void clrscr_sys()
 {
     textcolour(LIGHTGREY);
     textbackground(BLACK);
@@ -866,9 +866,6 @@ void clrscr()
     fflush(stdout);
 #endif
 
-#ifdef USE_TILE_WEB
-    tiles.clrscr();
-#endif
 }
 
 void set_cursor_enabled(bool enabled)
