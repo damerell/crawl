@@ -70,6 +70,7 @@ bcrawl:
   of bonus piety obviating the uncursing penalty.
   Even on low D levels, higher bondage levels give some extra piety gain.
 * Small species cannot use morningstars and eveningstars.
+* Controlled Blink is level 7, but range scales with spellpower.
 
 Gooncrawl:
 * Restore boulder beetles.
