@@ -6,9 +6,9 @@ spret_type cast_disjunction(int pow, bool fail);
 void disjunction_spell();
 
 spret_type cast_blink(bool fail = false);
-spret_type cast_controlled_blink(bool fail = false, bool safe = true);
+spret_type cast_controlled_blink(bool fail = false, bool safe = true, int power = 200);
 void uncontrolled_blink(bool override_stasis = false);
-spret_type controlled_blink(bool fail, bool safe_cancel = true);
+spret_type controlled_blink(bool fail, bool safe_cancel = true, int power = 200);
 spret_type frog_hop(bool fail);
 void wizard_blink();
 
