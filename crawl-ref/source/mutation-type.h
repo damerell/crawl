@@ -31,6 +31,7 @@ enum mutation_type
 #if TAG_MAJOR_VERSION > 34
     MUT_STURDY_FRAME,
     MUT_SANGUINE_ARMOUR,
+    MUT_BIG_BRAIN,
 #endif
     MUT_CAMOUFLAGE,
 
@@ -221,6 +222,7 @@ enum mutation_type
     MUT_RESIDUAL_APPENDAGE,
 #if TAG_MAJOR_VERSION == 34
     MUT_ACID_RESISTANCE,
+    MUT_BIG_BRAIN,
 #endif
     NUM_MUTATIONS,
     CATEGORY_MUTATIONS,
