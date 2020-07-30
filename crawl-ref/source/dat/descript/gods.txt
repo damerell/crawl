@@ -219,16 +219,16 @@ followers can convert to Elyvilon or the Shining One while keeping some piety.
 %%%%
 Ashenzari powers
 
-Ashenzari exhorts followers to garb themselves with curses, and appreciates
-exploration while using cursed armour, jewellery or weapons. Followers will
-soon be granted the ability to scry through walls. Ashenzari will passively
-grant followers increased skills depending on how cursed they are by equipment
-associated with those skills, and will reveal the invisible and grant clarity
-of mind. The truly devout will gain the ability to transfer a portion of their
+Followers of Ashenzari use cursed equipment as a conduit between
+themselves and the world. Piety can be gained by exploring while so
+bound, but uncursing equipment amounts to breaking links to the soul
+and will reduce piety.  Followers always have the ability to curse
+items as required; they gain the power to scry through walls, borrow
+the skills of spirits to boost their own through associated cursed
+equipment, perceive the invisible, and preserve their mental clarity.
+The truly devout will gain the ability to transfer a portion of their
 knowledge from one skill to another.
 
-When uncursing equipment, Ashenzari's followers will lose some piety, but can 
-choose which curses to remove.
 %%%%
 Beogh powers
 
