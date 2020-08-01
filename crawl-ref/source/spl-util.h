@@ -67,6 +67,7 @@ bool del_spell_from_memory(spell_type spell);
 int spell_hunger(spell_type which_spell);
 int spell_mana(spell_type which_spell);
 int spell_difficulty(spell_type which_spell);
+bool spell_range_varies(spell_type spell);
 int spell_power_cap(spell_type spell);
 int spell_range(spell_type spell, int pow, bool allow_bonus = true);
 int spell_noise(spell_type spell);
