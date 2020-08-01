@@ -377,8 +377,7 @@ spret_type frog_hop(bool fail)
  */
 spret_type controlled_blink(bool fail, bool safe_cancel, int power)
 {
-    int range = min(LOS_RADIUS, (LOS_RADIUS * power * power) / 10000);
-    range = max(1, range);
+    int range = spell_range(SPELL_CONTROLLED_BLINK, power);
     coord_def target;
     targeter_smite tgt(&you, range);
     tgt.obeys_mesmerise = true;
