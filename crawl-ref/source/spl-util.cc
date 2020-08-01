@@ -918,7 +918,7 @@ bool is_valid_spell(spell_type spell)
            && spell_list[spell] != -1;
 }
 
-static bool _spell_range_varies(spell_type spell)
+bool spell_range_varies(spell_type spell)
 {
     int minrange = _seekspell(spell)->min_range;
     int maxrange = _seekspell(spell)->max_range;
@@ -939,7 +939,7 @@ int spell_power_cap(spell_type spell)
     {
         // Two separate power caps; pre-zapping spell power
         // goes into range.
-        if (scap <= zcap || _spell_range_varies(spell))
+        if (scap <= zcap || spell_range_varies(spell))
             return scap;
         else
             return zcap;

@@ -2978,13 +2978,23 @@ static string _player_spell_stats(const spell_type spell)
     description += "\n" + length +  brilldesc + failure.c_str();
     you.props["brill_toggle"] = false;
 
-    description += "\n\nPower : ";
-    description += spell_power_string(spell);
+    description += "\n\n";
+    string addstring = "Power : " + spell_power_string(spell);
+    description += addstring;
     you.props["brill_toggle"] = true;
-    description += "    " + brilldesc + spell_power_string(spell);
+    string padding(20 - addstring.length(), ' ');
+    description += padding + brilldesc + spell_power_string(spell);
     you.props["brill_toggle"] = false;
-    description += "\nRange : ";
-    description += spell_range_string(spell);
+    description += "\n"; 
+    addstring = "Range : "+ spell_range_string(spell);
+    description += addstring;
+    if (spell_range_varies(spell)) {
+        you.props["brill_toggle"] = true;
+        padding.assign(20 - addstring.length(), ' ');
+        description += padding + brilldesc + spell_range_string(spell);
+        you.props["brill_toggle"] = true;
+    }
+    you.props["brill_toggle"] = false;
     description += "\nHunger: ";
     description += spell_hunger_string(spell);
     description += "\nNoise : ";
