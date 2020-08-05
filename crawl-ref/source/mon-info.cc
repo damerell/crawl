@@ -751,6 +751,11 @@ monster_info::monster_info(const monster* m, int milev)
     if (mons_has_ranged_attack(*m))
         mb.set(MB_RANGED_ATTACK);
 
+
+    if (m->props.exists("has darts")) {
+        mb.set(MB_HAS_DARTS);
+    }
+
     // this must be last because it provides this structure to Lua code
     if (milev > MILEV_SKIP_SAFE)
     {
@@ -1970,6 +1975,9 @@ vector<monster_info_func> init_monster_info_funcs() {
                 }
                 return false;
             }});
+    toret.push_back({"with darts","with darts", 
+                [](const monster_info &mi, bool newconditions) {
+                return newconditions && mi.is(MB_HAS_DARTS); }});
 // We know our own friendly summons are summons, right?
     toret.push_back({"summoned", "summoned",
                 [](const monster_info &mi, bool newconditions) { 
