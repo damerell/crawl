@@ -1128,6 +1128,9 @@ bool mons_throw(monster* mons, bolt &beam, int msl, bool teleport)
         {
             set_ident_flags(mitm[msl], ISFLAG_KNOW_TYPE);
             set_ident_flags(item, ISFLAG_KNOW_TYPE);
+            if (mitm[msl].sub_type == MI_DART) {
+                mons->props["has darts"] = true;
+            }
         }
     }
 
@@ -1209,8 +1212,12 @@ bool mons_throw(monster* mons, bolt &beam, int msl, bool teleport)
         if (!is_artefact(item))
             set_ident_flags(mitm[msl], ISFLAG_KNOW_TYPE);
     }
-    else if (dec_mitm_item_quantity(msl, 1))
+    else if (dec_mitm_item_quantity(msl, 1)) {
+        if (mitm[msl].sub_type == MI_DART) {
+            mons->props.erase("has darts");
+        }
         mons->inv[slot] = NON_ITEM;
+    }
 
     if (beam.special_explosion != nullptr)
         delete beam.special_explosion;
