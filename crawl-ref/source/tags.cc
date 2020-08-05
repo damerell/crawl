@@ -5034,6 +5034,40 @@ void unmarshallItem(reader &th, item_def &item)
         _fixup_dragon_artefact_name(item, ARTEFACT_NAME_KEY);
         _fixup_dragon_artefact_name(item, ARTEFACT_APPEAR_KEY);
     }
+    if (th.getMinorVersion() < TAG_MINOR_THROW_CONSOLIDATION
+        && item.base_type == OBJ_MISSILES)
+    {
+        if (item.sub_type == MI_NEEDLE)
+        {
+            item.sub_type = MI_DART;
+
+            switch (item.brand)
+            {
+            case SPMSL_PARALYSIS:
+            case SPMSL_SLOW:
+            case SPMSL_SLEEP:
+            case SPMSL_CONFUSION:
+            case SPMSL_SICKNESS:
+                item.brand = SPMSL_BLINDING;
+                break;
+            default: break;
+            }
+        }
+        else if (item.sub_type == MI_BOOMERANG || item.sub_type == MI_JAVELIN)
+        {
+            switch (item.brand)
+            {
+            case SPMSL_EXPLODING:
+            case SPMSL_POISONED:
+            case SPMSL_PENETRATION:
+                item.brand = SPMSL_NORMAL;
+                break;
+            case SPMSL_SILVER:
+                item.brand = SPMSL_STEEL;
+                break;
+            }
+        }
+    }
 #endif
 
     if (is_unrandom_artefact(item))
