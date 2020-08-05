@@ -535,7 +535,7 @@ static special_missile_type _determine_missile_brand(const item_def& item,
         }
 
         rc = random_choose_weighted(60, SPMSL_BLINDING,
-                                    30, SPMSL_FRENZY,
+                                    20, SPMSL_FRENZY,
                                     nw, SPMSL_POISONED);
         break;
     case MI_JAVELIN:
@@ -545,7 +545,7 @@ static special_missile_type _determine_missile_brand(const item_def& item,
                                     nw, SPMSL_NORMAL);
         break;
     case MI_BOOMERANG:
-        rc = random_choose_weighted(60, SPMSL_STEEL,
+        rc = random_choose_weighted(30, SPMSL_STEEL,
                                     30, SPMSL_DISPERSAL,
                                     nw, SPMSL_NORMAL);
         break;
