@@ -1017,7 +1017,7 @@ bool throw_it(bolt &pbolt, int throw_2, dist *target)
         viewwindow();
         pbolt.fire();
 
-        msg::stream << item.name(DESC_THE) << " returns to your pack!"
+        msg::stream << item.name(DESC_THE) << " returns!"
                     << endl;
 
         // Player saw the item return.
@@ -1027,10 +1027,11 @@ bool throw_it(bolt &pbolt, int throw_2, dist *target)
     else
     {
         // Should have returned but didn't.
-        if (returning && item_type_known(you.inv[throw_2]))
+        if (returning && item_type_known(you.inv[throw_2]) &&
+            (ammo_brand != SPMSL_DISPERSAL))
         {
             msg::stream << item.name(DESC_THE)
-                        << " fails to return to your pack!" << endl;
+                        << " fails to return!" << endl;
         }
         dec_inv_item_quantity(throw_2, 1);
         if (unwielded)
