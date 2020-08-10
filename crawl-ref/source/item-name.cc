@@ -3421,6 +3421,15 @@ bool is_dangerous_item(const item_def &item, bool temp)
             return false;
         }
 
+    case OBJ_MISCELLANY:
+        switch (item.sub_type)
+        {
+        case MISC_DISC_OF_STORMS:
+            return true;
+        default:
+            return false;
+        }
+
     default:
         return false;
     }
