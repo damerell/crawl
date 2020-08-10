@@ -751,6 +751,10 @@ monster_info::monster_info(const monster* m, int milev)
     if (mons_has_ranged_attack(*m))
         mb.set(MB_RANGED_ATTACK);
 
+    if ((m->type == MONS_BATTLESPHERE) && (m->attitude == ATT_FRIENDLY)
+        && (m->battlecharge == 0)) {
+        mb.set(MB_NO_CHARGES);
+    }
 
     if (m->props.exists("has darts")) {
         mb.set(MB_HAS_DARTS);
@@ -1843,6 +1847,9 @@ void mons_conditions_string(string& desc, const vector<monster_info>& mi,
 
 vector<monster_info_func> init_monster_info_funcs() {
     vector<monster_info_func> toret; // well, I couldn't think of a good name
+    toret.push_back({"no charges", "no charges", 
+                [](const monster_info &mi, bool newconditions) {
+                return newconditions && mi.is(MB_NO_CHARGES); }});
     toret.push_back({"charmed", "charmed", 
                 [](const monster_info &mi, bool newconditions) {
                 return newconditions && mi.is(MB_CHARMED); }});

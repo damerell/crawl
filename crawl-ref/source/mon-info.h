@@ -175,6 +175,7 @@ enum monster_info_flags
     MB_PINNED,
     MB_VILE_CLUTCH,
     MB_HAS_DARTS,
+    MB_NO_CHARGES,
     NUM_MB_FLAGS
 };
 
