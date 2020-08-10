@@ -1225,7 +1225,8 @@ static const char* _aux_attack_names[1 + UNAT_LAST_ATTACK] =
     "Tentacles",
 };
 
-static string _describe_action_subtype(caction_type type, int compound_subtype)
+static string _describe_action_subtype(caction_type type, int compound_subtype,
+    bool &any_permabuffs)
 {
     pair<int, int> types = caction_extract_types(compound_subtype);
     int subtype = types.first;
@@ -1292,7 +1293,15 @@ static string _describe_action_subtype(caction_type type, int compound_subtype)
         }
     }
     case CACT_CAST:
-        return spell_title((spell_type)subtype);
+    {
+        spell_type spell = (spell_type)subtype;
+        if (is_permabuff(spell)) {
+            any_permabuffs = true;
+            return ("* " + (string)spell_title(spell));
+        } else {
+            return spell_title(spell);
+        }
+    }
     case CACT_INVOKE:
     case CACT_ABIL:
         return ability_name((ability_type)subtype);
@@ -1347,6 +1356,7 @@ static void _sdump_action_counts(dump_params &par)
     if (you.action_count.empty())
         return;
     int max_lt = (min<int>(you.max_level, 27) - 1) / 3;
+    bool any_permabuffs = false;
 
     // Don't show both a total and 1..3 when there's only one tier.
     if (max_lt)
@@ -1388,7 +1398,7 @@ static void _sdump_action_counts(dump_params &par)
             }
             else
                 par.text += "       ";
-            par.text += chop_string(_describe_action_subtype(caction_type(cact), ac->first), 17);
+            par.text += chop_string(_describe_action_subtype(caction_type(cact), ac->first, any_permabuffs), 17);
             for (int lt = 0; lt < max_lt; lt++)
             {
                 int ltotal = 0;
@@ -1402,6 +1412,9 @@ static void _sdump_action_counts(dump_params &par)
             par.text += make_stringf(" ||%6d", ac->second[27]);
             par.text += "\n";
         }
+    }
+    if (any_permabuffs) {
+        par.text += "* Casting counts for permanent charms are based on the nominal duration and\nthe proportion of turns where the character received a benefit.\n";
     }
     par.text += "\n";
 }

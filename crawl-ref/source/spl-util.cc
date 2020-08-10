@@ -15,6 +15,7 @@
 #include <cstring>
 
 #include "areas.h"
+#include "chardump.h"
 #include "coordit.h"
 #include "directn.h"
 #include "english.h"
@@ -1652,10 +1653,11 @@ void permabuff_track(int pb) {
                    (you.elapsed_time - you.perma_last_track[pb]));
     you.perma_last_track[pb] = you.elapsed_time;
     if (time > 0) {
-// Divide by 3 here as a very crude compensation for the way we only get 
-// pinged on benefit not just from routine recasting
-        if (one_chance_in(dur / (3 * time))) {
+// Divide by 2 here as a very crude compensation for the way in vanilla you'd
+// rarely benefit every turn in the full duration.
+        if (one_chance_in(dur / (2 * time))) {
             practise_casting(spell, true);
+            count_action(CACT_CAST, spell);
         }
         string reason = you.cannot_renew_pbs_because();
         if ((!reason.empty()) && one_chance_in(dur / time)) {
