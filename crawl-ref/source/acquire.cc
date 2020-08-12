@@ -1678,10 +1678,11 @@ bool AcquireMenu::acquire_selected()
     update_help();
     const formatted_string old_more = more;
     more = formatted_string::parse_string(make_stringf(
-               "<%s>Acquire %s? (%s/N)</%s>\n",
+               "<%s>Acquire %s? (%s/%s)</%s>\n",
                col.c_str(),
                entry.text.c_str(),
                Options.easy_confirm == CONFIRM_NONE_EASY ? "Y" : "y",
+               Options.easy_confirm == CONFIRM_NONE_EASY ? "N" : "n",
                col.c_str()));
     more += old_more;
     update_more();

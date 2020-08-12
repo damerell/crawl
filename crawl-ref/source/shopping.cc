@@ -1195,11 +1195,12 @@ void ShopMenu::purchase_selected()
         return;
     }
     more = formatted_string::parse_string(make_stringf(
-               "<%s>Purchase items%s for %d gold? (%s/N)</%s>\n",
+               "<%s>Purchase items%s for %d gold? (%s/%s)</%s>\n",
                col.c_str(),
                buying_from_list ? " in shopping list" : "",
                cost,
                Options.easy_confirm == CONFIRM_NONE_EASY ? "Y" : "y",
+               Options.easy_confirm == CONFIRM_NONE_EASY ? "N" : "n",
                col.c_str()));
     more += old_more;
     update_more();
