@@ -1199,7 +1199,7 @@ void ShopMenu::purchase_selected()
                col.c_str(),
                buying_from_list ? " in shopping list" : "",
                cost,
-               Options.easy_confirm == easy_confirm_type::none ? "Y" : "y",
+               Options.easy_confirm == CONFIRM_NONE_EASY ? "Y" : "y",
                col.c_str()));
     more += old_more;
     update_more();
