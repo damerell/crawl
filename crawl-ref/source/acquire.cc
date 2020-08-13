@@ -1666,6 +1666,7 @@ static void _create_acquirement_item(item_def &item)
 
     acq_items.clear();
     you.props.erase(ACQUIRE_ITEMS_KEY);
+    you.duration[DUR_ACQUIREMENT] = 0;
 }
 
 bool AcquireMenu::acquire_selected()
@@ -1838,8 +1839,10 @@ bool acquirement_menu()
 {
     ASSERT(!crawl_state.game_is_arena());
 
-    if (!you.props.exists(ACQUIRE_ITEMS_KEY))
+    if (!you.props.exists(ACQUIRE_ITEMS_KEY)) {
         _make_acquirement_items();
+        you.set_duration(DUR_ACQUIREMENT, 500);
+    }
 
     auto &acq_items = you.props[ACQUIRE_ITEMS_KEY].get_vector();
 
@@ -1861,4 +1864,17 @@ bool acquirement_menu()
     acq_menu.show();
 
     return !you.props.exists(ACQUIRE_ITEMS_KEY);
+}
+void waste_acquirement() {
+    int thing_created = items(false, OBJ_SCROLLS, SCR_RANDOM_USELESSNESS, 
+                              0, 0, -1);
+    CrawlVector &acq_items = you.props[ACQUIRE_ITEMS_KEY].get_vector();
+    acq_items.clear();
+    item_set_appearance(mitm[thing_created]);
+    item_def item = mitm[thing_created];
+    set_ident_flags(item,
+            // Act as if we've recieved this item already to prevent notes.
+                    ISFLAG_IDENT_MASK | ISFLAG_NOTED_ID | ISFLAG_NOTED_GET);
+    acq_items.push_back(item);
+    destroy_item(thing_created);
 }

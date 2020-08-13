@@ -197,5 +197,6 @@ enum duration_type
     DUR_RECITE_COOLDOWN,
     DUR_ACROBAT,
     DUR_RESIDUAL_HARM,
+    DUR_ACQUIREMENT,
     NUM_DURATIONS
 };

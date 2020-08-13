@@ -5,6 +5,7 @@
 
 #include "AppHdr.h"
 
+#include "acquire.h"
 #include "player-reacts.h"
 #include "spl-selfench.h"
 #include "spl-wpnench.h"
@@ -616,6 +617,13 @@ static void _decrement_durations()
         if (you.props.exists(ICY_ARMOUR_KEY))
             you.props.erase(ICY_ARMOUR_KEY);
         you.redraw_armour_class = true;
+    }
+
+    if (_decrement_a_duration
+        (DUR_ACQUIREMENT, delay, 
+         "The magic of the acquirement scroll fades.", 0, 
+         "Beware! The magic of the acquirement scroll is fading.")) {
+        waste_acquirement();
     }
 
     // Possible reduction of silence radius.
