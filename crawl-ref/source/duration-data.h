@@ -743,7 +743,11 @@ static const duration_def duration_data[] =
     { DUR_RESIDUAL_HARM, 0, "", "", "", "", D_NO_FLAGS, {{""}}},
     { DUR_GRASPING_ROOTS, 0, "", "grasped by roots", "grasping roots",
       "You are constricted by grasping roots.", D_NO_FLAGS},
-
+    { DUR_ACQUIREMENT,
+      YELLOW, "Acquire",
+      "acquiring", "",
+      "You should select an object to acquire before the magic fades.",
+      D_NO_FLAGS, {}, 100},
 #if TAG_MAJOR_VERSION == 34
     // And removed ones
     { DUR_MAGIC_SAPPED, 0, "", "", "old magic sapped", "", D_NO_FLAGS},
