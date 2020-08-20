@@ -1198,7 +1198,7 @@ static int _body_covered()
     if (you.species == SP_NAGA)
         covered++;
 
-    if (species_is_draconian(you.species))
+    if (species_is_draconian(you.species) || (you.species == SP_FAERIE_DRAGON))
         covered += 3;
 
     for (mutation_type scale : _all_scales)
