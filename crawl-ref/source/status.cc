@@ -1003,6 +1003,13 @@ bool fill_status_info(int status, status_info& inf)
             inf.long_text = "The benefits from your permanent enchantments are presently consuming all your magic regeneration.";
         }
         break;
+        
+    case STATUS_MAX_PIETY:
+        if (!you_worship(GOD_USKAYAW) && ((MAX_PIETY - you.piety) <= 1)) {
+            inf.short_text = "max piety";
+            inf.long_text = "You have reached maximum piety.";
+        }
+        break;
 
     default:
         if (!found)

@@ -1,6 +1,9 @@
 Stoat Soup 0.23
 ---------------
 
+* Piety stars go white at 199 piety to encourage you to use it up; "max
+  piety" is displayed in %/@ displays.
+
 Vanilla changes messed around with
 ----------------------------------
 * Wands stack as in 0.20, but are identified by scrolls or Evocations as
