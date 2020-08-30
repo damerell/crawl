@@ -1807,7 +1807,7 @@ bool transform(int pow, transformation which_trans, bool involuntary,
         if (you.permabuff[PERMA_REGEN])
         {
             mprf(MSGCH_DURATION, "You stop regenerating, since you have no flesh.");
-            you.pb_off(PERMA_REGEN);
+            you.pb_off(PERMA_REGEN, true);
         }
 
         you.hunger_state = HS_SATIATED;  // no hunger effects while transformed

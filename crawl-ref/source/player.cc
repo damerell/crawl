@@ -4075,7 +4075,8 @@ int get_real_mp(bool include_items, bool count_frozen)
                         you.charms_reserve_size += cost * 100;
                     }
                 } else {
-                    you.pb_off((permabuff_type) j, false); someoff = true;
+                    you.pb_off((permabuff_type) j, false, false);
+                    someoff = true;
                     you.increase_duration(permabuff_durs[j], 25);
                 }
             }
@@ -5089,7 +5090,9 @@ bool player::permabuff_working(permabuff_type pb) {
 permabuff_state player::permabuff_notworking(permabuff_type pb) {
     if (god_hates_spell(permabuff_spell[pb],you.religion)) return PB_GOD;
     if (you.no_cast()) return PB_NO_CAST;
+    if (!player_regenerates_mp()) return PB_NO_MPREGEN;
     // Not clear you can get this duration right now
+    // Just as well because I think this is broken
     if ((you.duration[DUR_ANTIMAGIC]) && 
         (x_chance_in_y(you.duration[DUR_ANTIMAGIC] / 3, you.hp_max))) {
         return PB_ANTIMAGIC;
@@ -5145,6 +5148,8 @@ string player::permabuff_whynot(permabuff_type pb) {
         return "your religion forbids it";
     case PB_NO_CAST:
         return "your equipment doesn't let you cast spells";
+    case PB_NO_MPREGEN:
+        return "you cannot regenerate MP";
     case PB_ANTIMAGIC:
         return "you have been hit with an antimagic attack";
     case PB_BRAINLESS:
@@ -5187,13 +5192,34 @@ void player::pb_on(permabuff_type pb) {
     }
     calc_mp();
 }
-void player::pb_off(permabuff_type pb, bool recalcmp) {
-    permabuff[pb] = false;
+void player::pb_off(permabuff_type pb, bool voluntary, bool recalcmp) {
     if (recalcmp && charms_reserve_size && permabuff_uses_charms_reserve(pb)) {
         charms_reserve -= 
             (spell_mana(permabuff_spell[pb]) * 100 * charms_reserve) /
             charms_reserve_size;
     }
+    if (voluntary && permabuff[pb]) {
+        if (pb == PERMA_DMSL) {
+            if (you.props.exists(DMSL_RECHARGE) &&
+                you.props[DMSL_RECHARGE].get_int()) {
+                you.props.erase(DMSL_RECHARGE); 
+// Why 25 for SoG and DMsl but 10 for Regeneration? I dunno but I guess it
+// is because Regen will recharge faster if you have lots of MP anyway, so
+// preemptively cancelling it is less attractive?
+            you.increase_duration(DUR_DEFLECT_MISSILES, 25, 50);
+            }
+        } else if (pb == PERMA_REGEN)  {
+            // This stops HOM dropping and recasting to refill the reserve
+            you.increase_duration(DUR_REGENERATION, 10, 50);
+        } else if (pb == PERMA_SHROUD) {
+            if (you.props.exists(SHROUD_RECHARGE) &&
+                you.props[SHROUD_RECHARGE].get_int()) {
+                you.props.erase(SHROUD_RECHARGE); 
+                you.increase_duration(DUR_SHROUD_OF_GOLUBRIA, 25, 50);
+            }
+        }
+    }
+    permabuff[pb] = false;
     if ((pb == PERMA_EXCRU) && you.weapon() && 
         you.props.exists(ORIGINAL_BRAND_KEY)) {
         end_weapon_brand(*you.weapon(), true);

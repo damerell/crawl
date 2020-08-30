@@ -103,6 +103,7 @@ enum training_status
 enum permabuff_state {
     PB_GOD,
     PB_NO_CAST,
+    PB_NO_MPREGEN,
     PB_ANTIMAGIC,
     PB_BRAINLESS,
     PB_STARVING,
@@ -937,7 +938,11 @@ public:
     string permabuff_whynot(permabuff_type permabuff);
     bool has_any_permabuff();
     void pb_on(permabuff_type pb);
-    void pb_off(permabuff_type pb, bool recalcmp = true);
+    // "voluntary" is a bit misused here - it really means, don't let us use
+    // this as an end run around regen/shroud/DMSL recharge, it _might_ be
+    // voluntary. Or Sif hates you.
+    void pb_off(permabuff_type pb, bool voluntary = true,
+		bool recalcmp = true);
     // If called with a specific PB, checks for conditions particular to that
     // PB. Which there aren't any of right now, but I might think of some.
     bool can_renew_pbs(permabuff_type pb = PERMA_NO_PERMA);

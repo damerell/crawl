@@ -2142,7 +2142,7 @@ static spret_type _do_ability(const ability_def& abil, bool fail)
 
     case ABIL_END_PERMABUFFS:
         fail_check(); // Can't fail right now
-        spell_drop_permabuffs(true,false,false);
+        spell_drop_permabuffs(true,false,false,true);
         mpr("You bring all your permanent enchantments to an end.");
         break;
 

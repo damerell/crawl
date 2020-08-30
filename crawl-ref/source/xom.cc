@@ -530,7 +530,8 @@ static spell_type _choose_random_spell(int sever)
     {
         const spell_type spell = spell_list[i];
         if (!spell_is_useless(spell, true, true, true)
-             && _transformation_check(spell))
+            && _transformation_check(spell)
+            && !is_permabuff(spell))
         {
             ok_spells.push_back(spell);
         }

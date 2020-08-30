@@ -414,7 +414,8 @@ void debuff_player(bool end_permas, bool end_perma_durs,
             need_msg = true;
         }
     }
-    spell_drop_permabuffs(end_permas, end_perma_durs, increase_perma_durs);
+    spell_drop_permabuffs(end_permas, end_perma_durs, increase_perma_durs, 
+                          increase_perma_durs);
 
     if (need_msg)
         mprf(MSGCH_WARN, "Your magical effects are unravelling.");

@@ -94,15 +94,7 @@ spret_type deflection(int pow, bool fail)
     if (you.permabuff[PERMA_DMSL]) {
         bool wasworking = you.permabuff_working(PERMA_DMSL);
         const int orig_defl = you.missile_deflection();
-        if (you.props.exists(DMSL_RECHARGE) &&
-            you.props[DMSL_RECHARGE].get_int()) {
-            you.props.erase(DMSL_RECHARGE); 
-// Why 25 for SoG and DMsl but 10 for Regeneration? I dunno but I guess it
-// is because Regen will recharge faster if you have lots of MP anyway, so
-// preemptively cancelling it is less attractive?
-            you.increase_duration(DUR_DEFLECT_MISSILES, 25, 50);
-        }
-        you.pb_off(PERMA_DMSL); 
+        you.pb_off(PERMA_DMSL, true); 
         mprf("You are %s.",
              !wasworking ?
              "no longer attempting to deflect missiles" : 
@@ -125,9 +117,7 @@ spret_type cast_regen(int pow, bool fail)
 {
     if (you.permabuff[PERMA_REGEN]) {
         mpr("Your skin stops crawling.");
-                // This stops HOM dropping and recasting to refill the reserve
-        you.increase_duration(DUR_REGENERATION, 10, 50);
-        you.pb_off(PERMA_REGEN); return SPRET_PERMACANCEL;
+        you.pb_off(PERMA_REGEN, true); return SPRET_PERMACANCEL;
     } else {
         fail_check();
         mpr("Your skin crawls.");
@@ -226,7 +216,7 @@ spret_type cast_infusion(int pow, bool fail)
         mpr(you.permabuff_working(PERMA_INFUSION) ? 
             "You stop infusing your attacks with magical energy." :
             "You stop attempting to infuse your attacks with magical energy.");
-        you.pb_off(PERMA_INFUSION); return SPRET_PERMACANCEL;
+        you.pb_off(PERMA_INFUSION, true); return SPRET_PERMACANCEL;
     } else {
         fail_check();
         mpr(you.duration[DUR_INFUSION] ? 
@@ -244,7 +234,7 @@ spret_type cast_song_of_slaying(int pow, bool fail)
             "You stop singing a song of slaying." :
             "You stop trying to sing a song of slaying.");
         you.props[SONG_OF_SLAYING_KEY] = 0;
-        you.pb_off(PERMA_SONG); return SPRET_PERMACANCEL;
+        you.pb_off(PERMA_SONG, true); return SPRET_PERMACANCEL;
     } else {
         fail_check();
         mpr(you.duration[DUR_SONG_OF_SLAYING] ? 
@@ -295,12 +285,7 @@ spret_type cast_shroud_of_golubria(int pow, bool fail)
 {
     if (you.permabuff[PERMA_SHROUD]) {
         mpr("You dispel your protective shroud.");
-        if (you.props.exists(SHROUD_RECHARGE) &&
-            you.props[SHROUD_RECHARGE].get_int()) {
-            you.props.erase(SHROUD_RECHARGE); 
-            you.increase_duration(DUR_SHROUD_OF_GOLUBRIA, 25, 50);
-        }
-        you.pb_off(PERMA_SHROUD); return SPRET_PERMACANCEL;
+        you.pb_off(PERMA_SHROUD, true); return SPRET_PERMACANCEL;
     } else {
         fail_check();
         mpr (you.duration[DUR_SHROUD_OF_GOLUBRIA] ? 
@@ -325,7 +310,7 @@ spret_type cast_transform(int pow, transformation which_trans, bool fail)
 
 // Should this be one function?
 void spell_drop_permabuffs(bool turn_off, bool end_durs, bool increase_durs,
-                           int num, int size) {
+                           bool voluntary) {
     if (!(turn_off || end_durs || increase_durs)) {
         mprf(MSGCH_ERROR, "BUG: drop_permabuffs called to do nothing.");
     }
@@ -336,11 +321,10 @@ void spell_drop_permabuffs(bool turn_off, bool end_durs, bool increase_durs,
         if (end_durs) you.duration[permabuff_durs[i]] = 0;
         if (increase_durs && you.permabuff[i]) {
             you.duration[permabuff_durs[i]] 
-                // default 4d10
                 = max(you.duration[permabuff_durs[i]],
-                      BASELINE_DELAY * roll_dice(num,size));
+                      BASELINE_DELAY * roll_dice(4, 10));
         }
-        if (turn_off) you.pb_off((permabuff_type) i);
+        if (turn_off) you.pb_off((permabuff_type) i, voluntary);
         if (turn_off && end_durs) {
             you.perma_benefit[i] = you.perma_hunger[i] = you.perma_mp[i] =
                 0;
