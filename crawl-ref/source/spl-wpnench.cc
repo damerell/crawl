@@ -84,7 +84,7 @@ spret_type cast_excruciating_wounds(int power, bool fail)
         mpr(you.permabuff_working(PERMA_EXCRU) ?
             "You stop infusing your attacks with pain." :
             "You stop attempting to infuse your attacks with pain.");
-        you.pb_off(PERMA_EXCRU); return SPRET_PERMACANCEL;
+        you.pb_off(PERMA_EXCRU, true); return SPRET_PERMACANCEL;
     } else {
         fail_check();
 // Suitable weapon checks moved to spl-util.cc

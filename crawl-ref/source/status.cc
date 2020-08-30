@@ -999,7 +999,7 @@ bool fill_status_info(int status, status_info& inf)
         if (you.props[CHARMS_ALL_MPREGEN].get_bool()) {
             inf.light_colour = BROWN;
             inf.light_text = "Charms";
-            inf.short_text = "";
+            inf.short_text = "charms draining MP";
             inf.long_text = "The benefits from your permanent enchantments are presently consuming all your magic regeneration.";
         }
         break;

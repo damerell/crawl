@@ -783,7 +783,7 @@ spret_type cast_portal_projectile(int pow, bool fail)
         mpr(you.permabuff_working(PERMA_PPROJ) ?
             "You stop teleporting projectiles to their destination." :
             "You stop attempting to teleport projectiles to their destination.");
-        you.pb_off(PERMA_PPROJ); return SPRET_PERMACANCEL;
+        you.pb_off(PERMA_PPROJ, true); return SPRET_PERMACANCEL;
     } else {
         fail_check();
         mpr(you.duration[DUR_PORTAL_PROJECTILE] ?

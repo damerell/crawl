@@ -255,7 +255,7 @@ spret_type cast_ring_of_flames(int power, bool fail) {
         mpr(you.permabuff_working(PERMA_ROF) ?
             "The flames around you gutter out." :
             "You stop attemping to sustain a ring of flames."); // prosaic :-(
-        you.pb_off(PERMA_ROF); return SPRET_PERMACANCEL;
+        you.pb_off(PERMA_ROF, true); return SPRET_PERMACANCEL;
     } else {
         fail_check();
         did_god_conduct(DID_FIRE, min(5 + power/5, 50));

@@ -956,8 +956,8 @@ static bool _sif_muna_retribution()
         // This will set all the extendable duration spells to
         // a duration of one round, thus potentially exposing
         // the player to real danger.
-        // It just turns off your permabuffs completely
-        debuff_player(true,false,false);
+        // It just turns off your permabuffs completely and makes you wait
+        debuff_player(true,false,true);
         break;
     }
 

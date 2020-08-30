@@ -170,7 +170,7 @@ bool bless_weapon(god_type god, brand_type brand, colour_t colour)
     {
         ASSERT(you.weapon());
         end_weapon_brand(*you.weapon());
-        you.pb_off(PERMA_EXCRU); 
+        you.pb_off(PERMA_EXCRU, true); 
     }
 
     string old_name = wpn.name(DESC_A);
