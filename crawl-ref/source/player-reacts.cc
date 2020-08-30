@@ -1035,7 +1035,8 @@ static void _regenerate_hp_and_mp(int delay)
     // MP regen. The reporting here isn't brilliant but it's hard to see how
     // it can be improved
     if (sub) you.props[MP_TO_CHARMS].get_int() += sub;
-    if (sub >= mp_regen_countup) {
+// > not >= avoids DD who dons gspirit having Charms flag forever
+    if (sub > mp_regen_countup) {
         you.props[CHARMS_DEBT].get_int() += (sub - mp_regen_countup);
         mp_regen_countup = 0;
         you.props[CHARMS_ALL_MPREGEN] = true;
@@ -1087,7 +1088,7 @@ static void _regenerate_hp_and_mp(int delay)
 // PB with a massive failure chance, you can be charged >1 MP in a turn.
 //            } else {
 //                mprf(MSGCH_ERROR, "BUG: Found no permabuff to turn off when out of MP!");
-            }
+            } 
         }
     }
     if (mp_regen_countup > 0) {
@@ -1219,6 +1220,17 @@ static void _regenerate_hp_and_mp(int delay)
 static void _permabuff_bookkeeping(int delay) {
     for (int pb = PERMA_FIRST_PERMA; pb <= PERMA_LAST_PERMA; pb++) {
         you.perma_benefit[pb] = max(0,(you.perma_benefit[pb]-delay));
+        permabuff_type permab = (permabuff_type) pb;
+        if (you.permabuff[pb]) {
+            permabuff_state notworking = you.permabuff_notworking(permab);
+            if ((notworking == PB_GOD) || (notworking == PB_NO_MPREGEN) ||
+                (notworking == PB_BRAINLESS) || (notworking == PB_STARVING)) {
+                mprf("You dispel %s because %s.", 
+                     spell_title(permabuff_spell[pb]),
+                     you.permabuff_whynot(permab).c_str());
+                you.pb_off(permab, true);
+            }
+        }
     }
     int song = you.props[SONG_OF_SLAYING_KEY].get_int();
     if (song) {

@@ -75,7 +75,7 @@ spret_type cast_death_channel(int pow, god_type god, bool fail)
         mpr(you.permabuff_working(PERMA_DCHAN) ?
             "You stop channeling the dead." :
             "You stop attempting to channel the dead.");
-        you.pb_off(PERMA_DCHAN); return SPRET_PERMACANCEL;
+        you.pb_off(PERMA_DCHAN, true); return SPRET_PERMACANCEL;
     } else {
         fail_check();
         mpr(you.duration[DUR_DEATH_CHANNEL] ?

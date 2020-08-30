@@ -352,7 +352,7 @@ static void _remove_spell_attributes(spell_type spell)
     if (you.has_permabuff(spell)) {
         permabuff_type permabuff = permabuff_is(spell);
         you.duration[permabuff_durs[permabuff]] = 0;
-        you.pb_off(permabuff);
+        you.pb_off(permabuff, false);
         mpr("Your lingering enchantment dissipates.");
     }
     switch (spell)
