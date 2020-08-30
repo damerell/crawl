@@ -286,7 +286,7 @@ static void _nowrap_eol_cprintf_touchui(const char *format, ...)
 
 static string _god_powers();
 static string _god_asterisks();
-static int _god_status_colour(int default_colour);
+static int _god_status_colour(int default_colour, bool maxpiety = false);
 
 // Colour for captions like 'Health:', 'Str:', etc.
 #define HUD_CAPTION_COLOUR Options.status_caption_colour
@@ -1277,7 +1277,7 @@ static void _redraw_title()
         NOWRAP_EOL_CPRINTF("%s", god.c_str());
 
         string piety = _god_asterisks();
-        textcolour(_god_status_colour(YELLOW));
+        textcolour(_god_status_colour(YELLOW, true));
         const unsigned int textwidth = (unsigned int)(strwidth(species) + strwidth(god) + strwidth(piety) + 1);
         if (textwidth <= WIDTH)
             NOWRAP_EOL_CPRINTF(" %s", piety.c_str());
@@ -2141,9 +2141,10 @@ static string _god_asterisks()
  * What colour should the god status display be?
  *
  * @param default_colour   The default colour, if not under penance or boredom.
+ * @param maxpiety         Turn cyan at max piety
  * @return                 A colour for the god status display.
  */
-static int _god_status_colour(int default_colour)
+static int _god_status_colour(int default_colour, bool maxpiety)
 {
     if (player_under_penance())
         return RED;
@@ -2151,6 +2152,9 @@ static int _god_status_colour(int default_colour)
     if (you_worship(GOD_XOM) && you.gift_timeout <= 1)
         return you.gift_timeout ? RED : LIGHTRED;
 
+    if (maxpiety && at_almost_max_piety()) {
+        return WHITE;
+    }
     return default_colour;
 }
 

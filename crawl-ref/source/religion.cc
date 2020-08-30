@@ -2382,12 +2382,14 @@ static void _gain_piety_point()
     else if (you.piety < MAX_PIETY)
         you.piety++;
 
-    if (piety_rank() > piety_rank(old_piety))
-    {
+    if (piety_rank(you.piety, true) > piety_rank(old_piety, true)) {
         // Redraw piety display and, in case the best skill is Invocations,
         // redraw the god title.
         you.redraw_title = true;
-
+    }
+    // This could all go in the previous 'if' but let vanilla patches apply
+    if (piety_rank() > piety_rank(old_piety))
+    {
         const int rank = piety_rank();
         take_note(Note(NOTE_PIETY_RANK, you.religion, rank));
         for (const auto& power : get_god_powers(you.religion))
@@ -2558,15 +2560,19 @@ void lose_piety(int pgn)
     else
         you.piety -= pgn;
 
+    if (piety_rank(old_piety, true) > piety_rank(you.piety, true)) {
+        // Redraw piety display and, in case the best skill is Invocations,
+        // redraw the god title.
+        you.redraw_title = true;
+    }
+
+    // This could all go in the previous 'if' but let vanilla patches apply            
     // Don't bother printing out these messages if you're under
     // penance, you wouldn't notice since all these abilities
     // are withheld.
     if (!player_under_penance()
         && piety_rank(old_piety) > piety_rank())
     {
-        // Redraw piety display and, in case the best skill is Invocations,
-        // redraw the god title.
-        you.redraw_title = true;
 
         const int old_rank = piety_rank(old_piety);
 
@@ -3839,6 +3845,18 @@ god_type choose_god(god_type def_god)
                                bind(god_name, placeholders::_1, false));
 }
 
+bool at_almost_max_piety(int piety) {
+    if (you_worship(GOD_USKAYAW) || you_worship(GOD_XOM) || 
+        you_worship (GOD_GOZAG)) {
+        return false;
+    }
+    if (you_worship(GOD_RU) && piety == piety_breakpoint(5)) {
+        return true;
+    }
+    if ((MAX_PIETY - piety) <= 1) return true;
+    return false;
+}
+
 int had_gods()
 {
     int count = 0;
@@ -4317,17 +4335,20 @@ colour_t god_message_altar_colour(god_type god)
     }
 }
 
-int piety_rank(int piety)
+int piety_rank(int piety, bool extrarank)
 {
     // XXX: this seems to be used only in dat/database/godspeak.txt?
     if (you_worship(GOD_XOM))
     {
         const int breakpoints[] = { 20, 50, 80, 120, 180, INT_MAX };
+
         for (unsigned int i = 0; i < ARRAYSZ(breakpoints); ++i)
             if (piety <= breakpoints[i])
                 return i + 1;
         die("INT_MAX is no good");
     }
+
+    if (extrarank && at_almost_max_piety(piety)) return NUM_PIETY_STARS + 1;
 
     for (int i = NUM_PIETY_STARS; i >= 1; --i)
         if (piety >= piety_breakpoint(i - 1))

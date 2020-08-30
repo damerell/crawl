@@ -94,8 +94,9 @@ static inline bool in_good_standing(god_type god, int pbreak = -1)
 }
 
 int had_gods();
-int piety_rank(int piety = you.piety);
+int piety_rank(int piety = you.piety, bool extrarank = false);
 int piety_scale(int piety_change);
+bool at_almost_max_piety(int piety = you.piety);
 bool god_likes_your_god(god_type god, god_type your_god = you.religion);
 bool god_hates_your_god(god_type god, god_type your_god = you.religion);
 bool god_hates_killing(god_type god, const monster& mon);
