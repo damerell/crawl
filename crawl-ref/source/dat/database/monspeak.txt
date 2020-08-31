@@ -7105,6 +7105,40 @@ VISUAL:@The_monster@ looks @at_foe/around@ nervously.
 ################################################
 # Make this work for other predefined orcs!
 #################################################
+friendly related beogh orc priest
+
+@friendly related beogh orc@
+
+w:2
+@_orc_priest_joke_@
+
+%%%%
+_orc_priest_joke_
+#about 4x the weight of jokes
+w:28
+__NONE
+
+w:1
+@The_monster@ says, "Why did the chicken cross the road? To glorify Beogh! HAR HAR HAR!"
+
+w:1
+@The_monster@ says, "When is a door not a door? When it's a corridor! HAR HAR HAR!"
+
+w:1
+@The_monster@ says, "How do you get down from an elephant?  Smite it until it gives you some! HAR HAR HAR!"
+
+w:1
+@The_monster@ says, "An enchanter, an ice elementalist, and a skald walk into a Temple of Beogh. We kill them! HAR HAR HAR!"
+
+w:1
+@The_monster@ says, "What is an orc priest's favourite letter? o! HAR HAR HAR!"
+
+w:1
+@The_monster@ says, "Saint Roka walks into an inn, hands the innkeeper three nails, then smashes his head in! HAR HAR HAR!"
+
+w:1
+@The_monster@ says, "What's green and smitey? An orc high priest! HAR HAR HAR!"
+%%%%
 related beogh orc high priest
 
 __NONE
