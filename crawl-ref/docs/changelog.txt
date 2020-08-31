@@ -19,9 +19,8 @@ Vanilla changes messed around with
 * The 0.24 Throwing rework is pulled forward; however, boomerangs don't
   always return (it's skill-based as before), penetration is a separate
   brand on javelins, and steel is kept not silver.
-* The 0.25 acquirement rework is pulled forward; however, you are offered
-  4 items (plus gold and money) one of which might be a misc evocable. A 
-  cancelled acquirement times out after 500 turns.
+* The 0.25 acquirement rework is pulled forward; however, you can still be
+  offered evokables. Acquirement times out after 500 turns if not used.
 * The Brooch of Shielding is returned to its old AC/EV/warding combo, and
   Robustness and Phasing are perhaps a little more interesting than just
   being extra good rings of evasion / protection.
