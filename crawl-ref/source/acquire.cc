@@ -1794,7 +1794,7 @@ static void _make_acquirement_items()
     if (!you.get_mutation_level(MUT_NO_ARTIFICE))
         rand_classes.emplace_back(OBJ_MISCELLANY);
 
-    const int num_wanted = min(4, (int) rand_classes.size());
+    const int num_wanted = min(3, (int) rand_classes.size());
     shuffle_array(rand_classes);
 
     CrawlVector &acq_items = you.props[ACQUIRE_ITEMS_KEY].get_vector();
