@@ -2379,7 +2379,7 @@ static const facet_def _demon_facets[] =
     { 2, { MUT_POWERED_BY_DEATH, MUT_POWERED_BY_DEATH, MUT_POWERED_BY_DEATH },
       { -33, 0, 0 } },
     { 2, { MUT_DEMONIC_GUARDIAN, MUT_DEMONIC_GUARDIAN, MUT_DEMONIC_GUARDIAN },
-      { -66, 17, 50 } },
+      { -33, 0, 0 } },
     { 2, { MUT_NIGHTSTALKER, MUT_NIGHTSTALKER, MUT_NIGHTSTALKER },
       { -33, 0, 0 } },
     { 2, { MUT_SPINY, MUT_SPINY, MUT_SPINY },
@@ -2699,20 +2699,10 @@ int player::how_mutated(bool innate, bool levels, bool temp) const
     return result;
 }
 
-// Return whether current tension is balanced
-static bool _balance_demonic_guardian()
-{
-    // if tension is unfavorably high, perhaps another guardian should spawn
-    const int mutlevel = you.get_mutation_level(MUT_DEMONIC_GUARDIAN);
-    const int tension = get_tension(GOD_NO_GOD);
-    return tension*3/4 <= mutlevel*6 + random2(mutlevel*mutlevel*2);
-}
-
-// Primary function to handle and balance demonic guardians, if the tension
-// is unfavorably high and a guardian was not recently spawned, a new guardian
-// will be made, if tension is below a threshold (determined by the mutations
-// level and a bit of randomness), guardians may be dismissed in
-// _balance_demonic_guardian()
+// Primary function to handle demonic guardians.
+// Guardian tier is partially based on player experience level. This should
+// allow players to get the mutation early without it going totally out of
+// control.
 void check_demonic_guardian()
 {
     // Players hated by all monsters don't get guardians, so that they aren't
@@ -2722,12 +2712,12 @@ void check_demonic_guardian()
 
     const int mutlevel = you.get_mutation_level(MUT_DEMONIC_GUARDIAN);
 
-    if (!_balance_demonic_guardian() &&
-        you.duration[DUR_DEMONIC_GUARDIAN] == 0)
+    if (you.duration[DUR_DEMONIC_GUARDIAN] == 0)
     {
         monster_type mt;
+        int guardian_str = mutlevel + div_rand_round(you.experience_level - 9, 9);
 
-        switch (mutlevel)
+        switch (guardian_str)
         {
         case 1:
             mt = random_choose(MONS_QUASIT, MONS_WHITE_IMP, MONS_UFETUBUS,
@@ -2735,12 +2725,20 @@ void check_demonic_guardian()
             break;
         case 2:
             mt = random_choose(MONS_ORANGE_DEMON, MONS_ICE_DEVIL,
-                               MONS_SOUL_EATER, MONS_SMOKE_DEMON,
-                               MONS_SIXFIRHY);
+                               MONS_RUST_DEVIL, MONS_HELLWING);
             break;
         case 3:
-            mt = random_choose(MONS_EXECUTIONER, MONS_BALRUG, MONS_REAPER,
-                               MONS_CACODEMON, MONS_LOROCYPROCA);
+            mt = random_choose(MONS_SOUL_EATER, MONS_SMOKE_DEMON,
+                               MONS_SIXFIRHY, MONS_SUN_DEMON);
+            break;
+        case 4:
+            mt = random_choose(MONS_BALRUG, MONS_REAPER,
+                               MONS_LOROCYPROCA, MONS_CACODEMON,
+                               MONS_HELL_BEAST);
+            break;
+        case 5:
+            mt = random_choose(MONS_EXECUTIONER, MONS_HELL_SENTINEL,
+                               MONS_BRIMSTONE_FIEND);
             break;
         default:
             die("Invalid demonic guardian level: %d", mutlevel);
@@ -2760,6 +2758,8 @@ void check_demonic_guardian()
 
         // no more guardians for mutlevel+1 to mutlevel+20 turns
         you.duration[DUR_DEMONIC_GUARDIAN] = 10*(mutlevel + random2(20));
+
+        mpr("A demonic guardian appears!");
     }
 }
 
