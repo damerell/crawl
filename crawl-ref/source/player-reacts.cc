@@ -1391,9 +1391,6 @@ void player_reacts()
     mprf(MSGCH_DIAGNOSTICS, "stealth: %d", stealth);
 #endif
 
-    if (you.has_mutation(MUT_DEMONIC_GUARDIAN))
-        check_demonic_guardian();
-
     _check_equipment_conducts();
 
     if (you.unrand_reacts.any())
