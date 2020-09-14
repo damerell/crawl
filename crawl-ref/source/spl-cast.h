@@ -135,3 +135,5 @@ bool spell_removed(spell_type spell);
 bool apply_miscast(spell_type spell, int fail, bool chatty = false);
 
 int failure_check(spell_type spell, bool perma);
+
+void do_demonic_magic(int pow, int rank);
