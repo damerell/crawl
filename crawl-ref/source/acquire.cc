@@ -1369,15 +1369,7 @@ int acquirement_create_item(object_class_type class_wanted,
         if (class_wanted == OBJ_WANDS)
             acq_item.plus = max(static_cast<int>(acq_item.plus), 3 + random2(3));
         else if (class_wanted == OBJ_GOLD)
-        {
-            // New gold acquirement formula from dpeg.
-            // Min=220, Max=5520, Mean=1218, Std=911
-            acq_item.quantity = 10 * (20
-                                    + roll_dice(1, 20)
-                                    + (roll_dice(1, 8)
-                                       * roll_dice(1, 8)
-                                       * roll_dice(1, 8)));
-        }
+            acq_item.quantity = random_range(200, 1400, 2);
         else if (class_wanted == OBJ_MISSILES && !divine)
             acq_item.quantity *= 5;
         else if (quant > 1)
