@@ -200,6 +200,11 @@ unseen Call of Chaos cast
 Wind Blast cast
 
 @The_monster@ conjures a fierce blast of wind!
+%%%%
+Throw Klown Pie cast
+
+@The_monster@ pies you viciously!
+%%%%
 #################################################
 # These have special hard-coded messaging.
 #################################################
