@@ -347,7 +347,7 @@ static const ability_def Ability_List[] =
       0, 0, 600, 0, {fail_basis::evo, 50, 2}, abflag::none },
 
     { ABIL_EVOKE_TURN_INVISIBLE, "Evoke Invisibility",
-      2, 0, 250, 0, {fail_basis::evo, 60, 2}, abflag::none },
+        2, 0, 250, 0, {fail_basis::evo, 60, 2}, abflag::skill_drain },
 #if TAG_MAJOR_VERSION == 34
     { ABIL_EVOKE_TURN_VISIBLE, "Turn Visible",
       0, 0, 0, 0, {}, abflag::starve_ok },
@@ -911,7 +911,12 @@ static const string _detailed_cost_description(ability_type ability)
         ret << "\nYou can use it even if confused.";
 
     if (abil.flags & abflag::skill_drain)
-        ret << "\nIt will temporarily drain your skills when used.";
+    {
+        ret << "\nThis ability will temporarily drain your skills when used";
+        if (ability == ABIL_EVOKE_TURN_INVISIBLE)
+            ret << ", even unsuccessfully";
+        ret << ".";
+    }
 
     if (abil.flags & abflag::perma)
         ret << "\nYou must be able to incant; not silenced, drowning, berserk, or confused.";
@@ -2070,6 +2075,7 @@ static spret_type _do_ability(const ability_def& abil, bool fail)
     case ABIL_EVOKE_TURN_INVISIBLE:     // cloaks, randarts
         if (!invis_allowed())
             return SPRET_ABORT;
+        drain_player(40, false, true); // yes, before the fail check!
         fail_check();
         surge_power(you.spec_evoke());
         potionlike_effect(POT_INVISIBILITY,
