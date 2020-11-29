@@ -23,6 +23,7 @@ Vanilla changes messed around with
   brand on javelins, and steel is kept not silver.
 * The 0.25 acquirement rework is pulled forward; however, you can still be
   offered evocables. Acquirement times out after 500 turns if not used.
+* The 0.26 feature that evocable invisibility drains you is pulled forward.
 * The Brooch of Shielding is returned to its old AC/EV/warding combo, and
   Robustness and Phasing are perhaps a little more interesting than just
   being extra good rings of evasion / protection.
