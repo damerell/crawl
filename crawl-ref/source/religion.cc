@@ -1265,11 +1265,8 @@ static int _pakellas_high_misc()
 static bool _give_pakellas_gift()
 {
     // Break early if giving a gift now means it would be lost.
-    if (!(feat_has_solid_floor(grd(you.pos()))
-        || feat_is_watery(grd(you.pos())) && species_likes_water(you.species)))
-    {
+    if (feat_eliminates_items(env.grid(you.pos())))
         return false;
-    }
 
     bool success = false;
     object_class_type basetype = OBJ_UNASSIGNED;
@@ -1352,11 +1349,8 @@ static bool _give_pakellas_gift()
 static bool _give_trog_oka_gift(bool forced)
 {
     // Break early if giving a gift now means it would be lost.
-    if (!(feat_has_solid_floor(grd(you.pos()))
-        || feat_is_watery(grd(you.pos())) && species_likes_water(you.species)))
-    {
+    if (feat_eliminates_items(env.grid(you.pos())))
         return false;
-    }
 
     // Should gift catnip instead.
     if (you.species == SP_FELID)
@@ -1481,7 +1475,7 @@ static bool _gift_sif_kiku_gift(bool forced)
     bool success = false;
     book_type gift = NUM_BOOKS;
     // Break early if giving a gift now means it would be lost.
-    if (!feat_has_solid_floor(grd(you.pos())))
+    if (feat_eliminates_items(env.grid(you.pos())))
         return false;
 
     // Kikubaaqudgha gives the lesser Necromancy books in a quick
