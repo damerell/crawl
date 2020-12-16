@@ -130,6 +130,16 @@ LUAFN(l_spells_hunger)
     spell_type spell = spell_by_name(luaL_checkstring(ls, 1), false);
     PLUARET(number, hunger_bars(spell_hunger(spell)));
 }
+/*** The current spellpower (as an integer percentage 0-100).
+ * @tparam string name
+ * @treturn int
+ * @function power_perc
+ */
+LUAFN(l_spells_power_perc)
+{
+    spell_type spell = spell_by_name(luaL_checkstring(ls, 1), false);
+    PLUARET(number, spell_power_percent(spell));
+}
 
 /*** The current spellpower (in bars).
  * @tparam string name
