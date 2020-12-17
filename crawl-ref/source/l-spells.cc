@@ -278,6 +278,7 @@ static const struct luaL_reg spells_clib[] =
     { "hunger"        , l_spells_hunger },
     { "power"         , l_spells_power },
     { "max_power"     , l_spells_max_power },
+    { "power_perc"    , l_spells_power_perc },
     { "dir_or_target" , l_spells_dir_or_target },
     { "target"        , l_spells_target },
     { "dir"           , l_spells_dir },
