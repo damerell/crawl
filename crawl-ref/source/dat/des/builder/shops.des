@@ -462,7 +462,7 @@ MARKER: s = lua:fog_machine { cloud_type = "flame", \
 KFEAT: s = general shop type:Demolitions suffix:Depot ; \
    book of conjurations | book of power | book of annihilations | \
    randbook disc:conjuration | book of the tempests | book of clouds | \
-   wand of iceblast | wand of flame | wand of disintegration | \
+   wand of iceblast | wand of flame | wand of mindburst | \
    wand of clouds | wand of scattershot | staff of conjuration | \
    wand of acid |  fan of gales | lightning rod | lamp of fire | \
    phial of floods | stone of tremors | scroll of immolation | book of flames | \

@@ -663,7 +663,7 @@ static const char* _wand_type_name(int wandtype)
     case WAND_CHARMING:     return "charm monster";
     case WAND_ACID:            return "acid";
     case WAND_RANDOM_EFFECTS:  return "random effects";
-    case WAND_DISINTEGRATION:  return "disintegration";
+    case WAND_MINDBURST:       return "mindburst";
     case WAND_CLOUDS:          return "clouds";
     case WAND_SCATTERSHOT:     return "scattershot";
     default:                   return item_type_removed(OBJ_WANDS, wandtype)

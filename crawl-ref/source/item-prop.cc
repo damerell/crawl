@@ -1640,11 +1640,11 @@ bool is_offensive_wand(const item_def& item)
         return false;
 
     case WAND_CHARMING:
+    case WAND_MINDBURST:
     case WAND_FLAME:
     case WAND_PARALYSIS:
     case WAND_POLYMORPH:
     case WAND_ACID:
-    case WAND_DISINTEGRATION:
         return true;
     }
     return false;
