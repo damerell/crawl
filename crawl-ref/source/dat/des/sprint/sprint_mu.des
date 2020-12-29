@@ -520,7 +520,7 @@ KFEAT: q = deep_water
 KMONS: r = hydra simulacrum / fire dragon simulacrum / polar bear simulacrum /\
  wolf simulacrum / black mamba simulacrum
 KITEM: r = any, any, any, any, any, superb_item / w:1 wand of acid /\
- w:1 wand of disintegration
+ w:1 wand of mindburst
 KITEM: % = fruit q:6
 KFEAT: _ = altar_fedhas
 KMONS: s = patrolling Urug
@@ -1190,7 +1190,7 @@ KMONS: u = Mennas
 KMONS: y = generate_awake roxanne
 KMONS: z = oklob plant
 KFEAT: ! = gadget shop / armour shop / distillery shop / food shop
-KITEM: $ = any food / wand of disintegration w:2 / potion of curing / star_item
+KITEM: $ = any food / wand of mindburst w:2 / potion of curing / star_item
 KMONS: C = patrolling ice devil
 KMONS: D = patrolling hell beast
 KMONS: E = patrolling sun demon

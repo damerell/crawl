@@ -1253,11 +1253,6 @@ wand of charm monster
 A magical device which causes a creature to become fiercely, but briefly,
 loyal to the user.
 %%%%
-wand of disintegration
-
-A magical device which disrupts the physical structure of a target creature,
-dealing heavy damage and bypassing armour.
-%%%%
 wand of flame
 
 A magical device which throws little puffs of flame.
@@ -1266,6 +1261,13 @@ wand of iceblast
 
 A magical device which throws exploding shards of ice, partially harming even
 creatures resistant to cold.
+%%%%
+wand of mindburst
+
+A magical device which launches a psychic attack on a target creature. If it
+overcomes their willpower, it 'blows their mind' in a violently literal fashion,
+dealing damage that bypasses their armour entirely. It is useless against
+mindless creatures.
 %%%%
 wand of paralysis
 
