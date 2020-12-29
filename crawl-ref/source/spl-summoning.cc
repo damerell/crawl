@@ -1101,17 +1101,6 @@ static bool _summon_common_demon(int pow, god_type god, int spell, bool quiet)
                                  random2(pow) > 3, false, quiet);
 }
 
-static bool _summon_greater_demon(int pow, god_type god, int spell, bool quiet)
-{
-    monster_type mon = summon_any_demon(RANDOM_DEMON_GREATER);
-
-    const bool charmed = (random2(pow) > 5);
-    const bool friendly = (charmed && mons_demon_tier(mon) == 2);
-
-    return _summon_demon_wrapper(pow, god, spell, mon,
-                                 4, friendly, charmed, quiet);
-}
-
 bool summon_demon_type(monster_type mon, int pow, god_type god,
                        int spell, bool friendly)
 {
@@ -1130,20 +1119,6 @@ spret cast_summon_demon(int pow, god_type god, bool fail)
     mpr("You open a gate to Pandemonium!");
 
     if (!_summon_common_demon(pow, god, SPELL_SUMMON_DEMON, false))
-        canned_msg(MSG_NOTHING_HAPPENS);
-
-    return spret::success;
-}
-
-spret cast_summon_greater_demon(int pow, god_type god, bool fail)
-{
-    if (otr_stop_summoning_prompt())
-        return spret::abort;
-
-    fail_check();
-    mpr("You open a gate to Pandemonium!");
-
-    if (!_summon_greater_demon(pow, god, SPELL_SUMMON_GREATER_DEMON, false))
         canned_msg(MSG_NOTHING_HAPPENS);
 
     return spret::success;
@@ -3322,7 +3297,6 @@ static const map<spell_type, summon_cap> summonsdata =
     // Demons
     { SPELL_CALL_IMP,                   { 3, 3 } },
     { SPELL_SUMMON_DEMON,               { 3, 2 } },
-    { SPELL_SUMMON_GREATER_DEMON,       { 3, 2 } },
     // General monsters
     { SPELL_MONSTROUS_MENAGERIE,        { 3, 2 } },
     { SPELL_SUMMON_HORRIBLE_THINGS,     { 8, 8 } },
@@ -3360,6 +3334,7 @@ static const map<spell_type, summon_cap> summonsdata =
     { SPELL_SUMMON_EXECUTIONERS,        { 3, 1 } },
     { SPELL_AWAKEN_EARTH,               { 9, 2 } },
     { SPELL_GREATER_SERVANT_MAKHLEB,    { 1, 2 } },
+    { SPELL_SUMMON_GREATER_DEMON,       { 3, 2 } },
 };
 
 bool summons_are_capped(spell_type spell)

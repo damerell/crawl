@@ -1779,9 +1779,6 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_SUMMON_DEMON:
         return cast_summon_demon(powc, god, fail);
 
-    case SPELL_SUMMON_GREATER_DEMON:
-        return cast_summon_greater_demon(powc, god, fail);
-
     case SPELL_SHADOW_CREATURES:
         return cast_shadow_creatures(spell, god, level_id::current(), fail);
 
