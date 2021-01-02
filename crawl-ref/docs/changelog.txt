@@ -3,6 +3,8 @@ Stoat Soup 0.23
 
 * Piety stars go white at 199 piety to encourage you to use it up; "max
   piety" is displayed in %/@ displays.
+* Beastly Appendage is now a permabuff. The appendage pops out on
+  making a melee attack; it morphs occasionally on subsequent attacks.
 
 Vanilla changes messed around with
 ----------------------------------
@@ -20,7 +22,7 @@ Vanilla changes messed around with
   always return (it's skill-based as before), penetration is a separate
   brand on javelins, and steel is kept not silver.
 * The 0.25 acquirement rework is pulled forward; however, you can still be
-  offered evokables. Acquirement times out after 500 turns if not used.
+  offered evocables. Acquirement times out after 500 turns if not used.
 * The Brooch of Shielding is returned to its old AC/EV/warding combo, and
   Robustness and Phasing are perhaps a little more interesting than just
   being extra good rings of evasion / protection.

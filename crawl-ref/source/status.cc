@@ -971,6 +971,42 @@ bool fill_status_info(int status, status_info& inf)
         }
         break;
 
+    case STATUS_APPENDAGE:
+    {
+        if (you.permabuff[PERMA_APPENDAGE] && 
+            !you.duration[DUR_APPENDAGE]) {
+            inf.light_text = "App";
+            inf.short_text = "beastly appendage";
+            if (you.permabuff_working(PERMA_APPENDAGE)) {
+                if (you.form == transformation::appendage) {
+                    if (you.attribute[ATTR_APPENDAGE] == 
+                        MUT_RESIDUAL_APPENDAGE) {
+                        inf.light_colour = GREEN;
+                        inf.long_text = "The magic of Beastly Appendage has become too weak.";
+                    } else {
+                        inf.light_colour = LIGHTGREEN;
+                        const Form * const form = get_form();
+                        inf.long_text = form->get_description();
+                    }
+                } else {
+                    inf.light_colour = LIGHTBLUE;
+                    inf.long_text = "You will grow a monstrous appendage in melee.";                   
+                }
+            } else {
+                inf.light_colour = DARKGREY;
+                inf.short_text = "no beastly appendage";
+                inf.long_text = "You would grow a beastly appendage, but " + 
+                    you.permabuff_whynot(PERMA_APPENDAGE) + ".";
+            }
+        }
+        break;
+    }
+
+    case DUR_APPENDAGE:
+        if (!you.permabuff[PERMA_APPENDAGE]) inf.light_colour = DARKGREY;
+        inf.long_text = "If you recast Beastly Appendage, it will not take effect immediately.";
+        break;
+
     case STATUS_ORB:
     {
         if (player_has_orb())
@@ -1302,8 +1338,11 @@ static void _describe_sickness(status_info& inf)
  */
 static void _describe_transform(status_info& inf)
 {
-    if (you.form == transformation::none)
+    // appendage handled by STATUS_APPENDAGE now
+    if ((you.form == transformation::none) or 
+        (you.form == transformation::appendage)) {
         return;
+    }
 
     const Form * const form = get_form();
     inf.light_text = form->short_name;

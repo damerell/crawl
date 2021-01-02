@@ -2764,7 +2764,7 @@ static const struct spell_desc spelldata[] =
     -1, -1,
     1, 0,
     TILEG_BEASTLY_APPENDAGE,
-    PERMA_NO_PERMA,
+    PERMA_APPENDAGE,
 },
 
 #if TAG_MAJOR_VERSION == 34

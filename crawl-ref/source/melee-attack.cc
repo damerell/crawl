@@ -263,6 +263,9 @@ bool melee_attack::handle_phase_attempted()
     }
 
     attack_occurred = true;
+    if (attacker->is_player() && you.permabuff_working(PERMA_APPENDAGE)) {
+        cycle_beastly_appendage();
+    }
 
     // Check for player practicing dodging
     if (defender && defender->is_player())

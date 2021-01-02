@@ -1640,6 +1640,7 @@ bool is_permabuff(spell_type spell) {
 // It is safe to call this more than once in the same turn for the same PB
 void permabuff_track(int pb) {
     spell_type spell = permabuff_spell[pb];
+    ASSERT (is_permabuff(spell));
     int dur = BASELINE_DELAY * nominal_duration(spell);
     // The value of '8' is pretty arbitrary
     you.perma_benefit[pb] = max(you.perma_benefit[pb], div_rand_round(dur, 8));
@@ -1714,6 +1715,9 @@ int nominal_duration(spell_type spell) {
     case SPELL_BATTLESPHERE:
         return min(50, 7 + calc_spell_power(spell, true));
         //abj.duration = min(abj.duration + (7 + roll_dice(2, pow)) * 10, 500);
+    case SPELL_BEASTLY_APPENDAGE:
+        return min (60, 10 + calc_spell_power(spell, true));
+        // FormDuration(10, PS_DOUBLE, 60) base / scaling / max
     default:
         return 0;
     }

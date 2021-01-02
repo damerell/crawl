@@ -14,9 +14,10 @@ enum permabuff_type {
 	PERMA_DCHAN,
 	PERMA_ROF,
 	PERMA_BATTLESPHERE,
+	PERMA_APPENDAGE,
 	PERMA_FIRST_PERMA = PERMA_INFUSION,
 	// Don't FORGET TO CHANGE THIS, David
-	PERMA_LAST_PERMA = PERMA_BATTLESPHERE,
+	PERMA_LAST_PERMA = PERMA_APPENDAGE,
     };
 
 static const duration_type permabuff_durs[] = {
@@ -31,6 +32,7 @@ static const duration_type permabuff_durs[] = {
     DUR_DEATH_CHANNEL,
     DUR_FIRE_SHIELD, // bah
     DUR_BATTLESPHERE,
+    DUR_APPENDAGE, // new
 };
 
 static const spell_type permabuff_spell[] = {
@@ -45,6 +47,7 @@ static const spell_type permabuff_spell[] = {
     SPELL_DEATH_CHANNEL,
     SPELL_RING_OF_FLAMES,
     SPELL_BATTLESPHERE,
+    SPELL_BEASTLY_APPENDAGE,
 };
 
 // These PBs charge you MP regeneration based on their nominal duration.
@@ -60,6 +63,7 @@ static const permabuff_type pb_ordinary_mpregen[] = {
     PERMA_EXCRU,
     PERMA_DCHAN,
     PERMA_ROF,
+    PERMA_APPENDAGE,
 };
 static const int size_mpregen_pb = ARRAYSZ(pb_ordinary_mpregen);
 
@@ -82,4 +86,5 @@ static const int pb_dur_fudge[] = {
     1, // rof (short duration, cast before unloading)
     2, // battlesphere (but doesn't do anything because miscast frequency is
        // done per-charge)
+    1, // beastly appendage (probably cast just before melee)
 };

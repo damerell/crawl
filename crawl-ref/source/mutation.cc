@@ -76,6 +76,7 @@ struct demon_mutation_info
 
 enum class mutflag
 {
+    none    = 0,      // none of the below
     good    = 1 << 0, // used by benemut etc
     bad     = 1 << 1, // used by malmut etc
     jiyva   = 1 << 2, // jiyva-only muts
@@ -165,7 +166,7 @@ equipment_type beastly_slot(int mut)
     {
     case MUT_HORNS:
     case MUT_ANTENNAE:
-    // Not putting MUT_BEAK here because it doesn't conflict with the other two.
+    case MUT_BEAK: // allowed in slot_conflict
         return EQ_HELMET;
     case MUT_CLAWS:
         return EQ_GLOVES;

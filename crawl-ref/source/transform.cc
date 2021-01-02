@@ -33,6 +33,7 @@
 #include "prompt.h"
 #include "religion.h"
 #include "spl-cast.h"
+#include "spl-selfench.h"
 #include "state.h"
 #include "stringutil.h"
 #include "terrain.h"
@@ -785,6 +786,11 @@ public:
             return make_stringf("One of your tentacles %s a temporary spike.",
                                  past_tense ? "had" : "has");
         }
+        if (you.attribute[ATTR_APPENDAGE] == MUT_RESIDUAL_APPENDAGE)
+        {
+            return make_stringf("You %s of monstrous appearance.",
+                                 past_tense ? "were" : "are");
+        }
 
         return make_stringf("You %s grown temporary %s.",
                             past_tense ? "had" : "have",
@@ -797,18 +803,30 @@ public:
      */
     string transform_message(transformation previous_trans) const override
     {
+        string formdesc;
         // ATTR_APPENDAGE must be set earlier!
-        switch (you.attribute[ATTR_APPENDAGE])
-        {
-            case MUT_HORNS:
-                return "You grow a pair of large bovine horns.";
-            case MUT_TENTACLE_SPIKE:
-                return "One of your tentacles grows a vicious spike.";
-            case MUT_TALONS:
-                return "Your feet morph into talons.";
-            default:
-                 die("Unknown beastly appendage.");
+        switch (you.attribute[ATTR_APPENDAGE]) {
+        case MUT_HORNS:
+            formdesc = "You grow a pair of large bovine horns"; break;
+        case MUT_TENTACLE_SPIKE:
+            formdesc = "One of your tentacles grows a vicious spike"; break;
+        case MUT_TALONS:
+            formdesc = "Your feet morph into talons"; break;
+        case MUT_HOOVES:
+            formdesc = "Your feet thicken into hooves"; break;
+        case MUT_BEAK:
+            formdesc = "A sharp beak grows from your head"; break;
+        case MUT_RESIDUAL_APPENDAGE:
+            formdesc = "Your body twists, but the magic is too weak now to do more"; break;
+        default:
+            die("Unknown beastly appendage.");
         }
+        if (previous_trans == transformation::appendage) {
+            formdesc += "; your previous beastly form shrinks away.";
+        } else {
+            formdesc += ".";
+        }
+        return formdesc;
     }
 
     /**
@@ -1375,15 +1393,24 @@ bool feat_dangerous_for_form(transformation which_trans,
     return false;
 }
 
-static mutation_type appendages[] =
+struct appendage_selection { 
+    mutation_type mutation;
+    short weight;
+};
+static int nice_appendage_weights = 8;
+static struct appendage_selection appendages[] =
 {
-    MUT_HORNS,
-    MUT_TENTACLE_SPIKE,
-    MUT_TALONS,
+    { MUT_HORNS, 2 },
+    { MUT_TENTACLE_SPIKE, 4 },
+    { MUT_TALONS, 1 },
+    { MUT_HOOVES, 1 },
+    { MUT_BEAK, 2 },
+//    { MUT_RESIDUAL_APPENDAGE, 1 }
 };
 
-static bool _slot_conflict(equipment_type eq)
+static bool _slot_conflict(equipment_type eq, bool eqonly = false)
 {
+    if (eq == EQ_NONE) return false;
     // Choose uncovered slots only. Melding could make people re-cast
     // until they get something that doesn't conflict with their randart
     // of überness.
@@ -1398,6 +1425,8 @@ static bool _slot_conflict(equipment_type eq)
         }
     }
 
+    if (eqonly) return false;
+
     for (int mut = 0; mut < NUM_MUTATIONS; mut++)
         if (you.has_mutation(static_cast<mutation_type>(mut)) && eq == beastly_slot(mut))
             return true;
@@ -1408,17 +1437,36 @@ static bool _slot_conflict(equipment_type eq)
 static mutation_type _beastly_appendage()
 {
     mutation_type chosen = NUM_MUTATIONS;
-    int count = 0;
-
-    for (mutation_type app : appendages)
+    int tried = 0; bool foundany = false;
+    int durations = (you.elapsed_time - you.props[APPENDAGE_TIME].get_int()) /
+        (BASELINE_DELAY * nominal_duration(SPELL_BEASTLY_APPENDAGE));
+    int overflow = random2avg(durations + 1, 2);
+    vector <mutation_type> possible_appendages;
+    for (appendage_selection app : appendages)
     {
-        if (_slot_conflict(beastly_slot(app)))
-            continue;
-        if (physiology_mutation_conflict(app))
-            continue;
-
-        if (one_chance_in(++count))
-            chosen = app;
+        for (int i=app.weight; i > 0; i--) {
+            tried++;
+            if (_slot_conflict(beastly_slot(app.mutation), 
+                               (app.mutation == MUT_BEAK))) continue;
+            if (physiology_mutation_conflict(app.mutation)) continue;
+            foundany = true;
+            if (tried <= overflow) continue;
+            if (!((tried >= nice_appendage_weights + overflow) && foundany)) {
+                possible_appendages.push_back(app.mutation);
+            }
+        }
+    }
+    int moretries = nice_appendage_weights + overflow - tried;
+    if (moretries > 0) {
+        for (int $i = 0; $i <= moretries; $i++) {
+            possible_appendages.push_back(MUT_RESIDUAL_APPENDAGE);
+        }
+    }
+    if (foundany) {
+        int count = 0;
+        for (mutation_type app : possible_appendages) {
+            if (one_chance_in(++count)) chosen = app;
+        }
     }
     return chosen;
 }
@@ -1482,8 +1530,16 @@ static int _beastly_appendage_level(int appendage)
 {
     switch (appendage)
     {
+    case MUT_HOOVES:
     case MUT_HORNS: return 2;
-    default:        return 3;
+    case MUT_BEAK: 
+    case MUT_RESIDUAL_APPENDAGE: return 1;
+    case MUT_TENTACLE_SPIKE:
+    case MUT_TALONS: return 3;
+
+    default:
+      mprf(MSGCH_ERROR, "BUG: no default beastly appendage level now.");
+      return 1;
     }
 }
 
@@ -1588,6 +1644,8 @@ bool transform(int pow, transformation which_trans, bool involuntary,
     const bool was_flying = you.airborne();
     bool success = true;
     string msg;
+    bool unchangedapp = false; bool appfromnothing = false;
+    int oldapp = you.attribute[ATTR_APPENDAGE];
 
     // Zin's protection.
     if (!just_check && have_passive(passive_t::resist_polymorph)
@@ -1620,8 +1678,8 @@ bool transform(int pow, transformation which_trans, bool involuntary,
     }
 
     // This must occur before the untransform() and the undead_state() check.
-    if (previous_trans == which_trans)
-    {
+    if ((previous_trans == which_trans) && 
+        (which_trans != transformation::appendage)) {
         if (just_check)
             return true;
 
@@ -1632,7 +1690,7 @@ bool transform(int pow, transformation which_trans, bool involuntary,
             you.redraw_armour_class = true;
             // ^ could check more carefully for the exact cases, but I'm
             // worried about making the code too fragile
-
+            
             if (which_trans == transformation::hydra)
             {
                 const int heads = you.heads();
@@ -1665,10 +1723,16 @@ bool transform(int pow, transformation which_trans, bool involuntary,
     {
         msg = "You cannot become a lich while in Death's Door.";
         success = false;
+    } else if (which_trans == transformation::appendage) {
+        if (you.attribute[ATTR_APPENDAGE] == MUT_RESIDUAL_APPENDAGE) {
+            appfromnothing = true;
+        }
     }
-
-    if (!just_check && previous_trans != transformation::none)
-        untransform(true);
+    if (!just_check && previous_trans != transformation::none) {
+        untransform(true, 
+                    ((previous_trans == which_trans) &&
+                     (which_trans == transformation::appendage)));
+    }
 
     set<equipment_type> rem_stuff = _init_equipment_removal(which_trans);
 
@@ -1689,14 +1753,18 @@ bool transform(int pow, transformation which_trans, bool involuntary,
         const mutation_type app = _beastly_appendage();
         if (app == NUM_MUTATIONS)
         {
-            msg = "You have no appropriate body parts free.";
+            msg = "You dispel Beastly Appendage; you have no appropriate body parts free.";
+            you.pb_off(PERMA_APPENDAGE, true, true);
             success = false; // XXX: VERY dubious, since an untransform occurred
         }
 
         if (!just_check)
         {
             you.attribute[ATTR_APPENDAGE] = app; // need to set it here so
-                                                 // the message correlates
+                                                     // the message correlates
+            if ((oldapp == app) && (previous_trans == which_trans)) {
+                unchangedapp = true;
+            }
         }
     }
 
@@ -1726,7 +1794,16 @@ bool transform(int pow, transformation which_trans, bool involuntary,
         set_hydra_form_heads(div_rand_round(pow, 10));
 
     // Give the transformation message.
-    mpr(get_form(which_trans)->transform_message(previous_trans));
+    if (!unchangedapp) {
+        if ((previous_trans == transformation::appendage)  &&
+            appfromnothing) {
+            // XXX
+            mpr(get_form(which_trans)->
+                transform_message(transformation::none));
+        } else {
+            mpr(get_form(which_trans)->transform_message(previous_trans));
+        }
+    }
 
     // Update your status.
     // Order matters here, take stuff off (and handle attendant HP and stat
@@ -1818,7 +1895,7 @@ bool transform(int pow, transformation which_trans, bool involuntary,
         {
             int app = you.attribute[ATTR_APPENDAGE];
             ASSERT(app != NUM_MUTATIONS);
-            ASSERT(beastly_slot(app) != EQ_NONE);
+//            ASSERT(beastly_slot(app) != EQ_NONE);
             you.mutation[app] = _beastly_appendage_level(app);
         }
         break;
@@ -1899,7 +1976,7 @@ bool transform(int pow, transformation which_trans, bool involuntary,
  * @param skip_move      If true, skip any move that was in progress before
  *                       the transformation ended.
  */
-void untransform(bool skip_move)
+void untransform(bool skip_move, bool silent)
 {
     const bool was_flying = you.airborne();
 
@@ -1926,7 +2003,7 @@ void untransform(bool skip_move)
     if (old_form == transformation::appendage)
     {
         mutation_type app = static_cast<mutation_type>(you.attribute[ATTR_APPENDAGE]);
-        ASSERT(beastly_slot(app) != EQ_NONE);
+//        ASSERT(beastly_slot(app) != EQ_NONE);
         const int levels = you.get_base_mutation_level(app);
         // Preserve extra mutation levels acquired after transforming.
         const int beast_levels = _beastly_appendage_level(app);
@@ -1937,13 +2014,18 @@ void untransform(bool skip_move)
 
         // The mutation might have been removed already by a conflicting
         // demonspawn innate mutation; no message then.
-        if (levels)
+        if (levels && !silent)
         {
             const char * const verb = you.has_mutation(app) ? "shrink"
-                                                            : "disappear";
-            mprf(MSGCH_DURATION, "Your %s %s%s.",
-                 mutation_name(app), verb,
-                 app == MUT_TENTACLE_SPIKE ? "s" : "");
+                                   : "disappear";
+            if (app != MUT_RESIDUAL_APPENDAGE) {
+                mprf(MSGCH_DURATION, "Your %s %s%s.",
+                     mutation_name(app), verb,
+                     ((app == MUT_TENTACLE_SPIKE) || (app == MUT_BEAK))  ?
+                     "s" : "");
+            } else {
+                mprf(MSGCH_DURATION, "Your body seems less monstrous.");
+            }
         }
     }
 
@@ -1951,7 +2033,7 @@ void untransform(bool skip_move)
     calc_mp();
 
     const string message = get_form(old_form)->get_untransform_message();
-    if (!message.empty())
+    if (!message.empty() && !silent)
         mprf(MSGCH_DURATION, "%s", message.c_str());
 
     const int str_mod = get_form(old_form)->str_mod;
@@ -2092,4 +2174,36 @@ void merfolk_stop_swimming()
 #ifdef USE_TILE
     init_player_doll();
 #endif
+}
+
+void cycle_beastly_appendage() {
+    bool already = (you.form == transformation::appendage);
+    if (already) {
+        if (you.duration[DUR_TRANSFORMATION] < 
+            _transform_duration(transformation::appendage, 15)) {
+            you.increase_duration(DUR_TRANSFORMATION, 10);
+        }
+        // This gives a grace period after the forced fail_check when first
+        // manifesting the appendage during which it is less likely to take
+        // another fail check.
+        int elapsed = (you.elapsed_time - 
+                       you.props[APPENDAGE_TIME].get_int());
+        if (!x_chance_in_y
+            (elapsed, 
+             BASELINE_DELAY * nominal_duration(SPELL_BEASTLY_APPENDAGE))) {
+            return;
+        }
+    } else {
+        you.props[APPENDAGE_TIME] = you.elapsed_time;
+    }
+    if (!permabuff_fail_check
+        (PERMA_APPENDAGE,
+         (already ? "You lose control of Beastly Appendage." :
+          "Your body twists horribly, then returns to normal."),
+         !already)) {
+        if (one_chance_in(27) || !already) {
+            // fixed dur so low spellpower not better for appendage roulette
+            transform(15, transformation::appendage,false,false); 
+        }
+    }
 }

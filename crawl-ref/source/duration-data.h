@@ -497,6 +497,19 @@ static const duration_def duration_data[] =
 				"channelling the dead" :
 				"able to channel the dead"));
 		      }}}}}},
+    { DUR_APPENDAGE,
+      YELLOW, "-App",
+      "beastly appendage suppressed", "",
+      "You cannot grow a monstrous appendage.", D_EXPIRES,
+      {{ "", []() {
+		  if (_recheck_perma(PERMA_APPENDAGE)) {
+		      if (you.permabuff_could(PERMA_APPENDAGE)) {
+			  mprf(MSGCH_DURATION, 
+			       "%s once again grow a monstrous appendage in melee.",
+			       (you.permabuff_working(PERMA_APPENDAGE) ? 
+				"You will" :
+				"You can"));
+		      }}}}}},
     { DUR_FLAYED,
       RED, "Flay",
       "flayed", "",

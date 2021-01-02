@@ -98,10 +98,12 @@ Beastly Appendage spell
                "tentacles, increasing the damage of their extra tentacle " ..
                "attacks."
     else
-        return "Causes monstrous horns or talons to grow from the caster's " ..
-               "body, granting them a chance of making an extra attack in " ..
+        return "Causes the caster to grow monstrous bodily parts, granting " ..
+               "them a chance of making an extra attack in " ..
                "melee. It is not powerful enough to meld armour or enhance " ..
-               "appendages that are already nonhuman."
+               "appendages that are already nonhuman. If the caster remains" ..
+	       "in melee, their body will continue to morph, but the magic" ..
+	       "will weaken until eventually it does little."
     end
 }}
 %%%%

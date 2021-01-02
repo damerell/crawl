@@ -5115,6 +5115,10 @@ permabuff_state player::permabuff_notworking(permabuff_type pb) {
     if ((pb == PERMA_REGEN) && (you.form == transformation::lich)) {
         return PB_REGEN_LICH;
     }
+    if ((pb == PERMA_APPENDAGE) && (you.form != transformation::none) &&
+        (you.form != transformation::appendage)) {
+        return PB_MULTI_TRANSFORM;
+    }
     if ((pb == PERMA_REGEN) && (you.species == SP_VAMPIRE) &&
         (you.hunger_state <= HS_STARVING)) {
         return PB_STARVING;
@@ -5167,6 +5171,8 @@ string player::permabuff_whynot(permabuff_type pb) {
         return "you cannot sing in this magical silence";
     case PB_REGEN_LICH:
         return "you have no flesh to regenerate";
+    case PB_MULTI_TRANSFORM:
+        return "you can't have a monstrous appendage in this form";
     case PB_CONFUSED:
         return "you are too confused";
     case PB_EXCRU_NOWEP:
@@ -5217,12 +5223,17 @@ void player::pb_off(permabuff_type pb, bool voluntary, bool recalcmp) {
                 you.props.erase(SHROUD_RECHARGE); 
                 you.increase_duration(DUR_SHROUD_OF_GOLUBRIA, 25, 50);
             }
+        } else if (pb == PERMA_APPENDAGE) {
+            you.increase_duration(DUR_APPENDAGE, 25, 50);
         }
     }
     permabuff[pb] = false;
     if ((pb == PERMA_EXCRU) && you.weapon() && 
         you.props.exists(ORIGINAL_BRAND_KEY)) {
         end_weapon_brand(*you.weapon(), true);
+    }
+    if ((pb == PERMA_APPENDAGE) && (form == transformation::appendage)) {
+        untransform(false);
     }
     monster* battlesphere = find_battlesphere(&you);
     if ((pb == PERMA_BATTLESPHERE) && battlesphere) {

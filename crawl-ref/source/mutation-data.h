@@ -1933,9 +1933,17 @@ static const mutation_def mut_data[] =
   {"You can fly continuously.", "", ""},
   {"", "", ""},
   {"", "", ""},
-},
+  },
 
-};
+{ MUT_RESIDUAL_APPENDAGE, 0, 1, mutflag::none, true,
+  "beastly",
+    
+  {"You appear somewhat monstrous, but have no beastly appendage.", "", ""},
+  {"Your appearance becomes monstrous.", "", ""},
+  {"Your appearance returns to normal.","",""},
+  },
+    
+    };
 
 static const mutation_category_def category_mut_data[] =
 {
