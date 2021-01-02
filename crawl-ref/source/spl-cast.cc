@@ -1829,10 +1829,11 @@ static spret_type _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_EXCRUCIATING_WOUNDS:
         return cast_excruciating_wounds(powc, fail);
 
-    // Transformations.
+        // Transformation permabuff
     case SPELL_BEASTLY_APPENDAGE:
-        return cast_transform(powc, transformation::appendage, fail);
+        return cast_appendage(powc, fail);
 
+    // Transformations.
     case SPELL_BLADE_HANDS:
         return cast_transform(powc, transformation::blade_hands, fail);
 

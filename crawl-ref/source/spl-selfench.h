@@ -13,6 +13,7 @@
 #define REGEN_RESERVE "regen_reserve"
 #define CHARMS_ALL_MPREGEN "charms_all_mpregen"
 #define REGEN_REPORTING_PERCENT "regen_reporting_percent"
+#define APPENDAGE_TIME "appendage_time"
 
 int allowed_deaths_door_hp();
 spret_type cast_deaths_door(int pow, bool fail);
@@ -36,6 +37,7 @@ spret_type cast_silence(int pow, bool fail = false);
 spret_type cast_infusion(int pow, bool fail);
 spret_type cast_song_of_slaying(int pow, bool fail);
 void check_sos_miscast();
+spret_type cast_appendage(int pow, bool fail);
 
 spret_type cast_liquefaction(int pow, bool fail);
 spret_type cast_shroud_of_golubria(int pow, bool fail);

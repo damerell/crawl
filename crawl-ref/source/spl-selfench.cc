@@ -252,6 +252,18 @@ void check_sos_miscast() {
     }
 }
 
+spret_type cast_appendage(int pow, bool fail)
+{
+    if (you.permabuff[PERMA_APPENDAGE]) {
+        mpr("You will no longer grow a monstrous appendage in melee.");
+        you.pb_off(PERMA_APPENDAGE, true); return SPRET_PERMACANCEL;
+    } else {
+        fail_check();
+        mpr("You will grow a monstrous appendage in melee.");
+        you.pb_on(PERMA_APPENDAGE); return SPRET_SUCCESS;
+    }
+}
+
 spret_type cast_silence(int pow, bool fail)
 {
     fail_check();
@@ -352,6 +364,10 @@ bool permabuff_fail_check(permabuff_type pb, const string &message,
         int fail = failure_check(spell, true);
         if (fail) {
             mprf(MSGCH_DURATION, "%s", message.c_str());
+            if ((pb == PERMA_APPENDAGE) && 
+                (you.form == transformation::appendage)) {
+                untransform(false);
+            }
             apply_miscast(spell, fail, false);
             you.increase_duration(permabuff_durs[pb],roll_dice(2,10) + fail/4);
             you.perma_miscast[pb] = true;

@@ -626,6 +626,8 @@ bool wielded_weapon_check(item_def *weapon)
     // melee weapons yet.
     if (!weapon
         && (you.skill(SK_UNARMED_COMBAT) > 0
+            // this one's a bit dubious
+            || you.permabuff_working(PERMA_APPENDAGE) 
             || !any_of(you.inv.begin(), you.inv.end(),
                        [](item_def &it)
                        { return is_melee_weapon(it) && can_wield(&it); })))

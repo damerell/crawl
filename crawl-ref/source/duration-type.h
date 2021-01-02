@@ -198,5 +198,6 @@ enum duration_type
     DUR_ACROBAT,
     DUR_RESIDUAL_HARM,
     DUR_ACQUIREMENT,
+    DUR_APPENDAGE,
     NUM_DURATIONS
 };
