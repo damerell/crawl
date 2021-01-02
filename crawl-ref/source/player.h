@@ -114,6 +114,8 @@ enum permabuff_state {
     PB_DMSL_RECHARGE,   // breaks messages from permabuff_whynot
     PB_SONG_SILENCED,
     PB_REGEN_LICH,
+    PB_MULTI_TRANSFORM,
+    PB_TOO_DEAD, // bloodless vampire
     PB_CONFUSED, // only applies to portal proj
     PB_EXCRU_NOWEP,
 };

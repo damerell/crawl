@@ -653,10 +653,21 @@ static void _decrement_durations()
             you.props.erase(EMERGENCY_FLIGHT_KEY);
         }
 
-        if (_decrement_a_duration(DUR_TRANSFORMATION, delay, nullptr, random2(3),
-                                  "Your transformation is almost over."))
-        {
-            untransform();
+        if (you.form == transformation::appendage) {
+            if ((!you.permabuff_working(PERMA_APPENDAGE)) ||
+                _decrement_a_duration(DUR_TRANSFORMATION, delay)) {
+                untransform();
+            } else {
+                if (you.hp == you.hp_max) {
+                    you.props[APPENDAGE_TIME] = you.elapsed_time;
+                }
+            }
+        } else {
+            if (_decrement_a_duration
+                (DUR_TRANSFORMATION, delay, nullptr, random2(3),
+                 "Your transformation is almost over.")) {
+                untransform();
+            }
         }
     }
 
