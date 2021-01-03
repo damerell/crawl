@@ -1383,11 +1383,9 @@ int acquirement_create_item(object_class_type class_wanted,
         else if (quant > 1)
             acq_item.quantity = quant;
 
-        // Remove curse flag from item, unless worshipping Ashenzari.
-        if (have_passive(passive_t::want_curses))
-            do_curse_item(acq_item, true);
-        else
-            do_uncurse_item(acq_item);
+        // Remove curse flag from item, even if worshipping Ashenzari
+        // since cursing is free in Stoat Soup
+        do_uncurse_item(acq_item);
 
         if (acq_item.base_type == OBJ_BOOKS)
         {
