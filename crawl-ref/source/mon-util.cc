@@ -2053,6 +2053,16 @@ mon_attack_def mons_attack_spec(const monster& m, int attk_number,
             attk.damage = max(1, you.skill_rdiv(SK_UNARMED_COMBAT, 10, 20));
     }
 
+    if (mon.type == MONS_ANIMATED_ARMOUR) {
+        const int armour_slot = mon.inv[MSLOT_ARMOUR];
+        if (armour_slot != NON_ITEM)
+        {
+            const int typ = env.item[armour_slot].sub_type;
+            const int ac = armour_prop(typ, PARM_AC);
+            attk.damage = ac + ac * ac / 2;
+        }
+    }
+
     if (attk.type == AT_RANDOM)
         attk.type = random_choose(AT_HIT, AT_GORE);
 
