@@ -156,6 +156,7 @@ enum monster_type                      // menv[].type
     MONS_DANCING_WEAPON,
 #if TAG_MAJOR_VERSION > 34
     MONS_SPECTRAL_WEAPON,
+    MONS_ANIMATED_ARMOUR,
 #endif
     MONS_HARPY,
     MONS_RAVEN,
@@ -1042,6 +1043,7 @@ enum monster_type                      // menv[].type
     MONS_CAVALIER,
     MONS_TAINTED_LEVIATHAN,     // Not in Stoat Soup, added to let later
     MONS_FOXFIRE,               // commits apply OK
+    MONS_ANIMATED_ARMOUR,
 #endif
 
     NUM_MONSTERS,               // used for polymorph
