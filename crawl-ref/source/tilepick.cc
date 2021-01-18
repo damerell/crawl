@@ -3567,6 +3567,8 @@ tileidx_t tileidx_ability(const ability_type ability)
         return TILEG_ABILITY_GOZAG_CALL_MERCHANT;
     case ABIL_GOZAG_BRIBE_BRANCH:
         return TILEG_ABILITY_GOZAG_BRIBE_BRANCH;
+    case ABIL_GOZAG_RESUPPLY_AMMO:
+        return TILEG_ABILITY_GOZAG_RESUPPLY_AMMO;
     // Qazlal
     case ABIL_QAZLAL_UPHEAVAL:
         return TILEG_ABILITY_QAZLAL_UPHEAVAL;

@@ -279,6 +279,7 @@ const vector<god_power> god_powers[NUM_GODS] =
 
     // Gozag
     { { 0, ABIL_GOZAG_POTION_PETITION, "petition Gozag for potion effects" },
+      { 0, ABIL_GOZAG_RESUPPLY_AMMO, "purchase ammunition from Gozag" },
       { 0, ABIL_GOZAG_CALL_MERCHANT, "fund merchants seeking to open stores in the dungeon" },
       { 0, ABIL_GOZAG_BRIBE_BRANCH, "bribe branches to halt enemies' attacks and recruit allies" },
     },

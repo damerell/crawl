@@ -592,6 +592,8 @@ static const ability_def Ability_List[] =
       0, 0, 0, 0, {fail_basis::invo}, abflag::gold|abflag::starve_ok },
     { ABIL_GOZAG_BRIBE_BRANCH, "Bribe Branch",
       0, 0, 0, 0, {fail_basis::invo}, abflag::gold },
+    { ABIL_GOZAG_RESUPPLY_AMMO, "Resupply Ammunition",
+      0, 0, 0, 0, {fail_basis::invo}, abflag::gold },
 
     // Qazlal
     { ABIL_QAZLAL_UPHEAVAL, "Upheaval",
@@ -739,6 +741,8 @@ int get_gold_cost(ability_type ability)
         return gozag_potion_price();
     case ABIL_GOZAG_BRIBE_BRANCH:
         return GOZAG_BRIBE_AMOUNT;
+    case ABIL_GOZAG_RESUPPLY_AMMO:
+        return GOZAG_RESUPPLY_COST;
     default:
         return 0;
     }
@@ -980,6 +984,7 @@ ability_type fixup_ability(ability_type ability)
     case ABIL_TSO_BLESS_WEAPON:
     case ABIL_KIKU_BLESS_WEAPON:
     case ABIL_LUGONU_BLESS_WEAPON:
+    case ABIL_GOZAG_RESUPPLY_AMMO:
         if (you.species == SP_FELID)
             return ABIL_NON_ABILITY;
         else
@@ -1607,6 +1612,9 @@ static bool _check_ability_possible(const ability_def& abil, bool quiet = false)
 
     case ABIL_GOZAG_BRIBE_BRANCH:
         return gozag_check_bribe_branch(quiet);
+
+    case ABIL_GOZAG_RESUPPLY_AMMO:
+        return gozag_check_resupply_ammo(quiet);
 
     case ABIL_RU_SACRIFICE_EXPERIENCE:
         if (you.experience_level <= RU_SAC_XP_LEVELS)
@@ -2878,6 +2886,11 @@ static spret_type _do_ability(const ability_def& abil, bool fail)
         fail_check();
         if (!gozag_bribe_branch())
             return SPRET_ABORT;
+        break;
+
+    case ABIL_GOZAG_RESUPPLY_AMMO:
+        fail_check();
+        if (!gozag_resupply_ammo()) return SPRET_ABORT;
         break;
 
     case ABIL_QAZLAL_UPHEAVAL:

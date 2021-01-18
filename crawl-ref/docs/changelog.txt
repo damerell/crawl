@@ -5,6 +5,7 @@ Stoat Soup 0.23
   piety" is displayed in %/@ displays.
 * Beastly Appendage is now a permabuff. The appendage pops out on
   making a melee attack; it morphs occasionally on subsequent attacks.
+* Gozag offers an "Ammunition Resupply" ability.
 
 Vanilla changes messed around with
 ----------------------------------

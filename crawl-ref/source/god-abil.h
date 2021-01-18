@@ -41,6 +41,7 @@ const char * const GOZAG_SHOP_COST_KEY       = "gozag_shop_cost_%d";
 
 #define GOZAG_GOLD_AURA_KEY "gozag_gold_aura_amount"
 #define GOZAG_POTION_PETITION_AMOUNT 400
+#define GOZAG_RESUPPLY_COST 400
 #define GOZAG_SHOP_BASE_MULTIPLIER 100
 #define GOZAG_SHOP_MOD_MULTIPLIER 25
 #define GOZAG_BRIBE_AMOUNT 3000
@@ -156,6 +157,8 @@ bool gozag_branch_bribable(branch_type branch);
 void gozag_deduct_bribe(branch_type br, int amount);
 bool gozag_check_bribe_branch(bool quiet = false);
 bool gozag_bribe_branch();
+bool gozag_check_resupply_ammo(bool quiet = false);
+bool gozag_resupply_ammo();
 
 spret_type qazlal_upheaval(coord_def target, bool quiet = false,
                            bool fail = false);

@@ -4635,6 +4635,181 @@ bool gozag_bribe_branch()
     return false;
 }
 
+bool gozag_check_resupply_ammo(bool quiet) {
+    // is there anything else to check for?
+    // Gozag will sell you ammo you don't know how to use.
+    if (you.gold < GOZAG_RESUPPLY_COST) {
+        if (!quiet)
+            mprf("You need at least %d gold to purchase ammunition.", 
+                 GOZAG_RESUPPLY_COST);
+        return false;
+    }
+    if (feat_eliminates_items(grd(you.pos()))) {
+        if (!quiet) mpr("Your consignment would fall and be lost.");
+        return false;
+    }
+    return true;
+}
+
+// *10 to avoid rounding errors
+static int _resupply_cost(const item_def &item) {
+    return ((20 + min (you.props["ammo resupplies"].get_int(), 80)) * 
+            item_value(item, true));
+}
+
+// Is all this really necessary? IDK any other way to do it...
+class AmmoMenu : public InvMenu {
+    friend class AmmoEntry;
+
+    CrawlVector &ammo_items;
+
+    void init_entries();
+    void update_help();
+    bool buy_selected();
+
+    virtual bool process_key(int keyin) override;
+
+public:
+    bool bought_something = false;
+
+    AmmoMenu(CrawlVector &aitems);
+};
+
+class AmmoEntry: public InvEntry {
+    AmmoMenu& menu;
+    
+    string get_text(bool need_cursor = false) const override {
+        need_cursor = need_cursor && show_cursor;
+        const colour_t keycol = LIGHTCYAN;
+        const int cost = _resupply_cost(*item) / 10;
+        const string keystr = colour_to_str(keycol);
+        const string itemstr =
+            colour_to_str(menu_colour(text, item_prefix(*item), tag));
+        return make_stringf(" <%s>%c%c%c%c</%s><%s>%3d gold  %s</%s>",
+                            keystr.c_str(),
+                            hotkeys[0],
+                            need_cursor ? '[' : ' ',
+                            selected() ? '+' : '-',
+                            need_cursor ? ']' : ' ',
+                            keystr.c_str(),
+                            itemstr.c_str(),
+                            cost,
+                            text.c_str(),
+                            itemstr.c_str());
+    }
+public:
+    AmmoEntry(const item_def& i, AmmoMenu& m) : InvEntry(i),menu(m) {
+        show_background = false;
+    }
+};
+
+AmmoMenu::AmmoMenu(CrawlVector &aitems)
+    : InvMenu(MF_SINGLESELECT | MF_NO_SELECT_QTY | MF_QUIET_SELECT
+              | MF_ALWAYS_SHOW_MORE | MF_ALLOW_FORMATTING),
+      ammo_items(aitems) {
+    menu_action = ACT_EXECUTE;
+    set_flags(get_flags() & ~MF_USE_TWO_COLUMNS);
+    
+    set_tag("ammuition resupply");
+    
+    init_entries();
+    
+    update_help();
+
+    set_title("What would you like to purchase?");
+      
+      }
+
+static string _hyphenated_letters(int how_many, char first)
+{
+    string s = "<w>";
+    s += first;
+    s += "</w>";
+    if (how_many > 1)
+    {
+        s += "-<w>";
+        s += first + how_many - 1;
+        s += "</w>";
+    }
+    return s;
+}
+
+void AmmoMenu::init_entries()
+{
+    menu_letter ckey = 'a';
+    for (item_def& item : ammo_items)
+    {
+        auto newentry = make_unique<AmmoEntry>(item, *this);
+        newentry->hotkeys.clear();
+        newentry->add_hotkey(ckey++);
+        add_entry(move(newentry));
+    }
+}
+
+void AmmoMenu::update_help()
+{
+    string top_line = string(80, ' ') + '\n';
+
+    set_more(formatted_string::parse_string(top_line + make_stringf(
+        "[%s] %s\n"
+        "[Esc/R-Click] exit",
+        _hyphenated_letters(item_count(), 'a').c_str(),
+        "select ammunition to purchase")));
+}
+
+bool AmmoMenu::buy_selected() {
+    vector<MenuEntry*> selected = selected_entries();
+    ASSERT(selected.size() == 1);
+    auto& entry = *selected[0];
+
+    item_def ammo_item = *static_cast<item_def*>(entry.data);
+    if (copy_item_to_grid(ammo_item, you.pos())) {
+        canned_msg(MSG_SOMETHING_APPEARS);
+        you.del_gold(_resupply_cost(ammo_item) / 10);
+        you.props["ammo resupplies"].get_int() += 1;
+        bought_something = true;
+    } else {
+        mpr("Nothing happens; you have not been charged.");
+    }
+    return false;
+}
+
+bool AmmoMenu::process_key(int keyin)
+{
+    if (keyin - 'a' >= 0 && keyin - 'a' < (int)items.size()) {
+        const unsigned int i = keyin - 'a';
+        select_item_index(i, 1, false);
+        return buy_selected();
+    }
+    const bool ret = InvMenu::process_key(keyin);
+    auto selected = selected_entries();
+    if (selected.size() == 1)
+        return buy_selected();
+    else
+        return ret;
+}
+
+bool gozag_resupply_ammo() {
+    CrawlVector ammo_items;
+    // We reserve the right to change offerings or prices as the game goes on
+    int ammo_types[] = {MI_ARROW, MI_BOLT, MI_SLING_BULLET, MI_BOOMERANG};
+    for (int type : ammo_types) {
+        int ammo_created = items(false, OBJ_MISSILES, type, 0, SP_FORBID_EGO,
+                                 GOD_GOZAG);
+        if (ammo_created != NON_ITEM) {
+            item_def ammo = mitm[ammo_created];
+            ammo.quantity = 1;
+            ammo.quantity = (10 * GOZAG_RESUPPLY_COST) / _resupply_cost(ammo);
+            ammo_items.push_back(ammo);
+            destroy_item(ammo_created);
+        }
+    }
+    AmmoMenu ammo_menu(ammo_items);
+    ammo_menu.show();
+    
+    return ammo_menu.bought_something;
+}
+
 static int _upheaval_radius(int pow)
 {
     return pow >= 100 ? 2 : 1;
