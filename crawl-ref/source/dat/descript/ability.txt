@@ -610,6 +610,12 @@ though they will not leave their home branch. Enemies accepting a bribe will
 lower the remaining bribe fund; upon its exhaustion, bribed enemies will become
 indifferent if they have not become your allies.
 %%%%
+Resupply Ammunition ability
+
+Gozag will sell you arrows, bolts, boomerangs, or sling bullets - naturally,
+you pay a premium for the convenience of immediate delivery, and prices will
+increase further if demand seems to be high.
+%%%%
 # Pakellas
 Device Surge ability
 
