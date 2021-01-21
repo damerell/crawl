@@ -2002,6 +2002,7 @@ bool setup_mons_cast(const monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_GREATER_SERVANT_MAKHLEB:
     case SPELL_BIND_SOULS:
     case SPELL_DREAM_DUST:
+    case SPELL_SUMMON_TZITZIMITL:
         pbolt.range = 0;
         pbolt.glyph = 0;
         return true;
@@ -6608,6 +6609,10 @@ void mons_cast(monster* mons, bolt pbolt, spell_type spell_cast,
         mons->add_ench(mon_enchant(ENCH_REGENERATION, 0, mons, dur));
         return;
     }
+
+    case SPELL_SUMMON_TZITZIMITL:
+        _summon(*mons, MONS_TZITZIMITL, 2, slot);
+        return;
 
     case SPELL_OZOCUBUS_ARMOUR:
     {
