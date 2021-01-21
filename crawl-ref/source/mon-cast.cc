@@ -2003,6 +2003,7 @@ bool setup_mons_cast(const monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_BIND_SOULS:
     case SPELL_DREAM_DUST:
     case SPELL_SUMMON_TZITZIMITL:
+    case SPELL_SUMMON_HELL_SENTINEL:
         pbolt.range = 0;
         pbolt.glyph = 0;
         return true;
@@ -6612,6 +6613,10 @@ void mons_cast(monster* mons, bolt pbolt, spell_type spell_cast,
 
     case SPELL_SUMMON_TZITZIMITL:
         _summon(*mons, MONS_TZITZIMITL, 2, slot);
+        return;
+
+    case SPELL_SUMMON_HELL_SENTINEL:
+        _summon(*mons, MONS_HELL_SENTINEL, 2, slot);
         return;
 
     case SPELL_OZOCUBUS_ARMOUR:
