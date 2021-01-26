@@ -876,7 +876,8 @@ bool cast_a_spell(bool check_range, spell_type spell)
             return false;
         }
         // check_range being stretched a bit here
-        if (!you.permabuff[PERMA_INFUSION] && check_range &&
+        if ((spell == SPELL_INFUSION) &&
+            !you.permabuff[PERMA_INFUSION] && check_range &&
             (you.max_magic_points <= spell_mana(SPELL_INFUSION))) {
             mpr("You would have no MP left to infuse your attacks with. "
                 "(Use <w>Z</w> to cast anyway.)");
