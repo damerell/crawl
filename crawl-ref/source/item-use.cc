@@ -2964,14 +2964,17 @@ void read_scroll(item_def& scroll)
             you.duration[DUR_SILENCE] = 1;
         }
         // vexingly this is a bit like holy_word but not enough
-        for (radius_iterator ri(you.pos(), LOS_SOLID); ri; ++ri) {
+        for (radius_iterator ri(you.pos(), LOS_RADIUS, C_SQUARE, false);
+             ri; ++ri) {
             if (monster* mons = monster_at(*ri)) {
-                if ((mons->silence_radius() > 0) ||
-                    (mons->type == MONS_SILENT_SPECTRE)) {
-                    if (mons->type == MONS_MENNAS) {
+                if ((mons->type == MONS_SILENT_SPECTRE) ||
+                    mons->has_ench(ENCH_SILENCE)) {
+                    if (mons->has_ench(ENCH_SILENCE)) {
                         mons->del_ench(ENCH_SILENCE);
-                    } else {
+                    } 
+                    if (mons->type == MONS_SILENT_SPECTRE) {
                         int hploss = roll_dice(3, 15);
+                        // does a visibility check
                         simple_monster_message(*mons, 
                                                " is blasted by the noise!");
                         mons->hurt(&you, hploss, BEAM_MISSILE);
@@ -2983,6 +2986,11 @@ void read_scroll(item_def& scroll)
                         invalidate_agrid(true);
                     }
                     behaviour_event(mons, ME_ANNOY, &you);
+                }
+                if (mons->alive() && (mons->silence_radius() > 0)) {
+                    mprf (MSGCH_ERROR, 
+                          "BUG: scroll of noise did not break silence on %s.",
+                          mons->name(DESC_A).c_str());
                 }
             }
         }
