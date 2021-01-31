@@ -1415,6 +1415,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_WHIRLWIND_PINNED:
     case ENCH_VILE_CLUTCH:
     case ENCH_GRASPING_ROOTS:
+    case ENCH_WU_TOHIT:
         decay_enchantment(en);
         break;
 
@@ -2121,7 +2122,7 @@ static const char *enchant_names[] =
     "aura_of_brilliance", "empowered_spells", "gozag_incite", "pain_bond",
     "idealised", "bound_soul", "infestation",
     "stilling the winds", "thunder_ringed", "pinned_by_whirlwind",
-    "vortex", "vortex_cooldown", "vile_clutch",
+    "vortex", "vortex_cooldown", "vile_clutch", "wu_tohit",
     "buggy",
 };
 

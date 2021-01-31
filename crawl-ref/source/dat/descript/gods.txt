@@ -322,14 +322,18 @@ precision and damage for as long as they keep using martial attacks.
   .......       .......
 
   .......       ...<lightred>@</lightred>... (*) <lightred>Whirlwind</lightred>: Move between two tiles adjacent to
-  ...<lightred>@</lightred>O..  -->  ....O.. an enemy to strike them lightly. The dizzying
-  .......       ....... motion pins monsters in place for one action.
-
+  ...<lightred>@</lightred>O..  -->  ....O.. an enemy to strike them lightly. The dizzying motion
+  .......       ....... pins monsters in place for one action if you are using
+                        Serpent's Lash or Heavenly Storm.
   ..#....       ..#.... (**) <lightred>Wall Jump</lightred>: Move into a wall to vault off it and
   ..#<lightred>@</lightred>O..  -->  ..#.O<lightred>@</lightred>. strike enemies adjacent to the landing spot. Vaulting
   ..#....       ..#.... takes two turns. Can also be activated via the
                         (a)bility menu. Set the config option <lightred>wall_jump_move =
                         false</lightred> to disable movement-activated wall jump.
+
+If you attack more than one monster with Whirlwind or Wall Jump, any monster
+you hit will be briefly confused, and experience difficulty hitting you on its
+next action.
 
 %%%%
 Kikubaaqudgha powers

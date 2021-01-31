@@ -492,9 +492,16 @@ bool melee_attack::handle_phase_hit()
     if (check_unrand_effects())
         return false;
 
-    if (damage_done > 0)
+    if (damage_done > 0) 
         apply_black_mark_effects();
-
+    
+    if (((wu_jian_attack == WU_JIAN_ATTACK_WHIRLWIND) ||
+         (wu_jian_attack == WU_JIAN_ATTACK_WALL_JUMP)) &&
+        wu_jian_number_of_targets > 1) {
+        defender->as_monster()->del_ench(ENCH_WU_TOHIT);
+        defender->as_monster()->add_ench(mon_enchant(ENCH_WU_TOHIT, 1, nullptr,
+                                                     BASELINE_DELAY * 5));
+    }
     if (attacker->is_player())
     {
         // Always upset monster regardless of damage.
