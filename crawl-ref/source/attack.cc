@@ -1289,6 +1289,11 @@ int attack::calc_damage()
 int attack::test_hit(int to_land, int ev, bool randomise_ev)
 {
     int margin = AUTOMATIC_HIT;
+    if (attacker->is_monster() && defender->is_player()) {
+        if (attacker->as_monster()->has_ench(ENCH_WU_TOHIT)) {
+            ev += 10; 
+        }
+    }
     if (randomise_ev)
         ev = random2avg(2*ev, 2);
     if (to_land >= AUTOMATIC_HIT)
