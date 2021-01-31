@@ -1,5 +1,5 @@
-Stoat Soup 0.23
----------------
+Stoat Soup 0.23 "The Masque of the Red Death"
+---------------------------------------------
 
 * Piety stars go white at 199 piety to encourage you to use it up; "max
   piety" is displayed in %/@ displays.
@@ -29,8 +29,8 @@ Vanilla changes messed around with
   Robustness and Phasing are perhaps a little more interesting than just
   being extra good rings of evasion / protection.
 
-Stoat Soup 0.22
----------------
+Stoat Soup 0.22 "Spirits of the Dead"
+-------------------------------------
 
 * High elves and mountain dwarves are back, and joined by faerie dragons.
 * Skills with low apts are not turned on by default with manual training.
@@ -237,8 +237,8 @@ Spells
 * Passwall now has better range scaling, a lower max spellpower and a targeter
   to show its range.
 
-Stoat Soup 0.21.2
------------------
+Stoat Soup 0.21.2 "A Descent into the Maelstrom"
+------------------------------------------------
 * Restore spawns
 * Restore purple chunks. Mutagenic monsters "cool down" to stop Mr Boring
   but Optimal storing them all in a branch somewhere for later.
