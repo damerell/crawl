@@ -417,7 +417,7 @@ static const vector<god_passive> god_passives[] =
     // Wu Jian
     {
         { 0, passive_t::wu_jian_lunge, "perform damaging attacks by moving towards foes." },
-        { 1, passive_t::wu_jian_whirlwind, "lightly attack and pin monsters in place by moving around them." },
+        { 1, passive_t::wu_jian_whirlwind, "lightly attack monsters in place by moving around them." },
         { 2, passive_t::wu_jian_wall_jump, "perform airborne attacks by moving against a solid obstacle." },
     },
 };
@@ -1705,9 +1705,11 @@ static bool _wu_jian_whirlwind(const coord_def& old_pos)
         // necessary to make sure it works well with Wall Jump's longer aut
         // count.
         mons->del_ench(ENCH_WHIRLWIND_PINNED);
-        mons->add_ench(mon_enchant(ENCH_WHIRLWIND_PINNED, 2, nullptr,
-                                   BASELINE_DELAY * 5));
-
+        if ((you.attribute[ATTR_HEAVENLY_STORM] > 0) ||
+            (you.attribute[ATTR_SERPENTS_LASH] > 0)) {
+            mons->add_ench(mon_enchant(ENCH_WHIRLWIND_PINNED, 2, nullptr,
+                                       BASELINE_DELAY * 5));
+        }
         you.apply_berserk_penalty = false;
 
         const int number_of_attacks = _wu_jian_number_of_attacks(false);
@@ -1817,12 +1819,16 @@ void wu_jian_end_of_turn_effects()
 {
     // This guarantees that the whirlwind pin status is capped to one turn of
     // monster movement.
-    for (monster_iterator mi; mi; ++mi)
+    for (monster_iterator mi; mi; ++mi) {
         if (mi->has_ench(ENCH_WHIRLWIND_PINNED)
-            && !you.attribute[ATTR_SERPENTS_LASH])
-        {
+            && !you.attribute[ATTR_SERPENTS_LASH]) {
             mi->lose_ench_levels(mi->get_ench(ENCH_WHIRLWIND_PINNED), 1, true);
         }
+        if (mi->has_ench(ENCH_WU_TOHIT)
+            && !you.attribute[ATTR_SERPENTS_LASH]) {
+            mi->lose_ench_levels(mi->get_ench(ENCH_WU_TOHIT), 1, true);
+        }
+    }
 
     you.attribute[ATTR_WALL_JUMP_READY] = 0;
 }
