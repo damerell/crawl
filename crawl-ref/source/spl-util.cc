@@ -1642,6 +1642,10 @@ void permabuff_track(int pb) {
     spell_type spell = permabuff_spell[pb];
     ASSERT (is_permabuff(spell));
     int dur = BASELINE_DELAY * nominal_duration(spell);
+    if (you.perma_benefit[pb] == 0) {
+        practise_casting(spell, true);
+        count_action(CACT_CAST, spell);
+    }
     // The value of '8' is pretty arbitrary
     you.perma_benefit[pb] = max(you.perma_benefit[pb], div_rand_round(dur, 8));
     you.perma_hunger[pb] = (100 * spell_hunger(spell)) / dur;
@@ -1656,10 +1660,6 @@ void permabuff_track(int pb) {
     if (time > 0) {
 // Divide by 2 here as a very crude compensation for the way in vanilla you'd
 // rarely benefit every turn in the full duration.
-        if (one_chance_in(dur / (2 * time))) {
-            practise_casting(spell, true);
-            count_action(CACT_CAST, spell);
-        }
         string reason = you.cannot_renew_pbs_because();
         if ((!reason.empty()) && one_chance_in(dur / time)) {
             mprf(MSGCH_DURATION, "You can't renew one of your enchantments because %s!", reason.c_str());
