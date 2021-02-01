@@ -1414,7 +1414,7 @@ static void _sdump_action_counts(dump_params &par)
         }
     }
     if (any_permabuffs) {
-        par.text += "* Casting counts for permanent charms are based on the nominal duration and\nthe proportion of turns where the character received a benefit.\n";
+        par.text += "* Casting counts for permanent charms are approximate representations of how often the player would have had to cast a non-permanent spell for the same benefits.\n";
     }
     par.text += "\n";
 }
