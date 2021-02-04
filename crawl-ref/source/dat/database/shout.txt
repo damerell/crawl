@@ -193,99 +193,12 @@ SOUND:@The_monster@ roars deafeningly!
 ############################################
 # End of default shouts
 ############################################
-############################################################
-# Player ghost shouts. Potentially different ones for each
-# class, though currently they all just copy the default
-# player ghost.
-############################################################
+# Ghosts are announced by delay.cc, so make sure they never shout.
 %%%%
 player ghost
 
-VISUAL:@The_monster@ turns @possessive@ malevolent gaze towards you.
+__NONE
 %%%%
-Fighter player ghost
-
-@player ghost@
-%%%%
-Wizard player ghost
-
-@player ghost@
-%%%%
-Gladiator player ghost
-
-@player ghost@
-%%%%
-Necromancer player ghost
-
-@player ghost@
-%%%%
-Assassin player ghost
-
-@player ghost@
-%%%%
-Berserker player ghost
-
-@player ghost@
-%%%%
-Hunter player ghost
-
-@player ghost@
-%%%%
-Conjurer player ghost
-
-@player ghost@
-%%%%
-Enchanter player ghost
-
-@player ghost@
-%%%%
-Fire Elementalist player ghost
-
-@player ghost@
-%%%%
-Ice Elementalist player ghost
-
-@player ghost@
-%%%%
-Summoner player ghost
-
-@player ghost@
-%%%%
-Air Elementalist player ghost
-
-@player ghost@
-%%%%
-Earth Elementalist player ghost
-
-@player ghost@
-%%%%
-Skald player ghost
-
-@player ghost@
-%%%%
-Venom Mage player ghost
-
-@player ghost@
-%%%%
-Chaos Knight player ghost
-
-@player ghost@
-%%%%
-Transmuter player ghost
-
-@player ghost@
-%%%%
-Monk player ghost
-
-@player ghost@
-%%%%
-Warper player ghost
-
-@player ghost@
-%%%%
-Wanderer player ghost
-
-@player ghost@
 ########################################
 # Shouts by monster symbol
 ########################################

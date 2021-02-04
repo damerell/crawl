@@ -347,10 +347,6 @@ void maybe_mons_speaks(monster* mons)
     if (mons->is_patrolling() || mons_is_wandering(*mons))
         return;
 
-    // per ef44f8a14, this seems to be handled elsewhere?
-    if (mons->attitude == ATT_NEUTRAL)
-        return;
-
     // too annoying for a permanent companion without more thought put into it
     if (mons_is_hepliaklqana_ancestor(mons->type))
         return;
@@ -456,8 +452,10 @@ bool mons_speaks(monster* mons)
     vector<string> prefixes;
     if (mons->neutral())
     {
-        if (!force_speak && coinflip()) // Neutrals speak half as often.
+        if (!force_speak && (!(mons->type == MONS_PLAYER_GHOST)) 
+            && coinflip()) { // Neutrals speak half as often.
             return false;
+        }
 
         prefixes.emplace_back("neutral");
     }
