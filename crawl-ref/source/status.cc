@@ -606,7 +606,7 @@ bool fill_status_info(int status, status_info& inf)
             if (you.permabuff_working(PERMA_SONG)) {
                 inf.light_colour = LIGHTBLUE;
                 inf.long_text = you.props[SONG_OF_SLAYING_KEY].get_int() ?
-                    "Your melee attacks are strengthened by your song." :
+                    "Your attacks are strengthened by your song." :
                     "You are singing a song of slaying.";
             } else {            
                 inf.light_colour = DARKGREY;
