@@ -2320,6 +2320,8 @@ bool ring_has_stackable_effect(const item_def &item)
     case RING_WIZARDRY:
     case RING_FIRE:
     case RING_ICE:
+    case RING_PROTECTION_FROM_MAGIC:
+    case RING_MAGICAL_POWER:
         return true;
 
     default:
