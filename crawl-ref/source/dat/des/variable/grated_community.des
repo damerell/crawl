@@ -59,8 +59,7 @@ KFEAT:  f = fountain_blue
 KFEAT:  j = fountain_sparkling
 KFEAT:  ~ = closed_door
 KFEAT:  7 = tree
-KFEAT:  A = general shop type:Slaves suffix:and_Accessories count:10 ; \
-            w:50 whip | wand of enslavement
+KFEAT:  A = general shop
 KFEAT:  B = food shop name:Jack type:Jerk-a-riffic suffix:Jerky count:10 ; \
             q:1 meat ration
 KFEAT:  C = distillery shop type:Miraculous suffix:Elixirs count:10 \
