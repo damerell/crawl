@@ -3560,11 +3560,11 @@ void bolt::affect_player_enchantment(bool resistible)
         obvious_effect = beckon(you, *this);
         break;
 
-    case BEAM_ENSLAVE:
+    case BEAM_CHARM:
         mprf(MSGCH_WARN, "Your will is overpowered!");
         confuse_player(5 + random2(3));
         obvious_effect = true;
-        break;     // enslavement - confusion?
+        break;     // charming - confusion?
 
     case BEAM_BANISH:
         if (YOU_KILL(thrower))
@@ -5241,6 +5241,12 @@ bool ench_flavour_affects_monster(beam_type flavour, const monster* mon,
         rc = !mons_aligned(&you, mon) && you.can_constrict(mon, false);
         break;
 
+    // These are special allies whose loyalty can't be so easily bent
+    case BEAM_CHARM:
+        rc = !(mons_is_hepliaklqana_ancestor(mon->type)
+               || testbits(mon->flags, MF_DEMONIC_GUARDIAN));
+        break;
+
     default:
         break;
     }
@@ -5558,7 +5564,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         return MON_AFFECTED;
     }
 
-    case BEAM_ENSLAVE:
+    case BEAM_CHARM:
         if (agent() && agent()->is_monster())
         {
             enchant_type good = (agent()->wont_attack()) ? ENCH_CHARM
@@ -5572,7 +5578,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
                 obvious_effect = mon->del_ench(bad);
                 return MON_AFFECTED;
             }
-            if (simple_monster_message(*mon, " is enslaved!"))
+            if (simple_monster_message(*mon, " is charmed!"))
                 obvious_effect = true;
             mon->add_ench(mon_enchant(good, 0, agent()));
             if (!obvious_effect && could_see && !you.can_see(*mon))
@@ -6523,7 +6529,7 @@ static string _beam_type_name(beam_type type)
     case BEAM_TELEPORT:              return "teleportation";
     case BEAM_POLYMORPH:             return "polymorph";
     case BEAM_MALMUTATE:             return "malmutation";
-    case BEAM_ENSLAVE:               return "enslave";
+    case BEAM_CHARM:               return "charm";
     case BEAM_BANISH:                return "banishment";
     case BEAM_PAIN:                  return "pain";
     case BEAM_AGONY:                 return "agony";

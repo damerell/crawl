@@ -3160,6 +3160,10 @@ wand of acid
 “And when Water and Oil of Vitriol poured successively into the same Vessel grow very hot in the mixing, does not this Heat argue a great Motion in the Parts of the Liquors?”
     -Isaac Newton, _Opticks_, Book III, Quest. 31. 1704.
 %%%%
+wand of charm monster
+
+<wand>
+%%%%
 wand of clouds
 
 <wand>
