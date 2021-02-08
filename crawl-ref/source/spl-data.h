@@ -663,7 +663,7 @@ static const struct spell_desc spelldata[] =
 },
 
 {
-    SPELL_ENSLAVEMENT, "Enslavement",
+    SPELL_CHARMING, "Charm Monster",
     SPTYP_HEXES,
     SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER
         | SPFLAG_MONSTER | SPFLAG_MR_CHECK,
@@ -671,7 +671,7 @@ static const struct spell_desc spelldata[] =
     200,
     LOS_RADIUS, LOS_RADIUS,
     3, 0,
-    TILEG_ENSLAVEMENT,
+    TILEG_CHARMING,
     PERMA_NO_PERMA,
 },
 
