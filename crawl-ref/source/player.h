@@ -1148,6 +1148,7 @@ void set_mp(int new_amount);
 
 bool player_regenerates_hp();
 bool player_regenerates_mp();
+int player_last_damaged(); // in auts
 
 void print_potion_heal_message();
 
