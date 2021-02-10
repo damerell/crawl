@@ -753,7 +753,6 @@ static const duration_def duration_data[] =
       {{ "You regain access to your magic." }, {}, true }},
     { DUR_HEAVENLY_STORM, 0, "", "", "", "", D_NO_FLAGS,
       {{ "",  wu_jian_heaven_tick }}},
-    { DUR_RESIDUAL_HARM, 0, "", "", "", "", D_NO_FLAGS, {{""}}},
     { DUR_GRASPING_ROOTS, 0, "", "grasped by roots", "grasping roots",
       "You are constricted by grasping roots.", D_NO_FLAGS},
     { DUR_ACQUIREMENT,
@@ -794,6 +793,7 @@ static const duration_def duration_data[] =
     { DUR_MAGIC_ARMOUR, 0, "", "", "old magic armour", "", D_NO_FLAGS},
     { DUR_MAGIC_SHIELD, 0, "", "", "old magic shield", "", D_NO_FLAGS},
     { DUR_FORTITUDE, 0, "", "", "old fortitude", "", D_NO_FLAGS},
+    { DUR_RESIDUAL_HARM, 0, "", "", "", "", D_NO_FLAGS, {{""}}},
 
 #endif
 };

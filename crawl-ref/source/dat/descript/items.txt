@@ -26,7 +26,7 @@ unfortunate side effect, it also amplifies all damage dealt to the
 wearer, albeit to a lesser degree. The amulet's effects are produced
 by a malicious spirit which loves to see the blood of the wearer shed;
 even when the amulet is removed, the user will continue to take more
-damage until a little time has passed and they are fully healed.
+damage until a little time has passed without them being injured.
 %%%% 
 amulet of inaccuracy
 
