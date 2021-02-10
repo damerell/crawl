@@ -1212,8 +1212,8 @@ void update_amulet_attunement_by_health()
 
     if (you.props.exists(RESIDUAL_HARM) && 
         (!you.wearing(EQ_AMULET, AMU_HARM)) &&
-        (!you.duration[DUR_RESIDUAL_HARM]) &&
-        (you.hp == you.hp_max)) {
+        ((you.elapsed_time - you.props[RESIDUAL_HARM].get_int()) >= 500) &&
+        (player_last_damaged() >= 500)) {
         you.props.erase(RESIDUAL_HARM);
         mpr("The lingering effects of the amulet of harm leave you.");
     }
@@ -4113,6 +4113,10 @@ bool player_regenerates_mp()
     if (have_passive(passive_t::no_mp_regen) || player_under_penance(GOD_PAKELLAS))
         return false;
     return true;
+}
+
+int player_last_damaged() {
+    return you.elapsed_time - you.props["last damaged"].get_int();
 }
 
 int get_contamination_level()

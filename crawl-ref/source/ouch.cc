@@ -941,6 +941,8 @@ void ouch(int dam, kill_method_type death_type, mid_t source, const char *aux,
 
             hints_healing_check();
 
+            you.props["last damaged"] = you.elapsed_time;
+
             _xom_checks_damage(death_type, dam, source);
 
             // for note taking
