@@ -14,6 +14,7 @@ enum operation_types
     OPER_MEMORISE = 'M',
     OPER_ZAP      = 'Z',
     OPER_FIRE     = 'f',
+    OPER_THROW    = 't', // but not with a launcher
     OPER_EVOKE    = 'v',
     OPER_DESTROY  = 'D',
     OPER_QUIVER   = 'Q',
