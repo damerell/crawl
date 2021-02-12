@@ -2890,6 +2890,9 @@ commands:
 !f
   Prompt before firing or throwing this item.
 
+!t
+  Prompt before throwing this item, but not before firing it with a launcher.
+
 !W
   Prompt before wearing this armour.
 
