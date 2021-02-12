@@ -563,10 +563,14 @@ void fire_thing(int item)
     if (item == -1)
         return;
 
-    if (check_warning_inscriptions(you.inv[item], OPER_FIRE)
-        && (!you.weapon()
-            || is_launched(&you, you.weapon(), you.inv[item]) != launch_retval::LAUNCHED
-            || check_warning_inscriptions(*you.weapon(), OPER_FIRE)))
+    // First we check items's not !f
+    // and check either (we have no weapon or wrong ammo) and item's not !t
+    //           or     our weapon's not !f
+    if (check_warning_inscriptions(you.inv[item], OPER_FIRE) &&
+        ((!you.weapon() || (is_launched(&you, you.weapon(), you.inv[item]) !=
+                            launch_retval::LAUNCHED)) ?
+         check_warning_inscriptions(you.inv[item], OPER_THROW) :
+         check_warning_inscriptions(*you.weapon(), OPER_FIRE)))
     {
         bolt beam;
         throw_it(beam, item, &target);
