@@ -1,5 +1,6 @@
 #pragma once
 
+#include "maybe-bool.h"
 #include <unordered_map>
 #include <vector>
 
@@ -72,5 +73,5 @@ protected:
 
     FixedVector<vector<coord_def>, GXM * GYM> hash;
 
-    unordered_map<coord_def, bool> traversable_cache;
+    maybe_bool traversable_cache[GXM][GYM];
 };
