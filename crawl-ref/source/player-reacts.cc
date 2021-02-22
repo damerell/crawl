@@ -965,7 +965,7 @@ static void _regenerate_hp_and_mp(int delay)
     {
         const int base_val = player_regen();
         you.hit_points_regeneration += div_rand_round(base_val * delay, BASELINE_DELAY);
-        if (you.permabuff[PERMA_REGEN]) {
+        if (you.permabuff_working(PERMA_REGEN)) {
             if (you.hp < you.hp_max) {
                 int report = you.props[REGEN_REPORTING_PERCENT].get_int();
                 if (you.props[REGEN_RESERVE].get_int() > 0) report += delay;
@@ -975,25 +975,25 @@ static void _regenerate_hp_and_mp(int delay)
             } else {
                 you.props[REGEN_REPORTING_PERCENT] = 100;
             }
-        }
-        if (you.permabuff_working(PERMA_REGEN) &&
-            (you.hp < you.hp_max) &&
-            (you.props[REGEN_RESERVE].get_int() > 0)) {
-            if (permabuff_fail_check
-                (PERMA_REGEN,
-                 "Your skin crawls horribly, then goes numb.")) {
-                you.props[REGEN_RESERVE] = 0;
-            } else {
+            if ((you.hp < you.hp_max) &&
+                (you.props[REGEN_RESERVE].get_int() > 0)) {
+                if (permabuff_fail_check
+                    (PERMA_REGEN,
+                     "Your skin crawls horribly, then goes numb.")) {
+                    you.props[REGEN_RESERVE] = 0;
+                } else {
 // This is done oddly to fit into 16-bit ints
-                int succ = 10000 / 
-                    (100 - (min(90, failure_rate_to_int
-                                (raw_spell_fail(SPELL_REGENERATION)))));
-                you.props[REGEN_RESERVE].get_int() -= div_rand_round
-                    ((delay * spell_mana(SPELL_REGENERATION) * succ),
-                     (nominal_duration(SPELL_REGENERATION) * BASELINE_DELAY));
-                dprf(DIAG_PERMABUFF, 
-                     "Regen reserve now %d, succ %d, delay %d.",
-                     you.props[REGEN_RESERVE].get_int(), succ, delay);
+                    int succ = 10000 / 
+                        (100 - (min(90, failure_rate_to_int
+                                    (raw_spell_fail(SPELL_REGENERATION)))));
+                    you.props[REGEN_RESERVE].get_int() -= div_rand_round
+                        ((delay * spell_mana(SPELL_REGENERATION) * succ),
+                         (nominal_duration(SPELL_REGENERATION) * 
+                          BASELINE_DELAY));
+                    dprf(DIAG_PERMABUFF, 
+                         "Regen reserve now %d, succ %d, delay %d.",
+                         you.props[REGEN_RESERVE].get_int(), succ, delay);
+                }
             }
         }
     }
@@ -1108,34 +1108,48 @@ static void _regenerate_hp_and_mp(int delay)
                           (you.can_renew_pbs()) &&
                           (you.permabuff_notworking(PERMA_DMSL) 
                            >= PB_WORKING));
-        if (you.props.exists(SHROUD_RECHARGE) &&
-            (you.props[SHROUD_RECHARGE].get_int() > 0) &&
-            (you.can_renew_pbs()) &&
-            (you.permabuff_notworking(PERMA_SHROUD) >= PB_WORKING)) {
-            int available = div_rand_round(mp_regen_countup,
-                                           (dmsl_rech ? 3 : 2));
-            if (available < you.props[SHROUD_RECHARGE].get_int()) {
-                you.props[SHROUD_RECHARGE].get_int() -= available;
-                mp_regen_countup -= available;
-                you.props[MP_TO_CHARMS].get_int() += available;
-            } else {
-                mp_regen_countup -= you.props[SHROUD_RECHARGE].get_int();
-                you.props[MP_TO_CHARMS].get_int() += 
+        bool shroud_rech = (you.props.exists(SHROUD_RECHARGE) &&
+                            (you.props[SHROUD_RECHARGE].get_int() > 0) &&
+                            (you.can_renew_pbs()) &&
+                            (you.permabuff_notworking(PERMA_SHROUD) >=
+                             PB_WORKING));
+        int shroud_avail = div_rand_round(mp_regen_countup,
+                                          (dmsl_rech ? 3 : 2));
+        int dmsl_avail = div_rand_round(mp_regen_countup,
+                                        (shroud_rech ? 3 : 2));
+        if (shroud_rech) {
+            if (!player_pb_concentration()) {
+                shroud_avail = div_rand_round(shroud_avail, 3);
+            }
+            dprf(DIAG_PERMABUFF, "Shroud got %d.", shroud_avail);
+            if (shroud_avail > 0) {
+                if (shroud_avail < you.props[SHROUD_RECHARGE].get_int()) {
+                    you.props[SHROUD_RECHARGE].get_int() -= shroud_avail;
+                    mp_regen_countup -= shroud_avail;
+                    you.props[MP_TO_CHARMS].get_int() += shroud_avail;
+                } else {
+                    mp_regen_countup -= you.props[SHROUD_RECHARGE].get_int();
+                    you.props[MP_TO_CHARMS].get_int() += 
                     you.props[SHROUD_RECHARGE].get_int();
-                you.props[SHROUD_RECHARGE] = 0;
+                    you.props[SHROUD_RECHARGE] = 0;
+                }
             }
         }
         if (dmsl_rech) {
-            int available = div_rand_round(mp_regen_countup, 2);
-            if (available < you.props[DMSL_RECHARGE].get_int()) {
-                you.props[DMSL_RECHARGE].get_int() -= available;
-                mp_regen_countup -= available;
-                you.props[MP_TO_CHARMS].get_int() += available;
-            } else {
-                mp_regen_countup -= you.props[DMSL_RECHARGE].get_int();
-                you.props[MP_TO_CHARMS].get_int() += 
+            if (!player_pb_concentration()) {
+                dmsl_avail = div_rand_round(dmsl_avail, 3);
+            }
+            if (dmsl_avail > 0) {
+                if (dmsl_avail < you.props[DMSL_RECHARGE].get_int()) {
+                    you.props[DMSL_RECHARGE].get_int() -= dmsl_avail;
+                    mp_regen_countup -= dmsl_avail;
+                    you.props[MP_TO_CHARMS].get_int() += dmsl_avail;
+                } else {
+                    mp_regen_countup -= you.props[DMSL_RECHARGE].get_int();
+                    you.props[MP_TO_CHARMS].get_int() += 
                     you.props[DMSL_RECHARGE].get_int();
-                you.props[DMSL_RECHARGE] = 0;
+                    you.props[DMSL_RECHARGE] = 0;
+                }
             }
         }
 // The order in which permabuffs get to divert MPreg is kind of arbitrary
@@ -1143,10 +1157,9 @@ static void _regenerate_hp_and_mp(int delay)
 // go here to ensure the reserve is ~full when MP are full, because the player
 // cannot inspect the state of the reserve.
         bool needs_regen = false; bool needs_battlesphere = false;
-        int divert = (mp_regen_countup * you.magic_points) /
-            max(you.max_magic_points,1);
-        int regen_size = 100 * spell_mana(SPELL_REGENERATION);
         monster* battlesphere = find_battlesphere(&you);
+        int regen_size = 100 * spell_mana(SPELL_REGENERATION);
+        int divert = 0;
         if (you.can_renew_pbs()) {
             needs_regen = (you.permabuff_working(PERMA_REGEN) &&
                            (you.props[REGEN_RESERVE].get_int() < regen_size));
@@ -1165,6 +1178,16 @@ static void _regenerate_hp_and_mp(int delay)
                      >= battlesphere_max_charges())) {
                     needs_battlesphere = false;
                 }
+            }
+        }
+        if (needs_regen || needs_battlesphere) {
+            divert = (mp_regen_countup * you.magic_points) /
+                max(you.max_magic_points,1);
+// It is intentional that Regeneration (spell level increased) and Isk's
+// Battlesphere (routinely recast) take only a modest in-combat nerf compared
+// to Shroud and DMSL
+            if (!player_pb_concentration()) {
+              divert = div_rand_round((divert * 3), 4);
             }
         }
         if (needs_regen) {
@@ -1246,9 +1269,13 @@ static void _permabuff_bookkeeping(int delay) {
     int song = you.props[SONG_OF_SLAYING_KEY].get_int();
     if (song) {
         int dur = nominal_duration(SPELL_SONG_OF_SLAYING);
-        dur *= BASELINE_DELAY; dur /= delay;
-        you.props["song_decay"].get_int() += div_rand_round ((150 * song),
-                                                             dur);
+        dur *= BASELINE_DELAY; 
+        int slayingtime = 
+            you.elapsed_time - you.props[SONG_STARTED_KEY].get_int();
+        int overslaying = max(1, div_rand_round(slayingtime, dur));
+        dur /= delay;
+        you.props["song_decay"].get_int() += 
+            div_rand_round ((150 * song * overslaying), dur);
         if (you.props["song_decay"].get_int() > 100) {
             you.props[SONG_OF_SLAYING_KEY].get_int()--;
             you.props["song_decay"].get_int()-= 100;

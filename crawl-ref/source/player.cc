@@ -4119,6 +4119,14 @@ int player_last_damaged() {
     return you.elapsed_time - you.props["last damaged"].get_int();
 }
 
+bool player_pb_concentration() {
+    dprf (DIAG_PERMABUFF, "Player did%s have concentration (%d ago)",
+          (player_last_damaged() > (270 - you.skill(SK_SPELLCASTING, 10)) ?
+           "" : " not"),
+          (player_last_damaged()));
+    return player_last_damaged() > (270 - you.skill(SK_SPELLCASTING, 10));
+}
+
 int get_contamination_level()
 {
     const int glow = you.magic_contamination;
@@ -5119,6 +5127,9 @@ permabuff_state player::permabuff_notworking(permabuff_type pb) {
     if ((pb == PERMA_REGEN) && (you.form == transformation::lich)) {
         return PB_REGEN_LICH;
     }
+    if ((pb == PERMA_REGEN) && regeneration_is_inhibited()) {
+        return PB_REGEN_INVIEW;
+    }
     if (pb == PERMA_APPENDAGE) {
         if ((you.form != transformation::none) && 
             (you.form != transformation::appendage)) {
@@ -5180,6 +5191,8 @@ string player::permabuff_whynot(permabuff_type pb) {
         return "you cannot sing in this magical silence";
     case PB_REGEN_LICH:
         return "you have no flesh to regenerate";
+    case PB_REGEN_INVIEW:
+        return "you cannot regenerate with monsters nearby";
     case PB_MULTI_TRANSFORM:
         return "you can only have a monstrous appendage in your natural form";
     case PB_TOO_DEAD:

@@ -1653,7 +1653,9 @@ void permabuff_track(int pb) {
                           failure_rate_to_int
                           (raw_spell_fail(spell))));
     you.perma_mp[pb] = (1000000 * spell_mana(spell)) / (dur * succ);
-    dprf("%d hunger, %d MP per aut, %d auts", you.perma_hunger[pb], you.perma_mp[pb],you.perma_benefit[pb]);
+    dprf(DIAG_PERMABUFF, "%s: %d hunger, %d MP per aut, %d auts",
+         spell_title(spell), you.perma_hunger[pb],
+         you.perma_mp[pb],you.perma_benefit[pb]);
     int time = min(you.time_taken,
                    (you.elapsed_time - you.perma_last_track[pb]));
     you.perma_last_track[pb] = you.elapsed_time;

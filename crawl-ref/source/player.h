@@ -44,6 +44,7 @@
 #define HORROR_PENALTY_KEY "horror_penalty"
 #define POWERED_BY_DEATH_KEY "powered_by_death_strength"
 #define SONG_OF_SLAYING_KEY "song_of_slaying_bonus"
+#define SONG_STARTED_KEY "song_started"
 #define FORCE_MAPPABLE_KEY "force_mappable"
 #define REGEN_AMULET_ACTIVE "regen_amulet_active"
 #define MANA_REGEN_AMULET_ACTIVE "mana_regen_amulet_active"
@@ -114,6 +115,7 @@ enum permabuff_state {
     PB_DMSL_RECHARGE,   // breaks messages from permabuff_whynot
     PB_SONG_SILENCED,
     PB_REGEN_LICH,
+    PB_REGEN_INVIEW,
     PB_MULTI_TRANSFORM,
     PB_TOO_DEAD, // bloodless vampire
     PB_CONFUSED, // only applies to portal proj
@@ -1150,6 +1152,9 @@ void set_mp(int new_amount);
 bool player_regenerates_hp();
 bool player_regenerates_mp();
 int player_last_damaged(); // in auts
+// Is it long enough ago since the player was damaged to allow full pb 
+// reconstruction speed? Improves with Spellcasting.
+bool player_pb_concentration(); 
 
 void print_potion_heal_message();
 
