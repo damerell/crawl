@@ -44,6 +44,7 @@
 #define HORROR_PENALTY_KEY "horror_penalty"
 #define POWERED_BY_DEATH_KEY "powered_by_death_strength"
 #define SONG_OF_SLAYING_KEY "song_of_slaying_bonus"
+#define SONG_STARTED_KEY "song_started"
 #define FORCE_MAPPABLE_KEY "force_mappable"
 #define REGEN_AMULET_ACTIVE "regen_amulet_active"
 #define MANA_REGEN_AMULET_ACTIVE "mana_regen_amulet_active"
@@ -1149,6 +1150,9 @@ void set_mp(int new_amount);
 bool player_regenerates_hp();
 bool player_regenerates_mp();
 int player_last_damaged(); // in auts
+// Is it long enough ago since the player was damaged to allow full pb 
+// reconstruction speed? Improves with Spellcasting.
+bool player_pb_concentration(); 
 
 void print_potion_heal_message();
 

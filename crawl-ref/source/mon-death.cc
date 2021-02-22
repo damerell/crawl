@@ -2257,6 +2257,11 @@ item_def* monster_die(monster& mons, killer_type killer,
         && gives_player_xp)
     {
         const int sos_bonus = you.props[SONG_OF_SLAYING_KEY].get_int();
+        // Roughly speaking, it's a new fight
+        if ((sos_bonus == 0)  || (you.perma_benefit[PERMA_SONG] == 0) ||
+            player_pb_concentration()) {
+            you.props[SONG_STARTED_KEY] = you.elapsed_time;
+        }
         if (sos_bonus <= 8) // cap at +9 slay
             you.props[SONG_OF_SLAYING_KEY] = sos_bonus + 1;
     }

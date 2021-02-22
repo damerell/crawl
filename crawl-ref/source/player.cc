@@ -4118,6 +4118,14 @@ int player_last_damaged() {
     return you.elapsed_time - you.props["last damaged"].get_int();
 }
 
+bool player_pb_concentration() {
+    dprf (DIAG_PERMABUFF, "Player did%s have concentration (%d ago)",
+          (player_last_damaged() > (270 - you.skill(SK_SPELLCASTING, 10)) ?
+           "" : " not"),
+          (player_last_damaged()));
+    return player_last_damaged() > (270 - you.skill(SK_SPELLCASTING, 10));
+}
+
 int get_contamination_level()
 {
     const int glow = you.magic_contamination;

@@ -130,10 +130,12 @@ Spellcasting
 
 Being skilled in Spellcasting slightly increases the success rate and spell
 power of all spells, along with increasing your magical reserves and reducing
-the effects of spell hunger.
+the effects of spell hunger. 
 
-Training Spellcasting also gives you more spell slots to spend on new spells.
-%%%%
+Training Spellcasting also gives you more spell slots to spend on new
+spells, and also makes it easier to sustain and renew permanent charms
+even when being injured in combat.  
+%%%% 
 Conjurations
 
 Conjurations are battle oriented spells, which often work by conjuring up a
@@ -162,8 +164,10 @@ schools.
 %%%%
 Charms
 
-Charms provide you with a number of self-enhancing auras. Training Charms skill
-will often increase the duration or effectiveness of these auras.
+Charms provide you with a number of self-enhancing auras. Training
+Charms skill will often increase the duration or effectiveness of
+these auras. Many spells in this school are "permanent charms"; they
+last until intentionally dispelled.
 
 Being skilled in Charms increases the success rate and spell power of spells in
 this school. Many spells belong to a combination of several schools, in which

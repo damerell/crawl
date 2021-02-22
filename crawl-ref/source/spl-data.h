@@ -939,7 +939,7 @@ static const struct spell_desc spelldata[] =
     SPELL_REGENERATION, "Regeneration",
     SPTYP_CHARMS | SPTYP_NECROMANCY,
     SPFLAG_SELFENCH | SPFLAG_UTILITY,
-    3,
+    4,
     200,
     -1, -1,
     3, 0,
