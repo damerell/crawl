@@ -914,7 +914,7 @@ string monster_info::_core_name() const
             {
                 const item_def& item = *inv[MSLOT_ARMOUR];
                 s = "animated " + item.name(DESC_PLAIN, false, false, true, false,
-                                            ISFLAG_KNOW_CURSE);
+                                            ISFLAG_KNOW_CURSE | ISFLAG_KNOW_PLUSES);
             }
             break;
 
