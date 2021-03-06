@@ -559,7 +559,6 @@ SHUFFLE:   Aa/Bb/Cc/Dd, Cc/Ee, Dd/Ff
 COLOUR:    EeFf = yellow
 SUBST:     ab = !, AB = ., cd = !, CD = ., EeFf = $
 KFEAT:     ! = any shop
-KFEAT:     ? = any shop / T
 :          bazaar_setup(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -1432,7 +1431,7 @@ TAGS:   no_rotate
 WEIGHT: 5
 ORIENT: encompass
 KFEAT:  ! = supply shop
-KFEAT:  ? = any shop / T
+KFEAT:  ? = any shop
 :       bazaar_setup(_G)
 MAP
  xxxxx         xxxxx         xxxxx
