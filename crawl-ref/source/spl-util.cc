@@ -1660,10 +1660,9 @@ void permabuff_track(int pb) {
                    (you.elapsed_time - you.perma_last_track[pb]));
     you.perma_last_track[pb] = you.elapsed_time;
     if (time > 0) {
-// Divide by 2 here as a very crude compensation for the way in vanilla you'd
-// rarely benefit every turn in the full duration.
         string reason = you.cannot_renew_pbs_because();
-        if ((!reason.empty()) && one_chance_in(dur / time)) {
+        if ((!reason.empty()) && 
+            one_chance_in(dur / (time * pb_dur_fudge[pb]))) {
             mprf(MSGCH_DURATION, "You can't renew one of your enchantments because %s!", reason.c_str());
             // Duration reduced now _recheck_perma will silently renew it
             you.increase_duration(permabuff_durs[pb], roll_dice(2, 4));
