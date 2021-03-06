@@ -29,6 +29,7 @@ enum god_type
     GOD_USKAYAW,
     GOD_HEPLIAKLQANA,
     GOD_WU_JIAN,
+    GOD_IHPIX,
     NUM_GODS,                          // always after last god
 
     GOD_RANDOM = 100,

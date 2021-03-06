@@ -69,7 +69,8 @@ static const char *conducts[] =
     "Kill Slime", "Kill Plant", "Was Hasty", "Corpse Violation",
     "Carrion Rot", "Souled Friend Died", "Attack In Sanctuary",
     "Kill Artificial", "Exploration", "Desecrate Holy Remains", "Seen Monster",
-    "Fire", "Kill Fiery", "Sacrificed Love", "Channel", "Hurt Foe", "Use Wizardly Item",
+    "Fire", "Kill Fiery", "Sacrificed Love", "Channel", "Hurt Foe", 
+    "Use Wizardly Item", "Threw Something", "Anti-Missile Magic",
 };
 COMPILE_CHECK(ARRAYSZ(conducts) == NUM_CONDUCTS);
 
@@ -475,6 +476,16 @@ static peeve_map divine_peeves[] =
     peeve_map(),
     // GOD_WU_JIAN,
     peeve_map(),
+    // GOD_IHPIX
+    {
+        { DID_THROW, {
+                "you engage in the crude and unsophisticated practice of throwing objects at your adversaries", true, 1, 1, nullptr, 
+                " thinks you shouldn't throw things.", nullptr }},
+        { DID_REFLECT_ETC, {
+                "you use magical defences against projectiles", false, 1, 1, 
+                nullptr, 
+                " thinks you shouldn't defend yourself like that.", nullptr }},
+    }
 };
 
 string get_god_dislikes(god_type which_god)
@@ -1015,6 +1026,8 @@ static like_map divine_likes[] =
         { DID_KILL_HOLY, KILL_HOLY_RESPONSE },
         { DID_KILL_NONLIVING, KILL_NONLIVING_RESPONSE },
     },
+    // GOD_IHPIX FIXME special kill handing for IHPIX
+    like_map(),
 };
 
 /**

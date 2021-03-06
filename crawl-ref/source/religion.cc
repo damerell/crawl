@@ -349,6 +349,13 @@ const vector<god_power> god_powers[NUM_GODS] =
            "summon a storm of heavenly clouds" },
       { 5, "pin monsters in place when making spinning attacks during Heavenly Storm", "pin monsters with Heavenly Storm" },
     },
+    // Ihp'ix FIXME active powers
+    { // 0 piety passive not in here since active for all non-apostates
+        { 1, "Increasing your skill with any ranged weapon will now increase your skill with other ranged weapons.",
+          "Increasing your skill with any ranged weapon will no longer increase your skill with other ranged weapons." },
+        { 3, "Ihp'ix will sometimes gather up ammunition your enemies are about to fire at you.",
+          "Ihp'ix will no longer gather up ammunition your enemies are about to fire at you." },
+    },
 };
 
 vector<god_power> get_god_powers(god_type god)
@@ -2134,7 +2141,8 @@ string god_name(god_type which_god, bool long_name)
     case GOD_PAKELLAS:      return "Pakellas";
     case GOD_USKAYAW:       return "Uskayaw";
     case GOD_HEPLIAKLQANA:  return "Hepliaklqana";
-    case GOD_WU_JIAN:     return "Wu Jian";
+    case GOD_WU_JIAN:       return "Wu Jian";
+    case GOD_IHPIX:         return "Ihp'ix";
     case GOD_JIYVA: // This is handled at the beginning of the function
     case GOD_ECUMENICAL:    return "an unknown god";
     case NUM_GODS:          return "Buggy";
@@ -3601,6 +3609,12 @@ static void _join_cheibriados()
     notify_stat_change();
 }
 
+static void _join_ihpix()
+{
+    simple_god_message(" begins to gather up any ammunition you see and pass it to you as needed.");
+    // FIXME put all your ammo in the divine quiver
+}
+
 /// What special things happen when you join a god?
 static const map<god_type, function<void ()>> on_join = {
     { GOD_ASHENZARI, []() { ash_check_bondage(); }},
@@ -3624,6 +3638,7 @@ static const map<god_type, function<void ()>> on_join = {
     { GOD_RU, _join_ru },
     { GOD_TROG, _join_trog },
     { GOD_ZIN, _join_zin },
+    { GOD_IHPIX, _join_ihpix },
 };
 
 void join_religion(god_type which_god)
@@ -4118,6 +4133,7 @@ void handle_god_time(int /*time_delta*/)
         case GOD_PAKELLAS:
         case GOD_JIYVA:
         case GOD_WU_JIAN:
+        case GOD_IHPIX:
             if (one_chance_in(17))
                 lose_piety(1);
             break;

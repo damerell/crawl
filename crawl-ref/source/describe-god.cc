@@ -235,6 +235,9 @@ static const char *divine_title[][8] =
     // Wu Jian -- animal/chinese martial arts monk theme
     {"Wooden Rat",          "Young Dog",             "Young Crane",              "Young Tiger",
         "Young Dragon",     "Red Sash",               "Golden Sash",              "Sifu"},
+    // Ihp'ix -- punny, because all the serious ones are taken by skill titles
+    {"Butt of the Joke",     "Loose",                  "Cranky",                    "Quivering",
+     "Quarrelsome",             "Flighty",             "Tightly Wound",             "Highly Strung"},
 };
 COMPILE_CHECK(ARRAYSZ(divine_title) == NUM_GODS);
 
@@ -899,6 +902,16 @@ static formatted_string _describe_god_powers(god_type which_god)
     case GOD_LUGONU:
         have_any = true;
         cprintf("You are protected from the effects of unwielding distortion weapons.\n");
+        break;
+
+    case GOD_IHPIX:
+        have_any = true;
+        if (have_passive(passive_t::ihpix_gather))
+            desc.textcolour(god_colour(which_god));
+        else
+            desc.textcolour(DARKGREY);
+        desc.cprintf("%s gathers up ammunition and passes it to you.\n",
+                     uppercase_first(god_name(which_god)).c_str());
         break;
 
     default:
