@@ -198,6 +198,15 @@ static const char* grunt[][4] =
   {0}
 };
 
+static const char* oday[][4] = {
+    {"a",    "o"},
+    {"e",    "o"},
+    {"i",    "o"},
+    {"u",    "o"},
+    {0}
+};
+
+
 static void _replace_cap_variants(string &str,
                                   string a,
                                   string b,
@@ -576,6 +585,9 @@ void filter_lang(string &str)
                 break;
             case flang_t::grunt:
                 _grunt(str); repl = grunt;
+                break;
+            case flang_t::notoonolodoy:
+                repl = oday;
                 break;
             case flang_t::butt:
                 _butt(str, fake_lang.value);
