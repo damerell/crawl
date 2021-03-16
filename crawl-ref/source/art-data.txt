@@ -237,7 +237,7 @@ VALUE:   1000
 NAME:    Vampire's Tooth
 OBJ:     OBJ_WEAPONS/WPN_QUICK_BLADE
 # it's a quick blade made from a tooth -> no TYPE
-PLUS:    +12
+PLUS:    +8
 COLOUR:  ETC_BONE
 TILE:    spwpn_vampires_tooth
 TILE_EQ: vampires_tooth
@@ -357,7 +357,7 @@ BOOL:    nogen
 
 NAME:    demon blade "Leech"
 OBJ:     OBJ_WEAPONS/WPN_DEMON_BLADE
-PLUS:    +5
+PLUS:    +8
 COLOUR:  ETC_DARK
 TILE:    urand_leech
 TILE_EQ: leech
