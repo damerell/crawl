@@ -6794,9 +6794,10 @@ bool shoot_through_monster(const bolt& beam, const monster* victim)
              && fedhas_protects(*victim)
              && (mons_atts_aligned(victim->attitude, origin_attitude)
                  || victim->neutral())) ||
-           // Player demonic guardian
+            // Player demonic guardian
             (originator->is_player()
-             && testbits(victim->flags, MF_DEMONIC_GUARDIAN)));
+             && (testbits(victim->flags, MF_DEMONIC_GUARDIAN)
+                 || mons_is_hepliaklqana_ancestor(victim->type))));
 }
 
 /**
