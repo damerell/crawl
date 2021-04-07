@@ -1468,7 +1468,8 @@ bool vehumet_supports_spell(spell_type spell)
         || spell == SPELL_OLGREBS_TOXIC_RADIANCE
         || spell == SPELL_VIOLENT_UNRAVELLING
         || spell == SPELL_INNER_FLAME
-        || spell == SPELL_IGNITION)
+        || spell == SPELL_IGNITION
+        || spell == SPELL_POISONOUS_VAPOURS)
     {
         return true;
     }
