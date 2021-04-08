@@ -941,10 +941,15 @@ int spell_power_cap(spell_type spell)
     }
 }
 
-int spell_range(spell_type spell, int pow, bool allow_bonus)
+int spell_range(spell_type spell, int pow,
+                bool allow_bonus, bool ignore_shadows)
 {
     int minrange = _seekspell(spell)->min_range;
     int maxrange = _seekspell(spell)->max_range;
+
+    const int range_cap = ignore_shadows ? you.normal_vision
+                                         : you.current_vision;
+
     ASSERT(maxrange >= minrange);
 
     // spells with no range have maxrange == minrange == -1
@@ -963,22 +968,21 @@ int spell_range(spell_type spell, int pow, bool allow_bonus)
     }
 
     if (minrange == maxrange)
-        return min(minrange, (int)you.current_vision);
+        return min(minrange, range_cap);
 
     const int powercap = spell_power_cap(spell);
 
     if (spell != SPELL_CONTROLLED_BLINK) {
         if (powercap <= pow)
-            return min(maxrange, (int)you.current_vision);
+            return min(maxrange, range_cap);
 
         // Round appropriately.
-        return min((int)you.current_vision,
-                   (pow * (maxrange - minrange) + powercap / 2) / 
-                   powercap + minrange);
+        return min(range_cap,
+               (pow * (maxrange - minrange) + powercap / 2) / powercap + minrange);
     } else {
         pow = min(powercap, pow);
         return 
-            min (((int) you.current_vision), 
+            min (((int) range_cap), 
                  (max (minrange,
                        min(maxrange, (maxrange * pow * pow) / 10000))));
     }
