@@ -182,5 +182,7 @@ enum enchant_type
     ENCH_WU_TOHIT,
     // Update enchant_names[] in mon-ench.cc when adding or removing
     // enchantments.
+    ENCH_CONCENTRATE_VENOM, // does nothing but here so that if/when we get
+    // it the change in 8836bdb7d9193b06df2a94626c192ba0ec is correct
     NUM_ENCHANTMENTS
 };
