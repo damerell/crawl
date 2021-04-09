@@ -2140,7 +2140,7 @@ static const char *enchant_names[] =
     "idealised", "bound_soul", "infestation",
     "stilling the winds", "thunder_ringed", "pinned_by_whirlwind",
     "vortex", "vortex_cooldown", "vile_clutch", "wu_tohit",
-    "buggy",
+    "buggy concentrate venom", "buggy",
 };
 
 static const char *_mons_enchantment_name(enchant_type ench)
