@@ -6786,15 +6786,17 @@ bool shoot_through_monster(const bolt& beam, const monster* victim)
         origin_attitude = temp->attitude;
     }
 
-    return (beam.ihpierce && (victim->friendly() || victim->good_neutral()))
-           || (origin_worships_fedhas
-               && fedhas_protects(*victim))
-           || (originator->is_player()
-               && testbits(victim->flags, MF_DEMONIC_GUARDIAN))
-           && !beam.is_enchantment()
-           && beam.origin_spell != SPELL_CHAIN_LIGHTNING
-           && (mons_atts_aligned(victim->attitude, origin_attitude)
-               || victim->neutral());
+    // Fedhas logic: the alignment check is to allow a penanced player
+    // to continue to fight hostile plants, in case what they angered can
+    // fight back
+    return ((beam.ihpierce && (victim->friendly() || victim->good_neutral())) ||
+            (origin_worships_fedhas
+             && fedhas_protects(*victim)
+             && (mons_atts_aligned(victim->attitude, origin_attitude)
+                 || victim->neutral())) ||
+           // Player demonic guardian
+            (originator->is_player()
+             && testbits(victim->flags, MF_DEMONIC_GUARDIAN)));
 }
 
 /**
