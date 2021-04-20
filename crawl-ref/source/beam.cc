@@ -4830,6 +4830,8 @@ void bolt::affect_monster(monster* mon)
         {
             if (testbits(mon->flags, MF_DEMONIC_GUARDIAN))
                 mpr("Your demonic guardian avoids your attack.");
+            else if (mons_is_hepliaklqana_ancestor(mon->type))
+                mprf("%s avoids your attack.", mon->name(DESC_THE).c_str());
             else if (!bush_immune(*mon)) {
                 if (ihpierce) {
                     mprf("The %s speeds past %s.", name.c_str(),
