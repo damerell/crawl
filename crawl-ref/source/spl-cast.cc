@@ -693,7 +693,7 @@ bool can_cast_spells(bool quiet, bool perma_release)
     if (apply_starvation_penalties() && !perma_release)
     {
         if (!quiet)
-            canned_msg(MSG_NO_ENERGY);
+            mpr("You cannot cast spells while you are starving!");
         return false;
     }
 
@@ -888,7 +888,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
         if (you.undead_state() == US_ALIVE && !you_foodless()
             && you.hunger <= spell_hunger(spell))
         {
-            canned_msg(MSG_NO_ENERGY);
+            mpr("You are too hungry to cast that spell.");
             crawl_state.zero_turns_taken();
             return false;
         }
