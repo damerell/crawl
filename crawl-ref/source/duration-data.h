@@ -580,7 +580,7 @@ static const duration_def duration_data[] =
     { DUR_BATTLESPHERE, 
       YELLOW, "-Sphere",
       "battlesphere suppressed", "",
-      "Your battlesphere has been dispelled", D_EXPIRES,
+      "Your battlesphere has been dispelled.", D_EXPIRES,
       {{ "", []() {
 		  if (_recheck_perma(PERMA_BATTLESPHERE)) {
 		      if (you.permabuff_could(PERMA_BATTLESPHERE)) {
