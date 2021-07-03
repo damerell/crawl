@@ -2033,6 +2033,45 @@ bool item_skills(const item_def &item, set<skill_type> &skills)
     if (sk != SK_FIGHTING && sk != SK_THROWING)
         skills.insert(sk);
 
+    if ((item.base_type == OBJ_WEAPONS) && 
+        (get_weapon_brand(item) == SPWPN_PAIN)) {
+        skills.insert(SK_NECROMANCY);
+    }
+
+    if (is_unrandom_artefact(item, UNRAND_OLGREB)) {
+      skills.insert(SK_POISON_MAGIC);
+    }
+    if (is_unrandom_artefact(item, UNRAND_ELEMENTAL_STAFF)) {
+      skills.insert(SK_FIRE_MAGIC); skills.insert(SK_EARTH_MAGIC);
+      skills.insert(SK_ICE_MAGIC); skills.insert(SK_AIR_MAGIC);
+    }
+
+    if (item.base_type == OBJ_STAVES) {
+      switch (item.sub_type) {
+      case STAFF_FIRE:
+        skills.insert(SK_FIRE_MAGIC); break;
+      case STAFF_COLD:
+        skills.insert(SK_ICE_MAGIC); break;
+      case STAFF_EARTH:
+        skills.insert(SK_EARTH_MAGIC); break;
+      case STAFF_AIR:
+        skills.insert(SK_AIR_MAGIC); break;
+      case STAFF_POISON:
+        skills.insert(SK_POISON_MAGIC); break;
+      case STAFF_DEATH:
+        skills.insert(SK_NECROMANCY); break;
+      case STAFF_SUMMONING:
+        skills.insert(SK_SUMMONINGS); break;
+        // yeah, I know right now you can always train it
+      case STAFF_WIZARDRY:
+      case STAFF_POWER:
+      case STAFF_ENERGY:
+        skills.insert(SK_SPELLCASTING); break;
+      case STAFF_CONJURATION:
+        skills.insert(SK_CONJURATIONS); break;
+      }
+    }
+
     return !skills.empty();
 }
 
