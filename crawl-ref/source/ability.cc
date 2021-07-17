@@ -3445,9 +3445,6 @@ vector<talent> your_talents(bool check_confused, bool include_unusable)
         _add_talent(talents, ABIL_BREATHE_FIRE, check_confused);
     }
 
-    if (you.duration[DUR_PORTAL_PROJECTILE])
-        _add_talent(talents, ABIL_CANCEL_PPROJ, check_confused);
-
     if (you.has_any_permabuff()) {
         _add_talent(talents, ABIL_END_PERMABUFFS, check_confused);
     }
