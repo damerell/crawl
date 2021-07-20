@@ -2353,6 +2353,7 @@ static spell_type servitor_spells[] =
     SPELL_FLAME_TONGUE,
     SPELL_STING,
     SPELL_SANDBLAST,
+    SPELL_SHOCK,
     SPELL_MAGIC_DART,
 };
 
