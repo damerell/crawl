@@ -821,6 +821,7 @@ static string _describe_demon(const string& name, bool flying)
         " Its body is scourged by damnation.",
         " Its body is extensively scarred.",
         " You find it difficult to look away.",
+        " It menaces with spikes.",
     };
 
     static const char* smell_descs[] =
