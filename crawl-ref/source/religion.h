@@ -21,6 +21,9 @@
 #define FAITH_WORKING "faith working"
 #define FAITH_TOTAL "faith total"
 
+#define MAX_OVERFLOW_LEVEL 9
+#define MIN_OVERFLOW_LEVEL 2
+
 enum class lifesaving_chance
 {
     never,
