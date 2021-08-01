@@ -371,6 +371,23 @@ static string _get_altars(bool display)
     }
     disp += "\n";
     disp += _print_altars_for_gods(temple_god_list(), true, display);
+    bool seenall = true;
+    for (const god_type god : temple_god_list()) {
+        bool has_altar_been_seen = false;
+        for (const auto &entry : altars_present) {
+            if (entry.second == god) {
+                has_altar_been_seen = true; break;
+            }
+        }
+        if (!has_altar_been_seen) {
+            seenall = false; break;
+        }
+    } 
+    if (!seenall) {
+        disp += "Altars to gods listed above are guaranteed either in the "
+            "Temple or between levels " + to_string(MIN_OVERFLOW_LEVEL) +
+            " and " + to_string(MAX_OVERFLOW_LEVEL) + " of the Dungeon.\n";
+    }
     disp += _print_altars_for_gods(nontemple_god_list(), false, display);
 
     return disp;
