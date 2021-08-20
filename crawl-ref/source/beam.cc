@@ -89,6 +89,7 @@ static void _ench_animation(int flavour, const monster* mon = nullptr,
 static beam_type _chaos_beam_flavour(bolt* beam);
 static string _beam_type_name(beam_type type);
 int _ench_pow_to_dur(int pow);
+int _mindburst_head_bonus(int dam, int num_heads);
 
 tracer_info::tracer_info()
 {
@@ -3407,6 +3408,12 @@ bool bolt::misses_player()
     return miss;
 }
 
+int _mindburst_head_bonus(int dam, int num_heads) {
+    if (num_heads <= 1) return dam;
+    dam += (dam * (9 + num_heads)) / 27;
+    return dam; 
+}
+
 void bolt::affect_player_enchantment(bool resistible)
 {
     if (resistible
@@ -3623,6 +3630,7 @@ void bolt::affect_player_enchantment(bool resistible)
 
         {
             int amt = damage.roll();
+            amt = _mindburst_head_bonus(amt, you.heads());
             internal_ouch(amt);
 
             if (you.can_bleed())
@@ -5423,7 +5431,8 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
 
     case BEAM_MINDBURST:
     {
-        const int dam = damage.roll();
+        int dam = damage.roll();
+        dam = _mindburst_head_bonus(dam, mon->heads());
         if (you.see_cell(mon->pos()))
         {
             const bool plural = mon->heads() > 1;

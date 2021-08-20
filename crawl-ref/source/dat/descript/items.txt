@@ -1267,7 +1267,8 @@ wand of mindburst
 A magical device which launches a psychic attack on a target creature. If it
 overcomes their willpower, it 'blows their mind' in a violently literal fashion,
 dealing damage that bypasses their armour entirely. It is useless against
-mindless creatures.
+mindless creatures, but deals additional damage against creatures with multiple
+heads.
 %%%%
 wand of paralysis
 
