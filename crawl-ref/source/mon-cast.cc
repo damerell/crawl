@@ -7836,7 +7836,7 @@ static bool _ms_waste_of_time(monster* mon, mon_spell_slot slot)
 
     // Don't bother casting a summon spell if we're already at its cap
     if (summons_are_capped(monspell)
-        && count_summons(mon, monspell) >= summons_limit(monspell))
+        && count_summons(mon, monspell) >= summons_limit(monspell, false))
     {
         return true;
     }
