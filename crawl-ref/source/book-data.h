@@ -11,8 +11,8 @@
 // If you add a book don't forget to edit book_rarity in spl-book.cc
 // and item-name.cc... and alphabet shops!
 
-// If you add a spell it should probably turn up in about one non-starting
-// book or two if it's meant to shore up a school that needs help
+// If you add a spell it should probably turn up in about two books, starting
+// or nonstarting.
 // Don't forget to check if Vehumet should support if it's not a Conjuration.
 
 // It seems we are unlikely to divorce backgrounds from books as vanilla has
@@ -69,6 +69,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_AURA_OF_ABJURATION,
     SPELL_SUMMON_FOREST,
     SPELL_SUMMON_MANA_VIPER,
+    SPELL_SUMMON_CACTUS,
 },
 
 {   // Book of Fire
@@ -367,6 +368,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_CALL_CANINE_FAMILIAR,
     SPELL_SUMMON_ICE_BEAST,
     SPELL_SUMMON_MANA_VIPER,
+    SPELL_SUMMON_CACTUS,
     SPELL_SUMMON_HYDRA,
 },
 

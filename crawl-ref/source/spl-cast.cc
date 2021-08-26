@@ -1752,6 +1752,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     case SPELL_SUMMON_ICE_BEAST:
         return cast_summon_ice_beast(powc, god, fail);
 
+    case SPELL_SUMMON_CACTUS:
+        return cast_summon_cactus(powc, god, fail);
+
     case SPELL_MONSTROUS_MENAGERIE:
         return cast_monstrous_menagerie(&you, powc, god, fail);
 

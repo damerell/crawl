@@ -464,6 +464,7 @@ enum monster_type                      // menv[].type
 #if TAG_MAJOR_VERSION > 34
     MONS_JUGGERNAUT,
     MONS_IRON_GIANT,
+    MONS_CACTUS_GIANT,
 #endif
     MONS_HUMAN,
 #if TAG_MAJOR_VERSION == 34
@@ -1044,6 +1045,7 @@ enum monster_type                      // menv[].type
     MONS_TAINTED_LEVIATHAN,     // Not in Stoat Soup, added to let later
     MONS_FOXFIRE,               // commits apply OK
     MONS_ANIMATED_ARMOUR,
+    MONS_CACTUS_GIANT,
 #endif
 
     NUM_MONSTERS,               // used for polymorph

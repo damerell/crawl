@@ -38,6 +38,7 @@ spret cast_sticks_to_snakes(int pow, god_type god, bool fail);
 spret cast_call_canine_familiar(int pow, god_type god, bool fail);
 spret cast_summon_armour_spirit(int pow, god_type god, bool fail);
 spret cast_summon_ice_beast(int pow, god_type god, bool fail);
+spret cast_summon_cactus(int pow, god_type god, bool fail);
 spret cast_monstrous_menagerie(actor* caster, int pow, god_type god,
                                  bool fail = false);
 spret cast_summon_dragon(actor *caster, int pow,

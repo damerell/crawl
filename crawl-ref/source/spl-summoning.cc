@@ -130,7 +130,12 @@ spret cast_summon_small_mammal(int pow, god_type god, bool fail)
     else
         mon = MONS_WEASEL;
 
-    if (!create_monster(_pal_data(mon, 3, god, SPELL_SUMMON_SMALL_MAMMAL)))
+    if (monster* mons = create_monster(_pal_data(mon, 3, god, SPELL_SUMMON_SMALL_MAMMAL)))
+    {
+        if (you.can_see(*mons))
+            mprf("%s appears in a puff of smoke.", mons->name(DESC_A).c_str());
+    }
+    else
         canned_msg(MSG_NOTHING_HAPPENS);
 
     return spret::success;
@@ -256,6 +261,18 @@ spret cast_call_canine_familiar(int pow, god_type god, bool fail)
     const int dur = min(2 + (random2(pow) / 4), 6);
 
     if (!create_monster(_pal_data(mon, dur, god, SPELL_CALL_CANINE_FAMILIAR)))
+        canned_msg(MSG_NOTHING_HAPPENS);
+
+    return spret::success;
+}
+
+spret cast_summon_cactus(int pow, god_type god, bool fail)
+{
+    fail_check();
+
+    mgen_data mg = _pal_data(MONS_CACTUS_GIANT, 3, god, SPELL_SUMMON_CACTUS);
+    mg.hp = hit_points(pow + 27, 1);
+    if (!create_monster(mg))
         canned_msg(MSG_NOTHING_HAPPENS);
 
     return spret::success;
@@ -3322,6 +3339,7 @@ static const map<spell_type, summon_cap> summonsdata =
     { SPELL_SPELLFORGED_SERVITOR,     { 1, 1 } },
     { SPELL_ANIMATE_ARMOUR,           { 1, 1 } },
     { SPELL_HAUNT,                    { 8, 8 } },
+    { SPELL_SUMMON_CACTUS,            { 1, 1 } },
     // Monster-only spells
     { SPELL_SHADOW_CREATURES,         { 0, 4 } },
     { SPELL_SUMMON_UFETUBUS,          { 0, 8 } },
