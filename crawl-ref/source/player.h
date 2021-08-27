@@ -852,6 +852,9 @@ public:
 		     const actor* agent, string source)
         override;
 
+    // Always false since we have no mountain boots
+    bool resists_dislodge(string /*event*/ = "") const { return false; };
+
     bool can_throw_large_rocks() const override;
     bool can_smell() const;
     bool can_sleep(bool holi_only = false) const override;

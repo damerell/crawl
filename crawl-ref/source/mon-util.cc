@@ -1856,6 +1856,14 @@ static int _downscale_zombie_damage(int damage)
     return max(1, 4 * damage / 5);
 }
 
+// Do not include AF_PLAIN, we want that to be overwritten for spectrals
+// and simulacra
+static const set<attack_flavour> allowed_zombie_af = {
+    AF_REACH,
+    AF_CRUSH,
+    AF_TRAMPLE,
+};
+
 static mon_attack_def _downscale_zombie_attack(const monster& mons,
                                                mon_attack_def attk,
                                                bool random)
@@ -1870,14 +1878,16 @@ static mon_attack_def _downscale_zombie_attack(const monster& mons,
         break;
     }
 
+    attk.damage = _downscale_zombie_damage(attk.damage);
+    if (allowed_zombie_af.count(attk.flavour))
+        return attk;
+
+    // overwrite all other AFs
     if (mons.type == MONS_SIMULACRUM)
         attk.flavour = AF_COLD;
     else if (mons.type == MONS_SPECTRAL_THING && (!random || coinflip()))
         attk.flavour = AF_DRAIN_XP;
-    else if (attk.flavour != AF_REACH && attk.flavour != AF_CRUSH)
-        attk.flavour = AF_PLAIN;
-
-    attk.damage = _downscale_zombie_damage(attk.damage);
+    else attk.flavour = AF_PLAIN;
 
     return attk;
 }

@@ -234,7 +234,8 @@ public:
                                   const char* hurt_msg = nullptr) = 0;
     virtual bool corrode_equipment(const char* corrosion_source = "the acid",
                                    int degree = 1) = 0;
-
+    virtual bool resists_dislodge(string /*event*/ = "") const { return false; };
+    
     virtual bool can_hibernate(bool holi_only = false,
                                bool intrinsic_only = false) const;
     virtual bool can_sleep(bool holi_only = false) const;
