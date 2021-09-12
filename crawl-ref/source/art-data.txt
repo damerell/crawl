@@ -522,7 +522,6 @@ TILE:     urand_elemental
 TILE_EQ:  elemental_staff
 FIRE:     2
 COLD:     2
-MAGIC:    2
 AC:       5
 BOOL:     elec
 
