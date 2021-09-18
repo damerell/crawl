@@ -1860,6 +1860,10 @@ static int _check_for_uskayaw_targets(coord_def where)
     if (mons_is_firewood(*mons))
         return 0;
 
+    if ((mons->type == MONS_PLAYER_GHOST) && (mons->attitude == ATT_NEUTRAL)) {
+        return 0;
+    }
+
     return 1;
 }
 
