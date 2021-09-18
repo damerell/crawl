@@ -6,6 +6,8 @@ Stoat Soup 0.23 "The Masque of the Red Death"
 * Beastly Appendage is now a permabuff. The appendage pops out on
   making a melee attack; it morphs occasionally on subsequent attacks.
 * Gozag offers an "Ammunition Resupply" ability.
+* Inscribe items !t to be warned before throwing but not firing them.
+* Weapons of pain enable training Necromancy; staves enable their schools.
 
 Vanilla changes messed around with
 ----------------------------------
@@ -30,6 +32,7 @@ Vanilla changes messed around with
   being extra good rings of evasion / protection.
 * WJC loses pin other than during Serpent's Lash / Heavenly Storm, but any
   monster you hit when martially attacking >1 monster gets an accuracy penalty.
+* The "corpse sense" given to necromancers is also given to Yred worshippers.
 
 Stoat Soup 0.22 "Spirits of the Dead"
 -------------------------------------
