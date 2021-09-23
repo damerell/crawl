@@ -135,6 +135,10 @@ bool fight_melee(actor *attacker, actor *defender, bool *did_hit, bool simu)
         if (attacker->as_monster()->rolling())
             return false;
 
+        // It's hard to attack from within a shell.
+        if (attacker->as_monster()->withdrawn())
+            return false;
+
         // In case the monster hasn't noticed you, bumping into it will
         // change that.
         behaviour_event(attacker->as_monster(), ME_ALERT, defender);

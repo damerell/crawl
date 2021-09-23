@@ -71,6 +71,7 @@ static map<enchant_type, monster_info_flags> trivial_ench_mb_mappings = {
     { ENCH_RAISED_MR,       MB_RAISED_MR },
     { ENCH_MIRROR_DAMAGE,   MB_MIRROR_DAMAGE },
     { ENCH_FEAR_INSPIRING,  MB_FEAR_INSPIRING },
+    { ENCH_WITHDRAWN,       MB_WITHDRAWN },
     { ENCH_DAZED,           MB_DAZED },
     { ENCH_MUTE,            MB_MUTE },
     { ENCH_BLIND,           MB_BLIND },
@@ -1414,6 +1415,12 @@ vector<string> monster_info::attributes() const
         v.push_back(string("catching ")
                     + pronoun(PRONOUN_POSSESSIVE) + " breath");
     }
+    if (is(MB_WITHDRAWN))
+    {
+        v.emplace_back("regenerating health quickly");
+        v.push_back(string("protected by ")
+                    + pronoun(PRONOUN_POSSESSIVE) + " shell");
+    }
     if (is(MB_DAZED))
         v.emplace_back("dazed");
     if (is(MB_MUTE))
@@ -1846,6 +1853,9 @@ void mons_conditions_string(string& desc, const vector<monster_info>& mi,
     desc = out.str();
 }
 
+// Approx ordering; buffs like berserk first, then incapaciting
+// conditions like paralysis, then maluses, then largely informational
+// material like that a monster is invisible when you have SInv.
 vector<monster_info_func> init_monster_info_funcs() {
     vector<monster_info_func> toret; // well, I couldn't think of a good name
     toret.push_back({"no charges", "no charges", 
@@ -1924,6 +1934,9 @@ vector<monster_info_func> init_monster_info_funcs() {
     toret.push_back({"possessable", "possessable", 
                 [](const monster_info &mi, bool newconditions) { 
                 return mi.is(MB_POSSESSABLE); }});
+    toret.push_back({"in shell", "in shell", 
+                [](const monster_info &mi, bool newconditions) { 
+                return mi.is(MB_WITHDRAWN); }});
     toret.push_back({"insane", "insane", 
                 [](const monster_info &mi, bool newconditions) { 
                 return mi.is(MB_INSANE); }});

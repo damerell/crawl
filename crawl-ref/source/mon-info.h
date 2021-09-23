@@ -76,8 +76,8 @@ enum monster_info_flags
     MB_MOSTLY_FADED,
 #endif
     MB_FEAR_INSPIRING,
-#if TAG_MAJOR_VERSION == 34
     MB_WITHDRAWN,
+#if TAG_MAJOR_VERSION == 34
     MB_ATTACHED,
 #endif
     MB_DAZED,
