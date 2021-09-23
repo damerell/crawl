@@ -151,6 +151,7 @@ static void _monster_regenerate(monster* mons)
 
     if (mons_class_fast_regen(mons->type)
         || mons->has_ench(ENCH_REGENERATION)
+        || mons->has_ench(ENCH_WITHDRAWN)
         || _mons_natural_regen_roll(mons))
     {
         mons->heal(1);
@@ -1898,9 +1899,10 @@ void handle_monster_move(monster* mons)
         mons->props["mmov"].get_coord() = mmov;
 
     if (!mons->asleep() && !mons_is_wandering(*mons)
-        // Berserking monsters are limited to running up and
-        // hitting their foes.
-        && !mons->berserk_or_insane()
+            && !mons->withdrawn()
+            // Berserking monsters are limited to running up and
+            // hitting their foes.
+            && !mons->berserk_or_insane()
         // Slime creatures can split while wandering or resting.
         || mons->type == MONS_SLIME_CREATURE)
     {
@@ -1985,7 +1987,8 @@ void handle_monster_move(monster* mons)
 
             if (_unfriendly_or_insane(*mons)
                 && !mons->has_ench(ENCH_CHARM)
-                && !mons->has_ench(ENCH_HEXED))
+                && !mons->has_ench(ENCH_HEXED)
+                && !mons->withdrawn())
             {
                 monster* new_target = 0;
                 if (!mons->wont_attack())
