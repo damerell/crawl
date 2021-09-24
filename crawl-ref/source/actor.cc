@@ -18,6 +18,7 @@
 #include "los.h"
 #include "mon-behv.h"
 #include "mon-death.h"
+#include "mon-util.h"
 #include "religion.h"
 #include "stepdown.h"
 #include "stringutil.h"
@@ -348,6 +349,8 @@ int actor::spirit_shield(bool calc_unid, bool items) const
 int actor::apply_ac(int damage, int max_damage, ac_type ac_rule,
                     int stab_bypass, bool for_real) const
 {
+    int minimum = (!is_player() && (damage >= 1) &&
+                   mons_is_firewood(*as_monster())) ? 1 : 0;
     int ac = max(armour_class() - stab_bypass, 0);
     int gdr = gdr_perc();
     int saved = 0;
@@ -359,7 +362,7 @@ int actor::apply_ac(int damage, int max_damage, ac_type ac_rule,
         ASSERT(stab_bypass == 0);
         saved = damage - apply_chunked_AC(damage, ac);
         saved = max(saved, div_rand_round(max_damage * gdr, 100));
-        return max(damage - saved, 0);
+        return max(damage - saved, minimum);
 
     case AC_NORMAL:
         saved = random2(1 + ac);
@@ -390,7 +393,7 @@ int actor::apply_ac(int damage, int max_damage, ac_type ac_rule,
             count_action(CACT_ARMOUR, -1); // unarmoured subtype
     }
 
-    return max(damage - saved, 0);
+    return max(damage - saved, minimum);
 }
 
 bool actor_slime_wall_immune(const actor *act)
