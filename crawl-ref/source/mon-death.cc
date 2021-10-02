@@ -2163,21 +2163,16 @@ item_def* monster_die(monster& mons, killer_type killer,
         if (!silent && !hard_reset && !was_banished)
         {
             // Under Gozag, permanent dancing weapons get turned to gold.
-            if (!summoned_it && !mons.has_ench(ENCH_ABJ)) {
-                if (have_passive(passive_t::goldify_corpses)) {
-                    simple_monster_message(mons, " dissolves into gold.",
-                                           MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
-                    killer = KILL_RESET;
-                } else {
-                    simple_monster_message(mons, " falls from the air.",
+            if (!summoned_it
+                && (!have_passive(passive_t::goldify_corpses)
+                    || mons.has_ench(ENCH_ABJ)))
+            {
+                simple_monster_message(mons, " falls from the air.",
                                        MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
-                }
-            } else {
-                simple_monster_message(mons, " wavers and disappears.",
-                                           MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
-                killer = KILL_RESET;
+                silent = true;
             }
-            silent = true;
+            else
+                killer = KILL_RESET;
         }
 
         if (was_banished && !summoned_it && !hard_reset
