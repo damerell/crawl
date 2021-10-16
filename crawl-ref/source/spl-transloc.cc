@@ -930,11 +930,29 @@ spret cast_apportation(int pow, bolt& beam, bool fail)
     return spret::success;
 }
 
-spret cast_golubrias_passage(const coord_def& where, bool fail)
+int golubria_fuzz_range()
+{
+    return orb_limits_translocation() ? 4 : 2;
+}
+
+spret cast_golubrias_passage(int pow, const coord_def& where, bool fail)
 {
     if (orb_limits_translocation(false))
     {
         mprf(MSGCH_ORB, "The Orb prevents you from opening a passage!");
+        return spret::abort;
+    }
+
+    if (grid_distance(where, you.pos())
+        > spell_range(SPELL_GOLUBRIAS_PASSAGE, pow))
+    {
+        mpr("That's out of range!");
+        return spret::abort;
+    }
+
+    if (cell_is_solid(where))
+    {
+        mpr("You can't create a passage there!");
         return spret::abort;
     }
 
@@ -943,7 +961,7 @@ spret cast_golubrias_passage(const coord_def& where, bool fail)
     int tries = 0;
     int tries2 = 0;
     // Less accurate when the orb is interfering.
-    const int range = orb_limits_translocation() ? 4 : 2;
+    const int range = golubria_fuzz_range();
     coord_def randomized_where = where;
     coord_def randomized_here = you.pos();
     do
