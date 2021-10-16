@@ -1957,7 +1957,7 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
         return cast_corpse_rot(fail);
 
     case SPELL_GOLUBRIAS_PASSAGE:
-        return cast_golubrias_passage(beam.target, fail);
+        return cast_golubrias_passage(powc, beam.target, fail);
 
     case SPELL_DARKNESS:
         return cast_darkness(powc, fail);
