@@ -8,6 +8,8 @@ Stoat Soup 0.23 "The Masque of the Red Death"
 * Gozag offers an "Ammunition Resupply" ability.
 * Inscribe items !t to be warned before throwing but not firing them.
 * Weapons of pain enable training Necromancy; staves enable their schools.
+* Non-Gozag food shops are now "supply shops" which also sell ammo. They
+  would sell other non-magical consumables if we thought of any.
 
 Vanilla changes messed around with
 ----------------------------------

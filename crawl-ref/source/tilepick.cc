@@ -140,6 +140,8 @@ tileidx_t tileidx_shop(const shop_struct *shop)
         case SHOP_GENERAL:
         case SHOP_GENERAL_ANTIQUE:
             return TILE_SHOP_GENERAL;
+        case SHOP_SUPPLY:
+            return TILE_SHOP_SUPPLY;
         default:
             return TILE_DNGN_ERROR;
     }
