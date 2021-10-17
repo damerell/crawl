@@ -4417,6 +4417,9 @@ bool gozag_call_merchant()
         // first index.
         if (type == SHOP_FOOD)
             continue;
+        // Gozag sells ammo separately & should not offer >1 food shop
+        if (type == SHOP_SUPPLY)
+            continue;
         if (type == SHOP_DISTILLERY && you.species == SP_MUMMY)
             continue;
         if (type == SHOP_EVOKABLES && you.get_mutation_level(MUT_NO_ARTIFICE))

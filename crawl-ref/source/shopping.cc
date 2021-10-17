@@ -1531,6 +1531,8 @@ string shop_type_name(shop_type type)
             return "Distillery";
         case SHOP_GENERAL:
             return "General Store";
+        case SHOP_SUPPLY:
+            return "Supply";
         default:
             return "Bug";
     }
@@ -1625,6 +1627,7 @@ static const char *shop_types[] =
     "distillery",
     "scroll",
     "general",
+    "supply",
 };
 
 /** What shop type is this?

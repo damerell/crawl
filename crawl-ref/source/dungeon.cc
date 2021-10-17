@@ -5555,6 +5555,13 @@ static bool _valid_item_for_shop(int item_index, shop_type shop_type_,
         return !spec.items.empty();
     }
 
+    // Don't place stones in supply shops, sorry Sandblasters
+    if ((shop_type_ == SHOP_SUPPLY)
+        && (item.base_type == OBJ_MISSILES)
+        && (item.sub_type == MI_STONE)) {
+        return !spec.items.empty();
+    }
+
     return true;
 }
 
@@ -5717,8 +5724,12 @@ void place_spec_shop(const coord_def& where, shop_spec &spec, int shop_level)
     shop.shop_suffix_name = spec.suffix;
     shop.level = level_number * 2;
     shop.type = spec.sh_type;
-    if (shop.type == SHOP_RANDOM)
-        shop.type = static_cast<shop_type>(random2(NUM_SHOPS));
+    // blargh but it's this or use up a tag
+    if (shop.type == SHOP_RANDOM) {
+        do {
+            shop.type = static_cast<shop_type>(random2(NUM_SHOPS));
+        } while (shop.type == SHOP_FOOD);
+    }
     shop.greed = _shop_greed(shop.type, level_number, spec.greed);
     shop.pos = where;
 
@@ -5771,6 +5782,9 @@ object_class_type item_in_shop(shop_type shop_type)
 
     case SHOP_SCROLL:
         return OBJ_SCROLLS;
+
+    case SHOP_SUPPLY:
+        return random_choose(OBJ_FOOD, OBJ_MISSILES);
 
     default:
         die("unknown shop type %d", shop_type);
