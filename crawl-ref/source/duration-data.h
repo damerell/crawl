@@ -728,6 +728,12 @@ static const duration_def duration_data[] =
       D_DISPELLABLE | D_EXPIRES,
       {{"You feel conductive."},
        {"You start to feel a little less insulated."}}, 6},
+    { DUR_BLINK_COOLDOWN,
+      YELLOW, "-Blink",
+      "on blink cooldown", "blink cooldown",
+      "You are unable to blink.", D_NO_FLAGS,
+      {{ "You feel stable enough to blink again."}}},
+
     // The following are visible in wizmode only, or are handled
     // specially in the status lights and/or the % or @ screens.
 

@@ -198,8 +198,9 @@ enum duration_type
     DUR_ACROBAT,
 #if TAG_MAJOR_VERSION == 34
     DUR_RESIDUAL_HARM,
-#endif
     DUR_ACQUIREMENT,
     DUR_APPENDAGE,
+    DUR_BLINK_COOLDOWN,
+#endif
     NUM_DURATIONS
 };

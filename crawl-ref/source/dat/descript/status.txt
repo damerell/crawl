@@ -835,3 +835,11 @@ Your control over your magic has been sapped.
 -Sphere status
 
 You are temporarily unable to summon a battlesphere.
+%%%%
+-Blink status
+
+You are unstable and cannot cast Blink or activate evoked blink abilities
+for a short period of time. Powerful sources of translocation magic such as
+scrolls of blinking ignore this limitation, as do external sources of blinking
+outside of your control.
+%%%%
