@@ -1587,15 +1587,21 @@ static bool _check_ability_possible(const ability_def& abil, bool quiet = false)
     case ABIL_BLINK:
     case ABIL_EVOKE_BLINK:
     {
+        if (you.duration[DUR_BLINK_COOLDOWN])
+        {
+            if (!quiet)
+                mpr("You are still too unstable to blink.");
+            return false;
+        }
         const string no_tele_reason = you.no_tele_reason(false, true);
         if (no_tele_reason.empty())
             return true;
-
+        
         if (!quiet)
-             mpr(no_tele_reason);
+            mpr(no_tele_reason);
         return false;
     }
-
+    
     case ABIL_EVOKE_BERSERK:
     case ABIL_TROG_BERSERK:
         return you.can_go_berserk(true, false, true)
@@ -2062,9 +2068,12 @@ static spret _do_ability(const ability_def& abil, bool fail)
 
     case ABIL_EVOKE_BLINK:      // randarts
         fail_check();
-        // deliberate fall-through
+        return cast_blink(min(50, 1 + you.skill(SK_EVOCATIONS, 3)), fail);
+        break;
+
     case ABIL_BLINK:            // mutation
-        return cast_blink(fail);
+        return cast_blink(min(50, 1+(14 * you.get_mutation_level(MUT_BLINK)
+                                     + you.experience_level / 3)), fail);
         break;
 
     case ABIL_EVOKE_BERSERK:    // amulet of rage, randarts

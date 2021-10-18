@@ -567,7 +567,7 @@ static const struct spell_desc spelldata[] =
     SPTYP_TRANSLOCATION,
     SPFLAG_ESCAPE | SPFLAG_SELFENCH | SPFLAG_EMERGENCY | SPFLAG_UTILITY,
     2,
-    0,
+    50,
     -1, -1,
     2, 0,
     TILEG_BLINK,

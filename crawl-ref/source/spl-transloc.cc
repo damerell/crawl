@@ -365,6 +365,12 @@ spret frog_hop(bool fail)
     return spret::success; // TODO
 }
 
+static void _blink_cooldown(int pow) {
+    int cooldown = div_rand_round(50 - pow, 10);
+    if (cooldown > 0)
+        you.increase_duration(DUR_BLINK_COOLDOWN, 1 + random2(2) + cooldown);
+}
+
 /**
  * Attempt to blink the player to a nearby tile of their choosing.
  *
@@ -400,6 +406,7 @@ spret controlled_blink(bool fail, bool safe_cancel, int power)
     {
         mpr("Oops! There was something there already!");
         uncontrolled_blink();
+        _blink_cooldown(power);
         return spret::success; // of a sort
     }
 
@@ -407,7 +414,8 @@ spret controlled_blink(bool fail, bool safe_cancel, int power)
     move_player_to_grid(target, false);
     // Controlling teleport contaminates the player. -- bwr
     contaminate_player(750 + random2(500), true);
-
+    _blink_cooldown(power);
+    
     crawl_state.cancel_cmd_again();
     crawl_state.cancel_cmd_repeat();
 
@@ -421,7 +429,7 @@ spret controlled_blink(bool fail, bool safe_cancel, int power)
  * @return                  Whether the spell was successfully cast, aborted,
  *                          or miscast.
  */
-spret cast_blink(bool fail)
+spret cast_blink(int pow, bool fail)
 {
     // effects that cast the spell through the player, I guess (e.g. xom)
     if (you.no_tele(false, false, true))
@@ -429,6 +437,8 @@ spret cast_blink(bool fail)
 
     fail_check();
     uncontrolled_blink();
+    _blink_cooldown(pow);
+
     return spret::success;
 }
 
