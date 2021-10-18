@@ -671,8 +671,8 @@ xxxxxcccc2.2ccccxxxxxxxxxxxxxxxcccc2.2ccccxxxxx
 xxxxxxxxcccccxxxxxxxxxxxxxxxxxxxxxcccccxxxxxxxx
 ENDMAP
 
-## BIG BADDIE (Purgy) ######################################################
-# Threat is mostly a single larger creature, often Purgy. Combined weight 40.
+## BIG BADDIE (Pargi) ######################################################
+# Threat is mostly a single larger creature, often Pargi. Combined weight 40.
 
 NAME:     sewer_big_baddie
 TAGS:     no_item_gen no_monster_gen no_pool_fixup
@@ -680,7 +680,7 @@ ORIENT:   encompass
 : sewer_setup(_G)
 SUBST:    2 = 23
 KMONS:    2 = crocodile
-KMONS:    3 = Purgy, crocodile
+KMONS:    3 = Pargi, crocodile
 ITEM:     potion of berserk rage / potion of haste w:5
 MONS:     bat
 MAP
@@ -720,7 +720,7 @@ SUBST:  - = WW...
 MONS:   kobold, jackal
 SUBST:  3 = 334
 KMONS:  3 = crocodile
-KMONS:  4 = Purgy, crocodile
+KMONS:  4 = Pargi, crocodile
 ITEM:   potion of flight / potion of agility / potion of heal wounds / \
         potion of invisibility / potion of mutation / potion of degeneration /\
         scroll of blinking / scroll of teleportation / scroll of fear / \
@@ -763,20 +763,20 @@ cccc.......ccccc
 ENDMAP
 
 ############################################################################
-# Purgy island. by co
-# Purgy lives on this island, he appears in one of three places, if he is
+# Pargi island. by co
+# Pargi lives on this island, he appears in one of three places, if he is
 # outside the loot room, you can get the loot without fighting him
 # (if you are sneaky enough). Not much to walk on here, if you manage to
 # confuse Purge he will probably drown. Some stone walls from the secret room
 # can be seen from the island.
 #
-NAME:    sewer_co_purgy_island
+NAME:    sewer_co_pargi_island
 TAGS:    no_item_gen no_monster_gen no_pool_fixup
 ORIENT:  encompass
-#      Placing Purgy, he appears in one of three places. The crocodile serves
+#      Placing Pargi, he appears in one of three places. The crocodile serves
 #      as the back-up, in case Purgy was already placed in the Dungeon.
 SHUFFLE: PQR
-KMONS:   P = Purgy, crocodile
+KMONS:   P = Pargi, crocodile
 SUBST:   Q = .
 SUBST:   R = .
 #      lesser monsters.
@@ -848,7 +848,7 @@ TAGS:   no_item_gen no_monster_gen no_pool_fixup
 ORIENT: encompass
 MONS:   kobold w:40 / bat / frilled lizard / giant cockroach / \
         adder w:5 / big kobold w:1
-KMONS:  2 = purgy, crocodile
+KMONS:  2 = Pargi, crocodile
 ITEM:   potion of flight / potion of agility / potion of heal wounds / \
         potion of invisibility / potion of mutation / potion of degeneration / \
         scroll of blinking / scroll of teleportation / scroll of fear / \
