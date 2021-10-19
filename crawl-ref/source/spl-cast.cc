@@ -756,7 +756,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
 
             keyin = 0;
 #else
-            if (keyin == 0)
+            if (keyin == 0 && !Options.spell_menu)
             {
                 if (you.spell_no == 1)
                 {
@@ -793,7 +793,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
                 keyin = get_ch();
             }
 
-            if (keyin == '?' || keyin == '*')
+            if (keyin == '?' || keyin == '*' || Options.spell_menu)
             {
                 keyin = list_spells(true, false, true);
                 if (!keyin)

@@ -410,6 +410,7 @@ public:
     int         pickup_menu_limit;  // Over this number of items, menu for
                                     // pickup
     bool        ability_menu;       // 'a'bility starts with a full-screen menu
+    bool        spell_menu;         // 'z' starts with a full-screen menu
     bool        easy_floor_use;     // , selects the floor item if there's 1
 
     int         assign_item_slot;   // How free slots are assigned
