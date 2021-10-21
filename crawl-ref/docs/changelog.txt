@@ -10,6 +10,8 @@ Stoat Soup 0.23 "The Masque of the Red Death"
 * Weapons of pain enable training Necromancy; staves enable their schools.
 * Non-Gozag food shops are now "supply shops" which also sell ammo. They
   would sell other non-magical consumables if we thought of any.
+* Chei's assessment of the speed delta for piety and slouch is based purely
+  on movement speed; no piety for Roxanne or oklobs, sorry.
 
 Vanilla changes messed around with
 ----------------------------------

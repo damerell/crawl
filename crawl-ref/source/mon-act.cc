@@ -274,11 +274,7 @@ static bool _do_mon_spell(monster* mons)
 
 static void _swim_or_move_energy(monster& mon)
 {
-    const dungeon_feature_type feat = grd(mon.pos());
-
-    // FIXME: Replace check with mons_is_swimming()?
-    mon.lose_energy(((feat_is_lava(feat) || feat_is_water(feat))
-                     && mon.ground_level()) ? EUT_SWIM : EUT_MOVE);
+    mon.lose_energy(mons_is_swimming(mon) ? EUT_SWIM : EUT_MOVE);
 }
 
 static bool _unfriendly_or_insane(const monster& mon)
