@@ -5696,7 +5696,7 @@ const monsterentry *monster::find_monsterentry() const
                                                     : get_monster_data(type);
 }
 
-int monster::action_energy(energy_use_type et) const
+int monster::action_energy(energy_use_type et, bool countswim) const
 {
     if (!find_monsterentry())
         return 10;
@@ -5734,7 +5734,8 @@ int monster::action_energy(energy_use_type et) const
     // Floundering monsters get the same penalty as the player, except that
     // players get the penalty on entering water, while monsters get the
     // penalty when leaving it.
-    if (floundering())
+    // "countswim" lets Chei see their movement speed in their natural hab
+    if (floundering() && countswim)
         move_cost += 6;
 
     // Never reduce the cost to zero

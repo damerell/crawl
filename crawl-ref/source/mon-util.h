@@ -485,6 +485,7 @@ bool mons_can_destroy_door(const monster& mon, const coord_def& pos);
 bool mons_can_traverse(const monster& mon, const coord_def& pos,
                        bool only_in_sight = false,
                        bool checktraps = true);
+bool mons_is_swimming(const monster& mon);
 
 mon_inv_type equip_slot_to_mslot(equipment_type eq);
 mon_inv_type item_to_mslot(const item_def &item);

@@ -811,15 +811,34 @@ int cheibriados_monster_player_speed_delta(const monster& mon)
 {
     // Ignore the Slow effect.
     unwind_var<int> ignore_slow(you.duration[DUR_SLOW], 0);
+    // we can't div_rand_round here because it will be very confusing if
+    // chei awards piety for some but not all kills of monster type foo
     const int pspeed = 1000 / (player_movement_speed() * player_speed());
+    const habitat_type hab = mons_primary_habitat(mon);
+    energy_use_type energy = EUT_ATTACK;
+    switch (hab) {
+        case HT_LAND:
+            energy = EUT_MOVE;
+            break;
+        case HT_WATER:
+        case HT_LAVA:
+            energy = EUT_SWIM;
+            break;
+        default:
+            mprf(MSGCH_ERROR, 
+                 "BUG: Chei kill seemed neither to swim nor walk.");
+        }
+    const int mspeed = (10 * mon.speed) / mon.action_energy(energy, false);
     dprf("Your delay: %d, your speed: %d, mon speed: %d",
-        player_movement_speed(), pspeed, mon.speed);
-    return mon.speed - pspeed;
+        player_movement_speed(), pspeed, mspeed);
+    return mspeed - pspeed;
 }
 
 bool cheibriados_thinks_mons_is_fast(const monster& mon)
 {
-    return cheibriados_monster_player_speed_delta(mon) > 0;
+    return ((cheibriados_monster_player_speed_delta(mon) > 0) &&
+            (!mon.is_stationary()) &&
+            (mon.type != MONS_TORPOR_SNAIL));
 }
 
 // Dithmenos also hates fire users, flaming weapons, and generally fiery beings.
@@ -4190,6 +4209,12 @@ bool mons_can_traverse(const monster& mon, const coord_def& p,
     }
 
     return true;
+}
+
+bool mons_is_swimming(const monster& mon) {
+    const dungeon_feature_type feat = grd(mon.pos());
+    return (feat_is_lava(feat) || feat_is_water(feat))
+        && mon.ground_level();
 }
 
 void mons_remove_from_grid(const monster& mon)

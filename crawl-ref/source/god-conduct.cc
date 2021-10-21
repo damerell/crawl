@@ -893,7 +893,7 @@ static like_map divine_likes[] =
     // GOD_CHEIBRIADOS,
     {
         { DID_KILL_FAST, {
-            "you kill fast things, relative to your speed", false,
+            "you kill fast-moving things, relative to your speed", false,
             -6, 18, 2, nullptr,
             [] (int &piety, int &/*denom*/, const monster* victim)
             {
