@@ -629,7 +629,7 @@ static string _milestone_kill_verb(killer_type killer)
 {
     return killer == KILL_BANISHED ? "banished" :
            killer == KILL_PACIFIED ? "pacified" :
-           killer == KILL_CHARMD ? "charmed" :
+           killer == KILL_CHARMD ? "subjugated" :
            killer == KILL_SLIMIFIED ? "slimified" : "killed";
 }
 
@@ -1556,7 +1556,7 @@ static string _killer_type_name(killer_type killer)
     case KILL_PACIFIED:
         return "pacified";
     case KILL_CHARMD:
-        return "charmed";
+        return "subjugated";
     case KILL_SLIMIFIED:
         return "slimified";
     }
