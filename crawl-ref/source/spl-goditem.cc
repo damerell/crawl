@@ -7,6 +7,7 @@
 
 #include "spl-goditem.h"
 
+#include "attack.h"
 #include "cleansing-flame-source-type.h"
 #include "cloud.h"
 #include "coordit.h"
@@ -1066,14 +1067,21 @@ bool cast_smiting(int pow, monster* mons)
     god_conduct_trigger conducts[3];
     set_attack_conducts(conducts, *mons, you.can_see(*mons));
 
-    mprf("You smite %s!", mons->name(DESC_THE).c_str());
-    behaviour_event(mons, ME_ANNOY, &you);
-
     // damage at 0 Invo ranges from 9-12 (avg 10), to 9-72 (avg 40) at 27.
-    int damage_increment = div_rand_round(pow, 8);
-    mons->hurt(&you, 6 + roll_dice(3, damage_increment));
+    int damage = 6 + roll_dice(3, div_rand_round(pow, 8));
+
+    mprf("You smite %s%s",
+         mons->name(DESC_THE).c_str(),
+         attack_strength_punctuation(damage).c_str());
+
+    behaviour_event(mons, ME_ANNOY, &you);
+    mons->hurt(&you, damage);
+
     if (mons->alive())
+    {
         print_wounds(*mons);
+        you.pet_target = mons->mindex();
+    }
 
     return true;
 }
