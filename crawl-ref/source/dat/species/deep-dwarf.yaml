@@ -6,6 +6,8 @@ adjective: "Dwarven"
 genus: "Dwarf"
 difficulty: Intermediate
 difficulty_priority: 20
+species_flags:
+  - dwarven
 aptitudes:
   xp: -1
   hp: 2

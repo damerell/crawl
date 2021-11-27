@@ -692,7 +692,8 @@ string describe_mutations(bool drop_title)
 
     // Could move this into species-data, but then the hack that assumes
     // _dragon_abil should get called on all draconian fake muts would break.
-    if (species_is_draconian(you.species))
+    if (species_is_draconian(you.species) ||
+        (you.species == SP_FAERIE_DRAGON))
         result += "You cannot fit into any form of body armour.\n";
 
     if (player_res_poison(false, false, false) == 3)

@@ -52,11 +52,9 @@ recommended_jobs:
   - JOB_HUNTER
   - JOB_BERSERKER
   - JOB_ARCANE_MARKSMAN
-  - JOB_WIZARD
-  - JOB_FIRE_ELEMENTALIST
+  - JOB_NECROMANCER
+  - JOB_EARTH_ELEMENTALIST
 recommended_weapons:
   - SK_MACES_FLAILS
-  - SK_POLEARMS
   - SK_STAVES
-  - SK_AXES
 create_enum: false
