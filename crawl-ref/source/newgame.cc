@@ -194,7 +194,7 @@ bool is_starting_species(species_type species)
 static species_type random_starting_species()
 {
     species_type temp;
-    species_type selected;
+    species_type selected = SP_UNKNOWN;
     int choices = 0;
     for (int sp = 0; sp < NUM_SPECIES; ++sp)
     {

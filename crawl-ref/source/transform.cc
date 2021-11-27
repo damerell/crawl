@@ -557,7 +557,7 @@ public:
      */
     string transform_message(transformation previous_trans) const override
     {
-        if (you.species == SP_DEEP_DWARF && one_chance_in(10))
+        if (species_is_dwarven(you.species) && one_chance_in(10))
             return "You inwardly fear your resemblance to a lawn ornament.";
         else if (you.species == SP_GARGOYLE)
             return "Your body stiffens and grows slower.";

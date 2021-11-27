@@ -239,6 +239,8 @@ def species_flags(flags):
             out.add('SPF_ELVEN')
         elif f == 'draconian':
             out.add('SPF_DRACONIAN')
+        elif f == 'dwarven':
+            out.add('SPF_DWARVEN')
         elif f == 'orcish':
             out.add('SPF_ORCISH')
         elif f == 'hairless':

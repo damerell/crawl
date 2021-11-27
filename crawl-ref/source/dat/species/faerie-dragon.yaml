@@ -1,0 +1,70 @@
+enum: SP_FAERIE_DRAGON
+monster: MONS_ACID_DRAGON
+name: "Faerie Dragon"
+short_name: "FD"
+adjective: "Faerie"
+genus: "Faerie"
+difficulty: Simple
+difficulty_priority: 15
+species_flags:
+  - hairless
+size: small
+aptitudes:
+  xp: 0
+  hp: -1
+  mp_mod: 0
+  mr: 4
+  fighting: -1
+  short_blades: -2
+  long_blades: -2
+  axes: -2
+  maces_and_flails: -1
+  polearms: -2
+  staves: -1
+  slings: -2
+  bows: -2
+  crossbows: -2
+  throwing: -1
+  armour: False
+  dodging: 1
+  stealth: -3
+  shields: -3
+  unarmed_combat: -1
+  spellcasting: 1
+  conjurations: 2
+  necromancy: 2
+  fire_magic: 2
+  ice_magic: 2
+  air_magic: 2
+  earth_magic: 2
+  poison_magic: 2
+  evocations: -1
+str: 6
+int: 11
+dex: 7
+levelup_stat_frequency: 4
+levelup_stats:
+  - int
+  - dex
+mutations:
+  1:
+    MUT_MAGIC_ATTUNEMENT: 1
+    MUT_SHIMMERING_SCALES: 1
+    MUT_FAERIE_DRAGON_FLIGHT: 1
+fake_mutations:
+  - long: Your sparkly wings attract attention (Stealth-).
+    short: sparkly
+recommended_jobs:
+  - JOB_AIR_ELEMENTALIST
+  - JOB_FIRE_ELEMENTALIST
+  - JOB_ICE_ELEMENTALIST
+  - JOB_CONJURER
+  - JOB_EARTH_ELEMENTALIST
+  - JOB_VENOM_MAGE
+  - JOB_WIZARD
+  - JOB_NECROMANCER
+recommended_weapons:
+  - SK_SHORT_BLADES
+  - SK_MACES_FLAILS
+  - SK_SLINGS
+create_enum: false

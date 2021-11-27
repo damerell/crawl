@@ -12,6 +12,7 @@
 bool species_is_elven(species_type species);
 bool species_is_draconian(species_type species);
 bool species_is_orcish(species_type species);
+bool species_is_dwarven(species_type species);
 bool species_has_hair(species_type species);
 bool species_can_throw_large_rocks(species_type species);
 

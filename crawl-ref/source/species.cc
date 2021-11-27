@@ -145,6 +145,11 @@ bool species_is_orcish(species_type species)
     return bool(get_species_def(species).flags & SPF_ORCISH);
 }
 
+bool species_is_dwarven(species_type species)
+{
+    return bool(get_species_def(species).flags & SPF_DWARVEN);
+}
+
 bool species_has_hair(species_type species)
 {
     return !bool(get_species_def(species).flags & (SPF_NO_HAIR | SPF_DRACONIAN));
