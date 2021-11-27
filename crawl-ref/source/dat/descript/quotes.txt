@@ -2263,11 +2263,20 @@ ring
 %%%%
 ring of the Octopus King
 
-“A mermaid who fancied to sing,
- Roused lust in the Octopus King.
- Her squiggly suitor,
- Tried hard to woo her,
- But she couldn't wear all his rings.”
+{{
+    local descript = "“From a goldsmith the Octopus King,\n" ..
+                     " Bought ring after ring after ring.\n"
+    if you.race() == "Octopode" then
+        descript = descript .. " If you find the lot,\n" ..
+                               " To wear them to Zot,\n" ..
+                               " To seek out his trident's the thing.”"
+    else
+        descript = descript .. " You can't wear them all,\n" ..
+		   	       " Your limb count's too small.\n" ..
+			       " His Majesty can, that's the thing.”"
+    end
+    return descript
+}}
 %%%%
 ring mail
 
