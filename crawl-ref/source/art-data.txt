@@ -945,7 +945,7 @@ OBJ:     OBJ_JEWELLERY/RING_EVASION
 PLUS:    +6
 COLOUR:  ETC_POISON
 TILE:    urand_phasing
-STEALTH: 2
+BOOL:    rmsl
 
 NAME:    ring of Robustness
 OBJ:     OBJ_JEWELLERY/RING_PROTECTION
