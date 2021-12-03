@@ -2363,10 +2363,6 @@ int player_shield_class(bool incap)
         shield += ICEMAIL_MAX * 100;
     }
     shield += you.get_mutation_level(MUT_SHIMMERING_SCALES) * 1200;
-    // After getting only the mutation SH if incapacitated.
-    if (incap) {
-        shield /= 2;
-    }
 
     shield += qazlal_sh_boost() * 100;
     shield += tso_sh_boost() * 100;
