@@ -1690,7 +1690,7 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
 
     int nominal_quan = quantity; 
     // Initialising this just eats a compiler warning 
-    wandfacts facts = { true, true, 0, 0, 0, 0, 0, 0 };
+    wandfacts facts = { true, true, 0, 0, 0, 0, 0 };
     if (base_type == OBJ_WANDS) {
         facts = get_wand_facts(*this);
         nominal_quan = facts.num_wands;
@@ -1860,8 +1860,7 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
                     buff << facts.numIDed << " identified; ";
                 }
                 buff << facts.min_charges << "-" <<
-                    facts.max_charges << " charges, average " <<
-                    (facts.expected_charges + 1) / 2 << ")";
+                    facts.max_charges << " charges)";
             }
         }
         
@@ -2582,7 +2581,6 @@ static void _add_fake_item(object_class_type base, int sub,
 
     if (base == OBJ_WANDS && sub != NUM_WANDS) {
         ptmp->charges = wand_charge_value(ptmp->sub_type);
-        ptmp->expected_charges = 1 + wand_charge_value(ptmp->sub_type);
     }
     else if (base == OBJ_GOLD)
         ptmp->quantity = 18;
