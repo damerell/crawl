@@ -2416,7 +2416,7 @@ void do_demonic_magic(int pow, int rank)
     if (rank < 1)
         return;
 
-    mprf("Malevolent energies surge around you.");
+    bool sawany = false;
 
     for (radius_iterator ri(you.pos(), rank, C_SQUARE, LOS_NO_TRANS, true); ri; ++ri)
     {
@@ -2424,6 +2424,11 @@ void do_demonic_magic(int pow, int rank)
 
         if (!mons || mons->wont_attack() || !mons_is_threatening(*mons))
             continue;
+        
+        if ((!sawany) && you.can_see(*mons)) {
+            sawany = true;
+            mprf("Malevolent energies surge around you.");
+        }
 
         if (mons->check_res_magic(pow) <= 0)
             mons->paralyse(&you, 1 + roll_dice(1,4));
