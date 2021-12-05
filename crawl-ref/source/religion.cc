@@ -3648,6 +3648,15 @@ static const map<god_type, function<void ()>> on_join = {
     { GOD_ASHENZARI, []() { ash_check_bondage(); }},
     { GOD_BEOGH, update_player_symbol },
     { GOD_CHEIBRIADOS, _join_cheibriados },
+    { GOD_DITHMENOS, []() {
+            if (you.duration[DUR_LIQUID_FLAMES]) {
+                simple_god_message(" extinguishes the liquid flames.",
+                    GOD_DITHMENOS);
+                you.duration[DUR_LIQUID_FLAMES] = 0;
+                you.props.erase("sticky_flame_source");
+                you.props.erase("sticky_flame_aux");
+            }
+        }},
     { GOD_FEDHAS, []() {
         mprf(MSGCH_MONSTER_ENCHANT, "The plants of the dungeon cease their "
              "hostilities.");
