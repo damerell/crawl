@@ -3189,6 +3189,13 @@ bool player_can_join_god(god_type which_god)
     if (which_god == GOD_ZIN && you.char_class == JOB_CHAOS_KNIGHT)
         return false;
     
+    if (which_god == GOD_DITHMENOS) {
+        if ((you.species == SP_RED_DRACONIAN) ||
+            (you.has_mutation(MUT_IGNITE_BLOOD))) {
+            return false;
+        }
+    }
+
     if (you.get_mutation_level(MUT_NO_LOVE) && _god_rejects_loveless(which_god))
         return false;
 
@@ -3661,13 +3668,34 @@ static const map<god_type, function<void ()>> on_join = {
     { GOD_ZIN, _join_zin },
 };
 
-void join_religion(god_type which_god)
+bool join_religion(god_type which_god)
 {
     ASSERT(which_god != GOD_NO_GOD);
     ASSERT(which_god != GOD_ECUMENICAL);
     ASSERT(you.species != SP_DEMIGOD);
 
     redraw_screen();
+
+    if (which_god == GOD_DITHMENOS) {
+        bool dithok = true;
+        if (you.species == SP_BASE_DRACONIAN) {
+            if (!you.props.exists(DRACONIAN_COLOUR_INFO)) {
+                you.props[DRACONIAN_COLOUR_INFO] = random_draconian_colour();
+            }
+            if (you.props[DRACONIAN_COLOUR_INFO].get_int() == 
+                SP_RED_DRACONIAN) {
+                dithok = false;
+            }
+        } else if (you.species == SP_DEMONSPAWN) {
+            for (const player::demon_trait trait : you.demonic_traits) {
+                if (trait.mutation == MUT_IGNITE_BLOOD) dithok = false;
+            }
+        }
+        if (!dithok) {
+            simple_god_message(" sees fire in your future, and will not accept your worship.", which_god);
+            return false;
+        }
+    }
 
     const god_type old_god = you.religion;
     if (you.previous_good_god == GOD_NO_GOD)
@@ -3755,6 +3783,7 @@ void join_religion(god_type which_god)
 #endif
 
     learned_something_new(HINT_CONVERT);
+    return true;
 }
 
 void god_pitch(god_type which_god)
@@ -3826,6 +3855,14 @@ void god_pitch(god_type which_god)
         {
             simple_god_message(" does not accept worship from the loveless!",
                                which_god);
+        } 
+        else if (which_god == GOD_DITHMENOS) {
+            if ((you.species == SP_RED_DRACONIAN) ||
+                (you.has_mutation(MUT_IGNITE_BLOOD))) {
+                simple_god_message(" does not accept worship from the fiery!",
+                                   which_god);
+                return;
+            }
         }
         else if (you.get_mutation_level(MUT_NO_ARTIFICE)
                  && which_god == GOD_PAKELLAS)
@@ -3855,13 +3892,11 @@ void god_pitch(god_type which_god)
         return;
     }
 
-    if (describe_god_with_join(which_god))
-        join_religion(which_god);
-    else
-    {
-        you.turn_is_over = false;
-        redraw_screen();
+    if (describe_god_with_join(which_god)) {
+        if (join_religion(which_god)) return;
     }
+    you.turn_is_over = false;
+    redraw_screen();
 }
 
 /** Ask the user for a god by name.

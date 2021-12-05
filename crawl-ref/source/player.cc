@@ -2937,7 +2937,10 @@ void level_change(bool skip_attribute_increase)
             case SP_BASE_DRACONIAN:
                 if (you.experience_level >= 7)
                 {
-                    you.species = random_draconian_colour();
+                    you.species = (you.props.exists(DRACONIAN_COLOUR_INFO) ?
+                                   (species_type) 
+                                   you.props[DRACONIAN_COLOUR_INFO].get_int() :
+                                   random_draconian_colour());
 
                     // We just changed our aptitudes, so some skills may now
                     // be at the wrong level (with negative progress); if we
