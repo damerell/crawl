@@ -68,7 +68,7 @@ int god_colour(god_type god);
 colour_t god_message_altar_colour(god_type god);
 int gozag_service_fee();
 bool player_can_join_god(god_type which_god);
-void join_religion(god_type which_god);
+bool join_religion(god_type which_god);
 void god_pitch(god_type which_god);
 god_type choose_god(god_type def_god = NUM_GODS);
 
