@@ -894,20 +894,20 @@ void merge_ghost_check(monster* mons, monster* merge_to) {
         }
     }
 }
-// If we hated a splitting creature and it's gone, look around for another one
+// If we hated a creature and it's gone, look around for another one
+// Originally this just worked on slimes / starcursed masses but CEB and
+// I felt it could just work on anything, which as a bonus solves the
+// question of Natasha
 bool ghost_retarget(monster& mons) {
-    if ((mons.ghost->slayer == MONS_SLIME_CREATURE) ||
-        (mons.ghost->slayer == MONS_STARCURSED_MASS)) {
-        for (monster_iterator mi; mi; ++mi) {
-            if (mi->type == mons.ghost->slayer) {
-                if (mons.can_see(**mi)) {
-                    if (mons.foe == mons.props[ORIGINAL_FOE].get_int()) {
-                        mons.foe = mi->mindex();
-                    }
-                    mons.props[ORIGINAL_FOE] = mi->mindex();
-                    mi->props["ghost_target"] = true;
-                    return true;
+    for (monster_iterator mi; mi; ++mi) {
+        if (mi->type == mons.ghost->slayer) {
+            if (mons.can_see(**mi) || (mons.ghost->slayer == MONS_NATASHA)) {
+                if (mons.foe == mons.props[ORIGINAL_FOE].get_int()) {
+                    mons.foe = mi->mindex();
                 }
+                mons.props[ORIGINAL_FOE] = mi->mindex();
+                mi->props["ghost_target"] = true;
+                return true;
             }
         }
     }
