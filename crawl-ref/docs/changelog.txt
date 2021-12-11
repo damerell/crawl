@@ -37,6 +37,8 @@ Vanilla changes messed around with
 * WJC loses pin other than during Serpent's Lash / Heavenly Storm, but any
   monster you hit when martially attacking >1 monster gets an accuracy penalty.
 * The "corpse sense" given to necromancers is also given to Yred worshippers.
+* Sludge elves return, having been so keen to get back in the game as to be
+  randomly selectable without us actually putting them back in.
 
 Changes swiped from other variants
 ----------------------------------

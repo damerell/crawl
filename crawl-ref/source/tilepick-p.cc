@@ -671,11 +671,11 @@ void tilep_race_default(int sp, int level, dolls_data *doll)
 
     switch (sp) {
         case SP_HIGH_ELF:
-#if TAG_MAJOR_VERSION == 34
-        case SP_SLUDGE_ELF:
-#endif
             hair = TILEP_HAIR_ELF_YELLOW;
             break;
+        case SP_SLUDGE_ELF:
+	    hair = TILEP_HAIR_ELF_RED;
+	    break;
         case SP_DEEP_ELF:
             hair = TILEP_HAIR_ELF_WHITE;
             break;
