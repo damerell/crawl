@@ -125,6 +125,11 @@ Ogre
 Large, strong, and extremely robust, Ogres are competent with blunt weapons.
 They are not merely brutes, as they are comfortable with spellcasting.
 %%%%
+Sludge Elf
+
+The antithesis of the High Elves, the Sludge Elves prefer cunning to fair
+fighting, and dark magic to other wizardry.
+%%%%
 Spriggan
 
 Very small, very frail and very fast, Spriggans make highly competent stabbers

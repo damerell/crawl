@@ -1847,6 +1847,18 @@ Deep Elves
   but excellent at fighting from a distance. They advance in levels at the same
   speed as High Elves.
 
+Sludge Elves
+  Sludge elves are a somewhat degenerate race of elves (or, at any rate, that
+  is how the High Elves describe them). They are mirror images
+  of normal elves in some respects: they have no special proficiency with bows
+  or swords (long or short), nor do they have any aptitude in the traditional
+  areas of high elven magic (enchantments, conjurations and divinations). On
+  the other hand, they are superlative transmuters, and are comfortable
+  dabbling in necromantic, poison and elemental magic. As fighters they are
+  often more dangerous unarmed than armed. They advance in level slightly
+  faster than their common brethren.
+
+
 The Undead
 ========================================
 
