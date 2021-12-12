@@ -101,9 +101,9 @@ Beastly Appendage spell
         return "Causes the caster to grow monstrous bodily parts, granting " ..
                "them a chance of making an extra attack in " ..
                "melee. It is not powerful enough to meld armour or enhance " ..
-               "appendages that are already nonhuman. If the caster remains" ..
-	       "in melee, their body will continue to morph, but the magic" ..
-	       "will weaken until eventually it does little."
+               "appendages that are already nonhuman. If the caster " ..
+	       "remains in melee, their body will continue to morph, but " ..
+	       "the magic will weaken until eventually it does little."
     end
 }}
 %%%%
