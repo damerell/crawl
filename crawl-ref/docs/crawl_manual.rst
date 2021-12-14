@@ -1534,14 +1534,14 @@ Spriggans
   overtake a Centaur. Due to their tiny size, they need very little food.
   However, they are herbivorous and cannot eat meat. Their size also makes them
   unable to wear most armour. They cannot wield large weapons, and even most
-  smaller weapons require both hands to be wielded by a Spriggan.
+  smaller weapons require both hands to be wielded by a Spriggan. They advance
+  in levels quite slowly.
 
 Nagas
   Nagas are a hybrid species: Human from the waist up with a large snake tail
   instead of legs.
 
-  They are reasonably good at most things and advance in experience levels at
-  the same rate as Merfolk. They are naturally resistant to poisons, can see
+  They are reasonably good at most things. They are naturally resistant to poisons, can see
   invisible creatures, and have tough skin, but their tails are relatively slow
   and cannot move them around as quickly as can other creatures' legs (this only
   affects their movement rate; all other actions are at normal speed). Their
@@ -1582,8 +1582,8 @@ Trolls
 
   They are incredibly strong, and have a lightning-fast metabolism - requiring
   a great deal of food to survive, but regenerating rapidly from even the most
-  terrible wounds. However, they are hopeless at spellcasting and learn most
-  skills very slowly.
+  terrible wounds. However, they are hopeless at spellcasting, advance in 
+  levels quite slowly,  and learn most skills very slowly.
 
 Minotaurs
   The Minotaurs are yet another species of hybrids - Human bodies with bovine
@@ -1593,7 +1593,7 @@ Minotaurs
   Minotaurs are extremely good at all forms of physical combat, but are awful at
   using any type of magic. They can wear all armour except for some headgear.
   When in close combat, Minotaurs tend to reflexively headbutt those who dare
-  attack them.
+  attack them. They advance in levels quite slowly.
 
 Tengu
   The Tengu are an ancient and feared species of bird-people with a legendary
@@ -1630,10 +1630,11 @@ Demonspawn
   this class of beings also develop a range of unholy abilities, which are
   listed as mutations.
 
-  Demonspawn advance slowly in experience and learn most skills at about the
-  same rate as do Demigods. However, they are a little better at fighting
-  and conjurations and much better at necromancy and invocations. Note that
-  unlike Demigods, they can take on gods, although not all will accept them.
+  Demonspawn advance quite slowly in levels and learn most skills
+  at about the same rate as do Demigods. However, they are a little
+  better at fighting and conjurations and much better at necromancy
+  and invocations. Note that unlike Demigods, they can take on gods,
+  although not all will accept them.
 
 Felids
   Felids are a breed of cats that have been granted sentience. Originally they
@@ -1646,10 +1647,11 @@ Felids
   cats, Felids are incapable of thriving on vegetable food, and need meat to
   survive.
 
-  Their agility and stealth are legendary, as is their ability to get to hard to
-  reach places. They move faster than most races, but don't run as fast as
-  Centaurs or Spriggans. Felids advance in levels very slowly. They are skilled
-  with many forms of magic, though less so with raw elemental magic.
+  Their agility and stealth are legendary, as is their ability to get
+  to hard to reach places. They move faster than most races, but don't
+  run as fast as Centaurs or Spriggans. Felids advance in levels quite
+  slowly. They are skilled with many forms of magic, though less so
+  with raw elemental magic.
 
   Felids gain extra lives as they increase in levels. Upon death, they will be
   resurrected in a safe place, losing an experience level in the process.
@@ -1712,6 +1714,7 @@ Formicids
 
   Formicids make good earth and venom mages, but are quite capable at both melee
   and ranged combat too. They are naturally bad at air magic and conjurations.
+  They advance in levels as quickly as Humans.
 
 Vine Stalkers
   Limber in shape, Vine Stalkers are anthropomorphic masses of thick vines.
@@ -1726,7 +1729,7 @@ Vine Stalkers
   their bodies makes them extremely frail, and they cannot benefit from potions
   to heal their wounds.
 
-  Living examples of adaptation, Vine Stalkers level up quickly and lend well
+  Living examples of adaptation, Vine Stalkers are suited
   to an all-out offensive style; trusting their stealth to choose their prey
   and then their regenerating capabilities to power through the wounds they may
   sustain in battle. Many members of the species however, are seen wielding
@@ -1778,7 +1781,7 @@ Dwarves
 ========================================
 Dwarves are short, hardy people. Originally inhabiting deep
 underground caverns, some of them moved closer to the surface while still
-sticking to the mountainous habitat.
+sticking to the mountainous habitat. Dwarves advance in levels quite slowly.
 
 Mountain Dwarves
   Mountain Dwarves come from cities far above the Dungeon. They love to
@@ -1793,8 +1796,6 @@ Mountain Dwarves
   In general, they are rather more resistant to magic than capable of using it
   themselves. However, they are very proficient at earth and fire magic. Thus,
   many a Mountain Dwarf started a career as an elementalist in those schools.
-  They advance in levels at a similar rate to Deep Elves.
-
 
 Deep Dwarves
   Deep Dwarves are dwarves who, unlike their surface relatives, never
@@ -1831,8 +1832,8 @@ elemental magic in particular, while their affinity for other types of magic
 varies among the different sub-species.
 
 High Elves
-  This is a tall and powerful Elven species who advance in levels slowly,
-  requiring half again as much experience as Humans. They have good intelligence
+  This is a tall and powerful Elven species who advance in levels quite 
+  slowly. They have good intelligence
   and dexterity, but suffer in strength. Compared with Humans, they have fewer
   HP but more magic. Among all races, they are best with blades and bows. They
   are not very good with necromancy or with earth or poison magic, but are
@@ -1855,7 +1856,7 @@ Sludge Elves
   areas of high elven magic (enchantments, conjurations and divinations). On
   the other hand, they are superlative transmuters, and are comfortable
   dabbling in necromantic, poison and elemental magic. As fighters they are
-  often more dangerous unarmed than armed. They advance in level slightly
+  often more dangerous unarmed than armed. They advance in levels slightly
   faster than their common brethren.
 
 
@@ -1873,13 +1874,15 @@ Mummies
   These are undead creatures who travel into the depths in search of revenge,
   redemption, or just because they want to.
 
-  Mummies progress slowly in levels, half again as slowly as Humans in all
-  skills except fighting, spellcasting and necromancy. As they increase in
-  levels, they become increasingly in touch with the powers of death, but cannot
-  use some types of necromancy which only affect living creatures. The side
-  effects of necromantic magic tend to be relatively harmless to Mummies.
-  However, their desiccated bodies are highly flammable. They also do not need
-  to eat or drink and, in any case, are incapable of doing so.
+  Mummies progress quite slowly in levels and half again as slowly as
+  Humans in all skills except fighting, spellcasting and
+  necromancy. As they increase in levels, they become increasingly in
+  touch with the powers of death, but cannot use some types of
+  necromancy which only affect living creatures. The side effects of
+  necromantic magic tend to be relatively harmless to Mummies.
+  However, their desiccated bodies are highly flammable. They also do
+  not need to eat or drink and, in any case, are incapable of doing
+  so.
 
 Ghouls
   Ghouls are horrible undead creatures, slowly rotting away. Although Ghouls can
@@ -1893,16 +1896,18 @@ Ghouls
   ice, earth and death magic without too many difficulties.
 
 Vampires
-  Vampires are another form of undead, but with a peculiarity: by consuming
-  fresh blood, they may become alive. A bloodless Vampire has all the traits of
-  an undead, but cannot regain lost physical attributes or regenerate from
-  wounds over time - in particular, magical items or spells which increase the
-  rate of regeneration will not work (though divine ones will). On the other
-  hand, a Vampire full with blood will regenerate very quickly, but lose all
-  undead powers. Vampires can never starve. They can drink from fresh corpses
-  with the 'e' command, or can bottle blood for later use with 'c'. Upon
-  growing, they learn to transform into quick bats. Unlike other undead
-  species, they may be mutated normally at all times.
+  Vampires are another form of undead, but with a peculiarity: by
+  consuming fresh blood, they may become alive. A bloodless Vampire
+  has all the traits of an undead, but cannot regain lost physical
+  attributes or regenerate from wounds over time - in particular,
+  magical items or spells which increase the rate of regeneration will
+  not work (though divine ones will). On the other hand, a Vampire
+  full with blood will regenerate very quickly, but lose all undead
+  powers. Vampires can never starve. They can drink from fresh corpses
+  with the 'e' command, or can bottle blood for later use with
+  'c'. Upon growing, they learn to transform into quick bats. Unlike
+  other undead species, they may be mutated normally at all
+  times. They advance in levels quite slowly.
 
 Draconians
 ========================================
@@ -1914,7 +1919,7 @@ variety of colours. This happens at an early stage in their career, and the
 colour is determined by chromosomes, not by behaviour.
 
 Most types of Draconians have breath weapons or special resistances. Draconians
-cannot wear body armour and advance very slowly in levels, but are reasonably
+cannot wear body armour and advance quite slowly in levels, but are reasonably
 good at all skills other than missile weapons. Still, each colour has its own
 strengths and some have complementary weaknesses, which sometimes requires a bit
 of flexibility on the part of the player.
