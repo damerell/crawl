@@ -51,7 +51,7 @@ static const char *daction_names[] =
     "Trog's gifts go hostile",
     "reclaim decks",
     "reapply passive mapping",
-    "remove Jiyva altars",
+    "remove Jiyva altars and prayers",
     "Pikel's slaves go good-neutral",
     "corpses rot",
 #if TAG_MAJOR_VERSION == 34
@@ -133,6 +133,9 @@ bool mons_matches_daction(const monster* mon, daction_type act)
 
     case DACT_SET_BRIBES:
         return !testbits(mon->flags, MF_WAS_IN_VIEW);
+
+    case DACT_JIYVA_DEAD:
+        return mon->type == MONS_DISSOLUTION;
 
     default:
         return false;
@@ -258,6 +261,13 @@ void apply_daction_to_mons(monster* mon, daction_type act, bool local,
 
         case DACT_SET_BRIBES:
             gozag_set_bribe(mon);
+            break;
+
+        case DACT_JIYVA_DEAD:
+            mon->spells.clear();
+            mon->spells.push_back( { SPELL_CANTRIP, 62, MON_SPELL_PRIEST } );
+            mon->props[CUSTOM_SPELLS_KEY] = true;
+            break;
 
         // The other dactions do not affect monsters directly.
         default:
@@ -272,6 +282,13 @@ static void _apply_daction(daction_type act)
 
     switch (act)
     {
+    case DACT_JIYVA_DEAD:
+        for (rectangle_iterator ri(1); ri; ++ri)
+        {
+            if (env.grid(*ri) == DNGN_ALTAR_JIYVA)
+                env.grid(*ri) = DNGN_FLOOR;
+        }
+    // intentional fallthrough to handle Dissolution
     case DACT_ALLY_UNHOLY_EVIL:
     case DACT_ALLY_UNCLEAN_CHAOTIC:
     case DACT_ALLY_SPELLCASTER:
@@ -298,13 +315,6 @@ static void _apply_daction(daction_type act)
         break;
     case DACT_REAUTOMAP:
         reautomap_level();
-        break;
-    case DACT_REMOVE_JIYVA_ALTARS:
-        for (rectangle_iterator ri(1); ri; ++ri)
-        {
-            if (grd(*ri) == DNGN_ALTAR_JIYVA)
-                grd(*ri) = DNGN_FLOOR;
-        }
         break;
     case DACT_ROT_CORPSES:
         for (auto &item : mitm)

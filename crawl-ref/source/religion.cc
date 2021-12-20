@@ -556,9 +556,9 @@ void dec_penance(god_type god, int val)
             make_stringf(" seems mollified%s.",
                          dead_jiyva ? ", and vanishes" : "").c_str(),
             god);
-
         if (dead_jiyva)
-            add_daction(DACT_REMOVE_JIYVA_ALTARS);
+            add_daction(DACT_JIYVA_DEAD);
+
 
         take_note(Note(NOTE_MOLLIFY_GOD, god));
 
