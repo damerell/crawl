@@ -206,6 +206,14 @@ static const char* oday[][4] = {
     {0}
 };
 
+static const char* hippo[][4] = {
+    {"^spider nest","hippo tank"}, // why doesn't this work??
+    {"^spider","hippo"},
+    {"redback","red hippo"},
+    {"arachnid", "hippopotamine"},
+    {0}
+};
+
 
 static void _replace_cap_variants(string &str,
                                   string a,
@@ -588,6 +596,9 @@ void filter_lang(string &str)
                 break;
             case flang_t::notoonolodoy:
                 repl = oday;
+                break;
+            case flang_t::hippo:
+                repl = hippo;
                 break;
             case flang_t::butt:
                 _butt(str, fake_lang.value);
