@@ -10,4 +10,5 @@ enum class flang_t
     grunt,
     butt,
     notoonolodoy,
+    hippo
 };

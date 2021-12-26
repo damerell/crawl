@@ -3469,6 +3469,7 @@ static const map<string, flang_t> fake_lang_names = {
     { "!!!", flang_t::grunt },
 
     { "notoonolodoy", flang_t::notoonolodoy },
+    { "hippo", flang_t::hippo },
 
     { "butt", flang_t::butt },
     { "buttbot", flang_t::butt },
