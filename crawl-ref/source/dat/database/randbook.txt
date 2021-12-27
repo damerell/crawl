@@ -570,11 +570,9 @@ Companions
 
 the Escort
 
-w:1
+w:3
 Illusion
 
-w:2
-Slavery
 %%%%
 Translocation
 
