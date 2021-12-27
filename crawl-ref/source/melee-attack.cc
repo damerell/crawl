@@ -548,10 +548,9 @@ bool melee_attack::handle_phase_damaged()
                 div_rand_round(calc_spell_power(SPELL_SHROUD_OF_GOLUBRIA,
                                                 true),10) - 2;
         } 
-        int soak = min (damage_done, effectiveness * 2);
         // Chance of the shroud falling apart increases based on the
         // strain of it, i.e. the damage it is redirecting.
-        if (x_chance_in_y(soak, effectiveness+soak))
+        if (x_chance_in_y(damage_done, effectiveness+damage_done))
         {
             // Delay the message for the shroud breaking until after
             // the attack message.
@@ -566,20 +565,15 @@ bool melee_attack::handle_phase_damaged()
         {
             if (needs_message)
             {
-                mprf("%s shroud %sbends %s attack away%s",
+                mprf("%s shroud bends %s attack away%s",
                      def_name(DESC_ITS).c_str(),
-                     soak < damage_done ? "partially ": "",
                      atk_name(DESC_ITS).c_str(),
-                     attack_strength_punctuation(soak).c_str());
+                     attack_strength_punctuation(damage_done).c_str());
             }
-            if (soak < damage_done) {
-                damage_done -= soak;
-                return true;
-            } else {
-                did_hit = false;
-                damage_done = 0;
-                return false;
-            }
+            did_hit = false;
+            damage_done = 0;
+
+            return false;
         }
     }
 
