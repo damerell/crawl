@@ -708,6 +708,11 @@ static const duration_def duration_data[] =
       {{ "", []() {
           you.redraw_evasion = true;
       }}}},
+    { DUR_ACQUIREMENT,
+      YELLOW, "Acquire",
+      "acquiring", "",
+      "You should select an object to acquire before the magic fades.",
+      D_NO_FLAGS, {}, 100},
     // The following are visible in wizmode only, or are handled
     // specially in the status lights and/or the % or @ screens.
 
@@ -755,11 +760,6 @@ static const duration_def duration_data[] =
       {{ "",  wu_jian_heaven_tick }}},
     { DUR_GRASPING_ROOTS, 0, "", "grasped by roots", "grasping roots",
       "You are constricted by grasping roots.", D_NO_FLAGS},
-    { DUR_ACQUIREMENT,
-      YELLOW, "Acquire",
-      "acquiring", "",
-      "You should select an object to acquire before the magic fades.",
-      D_NO_FLAGS, {}, 100},
 #if TAG_MAJOR_VERSION == 34
     // And removed ones
     { DUR_MAGIC_SAPPED, 0, "", "", "old magic sapped", "", D_NO_FLAGS},
