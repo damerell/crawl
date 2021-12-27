@@ -3,6 +3,7 @@ airstrike AIRSTRIKE
 chain_lightning CHAIN_LIGHTNING
 conjure_ball_lightning CONJURE_BALL_LIGHTNING
 deflect_missiles DEFLECT_MISSILES
+insulation INSULATION
 lightning_bolt LIGHTNING_BOLT
 repel_missiles REPEL_MISSILES
 shock SHOCK
@@ -47,6 +48,7 @@ haste HASTE
 infusion INFUSION
 invisibility INVISIBILITY
 mass_confusion MASS_CONFUSION
+see_invisible SEE_INVISIBLE
 slow SLOW
 song_of_slaying SONG_OF_SLAYING
 spectral_weapon SPECTRAL_WEAPON

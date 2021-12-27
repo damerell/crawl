@@ -21,3 +21,5 @@ void unequip_effect(equipment_type slot, int item_slot, bool meld, bool msg);
 bool unwield_item(bool showMsgs = true);
 
 bool acrobat_boost_visible();
+
+void mark_unseen_monsters();

@@ -36,8 +36,6 @@
 #include "spl-wpnench.h"
 #include "xom.h"
 
-static void _mark_unseen_monsters();
-
 /**
  * Recalculate the player's max hp and set the current hp based on the %change
  * of max hp. This has resulted from our having equipped an artefact that
@@ -359,7 +357,7 @@ static void _unequip_artefact_effect(item_def &item,
         drain_player(150, true, true);
 
     if (proprt[ARTP_SEE_INVISIBLE])
-        _mark_unseen_monsters();
+        mark_unseen_monsters();
 
     if (is_unrandom_artefact(item))
     {
@@ -1021,7 +1019,7 @@ static void _unequip_armour_effect(item_def& item, bool meld,
         if (!you.can_see_invisible())
         {
             mpr("You feel less perceptive.");
-            _mark_unseen_monsters();
+            mark_unseen_monsters();
         }
         break;
 
@@ -1381,7 +1379,7 @@ static void _unequip_jewellery_effect(item_def &item, bool mesg, bool meld,
         break;
 
     case RING_SEE_INVISIBLE:
-        _mark_unseen_monsters();
+        mark_unseen_monsters();
         break;
 
     case RING_PROTECTION:
@@ -1464,7 +1462,7 @@ bool unwield_item(bool showMsgs)
     return true;
 }
 
-static void _mark_unseen_monsters()
+void mark_unseen_monsters()
 {
 
     for (monster_iterator mi; mi; ++mi)

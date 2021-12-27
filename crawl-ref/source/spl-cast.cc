@@ -1899,6 +1899,12 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
 
     case SPELL_PORTAL_PROJECTILE:
         return cast_portal_projectile(powc, fail);
+        
+    case SPELL_SEE_INVISIBLE:
+        return cast_see_invisible(powc, fail);
+
+    case SPELL_INSULATION:
+        return cast_insulation(powc,fail);
 
     // other
     case SPELL_BORGNJORS_REVIVIFICATION:
@@ -2312,10 +2318,8 @@ const set<spell_type> removed_spells =
     SPELL_FORCEFUL_DISMISSAL,
     SPELL_FREEZING_AURA,
     SPELL_FULSOME_DISTILLATION,
-    SPELL_INSULATION,
     SPELL_LETHAL_INFUSION,
     SPELL_POISON_WEAPON,
-    SPELL_SEE_INVISIBLE,
     SPELL_SINGULARITY,
     SPELL_SONG_OF_SHIELDING,
     SPELL_SUMMON_SCORPIONS,

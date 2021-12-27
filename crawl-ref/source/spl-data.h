@@ -1160,6 +1160,7 @@ static const struct spell_desc spelldata[] =
     TILEG_ERROR,
     PERMA_NO_PERMA,
 },
+#endif
 
 {
     SPELL_INSULATION, "Insulation",
@@ -1169,10 +1170,9 @@ static const struct spell_desc spelldata[] =
     200,
     -1, -1,
     3, 0,
-    TILEG_ERROR,
+    TILEG_INSULATION,
     PERMA_NO_PERMA,
 },
-#endif
 
 #if TAG_MAJOR_VERSION == 34
 {
@@ -1540,7 +1540,6 @@ static const struct spell_desc spelldata[] =
     PERMA_NO_PERMA,
 },
 
-#if TAG_MAJOR_VERSION == 34
 {
     SPELL_SEE_INVISIBLE, "See Invisible",
     SPTYP_CHARMS,
@@ -1549,10 +1548,11 @@ static const struct spell_desc spelldata[] =
     200,
     -1, -1,
     3, 0,
-    TILEG_ERROR,
+    TILEG_SEE_INVISIBLE,
     PERMA_NO_PERMA,
 },
 
+#if TAG_MAJOR_VERSION == 34
 {
     SPELL_PHASE_SHIFT, "Phase Shift",
     SPTYP_TRANSLOCATION,

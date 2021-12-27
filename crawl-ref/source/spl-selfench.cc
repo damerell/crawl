@@ -165,6 +165,14 @@ spret cast_swiftness(int power, bool fail)
     return spret::success;
 }
 
+spret cast_insulation(int power, bool fail)
+{
+    fail_check();
+    you.increase_duration(DUR_INSULATION, 10 + random2(power), 100,
+                          "You feel insulated.");
+    return spret::success;
+}
+
 int cast_selective_amnesia(const string &pre_msg)
 {
     if (you.spell_no == 0)
@@ -208,6 +216,23 @@ int cast_selective_amnesia(const string &pre_msg)
 
     canned_msg(MSG_OK);
     return -1;
+}
+
+spret cast_see_invisible(int pow, bool fail)
+{
+    fail_check();
+    if (you.duration[DUR_SEE_INVISIBLE])
+        mpr("You feel as though your vision will be sharpened longer.");
+    else
+    {
+        mpr("Your vision seems to sharpen.");
+        
+        // We might have to turn autopickup back on again.
+        autotoggle_autopickup(false);
+    }
+    
+    you.increase_duration(DUR_SEE_INVISIBLE, 10 + random2(2 + pow/2), 100);
+    return spret::success;
 }
 
 spret cast_infusion(int pow, bool fail)
