@@ -1609,7 +1609,7 @@ static bool _give_zin_gift()
                                    MUT_EVOLUTION : RANDOM_MUTATION, 
                                    "Zin's grace", true, true, true);
     if (success) {
-        mpr("Zin's grace purifies you.");
+        simple_god_message("'s grace purifies you.");
         inc_gift_timeout(20 + random2avg(10, 2));
     }
     return success;
