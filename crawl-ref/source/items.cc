@@ -4742,6 +4742,7 @@ item_info get_item_info(const item_def& item)
         if (item_type_known(item))
         {
             ii.sub_type = item.sub_type;
+            ii.charges = (get_wand_facts(item).expected_charges + 1) / 2;
         }
         else
             ii.sub_type = NUM_WANDS;
@@ -5080,11 +5081,13 @@ static wandfacts _process_wand(item_def wand, wandfacts &facts) {
         facts.noneIDed = false;
         facts.numIDed++;
         facts.min_charges += wand.charges; facts.max_charges += wand.charges;
+        facts.expected_charges += 2 * wand.charges;
     } else {
         facts.allIDed = false;
         facts.min_charges += 1; 
         facts.max_charges += (wand_charge_value(wand.sub_type) - 
                               wand.used_count);
+        facts.expected_charges += max(2, wand.expected_charges);
     }
     facts.actual_charges += wand.charges;
     return facts;

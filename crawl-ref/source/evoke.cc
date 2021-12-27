@@ -552,6 +552,7 @@ void zap_wand(int slot)
 
     // Take off a charge.
     wand.charges--;
+    wand.expected_charges -= 2;
     wand.used_count++;
 
     if (!_does_wand_crumble(wand)) {
@@ -574,6 +575,7 @@ void zap_wand(int slot)
 #endif
                 wasted_charges = 1 + random2(2); //1-2
                 wand.charges = max(0, wand.charges - wasted_charges);
+                wand.expected_charges -= 3;
                 wand.used_count++;
 
                 dprf("Wasted %d charges (wand %d -> %d)", wasted_charges,

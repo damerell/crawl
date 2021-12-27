@@ -572,7 +572,13 @@ struct item_def
                                    /// random cosmetics. 0 = uninitialized
     short          quantity;       ///< number of items
     iflags_t       flags;          ///< item status flags
-    int turnspotted;               ///< copied from the monster
+    union
+    {
+        // These must all be the same size!
+	int turnspotted;               ///< copied from the monster
+	int expected_charges; /// for an unIDed wand
+	                        /// doubled because it uses 1.5 average
+    };
     /// The location of the item. Items in player inventory are indicated by
     /// pos (-1, -1), items in monster inventory by (-2, -2), and items
     /// in shops by (0, y) for y >= 5.
@@ -908,6 +914,7 @@ struct wandfacts {
     int num_wands;
     int numIDed;
     int min_charges;
+    int expected_charges;
     int max_charges;
     int actual_charges;
 };
