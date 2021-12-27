@@ -1312,6 +1312,7 @@ static void _generate_wand_item(item_def& item, int force_type, int item_level)
 
     // Add wand charges and ensure we have at least one charge.
     item.charges = 1 + random2avg(wand_charge_value(item.sub_type), 3);
+    item.expected_charges = 1 + wand_charge_value(item.sub_type);
     item.used_count = 0;
 
     // Don't let monsters pickup early high-tier wands
