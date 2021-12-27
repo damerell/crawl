@@ -1031,7 +1031,7 @@ static void _add_status_light_to_out(int i, vector<status_light>& out)
 // - magenta, light magenta     for "better" enchantments (deflect, fly)
 //
 // Prints hunger,
-// pray, holy, teleport, regen, fly/lev, invis, silence,
+// pray, holy, teleport, regen, fly/lev, invis, silence, sinv, insulated
 //   conf. touch, sage
 // confused, mesmerised, fire, poison, disease, rot, held, glow, swift,
 //   fast, slow, breath

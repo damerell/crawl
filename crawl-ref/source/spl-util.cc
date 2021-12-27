@@ -1159,6 +1159,13 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
             return "invisibility won't help you when you glow in the dark.";
         break;
 
+        // We don't try to detect other conditions for See Invis or
+        // Insulation - might statue form run out? 
+    case SPELL_SEE_INVISIBLE:
+        if (you.innate_sinv())
+            return "you can always see invisible creatures.";
+        break;
+
     case SPELL_DARKNESS:
         // mere corona is not enough, but divine light blocks it completely
         if (temp && (you.haloed() || !prevent && have_passive(passive_t::halo)))

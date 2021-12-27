@@ -3,6 +3,7 @@
  */
 
 #include "god-passive.h"
+#include "player-equip.h"
 #include "spl-clouds.h"
 
 //static void _end_weapon_brand()
@@ -72,6 +73,8 @@ enum duration_flags : uint32_t
 };
 
 /// A description of the behaviour when a duration begins 'expiring'.
+/// This _defaults_ to 50% duration but can be made otherwise by setting
+/// expire_threshold - DJSD
 struct midpoint_msg
 {
     /// What message should be printed when the duration begins expiring?
@@ -100,7 +103,7 @@ struct decrement_rules
 {
     /// What happens when the duration ends?
     end_effect end;
-    /// What happens when a duration hits 50% remaining.
+    /// What happens when a duration hits the expiry threshold.
     midpoint_msg mid_msg;
     /// Should the message be MSGCH_RECOVERY instead of MSGCH_DURATION?
     bool recovery;
@@ -713,6 +716,18 @@ static const duration_def duration_data[] =
       "acquiring", "",
       "You should select an object to acquire before the magic fades.",
       D_NO_FLAGS, {}, 100},
+    { DUR_SEE_INVISIBLE, 
+      BLUE, "SInv",
+      "see invisible", "", "Your magic reveals invisible creatures.",
+      D_DISPELLABLE | D_EXPIRES,
+      {{"Your eyesight blurs momentarily.", []() {mark_unseen_monsters();}},
+       {"You begin to squint at shadows."}}, 6},
+    { DUR_INSULATION,
+      BLUE, "Ins",
+      "insulated", "", "Your magic is protecting you from electricity.", 
+      D_DISPELLABLE | D_EXPIRES,
+      {{"You feel conductive."},
+       {"You start to feel a little less insulated."}}, 6},
     // The following are visible in wizmode only, or are handled
     // specially in the status lights and/or the % or @ screens.
 
@@ -766,8 +781,6 @@ static const duration_def duration_data[] =
     { DUR_REPEL_MISSILES, 0, "", "", "old repel missiles", "", D_NO_FLAGS},
     { DUR_JELLY_PRAYER, 0, "", "", "old jelly prayer", "", D_NO_FLAGS},
     { DUR_CONTROLLED_FLIGHT, 0, "", "", "old controlled flight", "", D_NO_FLAGS},
-    { DUR_SEE_INVISIBLE, 0, "", "", "old see invisible", "", D_NO_FLAGS},
-    { DUR_INSULATION, 0, "", "", "old insulation", "", D_NO_FLAGS},
     { DUR_BARGAIN, 0, "", "", "old bargain", "", D_NO_FLAGS},
     { DUR_SLAYING, 0, "", "", "old slaying", "", D_NO_FLAGS},
     { DUR_MISLED, 0, "", "", "old misled", "", D_NO_FLAGS},

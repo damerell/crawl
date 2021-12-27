@@ -1586,6 +1586,8 @@ int player_res_electricity(bool calc_unid, bool temp, bool items)
         if (you.duration[DUR_QAZLAL_ELEC_RES])
             re++;
 
+        if (you.duration[DUR_INSULATION]) re++;
+
         // transformations:
         if (get_form()->res_elec())
             re++;
@@ -7401,6 +7403,10 @@ bool player::can_see_invisible(bool calc_unid) const
     {
         return true;
     }
+
+    //jmf: added see_invisible spell
+    if (duration[DUR_SEE_INVISIBLE] > 0)
+        return true;
 
     return innate_sinv();
 }

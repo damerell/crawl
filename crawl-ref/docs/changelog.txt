@@ -39,6 +39,7 @@ Vanilla changes messed around with
 * The "corpse sense" given to necromancers is also given to Yred worshippers.
 * Sludge elves return, having been so keen to get back in the game as to be
   randomly selectable without us actually putting them back in.
+* See Invisible and Insulation spells return.
 
 Changes swiped from other variants
 ----------------------------------
