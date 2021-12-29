@@ -161,9 +161,9 @@ ENDMAP
 # Generic Lair entry.
 #
 NAME:    david_lair_generic
-TAGS:    lair_entry transparent
 ORIENT:  float
-MONS:    crocodile / basilisk
+TAGS:    lair_entry transparent
+MONS:    crocodile / basilisk /  goliath beetle
 MONS:    hippogriff, yak / death yak w:2, elephant
 KMONS:   P = plant / fungus
 SHUFFLE: 234, A1

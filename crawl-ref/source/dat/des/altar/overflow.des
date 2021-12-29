@@ -314,11 +314,14 @@ MAP
 .......
 ENDMAP
 
-NAME:  slow_altar_1
+# Golems are slow and they protect an altar to the slow god. (Lemuel)
+# Goliath beetles are also slow and more reasonable for an overflow altar.
+# --elliptic
+NAME:  beetle_altar_1
 DEPTH: D:5-9
 TAGS:  patrolling no_monster_gen no_item_gen transparent
-TAGS:  uniq_slow_altar temple_overflow_1 temple_overflow_cheibriados
-KMONS: _ = worm / mummy / iron imp
+TAGS:  uniq_beetle_altar temple_overflow_1 temple_overflow_cheibriados
+KMONS: _ = goliath beetle
 KFEAT: _ = altar_cheibriados
 SUBST: x : xxxcccmnvb
 MAP
@@ -335,11 +338,11 @@ xxx.....xxx
 xxx..@..xxx
 ENDMAP
 
-NAME:    slow_altar_2
+NAME:    beetle_altar_2
 DEPTH:   D:5-9
 TAGS:    patrolling no_monster_gen no_item_gen
-TAGS:    uniq_slow_altar temple_overflow_1 temple_overflow_cheibriados
-KMONS:   _ = worm / mummy / iron imp
+TAGS:    uniq_beetle_altar temple_overflow_1 temple_overflow_cheibriados
+KMONS:   _ = goliath beetle
 KFEAT:   _ = altar_cheibriados
 SUBST:   x : xxxcccvb
 MAP
@@ -355,12 +358,12 @@ x.._..x
 xxxxxxx
 ENDMAP
 
-NAME:   chei_slow_surprise
-TAGS:   uniq_slow_altar overflow_altar_cheibriados transparent no_monster_gen
+NAME:   chei_beetle_safe_becter
+TAGS:   uniq_beetle_altar overflow_altar_cheibriados transparent no_monster_gen
 TAGS:   transparent
 DEPTH:  D:4-9
 WEIGHT: 5
-KMONS:  a = worm / mummy / iron imp
+KMONS:  a = goliath beetle
 NSUBST: ' = 1:a / *:.
 KFEAT:  _ = altar_cheibriados
 MAP
@@ -376,13 +379,13 @@ MAP
 .........
 ENDMAP
 
-NAME:   cheibrodos_worm_habitat
+NAME:   cheibrodos_beetle_habitat
 TAGS:   no_item_gen no_monster_gen temple_overflow_1 transparent
-TAGS:   uniq_slow_altar temple_overflow_cheibriados uniq_altar_cheibriados
+TAGS:   uniq_beetle_altar temple_overflow_cheibriados uniq_altar_cheibriados
 DEPTH:  D:5-9
 WEIGHT: 5
 KFEAT:  _ = altar_cheibriados
-MONS:   worm
+MONS:   goliath beetle
 MAP
 .............
 .xxxxx.xxxxx.
