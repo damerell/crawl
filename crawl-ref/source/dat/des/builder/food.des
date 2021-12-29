@@ -168,7 +168,7 @@ DEPTH:  D:8-14
 WEIGHT: 15
 TAGS:   uniq_second_food extra chance_second_food no_monster_gen patrolling
 MONS:   hornet / worm w:5 / worker ant
-MONS:   hornet w:7 / soldier ant w:13
+MONS:   hornet w:7 / goliath beetle / soldier ant w:13
 ITEM:   meat ration q:1 / fruit q:3
 ITEM:   meat ration q:1
 ITEM:   bread ration q:2

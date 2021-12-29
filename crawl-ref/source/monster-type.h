@@ -1051,6 +1051,7 @@ enum monster_type                      // menv[].type
     MONS_TRICERATOPS,           // whoops breaking savefile compat for saves
     MONS_TEST_STATUE,           // with test statues in
     MONS_FAERIE_DRAGON,
+    MONS_GOLIATH_BEETLE,
 #endif
 
     NUM_MONSTERS,               // used for polymorph

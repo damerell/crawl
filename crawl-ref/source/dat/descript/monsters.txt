@@ -1195,6 +1195,11 @@ A decayed cadaver, reanimated and accursed with a terrible hunger. It desires
 nothing but to feed on the flesh of the living, and will fell its victims with
 its vicious claws.
 %%%%
+goliath beetle
+
+A huge black beetle with great crunching mandibles and very hard chitinous
+armour.
+%%%%
 gelid demonspawn
 
 <demonspawn>

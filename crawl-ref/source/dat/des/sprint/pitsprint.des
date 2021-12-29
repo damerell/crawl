@@ -22,7 +22,7 @@ function base_monster_setup(e)
            warg / wolf / porcupine / black bear /\
            river rat / flying skull / iron imp /\
            white imp / ufetubus / fire bat")
-  e.kmons("B = steam dragon / crocodile / hippogriff /\
+  e.kmons("B = goliath beetle / steam dragon / crocodile / hippogriff /\
            killer bee band / hornet / eye of draining / manticore /\
            wyvern / troll / two-headed ogre / yak band /\
            komodo dragon / wraith / soldier ant / unseen horror /\

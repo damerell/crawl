@@ -971,7 +971,7 @@ KMONS:   A = river rat
 KMONS:   B = vampire bat / fire bat w:8
 KMONS:   C = iguana / basilisk w:8
 KMONS:   D = worm / tyrant leech
-KMONS:   E = jelly
+KMONS:   E = goliath beetle
 KMONS:   F = worker ant
 KMONS:   G = hound / wolf w:3
 KMONS:   H = water moccasin
@@ -2244,7 +2244,7 @@ NAME:  einodemon_crawler_minivault
 TAGS:  patrolling transparent
 DEPTH: D:13-, Elf, Spider
 MONS:  demonic crawler
-MONS:  vampire mosquito / boulder beetle w:8 / demonic crawler w:2 / \
+MONS:  goliath beetle / boulder beetle w:8 / demonic crawler w:2 / \
        nothing
 MAP
 ..........
