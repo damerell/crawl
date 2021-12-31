@@ -1959,7 +1959,8 @@ int player_movement_speed()
         mv = 5; // but allowed minimum is six
     else if (you.form == transformation::pig)
         mv = 7;
-    else if (you.form == transformation::wisp)
+    else if (you.form == transformation::wisp
+             || you.form == transformation::porcupine)
         mv = 8;
     else if (you.fishtail || you.form == transformation::hydra && you.in_water())
         mv = 6;
@@ -6682,10 +6683,11 @@ int player::res_constrict() const
 {
     if (is_insubstantial())
         return 3;
-
-    if (get_mutation_level(MUT_SPINY))
+    if (form == transformation::porcupine
+        || get_mutation_level(MUT_SPINY))
+    {
         return 3;
-
+    }
     return 0;
 }
 
@@ -7580,6 +7582,7 @@ bool player::polymorph(int pow)
         f = random_choose(transformation::bat,
                           transformation::fungus,
                           transformation::pig,
+			  transformation::porcupine,
                           transformation::tree,
                           transformation::wisp);
         // need to do a dry run first, as Zin's protection has a random factor
