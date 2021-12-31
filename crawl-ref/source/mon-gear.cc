@@ -198,6 +198,18 @@ static void _give_potion(monster* mon, int level)
     }
 }
 
+static void _give_scroll(monster* mon, int level) {
+    if (mon->type == MONS_MAUD) {
+        const int thing_created =
+            items(false, OBJ_SCROLLS, SCR_AMNESIA, level);
+        if (thing_created == NON_ITEM)
+            return;
+
+        mitm[thing_created].flags = ISFLAG_KNOW_TYPE;
+        give_specific_item(mon, thing_created);
+    }
+}
+
 static item_def* make_item_for_monster(
     monster* mons,
     object_class_type base,
@@ -404,7 +416,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         { SPWPN_PAIN,           2 },
         { NUM_SPECIAL_WEAPONS,  20 }, // 5/9 chance of brand
     };
-    static const weapon_list URUG_WEAPONS =
+    static const weapon_list MAUD_WEAPONS = // was URUG_WEAPONS
     {   { WPN_HALBERD,          5 },
         { WPN_GLAIVE,           5 },
         { WPN_WAR_AXE,          6 },
@@ -629,6 +641,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         { MONS_DRACONIAN_KNIGHT,        ORC_WARLORD_WSPEC },
         { MONS_ORC_KNIGHT,              ORC_KNIGHT_WSPEC },
         { MONS_TENGU_WARRIOR,           ORC_KNIGHT_WSPEC },
+        { MONS_URUG,                    ORC_KNIGHT_WSPEC },
         { MONS_VAULT_GUARD,             ORC_KNIGHT_WSPEC },
         { MONS_VAMPIRE_KNIGHT,          ORC_KNIGHT_WSPEC },
         { MONS_LOUISE,
@@ -773,8 +786,8 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
               { 1, 0, 5 },
               HELL_KNIGHT_BRANDS
         } },
-        { MONS_URUG,                    { URUG_WEAPONS } },
-        { MONS_FREDERICK,               { URUG_WEAPONS } },
+        { MONS_MAUD,                    { MAUD_WEAPONS } },
+        { MONS_FREDERICK,               { MAUD_WEAPONS } },
         { MONS_FIRE_GIANT, {
             { { WPN_GREAT_SWORD,        1 } }, {},
             { { SPWPN_FLAMING, 1 } },
@@ -1769,7 +1782,6 @@ int make_mons_armour(monster_type type, int level)
         break;
 
     case MONS_TERENCE:
-    case MONS_URUG:
     case MONS_HAROLD:
         item.base_type = OBJ_ARMOUR;
         item.sub_type  = random_choose_weighted(1, ARM_RING_MAIL,
@@ -1784,6 +1796,7 @@ int make_mons_armour(monster_type type, int level)
         item.sub_type  = ARM_ANIMAL_SKIN;
         break;
 
+    case MONS_URUG:
     case MONS_ASTERION:
     case MONS_EDMUND:
     case MONS_FRANCES:
@@ -1822,6 +1835,7 @@ int make_mons_armour(monster_type type, int level)
     case MONS_ORC_WARRIOR:
     case MONS_HELL_KNIGHT:
     case MONS_LOUISE:
+    case MONS_MAUD:
     case MONS_VAMPIRE_KNIGHT:
     case MONS_JORY:
     case MONS_FREDERICK:
@@ -2175,6 +2189,7 @@ void give_item(monster *mons, int level_number, bool mons_summoned)
     _give_book(mons, level_number);
     _give_wand(mons, level_number);
     _give_potion(mons, level_number);
+    _give_scroll(mons, level_number);
     _give_weapon(mons, level_number);
     _give_ammo(mons, level_number, mons_summoned);
     _give_armour(mons, 1 + level_number / 2);
