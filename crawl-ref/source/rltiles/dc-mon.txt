@@ -671,6 +671,7 @@ ophan MONS_OPHAN
 %sdir mon/animals
 hippogriff MONS_HIPPOGRIFF
 manticore MONS_MANTICORE
+griffon MONS_GRIFFON
 %sdir mon/demihumanoids
 harpy MONS_HARPY
 sphinx MONS_SPHINX

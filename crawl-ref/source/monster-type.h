@@ -87,9 +87,7 @@ enum monster_type                      // menv[].type
     MONS_HELLEPHANT,
     MONS_MANTICORE,
     MONS_HIPPOGRIFF,
-#if TAG_MAJOR_VERSION == 34
     MONS_GRIFFON,
-#endif
 #if TAG_MAJOR_VERSION > 34
     MONS_MUTANT_BEAST,
     MONS_FROG,                  // genus
