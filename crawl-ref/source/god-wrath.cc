@@ -1207,6 +1207,7 @@ static void _jiyva_transform()
     const transformation form = random_choose(transformation::bat,
                                               transformation::fungus,
                                               transformation::pig,
+					      transformation::porcupine,
                                               transformation::tree,
                                               transformation::wisp);
 

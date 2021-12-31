@@ -849,7 +849,6 @@ public:
     string get_untransform_message() const override { return "You feel less wooden."; }
 };
 
-#if TAG_MAJOR_VERSION == 34
 class FormPorcupine : public Form
 {
 private:
@@ -862,7 +861,6 @@ public:
         return inst;
     }
 };
-#endif
 
 class FormWisp : public Form
 {

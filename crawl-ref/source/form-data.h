@@ -170,10 +170,9 @@ static const form_entry formdata[] =
     "creak", 0, "branch", "root", "sway towards", "wood"
 },
 
-#if TAG_MAJOR_VERSION == 34
 {
-    transformation::porcupine, MONS_PORCUPINE, "Porc", "porcupine-form", "porcupine",
-    "a spiny porcupine.",
+    transformation::porcupine, MONS_PORCUPINE, "Porc", "porcupine-form", 
+    "porcupine", "a spiny porcupine.",
     EQF_ALL, MR_NO_FLAGS,
     BAD_DURATION, 0, 0, SIZE_TINY, 10,
     0, 0, 0, false, 0, 0, 3,
@@ -181,7 +180,6 @@ static const form_entry formdata[] =
     FC_DEFAULT, FC_FORBID, FC_ENABLE, true, false,
     "squeak", -8, "front leg", "", "curl into a sanctuary of spikes before", "flesh"
 },
-#endif
 
 {
     transformation::wisp, MONS_INSUBSTANTIAL_WISP, "Wisp", "wisp-form", "wisp",
