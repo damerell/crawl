@@ -2232,7 +2232,7 @@ TAGS:   no_pool_fixup
 DEPTH:  Lair:2-, !Lair:$
 ORIENT: north
 KMONS:  pq = plant / fungus / toadstool
-KMONS:  1 = electric eel / rime drake / elephant / hippogriff w:5
+KMONS:  1 = electric eel / rime drake / elephant / griffon
 KMONS:  2 = lindwurm / dire elephant / catoblepas
 KITEM:  2 = * / |
 KFEAT:  q = W
@@ -2660,7 +2660,7 @@ WEIGHT:  14
 # duos of bovids / elephantae, fantasy hybrids), then bosses.
 MONS:    wolf / blink frog / yak / hell rat w:2
 MONS:    basilisk, rime drake, lindwurm
-MONS:    hippogriff, manticore, catoblepas
+MONS:    hippogriff, griffon, manticore, catoblepas
 KMONS:   8 = water moccasin
 KMONS:   9 : spiny frog w:90 / hornet
 KMONS:   0 : black mamba w:90 / wolf spider
@@ -3090,7 +3090,7 @@ TAGS:    no_pool_fixup no_monster_gen
 ORIENT:  float
 KMONS:   ~ = plant
 KMONS:   1 = water moccasin / crocodile / hornet / wyvern / spiny frog
-KMONS:   2 = elephant / komodo dragon / polar bear / rime drake
+KMONS:   2 = elephant / komodo dragon / griffon / polar bear / rime drake
 KMONS:   3 = sea snake / manticore / wind drake / harpy
 KMONS:   4 = dire elephant / hydra
 KMONS:   5 = patrolling merfolk avatar
