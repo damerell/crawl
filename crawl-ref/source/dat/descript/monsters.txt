@@ -2515,6 +2515,11 @@ vine stalker
 
 A bizarre symbiotic creature, made up of a carnivorous vine magically combined
 with a humanoid.
+%%%
+viper
+
+A snake with a painful venom. It's not as fast as some other snakes, but
+still fairly quick.
 %%%%
 wandering mushroom
 

@@ -1048,6 +1048,7 @@ enum monster_type                      // menv[].type
     MONS_TEST_STATUE,           // with test statues in
     MONS_FAERIE_DRAGON,
     MONS_GOLIATH_BEETLE,
+    MONS_VIPER,
 #endif
 
     NUM_MONSTERS,               // used for polymorph

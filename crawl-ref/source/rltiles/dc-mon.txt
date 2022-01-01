@@ -214,6 +214,7 @@ anaconda MONS_ANACONDA
 %sdir mon/aquatic
 lava_snake MONS_LAVA_SNAKE
 %sdir mon/animals
+viper MONS_VIPER
 sea_snake MONS_SEA_SNAKE
 shock_serpent MONS_SHOCK_SERPENT
 mana_viper MONS_MANA_VIPER

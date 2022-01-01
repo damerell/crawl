@@ -322,6 +322,7 @@ static const pop_entry pop_snake[] =
 { // Snake Pit
   { -4,  4,  750, SEMI, MONS_NAGA },
   {  0,  4,  215, SEMI, MONS_SALAMANDER },
+  {  0,  4,  200, SEMI, MONS_VIPER },
   {  0,  6,  315, SEMI, MONS_ANACONDA },
   {  0,  8, 1125, SEMI, MONS_BLACK_MAMBA },
   {  0,  8,  340, SEMI, MONS_NAGA_WARRIOR },

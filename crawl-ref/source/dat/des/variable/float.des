@@ -1432,7 +1432,7 @@ ORIENT:  float
 TAGS:    transparent no_pool_fixup
 MONS:    leopard gecko / frilled lizard, crocodile, iguana
 MONS:    rime drake / swamp drake
-MONS:    adder, water moccasin
+MONS:    adder, water moccasin, viper
 SUBST:   4 = 34
 SUBST:   3 = 3:20 2
 SUBST:   2 = 2:20 1
