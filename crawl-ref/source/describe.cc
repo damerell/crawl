@@ -2210,7 +2210,7 @@ string get_item_description(const item_def &item, bool verbose,
         {
             if (need_extra_line)
                 description << "\n";
-            if (item_known_cursed(item))
+            if (item_known_cursed(item)) 
                 description << "\nIt has a curse placed upon it.";
 
             if (is_artefact(item))
@@ -2250,6 +2250,16 @@ string get_item_description(const item_def &item, bool verbose,
         if (!menu_prefix.empty())
             description << "\nMenu/colouring prefixes: " << menu_prefix;
     }
+    if (verbose && (item.base_type == OBJ_ARMOUR
+                    || item.base_type == OBJ_WEAPONS)
+        && !(item_ident(item, ISFLAG_KNOW_CURSE | ISFLAG_KNOW_PLUSES))
+        && !(item.flags & ISFLAG_COSMETIC_MASK)
+        && !(is_artefact(item))
+        && ((item.sub_type != ARM_SCARF)
+            && (item.sub_type != ARM_QUICKSILVER_DRAGON_ARMOUR))) {
+        description << "\n\n(Like any weapon/armour of mundane appearance, it is at best uncursed +0.)";
+    }
+
 
     return description.str();
 }
