@@ -1789,6 +1789,12 @@ static const mon_spellbook mspell_list[] =
       }
     },
 
+    {  MST_BRAIN_WORM,
+      {
+       { SPELL_BRAIN_FEED, 55, MON_SPELL_MAGICAL },
+      }
+    },
+
     // ('z') Corporeal undead.
     {  MST_MURRAY,
       {

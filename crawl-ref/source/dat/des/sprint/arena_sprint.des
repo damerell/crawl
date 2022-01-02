@@ -230,7 +230,8 @@ function arena_sprint_get_monster_set(round, boss)
                 "zombie / skeleton / wight w:5 / necrophage / phantom w:5",
                 "worker ant / soldier ant w:2 / queen ant w:1 / killer bee w:2",
                 "ooze / w:5 jelly",
-                "giant cockroach w:20 / w:5 goliath beetle / scorpion / worm"
+                "giant cockroach w:20 / w:5 goliath beetle / scorpion / worm /\
+                    w:5 brain worm",
             }
         elseif round <= 5 then
             mon_set = {
@@ -274,7 +275,7 @@ function arena_sprint_get_monster_set(round, boss)
                 "bullfrog w:20 / blink frog w:6 / spiny frog w:6 / prince ribbit w:2",
                 "gnoll / gnoll shaman / gnoll sergeant / hound / wolf",
                 -- Gimmicks
-                "neqoxec", "orc priest", "vampire bat",
+                "brain worm", "orc priest", "vampire bat",
                 "kobold name:kamikaze_kobold n_rpl n_noc n_des perm_ench:inner_flame"
              }
         elseif round <= 10 then
@@ -312,7 +313,7 @@ function arena_sprint_get_monster_set(round, boss)
                 -- Misc
                 "centaur w:20 / centaur warrior w:2 / nessos w:1",
                 "ugly thing",
-                "tyrant leech / worm",
+                "tyrant leech / worm / brain worm w:5",
                 "ogre w:15 / two-headed ogre / ogre mage w:5 / w:1 erolcha",
                 "troll / deep troll w:12 / iron troll w:2",
                 "rime drake / swamp drake / steam dragon / swamp dragon /\
@@ -321,7 +322,7 @@ function arena_sprint_get_monster_set(round, boss)
                 "shapeshifter hd:7",
                 "polar bear",
                 -- Gimmicks
-                "neqoxec",
+                "brain worm",
                 "kobold name:kamikaze_kobold n_rpl n_noc n_des perm_ench:inner_flame",
                 "dwarf name:drunken n_adj n_des n_noc perm_ench:confusion",
                 "hungry ghost"

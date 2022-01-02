@@ -427,6 +427,10 @@ Paralyse Xtahua cast
 ########################################################################
 # Individual monsters
 ########################################################################
+brain worm cast
+
+@The_monster@'s bulging head throbs.
+%%%%
 glowing orange brain cast
 
 @The_monster@ pulsates.
