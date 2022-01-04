@@ -1031,6 +1031,15 @@ buckler
     -Archilochos. 7th cent. B.C.
      trans. William H. Goodwin, 1878.
 %%%%
+bumblebee
+
+“How doth the little busy Bee
+     Improve each shining Hour,
+ And gather Honey all the day
+     From every opening Flower!”
+    -Isaac Watts, "Against Idleness and Mischief", in _Divine Songs for
+Children_. 1715.
+%%%%
 bush
 
 “And the angel of the LORD appeared unto him in a flame of fire out of the

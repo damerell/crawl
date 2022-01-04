@@ -99,6 +99,7 @@ natasha MONS_NATASHA
 
 ## Bees ('y')
 killer_bee MONS_KILLER_BEE
+bumblebee MONS_BUMBLEBEE
 queen_bee MONS_QUEEN_BEE
 %sdir mon/demihumanoids
 meliai MONS_MELIAI

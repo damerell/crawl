@@ -721,6 +721,10 @@ An unusually aggressive amphibian that pursues its prey with rapid hops.
 Its croak is loud and distinctive, but unlike its smaller counterparts above
 ground, the dungeon bullfrog is as large as it sounds.
 %%%%
+bumblebee
+
+A very large and fat hairy bee.
+%%%%
 butterfly
 
 A large, brightly coloured butterfly with beautifully patterned wings,
