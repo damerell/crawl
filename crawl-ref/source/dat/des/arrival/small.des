@@ -2441,7 +2441,7 @@ ORIENT:  float
 : if crawl.one_chance_in(10) then
 SHUFFLE: 16
 MONS:    centaur / centaur warrior / yaktaur / yaktaur captain
-MONS:    rat / river rat / hell rat / weasel
+MONS:    rat / river rat / hell rat 
 MONS:    worker ant / soldier ant / queen ant
 MONS:    brain worm / worm / tyrant leech
 MONS:    komodo dragon / iguana / basilisk
