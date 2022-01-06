@@ -388,7 +388,7 @@ NORETURN void end_game(scorefile_entry &se, int hiscore_index)
 
 NORETURN void game_ended()
 {
-    if (!crawl_state.seen_hups)
+    if ((!crawl_state.seen_hups) && (!crawl_state.game_is_tutorial())
         throw game_ended_condition();
     else
         end(0);
