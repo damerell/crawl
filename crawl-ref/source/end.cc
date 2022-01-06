@@ -482,7 +482,11 @@ NORETURN void game_ended(game_exit exit, const string &message)
         else
             end(retval);
     }
-    throw game_ended_condition(exit, message);
+    if (!(crawl_state.game_is_tutorial() && (exit == game_exit::win))) {
+	throw game_ended_condition(exit, message);
+    } else {
+	end(0);
+    }
 }
 
 // note: this *will not* print a crash dump, and so should probably be avoided.
