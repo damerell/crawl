@@ -151,7 +151,7 @@ static feature_def feat_defs[] =
 {
     DNGN_ORCISH_IDOL, "orcish idol", "orcish_idol",
     DCHAR_STATUE, NUM_DCHAR_TYPES,
-    COLOUR_IS(BROWN),
+    COLOUR_IS(BROWN), // same as clay golem, I hope that's okay
     FFT_SOLID, MF_WALL,
 },
 

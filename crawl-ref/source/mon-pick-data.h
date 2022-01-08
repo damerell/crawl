@@ -97,6 +97,7 @@ static const pop_entry pop_d[] =
   { 14, 22,  115, SEMI, MONS_BOGGART },
   { 14, 27,  192, PEAK, MONS_FIRE_DRAGON },
   { 15, 20,  335, SEMI, MONS_YAKTAUR },
+  { 15, 21,   75, SEMI, MONS_CLAY_GOLEM },
   { 15, 24,  345, FALL, MONS_ORC_KNIGHT },
   { 15, 25,  315, FALL, MONS_OGRE_MAGE },
   { 15, 25,  275, PEAK, MONS_WOLF_SPIDER },
@@ -549,6 +550,7 @@ static const pop_entry pop_dis[] =
   {  1,  7,   89, FALL, MONS_HELL_HOG },
   {  1,  7,   25, FALL, MONS_HELL_KNIGHT },
   {  1,  7, 1000, FLAT, MONS_IRON_IMP },
+  {  1,  7,   50, FALL, MONS_CLAY_GOLEM },
   {  1,  2,    8, FALL, MONS_CRIMSON_IMP },
   {  1,  7, 1000, FLAT, MONS_RUST_DEVIL },
   {  1,  7,  540, FALL, MONS_RED_DEVIL },
@@ -585,6 +587,7 @@ static const pop_entry pop_geh[] =
   {  1,  7,  350, FLAT, MONS_HELL_HOUND },
   {  1,  7,  300, FLAT, MONS_HELL_HOG },
   {  1,  7,  192, FALL, MONS_CRIMSON_IMP },
+  {  1,  7,   50, FALL, MONS_CLAY_GOLEM },
   {  1, 12,  690, FALL, MONS_RED_DEVIL },
   { -1,  7,   89, PEAK, MONS_RUST_DEVIL },
   {  3,  7,    8, PEAK, MONS_SOUL_EATER },
@@ -847,6 +850,7 @@ static const pop_entry pop_abyss[] =
   {  1,  5,    2, FLAT, MONS_SHADOW_DRAGON },
   {  1,  5,    2, FLAT, MONS_QUICKSILVER_DRAGON },
   {  1,  5,    2, FLAT, MONS_CRYSTAL_GUARDIAN },
+  {  1,  5,   12, FALL, MONS_CLAY_GOLEM },
   {  1,  5,    1, FLAT, MONS_TOENAIL_GOLEM },
   {  1,  5,   18, FLAT, MONS_EARTH_ELEMENTAL },
   {  1,  5,    6, FLAT, MONS_FIRE_ELEMENTAL },
@@ -1018,6 +1022,7 @@ static const pop_entry pop_wizlab[] =
 
 static const pop_entry pop_depths[] =
 { // Depths (OOD cap: 14)
+  { -2,  2,   60, SEMI, MONS_CLAY_GOLEM },
   { -2,  4,  100, SEMI, MONS_BOGGART },
   { -2,  4,  200, SEMI, MONS_SLIME_CREATURE },
   { -2,  4,  250, SEMI, MONS_RAKSHASA },

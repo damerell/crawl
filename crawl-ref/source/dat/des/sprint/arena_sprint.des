@@ -264,7 +264,7 @@ function arena_sprint_get_monster_set(round, boss)
                 "w:20 fire bat / fire elemental",
                 "steam dragon / w:5 air elemental / w:1 wind drake / w:5 lightning spire /\
                     w:30 sky beast / insubstantial wisp",
-                "w:15 earth elemental / w:5 gargoyle / w:5 boulder beetle /\
+                "w:5 earth elemental / clay golem w:5 gargoyle / w:5 boulder beetle /\
                     w:15 rust devil / w:15 iron imp",
                 "w:20 ice beast / w:20 simulacrum / rime drake / w:5 water elemental",
                 "wight / wraith / w:15 spectral thing",
@@ -306,7 +306,7 @@ function arena_sprint_get_monster_set(round, boss)
                     w:5 sun demon / w:2 efreet / hell hound",
                 "steam dragon / air elemental / w:3 wind drake / lightning spire /\
                     w:20 sky beast / insubstantial wisp",
-                "earth elemental w:15 / gargoyle w:5 / boulder beetle /\
+                "earth elemental w:5 / clay golem / gargoyle w:5 / boulder beetle /\
                     rust devil / iron imp / w:5 iron troll",
                 "ice beast / rime drake / ogre simulacrum / water elemental",
                 "wraith w:20 / w:5 eidolon / phantasmal warrior / w:2 nergalle",
