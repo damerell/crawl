@@ -933,8 +933,6 @@ static bool _destroy_wall_msg(dungeon_feature_type feat, const coord_def& p,
     case DNGN_CLEAR_ROCK_WALL:
     case DNGN_CRYSTAL_WALL:
     case DNGN_GRANITE_STATUE:
-    case DNGN_CLOSED_DOOR:
-    case DNGN_RUNED_DOOR:
         if (see)
         {
             msg = featname + " crumbles to dust.";
@@ -942,6 +940,19 @@ static bool _destroy_wall_msg(dungeon_feature_type feat, const coord_def& p,
         else if (hear)
         {
             msg = "You hear a grinding noise.";
+            chan = MSGCH_SOUND;
+        }
+        break;
+
+    case DNGN_CLOSED_DOOR:
+    case DNGN_RUNED_DOOR:
+        if (see)
+        {
+            msg = featname + " shatters into splinters.";
+        }
+        else if (hear)
+        {
+            msg = "You hear a splintering crack.";
             chan = MSGCH_SOUND;
         }
         break;
@@ -1102,7 +1113,8 @@ void bolt::affect_wall()
             digging_wall_effect();
         else if (can_burn_trees())
             burn_wall_effect();
-        else if (flavour == BEAM_DEVASTATION) {
+        else if (flavour == BEAM_DEVASTATION || 
+                 flavour == BEAM_BOULDER_BEETLE) {
             destroy_wall_effect();
             place_cloud(CLOUD_GREY_SMOKE,pos(),2+random2(3),agent(),11);
         }
@@ -2818,6 +2830,10 @@ bool bolt::can_affect_wall(const coord_def& p, bool map_knowledge) const
 //          || wall == DNGN_RUNED_DOOR
             || feat_is_statuelike(wall)
             || feat_is_tree(wall);
+    }
+    if (flavour == BEAM_BOULDER_BEETLE) {
+        return wall == DNGN_CLOSED_DOOR
+            || wall == DNGN_GRATE;
     }
 
     // Lee's Rapid Deconstruction
@@ -6543,6 +6559,7 @@ static string _beam_type_name(beam_type type)
     case BEAM_LAVA:                  return "magma";
     case BEAM_ICE:                   return "ice";
     case BEAM_DEVASTATION:           return "devastation";
+    case BEAM_BOULDER_BEETLE:        return "boulder beetle";
     case BEAM_RANDOM:                return "random";
     case BEAM_CHAOS:                 return "chaos";
     case BEAM_SLOW:                  return "slow";

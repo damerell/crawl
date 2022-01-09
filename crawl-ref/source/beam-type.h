@@ -27,6 +27,7 @@ enum beam_type                  // bolt::flavour
     BEAM_LAVA,
     BEAM_ICE,
     BEAM_DEVASTATION,
+    BEAM_BOULDER_BEETLE,          // just for breaking doors?
     BEAM_RANDOM,                  // currently translates into FIRE..ACID
     BEAM_CHAOS,
     BEAM_UNRAVELLED_MAGIC,
