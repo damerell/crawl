@@ -5304,6 +5304,9 @@ string player::cannot_renew_pbs_because(permabuff_type pb) {
     if (apply_starvation_penalties()) {
         return "you are too hungry";
     }
+    if (get_contamination_level() > 1) {
+        return "of your excessive magical contamination";
+    }
     return "";
 }
 
