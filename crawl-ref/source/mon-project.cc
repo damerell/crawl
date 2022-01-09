@@ -295,7 +295,18 @@ static bool _boulder_hit(monster& mon, const coord_def &pos)
 
         int dam = victim->apply_ac(roll_dice(3, 20));
         victim->hurt(&mon, dam, BEAM_MISSILE, KILLED_BY_ROLLING);
-    }
+    } else {
+        if (cell_is_solid(pos)) {
+            bolt beam;
+            beam.name = mon.name(DESC_PLAIN);
+            beam.flavour = BEAM_BOULDER_BEETLE;
+            beam.colour = WHITE;
+            beam.range = 1;
+            beam.source = beam.target = pos;
+            beam.hit = AUTOMATIC_HIT;
+            beam.fire();
+        }
+    } 
 
     noisy(5, pos);
     return victim && victim->alive() || !mon.alive();
@@ -492,6 +503,7 @@ move_again:
 
             if (!iood) // boulders need to stop now
             {
+                _boulder_hit(mon, pos);
                 _iood_stop(mon);
                 return true;
             }
