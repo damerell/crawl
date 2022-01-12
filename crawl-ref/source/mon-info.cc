@@ -68,7 +68,7 @@ static map<enchant_type, monster_info_flags> trivial_ench_mb_mappings = {
     { ENCH_PARALYSIS,       MB_PARALYSED },
     { ENCH_SOUL_RIPE,       MB_POSSESSABLE },
     { ENCH_REGENERATION,    MB_REGENERATION },
-    { ENCH_RAISED_MR,       MB_RAISED_MR },
+    { ENCH_TROGS_HAND,       MB_TROGS_HAND },
     { ENCH_MIRROR_DAMAGE,   MB_MIRROR_DAMAGE },
     { ENCH_FEAR_INSPIRING,  MB_FEAR_INSPIRING },
     { ENCH_WITHDRAWN,       MB_WITHDRAWN },
@@ -1433,7 +1433,7 @@ vector<string> monster_info::attributes() const
         v.emplace_back("lost in madness");
     if (is(MB_REGENERATION))
         v.emplace_back("regenerating");
-    if (is(MB_RAISED_MR))
+    if (is(MB_TROGS_HAND))
         v.emplace_back("resistant to hostile enchantments");
     if (is(MB_ROLLING))
         v.emplace_back("rolling");
@@ -2025,7 +2025,7 @@ vector<monster_info_func> init_monster_info_funcs() {
                 return newconditions && mi.is(MB_BLACK_MARK); }});
     toret.push_back({"Trog's Hand", "Trog's Hand",
                 [](const monster_info &mi, bool newconditions) {
-                return newconditions && mi.is(MB_RAISED_MR); }});
+                return newconditions && mi.is(MB_TROGS_HAND); }});
 // bit of a wheeze here but the two can probably be distinguished in context
     toret.push_back({"icy armour", "icy armour", 
                 [](const monster_info &mi, bool newconditions) {

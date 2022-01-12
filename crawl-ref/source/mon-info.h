@@ -62,7 +62,7 @@ enum monster_info_flags
     MB_PREP_RESURRECT,
 #endif
     MB_REGENERATION,
-    MB_RAISED_MR,
+    MB_TROGS_HAND,
     MB_MIRROR_DAMAGE,
     MB_SAFE,
     MB_UNSAFE,
