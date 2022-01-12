@@ -384,7 +384,7 @@ static string _get_altars(bool display)
             seenall = false; break;
         }
     } 
-    if (!seenall) {
+    if ((!seenall) && display) {
         disp += "Altars to gods listed above are guaranteed either in the "
             "Temple or between levels " + to_string(MIN_OVERFLOW_LEVEL) +
             " and " + to_string(MAX_OVERFLOW_LEVEL) + " of the Dungeon.\n";
