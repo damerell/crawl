@@ -277,7 +277,7 @@ static const map<spell_type, mons_spell_logic> spell_to_logic = {
     } },
     { SPELL_TROGS_HAND, {
         [](const monster &caster) {
-            return !caster.has_ench(ENCH_RAISED_MR)
+            return !caster.has_ench(ENCH_TROGS_HAND)
                 && !caster.has_ench(ENCH_REGENERATION);
         },
         [](monster &caster, mon_spell_slot, bolt&) {
@@ -289,7 +289,7 @@ static const map<spell_type, mons_spell_logic> spell_to_logic = {
             const int dur = BASELINE_DELAY
                 * min(5 + roll_dice(2, (caster.get_hit_dice() * 10) / 3 + 1),
                       100);
-            caster.add_ench(mon_enchant(ENCH_RAISED_MR, 0, &caster, dur));
+            caster.add_ench(mon_enchant(ENCH_TROGS_HAND, 0, &caster, dur));
             caster.add_ench(mon_enchant(ENCH_REGENERATION, 0, &caster, dur));
             dprf("Trog's Hand cast (dur: %d aut)", dur);
         },

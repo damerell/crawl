@@ -4104,7 +4104,7 @@ int monster::res_magic(bool calc_unid) const
         u += get_jewellery_res_magic(mitm[jewellery], false);
     }
 
-    if (has_ench(ENCH_RAISED_MR)) //trog's hand
+    if (has_ench(ENCH_TROGS_HAND)) //trog's hand
         u += 80;
 
     if (has_ench(ENCH_LOWERED_MR))

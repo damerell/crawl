@@ -443,6 +443,14 @@ static void _dispellable_monster_buffs(const monster &mon,
         if (ench == ENCH_HASTE && mon.has_ench(ENCH_GOZAG_INCITE))
             continue;
 
+        // Trog's Hand cannot be dispelled; post-berserk slowness is natural
+        // of course there is an edge case where you slow it for some other
+        // reason but short of doing the whole ENCH origin thing... too bad
+        if (ench == ENCH_REGENERATION && mon.has_ench(ENCH_TROGS_HAND))
+            continue;
+        if (ench == ENCH_SLOW && mon.has_ench(ENCH_FATIGUE))
+            continue;
+
         if (mon.has_ench(ench))
             buffs.push_back(ench);
     }
