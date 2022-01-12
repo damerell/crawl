@@ -2023,6 +2023,9 @@ vector<monster_info_func> init_monster_info_funcs() {
     toret.push_back({"black mark", "black marks",
                 [](const monster_info &mi, bool newconditions) {
                 return newconditions && mi.is(MB_BLACK_MARK); }});
+    toret.push_back({"Trog's Hand", "Trog's Hand",
+                [](const monster_info &mi, bool newconditions) {
+                return newconditions && mi.is(MB_RAISED_MR); }});
 // bit of a wheeze here but the two can probably be distinguished in context
     toret.push_back({"icy armour", "icy armour", 
                 [](const monster_info &mi, bool newconditions) {
@@ -2145,6 +2148,11 @@ vector<monster_info_func> init_monster_info_funcs() {
                 [](const monster_info &mi, bool newconditions) {
                 return newconditions && mi.is(MB_WATER_HOLD) && 
                     !mi.is(MB_WATER_HOLD_DROWN);}});
+    // Low down because only very relevant with Yara's
+    // Word really vague but maybe clear b/c will pop up with preservers about?
+    toret.push_back({"sheltered", "sheltered", 
+                [](const monster_info &mi, bool newconditions) {
+                return newconditions && mi.is(MB_INJURY_BOND); }});
     // This is at the bottom of the list because you know you did it
     toret.push_back({"idealised", "idealised", 
                 [](const monster_info &mi, bool newconditions) {
