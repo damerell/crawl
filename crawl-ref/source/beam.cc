@@ -2821,6 +2821,7 @@ bool bolt::can_affect_wall(const coord_def& p, bool map_knowledge) const
     if (can_burn_trees())
         return feat_is_tree(wall);
     if (flavour == BEAM_DEVASTATION) {
+        if (nodig) return false;
         return wall == DNGN_ROCK_WALL
             || wall == DNGN_SLIMY_WALL
             || wall == DNGN_CLEAR_ROCK_WALL
