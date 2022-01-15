@@ -80,6 +80,7 @@ struct bolt
                                   // "engulfs" if an explosion or cloud
                                   // and "hits" otherwise.
     int    loudness = 0;          // Noise level on hitting or exploding.
+    bool   nodig = false;         // suppress digging on IOOD
     string hit_noise_msg = "";    // Message to give player for each hit
                                   // monster that isn't in view.
     string explode_noise_msg = "";  // Message to give player if the explosion

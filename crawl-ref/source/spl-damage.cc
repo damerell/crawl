@@ -1929,6 +1929,14 @@ spret cast_discharge(int pow, const actor &agent, bool fail)
     return spret::success;
 }
 
+static bool _wall_is_unsupported(const coord_def target) {
+    int nearby = 0;
+    for (radius_iterator ri(target, 1, C_SQUARE, LOS_NONE); ri; ri++) {
+        if (feat_is_wall(grd(*ri))) nearby++;
+    }
+    return (nearby < 6);
+}
+
 bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
                               const coord_def target, bool quiet,
                               const char **what, bool &should_destroy_wall,
@@ -2120,12 +2128,13 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
         beam.name       = "blast of rock fragments";
         beam.damage.num = 3;
 
-        if (grid == DNGN_ORCISH_IDOL || grid == DNGN_GRANITE_STATUE ||
-            (pow >= 35 && (grid == DNGN_ROCK_WALL
-                           || grid == DNGN_SLIMY_WALL
-                           || grid == DNGN_CLEAR_ROCK_WALL)
-             && x_chance_in_y(pow,140))) {
+        if (grid == DNGN_ORCISH_IDOL || grid == DNGN_GRANITE_STATUE) {
             should_destroy_wall = true;
+        } else if (pow >= 35 && (grid == DNGN_ROCK_WALL
+                                 || grid == DNGN_SLIMY_WALL
+                                 || grid == DNGN_CLEAR_ROCK_WALL)
+                   && x_chance_in_y(pow,140)) {
+            if (_wall_is_unsupported(target)) should_destroy_wall = true;
         }
         break;
 
@@ -2153,7 +2162,7 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
         beam.damage.num = 4;
 
         if (one_chance_in(3) || x_chance_in_y(pow,140)) {
-            should_destroy_wall = true;
+            if (_wall_is_unsupported(target)) should_destroy_wall = true;
         }
         break;
 

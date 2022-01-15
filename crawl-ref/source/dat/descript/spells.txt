@@ -816,11 +816,12 @@ Targets made from rock, stone, ice or bone will cause a small explosion. Metal
 targets will cause a small but more damaging explosion, and targets made from
 crystal will cause a large and more damaging explosion.
 
-At 5 bars of power, this spell will sometimes destroy rock walls. Stone and
-metal walls are too sturdy to be destroyed. Conversely, crystal walls are
-particularly brittle and have a chance of being destroyed at any power level.
-%%%%
-Legendary Destruction spell
+At 5 bars of power, this spell will sometimes destroy rock
+walls. Stone and metal walls are too sturdy to be
+destroyed. Conversely, crystal walls are particularly brittle and have
+a chance of being destroyed at any power level. Walls well-supported by
+surrounding walls will not be destroyed.
+%%%% Legendary Destruction spell
 
 Conjures two explosive magical effects in instant succession. The effects can
 be any mix of Fireball, Iceblast, and Ghostly Fireball.
@@ -955,7 +956,7 @@ projectiles, these orbs travel at a relatively slow pace, but can
 reduce rock walls to dust. The orbs home onto their targets, yet
 because of their huge inertia, especially agile opponents may be able
 to outmanoeuvre them. The orbs need some time to stabilize, and a
-nascent orb will deal reduced damage.
+nascent orb will deal reduced damage and fail to destroy walls.
 
 Residents of the dungeon are able to maintain the orb until it impacts a
 target, but when cast by you the orb will dissipate upon leaving your line of
