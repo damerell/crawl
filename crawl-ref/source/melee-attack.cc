@@ -326,7 +326,10 @@ bool melee_attack::handle_phase_dodged()
                 = player_equip_unrand(UNRAND_FENCERS);
             const int chance = using_lbl + using_fencers;
 
-            if (x_chance_in_y(chance, 3) && !is_riposte) // no ping-pong!
+            // Vexingly this is not _quite_ you.incapacitated()
+            if (!you.caught() && !you.asleep() && !you.cannot_move() && 
+                !you.confused() && x_chance_in_y(chance, 3) 
+                && !is_riposte) // no ping-pong!
                 riposte();
 
             // Retaliations can kill!
