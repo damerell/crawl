@@ -1559,7 +1559,6 @@ static bool _handle_veh_gift(bool forced)
         set<spell_type> offers = _vehumet_get_spell_gifts();
         if (!offers.empty())
         {
-            you.vehumet_gifts = offers;
             string prompt = " offers you knowledge of ";
             for (auto it = offers.begin(); it != offers.end(); ++it)
             {
@@ -1575,14 +1574,10 @@ static bool _handle_veh_gift(bool forced)
                 }
                 prompt += spell_title(*it);
                 _add_to_old_gifts(*it);
+                you.vehumet_gifts.insert(*it);
                 take_note(Note(NOTE_OFFERED_SPELL, *it));
             }
             prompt += ".";
-            if (gifts >= NUM_VEHUMET_GIFTS - 1)
-            {
-                prompt += " These spells will remain available"
-                          " as long as you worship Vehumet.";
-            }
 
             you.duration[DUR_VEHUMET_GIFT] = (100 + random2avg(100, 2)) * BASELINE_DELAY;
             if (gifts >= 5)
