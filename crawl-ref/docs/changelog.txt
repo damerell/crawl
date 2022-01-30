@@ -43,6 +43,7 @@ Vanilla changes messed around with
 * See Invisible and Insulation spells return.
 * Goliath beetles, griffons, vipers, brain worms, clay golems, flaming corpses,
   and Maud return.
+* Swamp worms go back to being submerged ambush predators.
 
 Changes swiped from other variants
 ----------------------------------
