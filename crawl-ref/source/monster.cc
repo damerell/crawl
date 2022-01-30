@@ -5214,7 +5214,7 @@ bool monster::can_see_invisible(bool calc_unid) const
 
 bool monster::invisible() const
 {
-    return has_ench(ENCH_INVIS) && !backlit();
+    return has_ench(ENCH_INVIS) && !backlit() && !is_fiery();
 }
 
 bool monster::visible_to(const actor *looker) const
@@ -5869,7 +5869,8 @@ bool monster::should_drink_potion(potion_type ptype) const
         // We're being nice: friendlies won't go invisible if the player
         // won't be able to see them.
         return !has_ench(ENCH_INVIS)
-               && (you.can_see_invisible(false) || !friendly());
+            && (you.can_see_invisible(false) || !friendly())
+            && !is_fiery() && !backlit();
     default:
         break;
     }
