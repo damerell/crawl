@@ -1143,6 +1143,12 @@ fire vortex
 
 A swirling cloud of flame. After striking a foe, it disintegrates.
 %%%%
+flaming corpse
+
+A black, thoroughly charred cadaver covered in unquenchable fire, likely the
+remains of some unfortunate adventurer. It now rushes madly through the
+dungeon, seeking to share its fate with others.
+%%%%
 flayed ghost
 
 A hideous floating undead creature, the anguished spirit of a tortured victim,

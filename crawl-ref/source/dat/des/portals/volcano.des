@@ -267,7 +267,7 @@ function fiery_guardians (e, intelligent, village)
         else
             -- "Elemental" monster pack.
             e.mons("fire elemental w:12 / earth elemental / gargoyle w:8")
-            e.mons("efreet")
+            e.mons("efreet / flaming corpse")
             e.mons("stone giant")
         end
     end

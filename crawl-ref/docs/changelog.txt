@@ -41,7 +41,8 @@ Vanilla changes messed around with
 * Sludge elves return, having been so keen to get back in the game as to be
   randomly selectable without us actually putting them back in.
 * See Invisible and Insulation spells return.
-* Goliath beetles, griffons, vipers, brain worms, clay golems, and Maud return.
+* Goliath beetles, griffons, vipers, brain worms, clay golems, flaming corpses,
+  and Maud return.
 
 Changes swiped from other variants
 ----------------------------------

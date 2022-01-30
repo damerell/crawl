@@ -14,8 +14,10 @@
     - row 2: monster flags
     - row 3: monster resistance flags
     - row 4: experience modifier, genus, species, holiness, resist magic
+      old-style negative MR was multiplied by HD... ish
     - row 5: damage for each of four attacks
     - row 6: hit dice, hit points
+      old-style { HD, HP/HD, rolls/HD, fixed HP } - 10*a*(b+c/2)
     - row 7: AC, evasion, spells, corpse effect, shouts
     - row 8: intel, habitat, speed, energy_usage
     - row 9: gmon_use class, body size, body shape
@@ -223,7 +225,6 @@ static monsterentry mondata[] =
     AXED_MON(MONS_THORN_LOTUS)
     AXED_MON(MONS_GIANT_GOLDFISH)
     AXED_MON(MONS_SILVER_STAR)
-    AXED_MON(MONS_FLAMING_CORPSE)
     AXED_MON(MONS_GRIZZLY_BEAR)
     AXED_MON(MONS_SPRIGGAN_ENCHANTER)
     AXED_MON(MONS_PHOENIX)
@@ -2736,6 +2737,19 @@ DUMMY(MONS_MOTH, 'y', WHITE, "moth", TILEP_MONS_MOTH_OF_WRATH)
     I_ANIMAL, HT_LAND, 15, DEFAULT_ENERGY,
     MONUSE_NOTHING, SIZE_TINY, MON_SHAPE_MISC,
     {TILEP_MONS_FLYING_SKULL}, TILE_ERROR
+},
+
+{
+    MONS_FLAMING_CORPSE, 'z', RED, "flaming corpse",
+    M_SEE_INVIS,
+    MR_RES_STICKY_FLAME | mrd(MR_RES_FIRE, 3) | MR_VUL_WATER,
+    17, MONS_FLAMING_CORPSE, MONS_FLAMING_CORPSE, MH_UNDEAD, 35,
+    { {AT_HIT, AF_STICKY_FLAME, 20}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
+    8, 440,
+    12, 13, MST_NO_SPELLS, CE_NOCORPSE, S_SCREAM,
+    I_ANIMAL, HT_LAND, 12, DEFAULT_ENERGY,
+    MONUSE_NOTHING, SIZE_MEDIUM, MON_SHAPE_HUMANOID,
+    {TILEP_MONS_FLAMING_CORPSE}, TILE_ERROR
 },
 
 {
