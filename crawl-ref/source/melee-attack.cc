@@ -2742,6 +2742,10 @@ void melee_attack::mons_apply_attack_flavour()
             rot_defender(1);
         break;
 
+    case AF_DISEASE:
+        defender->sicken(50 + random2(100));
+        break;
+
     case AF_FIRE:
         special_damage =
             resist_adjust_damage(defender,

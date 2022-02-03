@@ -3625,6 +3625,7 @@ static string _flavour_base_desc(attack_flavour flavour)
         { AF_BLINK,             "blink itself" },
         { AF_COLD,              "deal up to %d extra cold damage" },
         { AF_CONFUSE,           "cause confusion" },
+        { AF_DISEASE,           "cause sickness" },
         { AF_DRAIN_STR,         "drain strength" },
         { AF_DRAIN_INT,         "drain intelligence" },
         { AF_DRAIN_DEX,         "drain dexterity" },

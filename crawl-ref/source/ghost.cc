@@ -434,6 +434,11 @@ static attack_flavour _very_ugly_thing_flavour_upgrade(attack_flavour u_att_flav
         u_att_flav = AF_POISON_STRONG;
         break;
 
+    case AF_DISEASE:
+        u_att_flav = AF_ROT;
+        break;
+
+
     default:
         break;
     }
@@ -461,6 +466,10 @@ static attack_flavour _ugly_thing_colour_to_flavour(colour_t u_colour)
 
     case CYAN:
         u_att_flav = AF_ELEC;
+        break;
+
+    case MAGENTA:
+        u_att_flav = AF_DISEASE;
         break;
 
     case LIGHTGREY:
@@ -523,8 +532,6 @@ void ghost_demon::init_ugly_thing(bool very_ugly, bool only_mutate,
 
     // Pick a compatible attack flavour for this colour.
     att_flav = _ugly_thing_colour_to_flavour(colour);
-    if (colour == MAGENTA)
-        damage = damage * 4 / 3; // +5 for uglies, +9 for v uglies
 
     // Pick a compatible resistance for this attack flavour.
     ugly_thing_add_resistance(false, att_flav);
@@ -563,6 +570,10 @@ static resists_t _ugly_thing_resists(bool very_ugly, attack_flavour u_att_flav)
 
     case AF_ELEC:
         return MR_RES_ELEC * (very_ugly ? 2 : 1);
+
+    case AF_DISEASE:
+    case AF_ROT:
+        return MR_RES_ROTTING;
 
     case AF_COLD:
         return MR_RES_COLD * (very_ugly ? 2 : 1);

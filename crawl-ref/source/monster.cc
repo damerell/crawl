@@ -3597,6 +3597,8 @@ int monster::how_unclean(bool check_god) const
         uncleanliness++;
     if (has_attack_flavour(AF_ROT))
         uncleanliness++;
+    if (has_attack_flavour(AF_DISEASE))
+        uncleanliness++;
     if (has_attack_flavour(AF_STEAL))
         uncleanliness++;
     if (has_attack_flavour(AF_VAMPIRIC))
