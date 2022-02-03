@@ -1769,7 +1769,8 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
                 "<w>maximum</w> health (your usual maximum health will be "
                 "indicated by a number in parentheses).\n"
                 "Whenever you drink potions of curing and heal wounds, "
-                "some rot will be cured, but you'll be healed less.";
+                "some rot will be cured, but you'll be healed less."
+                "Or it will heal slowly as you gain experience.";
         cmd.push_back(CMD_QUAFF);
         break;
 

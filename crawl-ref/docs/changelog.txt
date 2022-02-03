@@ -13,6 +13,7 @@ Stoat Soup 0.23 "The Masque of the Red Death"
 * Chei's assessment of the speed delta for piety and slouch is based purely
   on movement speed; no piety for Roxanne or oklobs, sorry.
 * Vehumet gifts do not expire.
+* Rot is gradually healed by gaining XP.
 
 Vanilla changes messed around with
 ----------------------------------
