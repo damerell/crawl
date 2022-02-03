@@ -6725,6 +6725,15 @@ _tormentor_rare_
 @The_monster@ shouts @at_foe@, "I'll tear you apart!"
 ## END _tormentor_ ##
 %%%%
+################## Weasel ##################################
+weasel
+
+VISUAL:@The_monster@ scampers to and fro.
+
+VISUAL:@The_monster@ stands on its hind legs and looks around.
+
+SOUND:@The_monster@ chitters furiously.
+%%%%
 ################## Wizard ##################################
 wizard
 

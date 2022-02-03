@@ -2582,6 +2582,11 @@ A capricious nature spirit, deeply bonded with the waters in which she lives.
 Wherever they flow, so may she, and ponds and rivers surge and leap at her
 whim.
 %%%%
+weasel
+
+A slender mustelid of a vicious disposition. It seems to have grown to an
+outrageous size.
+%%%%
 white draconian
 
 A muscular white-scaled humanoid with a reptilian tail and small wings.
@@ -2973,11 +2978,6 @@ water elementalist statue
 
 A smooth statue of a beautiful merfolk bathing in a fountain, sculpted from
 creamy, faintly pinkish travertine. It glistens softly in the light.
-%%%%
-weasel
-
-A slender mustelid of a vicious disposition. Not entirely to your surprise, it
-seems to have grown to an outrageous size.
 %%%%
 witch
 
