@@ -937,7 +937,7 @@ ENDMAP
 NAME:    hangedman_swamp_ravenous
 TAGS:    no_pool_fixup no_monster_gen patrolling transparent
 DEPTH:   Swamp, !Swamp:$
-MONS:    bog body, necrophage, ghoul
+MONS:    bog body, necrophage, ghoul, rotting hulk
 SUBST:   jl = t
 KFEAT:   % = shallow_water / .
 SHUFFLE: jJ / lL, })

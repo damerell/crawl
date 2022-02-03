@@ -4896,6 +4896,21 @@ xx8ACC888xx8CAA.ACC8888CCA8xx
               .....@
 ENDMAP
 
+NAME: nicolae_tainted_love
+DEPTH: Depths, Crypt
+TAGS: no_monster_gen no_pool_fixup
+KMONS: 1 = merfolk siren
+KMONS: 2 = rotting hulk
+MAP
+xxxxxxxxxxxxxx
+x%.2..xxxxxxxx
+xWww.....x...x
+xW1w2....=...+
+xWww.....x...x
+x%.2..xxxxxxxx
+xxxxxxxxxxxxxx
+ENDMAP
+
 NAME:   kennysheep_kite_vault
 TAGS:   no_item_gen no_monster_gen
 SUBST:  x : xcnvb
@@ -6220,7 +6235,7 @@ MONS:   death knight ; \
         chain mail w:7 | \
         plate armour w:1
 MONS:   profane servitor, bone dragon, ghoul, death cob, skeletal warrior
-MONS:   freezing wraith / phantasmal warrior / \
+MONS:   rotting hulk / freezing wraith / phantasmal warrior / \
         flaming corpse / flayed ghost / skeletal warrior
 KFEAT:  _ = altar_yredelemnul
 KFEAT:  - = open_door

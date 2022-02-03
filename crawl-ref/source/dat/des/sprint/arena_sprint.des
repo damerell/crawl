@@ -318,7 +318,7 @@ function arena_sprint_get_monster_set(round, boss)
                 "troll / deep troll w:12 / iron troll w:2",
                 "rime drake / swamp drake / steam dragon / swamp dragon /\
                  acid dragon / komodo dragon",
-                "necrophage / w:2 ghoul / bog body",
+                "necrophage / rotting hulk / w:2 ghoul / bog body",
                 "shapeshifter hd:7",
                 "polar bear",
                 -- Gimmicks
@@ -366,7 +366,7 @@ function arena_sprint_get_monster_set(round, boss)
                 "rime drake w:5 / swamp drake / swamp dragon /\
                     acid dragon w:5 / komodo dragon w:5 / lindwurm w:5 /\
                     fire dragon w:5 / ice dragon w:5 / storm dragon w:1",
-                "necrophage / ghoul / bog body",
+                "necrophage / rotting hulk / ghoul / bog body",
                 "shapeshifter",
                 -- Gimmicks
                 "neqoxec",
@@ -425,9 +425,9 @@ function arena_sprint_get_monster_set(round, boss)
                 "yak / dream sheep / death yak / apis / catoblepas",
                 "glowing shapeshifter",
                 "hell knight / w:5 necromancer / w:1 margery",
-                "wraith / wight / phantasmal warrior / skeletal warrior /\
-                    vampire / ghoul / mummy / flayed ghost / bone dragon / death cob /\
-                    profane servitor",
+                "wraith / wight / phantasmal warrior / rotting hulk /\
+		skeletal warrior / vampire / ghoul / mummy / flayed ghost /\
+		bone dragon / death cob / profane servitor",
                 "vault guard / necromancer / hell knight / wizard /\
                     killer klown",
                 "base draconian / w:1 nonbase draconian",

@@ -2131,7 +2131,7 @@ MONS:    vampire knight / jiangshi / flayed ghost
 MONS:    lich / revenant
 KMONS:   5 = Boris / lich / revenant, lich / revenant
 : elseif you.absdepth() > 13 then
-MONS:    phantasmal warrior / skeletal warrior / eidolon
+MONS:    phantasmal warrior / skeletal warrior / eidolon / rotting hulk
 MONS:    vampire mage / death knight
 KMONS:   5 = Frances / vampire mage / death knight, vampire mage / death knight
 : else

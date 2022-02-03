@@ -2295,6 +2295,7 @@ static const map<band_type, vector<member_possibilites>> band_membership = {
                                   {MONS_NAGA, 2}}}},
     { BAND_GHOULS,              {{{MONS_GHOUL, 4},
                                   {MONS_NECROPHAGE, 3},
+                                  {MONS_ROTTING_HULK, 2},
                                   {MONS_BOG_BODY, 2}}}},
     { BAND_ILSUIW,              {{{MONS_MERFOLK_SIREN, 6},
                                   {MONS_MERFOLK, 3},
@@ -2522,7 +2523,7 @@ static monster_type _band_member(band_type band, int which,
             return random_choose_weighted(5, MONS_WRAITH,
                                           6, MONS_FREEZING_WRAITH,
                                           3, MONS_PHANTASMAL_WARRIOR,
-                                          2, MONS_FLAMING_CORPSE,
+                                          2, MONS_ROTTING_HULK,
                                           3, MONS_SKELETAL_WARRIOR);
 
     case BAND_MONSTROUS_DEMONSPAWN:

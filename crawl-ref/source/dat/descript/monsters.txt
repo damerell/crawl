@@ -2039,6 +2039,12 @@ river rat
 A rodent with hair of a most peculiar green colour, and a powerful bite. It
 tends to form great swarms with its kin.
 %%%%
+rotting hulk
+
+A shambling reanimated corpse. Trapped by evil spellweaving in a grotesque
+parody of life, this infected decaying body lurches about, seeking retribution
+on the living.
+%%%%
 the Royal Jelly
 
 A particularly rich and golden gelatinous thing. Smaller jellies swim and pulse

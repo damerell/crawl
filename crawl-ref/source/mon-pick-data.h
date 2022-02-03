@@ -467,7 +467,8 @@ static const pop_entry pop_crypt[] =
   { -1,  9,  120, PEAK, MONS_ANCIENT_CHAMPION },
   {  0,  2,   65, SEMI, MONS_FREEZING_WRAITH },
   {  0,  5,  125, FLAT, MONS_VAMPIRE_MAGE },
-  {  0,  5,   93, PEAK, MONS_GHOUL },
+  {  0,  5,   45, PEAK, MONS_GHOUL },
+  {  0,  5,   30, FLAT, MONS_ROTTING_HULK },
   {  0,  5,  105, FLAT, MONS_VAMPIRE_KNIGHT },
   {  1,  4,   25, FLAT, MONS_FLAMING_CORPSE }, // stole plague shamblers' freq
   {  1,  4,   75, FLAT, MONS_SKELETAL_WARRIOR },

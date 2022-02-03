@@ -654,9 +654,7 @@ enum monster_type                      // menv[].type
     MONS_SKELETON,
     MONS_SIMULACRUM,
 #endif
-#if TAG_MAJOR_VERSION == 34
-    MONS_PLAGUE_SHAMBLER,
-#endif
+    MONS_ROTTING_HULK,
     MONS_NECROPHAGE,
     MONS_GHOUL,
     MONS_FLAMING_CORPSE,
