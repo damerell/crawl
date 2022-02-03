@@ -439,7 +439,7 @@ NORETURN static void _launch_game()
     if (!crawl_state.game_is_tutorial()) {
         mpr("Press <w>?</w> for a list of commands and other information.");
         if (game_start) {
-            mpr("See http://crawl.montres.org.uk/about-dev.html for changes.\nRecent change: Veh gifts do not expire; misc vanilla Veh tweaks/fixes.");
+            mpr("See http://crawl.montres.org.uk/about-dev.html for changes.\nRecent change: rot heals with XP gain (too fast? too slow?).");
         }
     }
 

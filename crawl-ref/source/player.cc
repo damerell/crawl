@@ -2590,6 +2590,25 @@ static void _transfer_knowledge(int exp)
     }
 }
 
+static void _handle_rot(int exp) {
+    if (!you.hp_max_adj_temp) return;
+
+    int loss = div_rand_round(exp, 40 * calc_skill_cost(you.skill_cost_level));
+
+    dprf("Lost %d of %d draining points", loss, -you.hp_max_adj_temp);
+
+    if (loss == 0) return; 
+
+    you.hp_max_adj_temp += loss;
+
+    const bool rot_removed = you.hp_max_adj_temp >= 0;
+    if (rot_removed) you.hp_max_adj_temp = 0;
+
+    calc_hp();
+    
+    if (rot_removed) mprf(MSGCH_RECOVERY, "Your rotted flesh has healed.");
+}
+
 /// update temporary mutations
 static void _handle_temp_mutation(int exp)
 {
@@ -2667,6 +2686,7 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain)
     _handle_xp_penance(exp_gained);
     _handle_god_wrath(exp_gained);
     _transfer_knowledge(exp_gained);
+    _handle_rot(exp_gained);
 
     // evolution mutation timer
     you.attribute[ATTR_EVOL_XP] += exp_gained;
