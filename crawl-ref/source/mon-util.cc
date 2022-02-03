@@ -1368,6 +1368,7 @@ int get_shout_noise_level(const shout_type shout)
     case S_HISS:
     case S_VERY_SOFT:
         return 4;
+    case S_SQUEAK:
     case S_SOFT:
         return 6;
     case S_LOUD:
@@ -4691,6 +4692,7 @@ string do_mon_str_replacements(const string &in_msg, const monster& mons,
         "says",         // S_NORMAL
         "shouts",       // S_LOUD
         "screams",      // S_VERY_LOUD
+        "squeaks",
     };
     COMPILE_CHECK(ARRAYSZ(sound_list) == NUM_LOUDNESS);
 
