@@ -2969,7 +2969,8 @@ void read_scroll(item_def& scroll)
             you.duration[DUR_SILENCE] = 1;
         }
         // vexingly this is a bit like holy_word but not enough
-        for (radius_iterator ri(you.pos(), LOS_RADIUS, C_SQUARE, false);
+        for (radius_iterator 
+                 ri(you.pos(), MAX_SILENCE_RADIUS, C_SQUARE, false); 
              ri; ++ri) {
             if (monster* mons = monster_at(*ri)) {
                 if ((mons->type == MONS_SILENT_SPECTRE) ||
