@@ -2060,6 +2060,10 @@ salamander
 A red, flaming half-human half-snake creature with a legendary affinity for
 fire.
 %%%%
+The rarest of the salamander castes, possessed of fearsome agility and
+unparallelled martial prowess. Their mastery of fire is woven into every strike
+of their weapons, filling the air around their opponent with scorching flames.
+%%%%
 salamander mystic
 
 A member of the salamander's scholarly caste, possessed of lesser size and

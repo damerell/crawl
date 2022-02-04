@@ -857,6 +857,7 @@ bool mons_is_fiery(const monster& mon)
     return mon.has_attack_flavour(AF_FIRE)
            || mon.has_attack_flavour(AF_PURE_FIRE)
            || mon.has_attack_flavour(AF_STICKY_FLAME)
+           || mon.has_attack_flavour(AF_FIREBRAND)
            || mon.has_spell_of_type(SPTYP_FIRE);
 }
 
@@ -2171,6 +2172,7 @@ int flavour_damage(attack_flavour flavour, int HD, bool random)
     switch (flavour)
     {
         case AF_FIRE:
+        case AF_FIREBRAND:
             if (random)
                 return HD + random2(HD);
             return HD * 2;

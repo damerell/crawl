@@ -3658,6 +3658,7 @@ static string _flavour_base_desc(attack_flavour flavour)
         { AF_VULN,              "reduce resistance to hostile enchantments" },
         { AF_SHADOWSTAB,        "deal increased damage when unseen" },
         { AF_DROWN,             "deal drowning damage" },
+        { AF_FIREBRAND, "deal up to %d extra fire damage and surround the defender with flames"},
         { AF_CORRODE,           "cause corrosion" },
         { AF_SCARAB,            "drain speed and drain health" },
         { AF_TRAMPLE,           "knock back the defender" },
