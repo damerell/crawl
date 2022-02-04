@@ -336,3 +336,5 @@ const int DEFAULT_VIEW_DELAY = 600;
 #ifdef __ANDROID__
 #define ANDROID_ASSETS "ANDROID_ASSETS"
 #endif
+
+#define MAX_SILENCE_RADIUS 10
