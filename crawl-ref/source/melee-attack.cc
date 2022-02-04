@@ -3155,6 +3155,47 @@ void melee_attack::mons_apply_attack_flavour()
         }
         break;
 
+    case AF_FIREBRAND:
+    {
+        special_damage =
+            resist_adjust_damage(defender,
+                                 BEAM_FIRE,
+                                 base_damage);
+        special_damage_flavour = BEAM_FIRE;
+        
+        if (base_damage)
+        {
+            if (needs_message)
+            {
+                mprf("The air around %s erupts in flames!",
+                     defender_name(false).c_str());
+                
+                for (adjacent_iterator ai(defender->pos()); ai; ++ai)
+                {
+                    if (!cell_is_solid(*ai)
+                        && (!cloud_at(*ai)
+                            || cloud_at(*ai)->type == CLOUD_FIRE))
+                    {
+                        // Don't place clouds under non-resistant allies
+                        const actor* act = actor_at(*ai);
+                        if (act && mons_aligned(attacker, act)
+                            && act->res_fire() < 1)
+                        {
+                            continue;
+                        }
+                        
+                        place_cloud(CLOUD_FIRE, *ai, 4 + random2(9), attacker);
+                    }
+                }
+                
+                _print_resist_messages(defender, base_damage, BEAM_FIRE);
+            }
+        }
+        
+        defender->expose_to_element(BEAM_FIRE, 2);
+        break;
+    }
+
     case AF_WEAKNESS:
         if (coinflip())
             defender->weaken(attacker, 12);

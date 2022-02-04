@@ -338,6 +338,7 @@ static const pop_entry pop_snake[] =
   {  1,  4,  200, FLAT, MONS_MANA_VIPER },
   {  1,  7,  225, PEAK, MONS_GUARDIAN_SERPENT },
   {  2,  5,  110, PEAK, MONS_SALAMANDER_MYSTIC },
+  {  2,  6,   80, RISE, MONS_SALAMANDER_FIREBRAND },
   {  2,  8,  245, SEMI, MONS_NAGARAJA },
   { 0,0,0,FLAT,MONS_0 }
 };
@@ -1388,6 +1389,7 @@ static const pop_entry pop_lava_snake[] =
   {  1,   4,  200, FLAT, MONS_LAVA_SNAKE },
   {  1,   4,  200, FLAT, MONS_SALAMANDER },
   {  0,   6,  85,  SEMI, MONS_SALAMANDER_MYSTIC },
+  {  2,   4,  55,  SEMI, MONS_SALAMANDER_FIREBRAND },
   { 0,0,0,FLAT,MONS_0 }
 };
 
@@ -1399,6 +1401,7 @@ static const pop_entry pop_lava_depths[] =
   {  1,  6,   11, FALL, MONS_MOLTEN_GARGOYLE },
   {  1,  6,  100, FLAT, MONS_SALAMANDER },
   {  1,  8,   85, SEMI, MONS_SALAMANDER_MYSTIC },
+  {  3,  6,   55, RISE, MONS_SALAMANDER_FIREBRAND },
   {  1,  6,  400, FLAT, MONS_NO_MONSTER },
   { 0,0,0,FLAT,MONS_0 }
 };
@@ -1408,6 +1411,7 @@ static const pop_entry pop_lava_hell[] =
   {  1,  8,   300, FALL, MONS_FIRE_ELEMENTAL },
   {  1,  6,    25, FALL, MONS_MOLTEN_GARGOYLE },
   {  1,  7,    25, FLAT, MONS_SMOKE_DEMON },
+  {  1,  7,    75, FLAT, MONS_SALAMANDER_FIREBRAND },
   {  1,  7,   100, FLAT, MONS_NO_MONSTER },
   { 0,0,0,FLAT,MONS_0 }
 };

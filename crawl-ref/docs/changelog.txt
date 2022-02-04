@@ -43,7 +43,7 @@ Vanilla changes messed around with
   randomly selectable without us actually putting them back in.
 * See Invisible and Insulation spells return.
 * Goliath beetles, griffons, vipers, brain worms, clay golems, flaming corpses,
-  rotting hulks, and Maud return.
+  rotting hulks, salamander firebrands, and Maud return.
 * Swamp worms go back to being submerged ambush predators.
 
 Changes swiped from other variants

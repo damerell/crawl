@@ -28,7 +28,7 @@
         e.weight("5")
         e.mons("raiju band / spriggan air mage band / titan w:5 / " ..
                "storm dragon w:5 / shock serpent w:5 / " ..
-               "blizzard demon w:15")
+               "blizzard demon w:15 / salamander firebrand w:15")
         e.mons("w:20 obsidian statue / w:1 orange crystal statue")
         e.mons("glowing shapeshifter")
         e.mons("very ugly thing / ugly thing w:5")
@@ -217,7 +217,7 @@ MONS:   spriggan air mage / fire giant
 : else
 MONS:   yaktaur w:8 / centaur warrior / minotaur w:2 / \
         tengu conjurer / tengu warrior / nothing w:5
-MONS:   tengu reaver / sphinx
+MONS:   salamander firebrand / tengu reaver 
 : end
 KMONS:   L = fire dragon
 KMONS:   ~ = ice dragon
@@ -453,7 +453,7 @@ TAGS: grunt_profane_temple no_monster_gen
 NSUBST: 4 = 8:4 / *:., 5 = 1:6 / *:5
 KMONS: 4 = red devil / hell hound / efreet w:5
 KMONS: 5 = sun demon
-KMONS: 6 = balrug
+KMONS: 6 = salamander firebrand / balrug
 KFEAT: A = stone_arch
 MARKER: A = lua:props_marker { portal=1 }
 KMASK: 12345 = !no_monster_gen

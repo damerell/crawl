@@ -836,6 +836,11 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
                 { WPN_DAGGER,           5 },
                 { WPN_SCIMITAR,         2 },
         } } },
+        { MONS_SALAMANDER_FIREBRAND,
+          { { { WPN_GREAT_SWORD,        1 },
+                { WPN_GREAT_MACE,       1 },
+                { WPN_BATTLEAXE,        1 },
+        } } },
         { MONS_SPRIGGAN,
             { { { WPN_DAGGER,           1 },
                 { WPN_SHORT_SWORD,      1 },
@@ -1182,6 +1187,12 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
             set_item_ego_type(item, OBJ_WEAPONS, SPWPN_FLAMING);
             force_item = true;
         }
+        break;
+
+    case MONS_SALAMANDER_FIREBRAND:
+        force_item = true;
+        set_item_ego_type(item, OBJ_WEAPONS, SPWPN_FLAMING);
+        if (one_chance_in(3)) item.plus = 2 + random2(4);
         break;
 
     case MONS_THE_ENCHANTRESS:

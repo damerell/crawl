@@ -5033,6 +5033,7 @@ static branch_summon_pair _invitation_summons[] =
 static const pop_entry _planerend_snake[] =
 { // Snake enemies
   {  1,   1,   40, FLAT, MONS_ANACONDA },
+  {  1,   1,   60, FLAT, MONS_SALAMANDER_FIREBRAND },
   {  1,   1,  100, FLAT, MONS_GUARDIAN_SERPENT },
   {  1,   1,  100, FLAT, MONS_NAGARAJA },
   { 0,0,0,FLAT,MONS_0 }

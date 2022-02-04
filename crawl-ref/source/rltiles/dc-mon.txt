@@ -811,6 +811,7 @@ nagaraja MONS_NAGARAJA
 %sdir mon/demihumanoids
 salamander MONS_SALAMANDER
 salamander_mystic MONS_SALAMANDER_MYSTIC
+salamander_mystic MONS_SALAMANDER_FIREBRAND
 guardian_serpent MONS_GUARDIAN_SERPENT
 
 ## Ogres ('O')

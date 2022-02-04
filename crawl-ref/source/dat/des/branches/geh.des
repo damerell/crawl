@@ -829,8 +829,8 @@ ENDMAP
 
 NAME:    geh_hangedman
 ORIENT:  encompass
-MONS:    patrolling Asmodeus, brimstone fiend, balrug
-MONS:    hellion, fire giant, hell knight, hell hog
+MONS:    patrolling Asmodeus, brimstone fiend, balrug, hellion
+MONS:    fire giant, hell knight, salamander firebrand
 KMONS:   y = red devil w:20 / fire elemental / salamander
 KMONS:   Y = molten gargoyle
 KMONS:   zZ = sun demon / efreet / smoke demon w:5 / \
