@@ -2283,7 +2283,7 @@ static void _cap_mutation_at(mutation_type mut, int cap)
         // Don't convert real mutation levels to temporary.
         int real_levels = you.get_base_mutation_level(mut, true, false, true);
         you.temp_mutation[mut] = max(cap - real_levels, 0);
-
+        
         you.mutation[mut] = cap;
     }
     if (you.innate_mutation[mut] > cap)
@@ -3044,11 +3044,11 @@ static void tag_read_you(reader &th)
         }
     }
 
-    if (th.getMinorVersion() < TAG_MINOR_DIET_MUT)
-    {
-        you.mutation[MUT_CARNIVOROUS] = you.innate_mutation[MUT_CARNIVOROUS];
-        you.mutation[MUT_HERBIVOROUS] = you.innate_mutation[MUT_HERBIVOROUS];
-    }
+//    if (th.getMinorVersion() < TAG_MINOR_DIET_MUT)
+//    {
+//        you.mutation[MUT_CARNIVOROUS] = you.innate_mutation[MUT_CARNIVOROUS];
+//        you.mutation[MUT_HERBIVOROUS] = you.innate_mutation[MUT_HERBIVOROUS];
+//    }
 
     if (th.getMinorVersion() < TAG_MINOR_SAPROVOROUS
         && you.species == SP_OGRE)
@@ -3060,15 +3060,10 @@ static void tag_read_you(reader &th)
 
     if (th.getMinorVersion() < TAG_MINOR_CE_HA_DIET)
     {
-        if (you.species == SP_CENTAUR)
-        {
-            you.mutation[MUT_FAST_METABOLISM] -= 1;
-            you.innate_mutation[MUT_FAST_METABOLISM] -= 1;
-
-            you.mutation[MUT_HERBIVOROUS] = 1;
-            you.innate_mutation[MUT_HERBIVOROUS] = 1;
-        }
-        else if (you.species == SP_HALFLING)
+//        if (you.species == SP_CENTAUR)
+// removed since we are, somehow out of order, restoring Ce's Herb 1 and
+// fast metabolism
+        if (you.species == SP_HALFLING)
         {
             you.mutation[MUT_SLOW_METABOLISM] -= 1;
             you.innate_mutation[MUT_SLOW_METABOLISM] -= 1;
@@ -3256,9 +3251,12 @@ static void tag_read_you(reader &th)
             you.innate_mutation[MUT_SPIT_POISON] = 1;
     }
 
-    // Carnivore and herbivore used to be 3-level mutations.
-    _cap_mutation_at(MUT_HERBIVOROUS, 1);
-    _cap_mutation_at(MUT_CARNIVOROUS, 1);
+    if (th.getMinorVersion() < TAG_MINOR_FOOD_MUTS) {
+        you.innate_mutation[MUT_CARNIVOROUS] *= 3;
+        you.innate_mutation[MUT_HERBIVOROUS] *= 3;
+        you.mutation[MUT_CARNIVOROUS] *= 3;
+        you.mutation[MUT_HERBIVOROUS] *= 3;
+    }
 
     // Slow regeneration split into two single-level muts:
     // * Inhibited regeneration (no regen in los of monsters, what Gh get)

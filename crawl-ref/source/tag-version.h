@@ -234,6 +234,7 @@ enum tag_minor_version
     TAG_PB_REPEATED_MISCAST,       // I wonder how trunk avoids having so many
     TAG_PB_TRACK_FIX,              // of these?
     TAG_MINOR_THROW_CONSOLIDATION, // Throwing brands consolidated
+    TAG_MINOR_FOOD_MUTS,           // 3-level carn/herb
 #endif
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1

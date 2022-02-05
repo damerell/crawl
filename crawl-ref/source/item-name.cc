@@ -3643,7 +3643,7 @@ bool is_useless_item(const item_def &item, bool temp)
 #if TAG_MAJOR_VERSION == 34
         case POT_PORRIDGE:
             return you.species == SP_VAMPIRE
-                    || you.get_mutation_level(MUT_CARNIVOROUS) > 0;
+                    || you.get_mutation_level(MUT_CARNIVOROUS) == 3;
         case POT_BLOOD_COAGULATED:
 #endif
         case POT_BLOOD:
@@ -3690,9 +3690,9 @@ bool is_useless_item(const item_def &item, bool temp)
             return you.res_corr(false, false);
 
         case AMU_THE_GOURMAND:
-            return player_likes_chunks(true)
+            return player_chunk_affinity(true) == 3
                    || you.get_mutation_level(MUT_GOURMAND) > 0
-                   || you.get_mutation_level(MUT_HERBIVOROUS) > 0
+                   || you.get_mutation_level(MUT_HERBIVOROUS) == 3
                    || you.undead_state(temp);
 
         case AMU_FAITH:
