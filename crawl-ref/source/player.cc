@@ -4135,10 +4135,10 @@ int player_last_damaged() {
 
 bool player_pb_concentration() {
     dprf (DIAG_PERMABUFF, "Player did%s have concentration (%d ago)",
-          (player_last_damaged() > (270 - you.skill(SK_SPELLCASTING, 10)) ?
+          (player_last_damaged() > (300 - you.skill(SK_SPELLCASTING, 10)) ?
            "" : " not"),
           (player_last_damaged()));
-    return player_last_damaged() > (270 - you.skill(SK_SPELLCASTING, 10));
+    return player_last_damaged() > (300 - you.skill(SK_SPELLCASTING, 10));
 }
 
 int get_contamination_level()
