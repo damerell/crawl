@@ -302,3 +302,4 @@ void merfolk_start_swimming(bool step = false);
 void merfolk_stop_swimming();
 
 void cycle_beastly_appendage();
+bool any_appendage_possible();

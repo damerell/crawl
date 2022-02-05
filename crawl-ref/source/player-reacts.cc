@@ -657,8 +657,8 @@ static void _decrement_durations()
                 _decrement_a_duration(DUR_TRANSFORMATION, delay)) {
                 untransform();
             } else {
-                if (you.hp == you.hp_max) {
-                    you.props[APPENDAGE_TIME] = you.elapsed_time;
+                if (player_pb_concentration()) {
+//                    you.props[APPENDAGE_TIME] = you.elapsed_time;
                 }
             }
         } else {
@@ -1376,6 +1376,10 @@ static void _permabuff_bookkeeping(int delay) {
                                    you.props[BS_CHARGE_RESERVE].get_int());
             }
         }
+    }
+    if (you.permabuff_working(PERMA_APPENDAGE) && !any_appendage_possible()) {
+        mpr("You dispel Beastly Appendage; you have no appropriate body parts free.");
+        you.pb_off(PERMA_APPENDAGE, true, true);
     }
 }
 
