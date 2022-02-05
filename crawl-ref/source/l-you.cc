@@ -253,11 +253,10 @@ LUARET1(you_gourmand, boolean, you.gourmand(false))
  */
 LUARET1(you_res_corr, boolean, you.res_corr(false))
 /*** Do you like to eat chunks?
- * Returns a number so as not to break existing scripts.
  * @treturn int
  * @function like_chunks
  */
-LUARET1(you_like_chunks, number, player_likes_chunks(true) ? 3 : 0)
+LUARET1(you_like_chunks, number, player_chunk_affinity(true))
 /*** Are you flying?
  * @treturn boolean
  * @function flying
@@ -800,8 +799,10 @@ static int you_gold(lua_State *ls)
  */
 static int you_can_consume_corpses(lua_State *ls)
 {
-    lua_pushboolean(ls, you.get_mutation_level(MUT_HERBIVOROUS) == 0
-                        && !you_foodless());
+    lua_pushboolean(ls,
+                     you.get_mutation_level(MUT_HERBIVOROUS) < 3
+                     && !you_foodless()
+                  );
     return 1;
 }
 

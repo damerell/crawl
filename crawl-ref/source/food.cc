@@ -352,8 +352,8 @@ static void _describe_food_change(int food_increment)
 // Some food types may not get a message.
 static void _finished_eating_message(food_type type)
 {
-    const bool herbivorous = you.get_mutation_level(MUT_HERBIVOROUS) > 0;
-    const bool carnivorous = you.get_mutation_level(MUT_CARNIVOROUS) > 0;
+    bool herbivorous = you.get_mutation_level(MUT_HERBIVOROUS) > 0;
+    bool carnivorous = you.get_mutation_level(MUT_CARNIVOROUS) > 0;
 
     if (herbivorous)
     {
@@ -435,9 +435,9 @@ static bool _compare_by_freshness(const item_def *food1, const item_def *food2)
     return food1->freshness < food2->freshness;
 }
 
-static hunger_state_t _max_chunk_state(bool like_chunks = player_likes_chunks())
+static hunger_state_t _max_chunk_state()
 {
-    return like_chunks ? HS_VERY_FULL : HS_HUNGRY;
+    return ((hunger_state_t)(player_chunk_affinity() + ((int)HS_HUNGRY)));
 }
 
 /** Make the prompt for chunk eating/corpse draining.
@@ -449,14 +449,15 @@ static hunger_state_t _max_chunk_state(bool like_chunks = player_likes_chunks())
 int prompt_eat_chunks(bool only_auto)
 {
     // Full herbivores cannot eat chunks.
-    if (you.get_mutation_level(MUT_HERBIVOROUS) > 0)
+    if (you.get_mutation_level(MUT_HERBIVOROUS) == 3)
         return 0;
-
+    
     // If we *know* the player can eat chunks, doesn't have the gourmand
     // effect and isn't hungry, don't prompt for chunks.
     if (you.species != SP_VAMPIRE && you.hunger_state > _max_chunk_state())
+    {
         return 0;
-
+    }
     bool found_valid = false;
     vector<item_def *> chunks;
 
@@ -608,10 +609,12 @@ static void _chunk_nutrition_message(int nutrition)
 
 static int _apply_herbivore_nutrition_effects(int nutrition)
 {
-    if (you.get_mutation_level(MUT_HERBIVOROUS) > 0)
-        return nutrition * 5 / 12; // Was 42.2% with Herb 3, now 41.7%
-    else
-        return nutrition;
+    int how_herbivorous = you.get_mutation_level(MUT_HERBIVOROUS);
+
+    while (how_herbivorous--)
+        nutrition = nutrition * 75 / 100;
+
+    return nutrition;
 }
 
 static int _apply_gourmand_nutrition_effects(int nutrition, int gourmand)
@@ -624,7 +627,7 @@ static int _chunk_nutrition(bool likes_chunks)
 {
     int nutrition = CHUNK_BASE_NUTRITION;
 
-    if (you.hunger_state <= _max_chunk_state(likes_chunks))
+    if (you.hunger_state <= _max_chunk_state())
     {
         return likes_chunks ? nutrition
                             : _apply_herbivore_nutrition_effects(nutrition);
@@ -670,7 +673,7 @@ static void _eat_chunk(item_def& food)
 {
     const corpse_effect_type chunk_effect = determine_chunk_effect(food);
 
-    bool likes_chunks = player_likes_chunks(true);
+    int likes_chunks  = player_likes_chunks(true);
     int nutrition     = _chunk_nutrition(likes_chunks);
     int age           = you.elapsed_time - food.turnspotted;
     bool suppress_msg = false; // do we display the chunk nutrition message?
@@ -842,7 +845,7 @@ bool is_preferred_food(const item_def &food)
     if (food.is_type(OBJ_POTIONS, POT_PORRIDGE)
         && item_type_known(food))
     {
-        return you.get_mutation_level(MUT_CARNIVOROUS) == 0;
+        return !you.get_mutation_level(MUT_CARNIVOROUS);
     }
 #endif
 
@@ -853,10 +856,10 @@ bool is_preferred_food(const item_def &food)
     if (is_bad_food(food))
         return false;
 
-    if (you.get_mutation_level(MUT_CARNIVOROUS) > 0)
+    if (you.get_mutation_level(MUT_CARNIVOROUS) == 3)
         return food_is_meaty(food.sub_type);
 
-    if (you.get_mutation_level(MUT_HERBIVOROUS) > 0)
+    if (you.get_mutation_level(MUT_HERBIVOROUS) == 3)
         return food_is_veggie(food.sub_type);
 
     // No food preference.
@@ -923,19 +926,19 @@ bool can_eat(const item_def &food, bool suppress_msg, bool check_hunger)
 
     if (food_is_veggie(food))
     {
-        if (you.get_mutation_level(MUT_CARNIVOROUS) > 0)
+        if (you.get_mutation_level(MUT_CARNIVOROUS) == 3)
             FAIL("Sorry, you're a carnivore.")
         else
             return true;
     }
     else if (food_is_meaty(food))
     {
-        if (you.get_mutation_level(MUT_HERBIVOROUS) > 0)
+        if (you.get_mutation_level(MUT_HERBIVOROUS) == 3)
             FAIL("Sorry, you're a herbivore.")
         else if (food.sub_type == FOOD_CHUNK)
         {
             if (!check_hunger
-                || you.hunger_state < HS_SATIATED
+                || you.hunger_state <= _max_chunk_state()
                 || player_likes_chunks())
             {
                 return true;

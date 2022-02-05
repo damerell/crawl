@@ -346,7 +346,7 @@ static void _give_starting_food()
         base_type = OBJ_POTIONS;
         sub_type  = POT_BLOOD;
     }
-    else if (you.get_mutation_level(MUT_CARNIVOROUS) > 0)
+    else if (you.get_mutation_level(MUT_CARNIVOROUS))
         sub_type = FOOD_MEAT_RATION;
 
     // Give another one for hungry species.

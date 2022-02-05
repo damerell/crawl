@@ -679,20 +679,23 @@ struct food_def
 {
     int         id;
     const char *name;
-    int         normal_nutr;
-    int         carn_nutr;
-    int         herb_nutr;
+    int         value;
+    int         carn_mod;
+    int         herb_mod;
 };
 
 static int Food_index[NUM_FOODS];
 static const food_def Food_prop[] =
 {
-    { FOOD_MEAT_RATION,  "meat ration",  5000,  6500,     0 },
-    { FOOD_CHUNK,        "chunk",        1000,  1300,     0 },
-    { FOOD_BREAD_RATION, "bread ration", 4400,     0,  5900 },
-    { FOOD_FRUIT,        "fruit",         850,     0,  1000 },
-    { FOOD_HONEYCOMB,    "honeycomb",    2000,  2000,  2000 },
-    { FOOD_ROYAL_JELLY,  "royal jelly",  4000,  4000,  4000 },
+    { FOOD_MEAT_RATION,  "meat ration",  5000,   500, -1500 },
+    { FOOD_CHUNK,        "chunk",        1000,   100,  -500 },
+
+    { FOOD_BREAD_RATION, "bread ration", 4400, -1000,   500 },
+
+    { FOOD_FRUIT,        "fruit",         850,  -100,    50 },
+
+    { FOOD_HONEYCOMB,    "honeycomb",    2000,     0,     0 },
+    { FOOD_ROYAL_JELLY,  "royal jelly",  4000,     0,     0 },
 
 #if TAG_MAJOR_VERSION == 34
     // is_real_food assumes we list FOOD_UNUSED as the first removed
@@ -2354,7 +2357,7 @@ bool food_is_meaty(int food_type)
             "Bad food type %d (NUM_FOODS = %d)",
             food_type, NUM_FOODS);
 
-    return Food_prop[Food_index[food_type]].herb_nutr == 0;
+    return Food_prop[Food_index[food_type]].carn_mod > 0;
 }
 
 bool food_is_meaty(const item_def &item)
@@ -2371,7 +2374,7 @@ bool food_is_veggie(int food_type)
             "Bad food type %d (NUM_FOODS = %d)",
             food_type, NUM_FOODS);
 
-    return Food_prop[Food_index[food_type]].carn_nutr == 0;
+    return Food_prop[Food_index[food_type]].herb_mod > 0;
 }
 
 bool food_is_veggie(const item_def &item)
@@ -2386,11 +2389,17 @@ int food_value(const item_def &item)
 {
     ASSERT(item.defined() && item.base_type == OBJ_FOOD);
 
+    const int herb = you.get_mutation_level(MUT_HERBIVOROUS);
+    const int carn = you.get_mutation_level(MUT_CARNIVOROUS);
+
     const food_def &food = Food_prop[Food_index[item.sub_type]];
 
-    return you.get_mutation_level(MUT_HERBIVOROUS) > 0 ? food.herb_nutr
-         : you.get_mutation_level(MUT_CARNIVOROUS) > 0 ? food.carn_nutr
-                                                       : food.normal_nutr;
+    int ret = food.value;
+
+    ret += carn * food.carn_mod;
+    ret += herb * food.herb_mod;
+
+    return ret;
 }
 
 bool is_fruit(const item_def & item)
