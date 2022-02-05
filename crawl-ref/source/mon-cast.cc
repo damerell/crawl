@@ -5967,20 +5967,22 @@ void mons_cast(monster* mons, bolt pbolt, spell_type spell_cast,
     case SPELL_VAMPIRE_SUMMON:
 #endif
     case SPELL_SUMMON_SMALL_MAMMAL:
+    {
         sumcount2 = 1 + random2(3);
+        monster_type rats[] = { MONS_WEASEL, MONS_RAT, MONS_RIVER_RAT };
+        int lastrat = ARRAYSZ(rats);
+        if (mons->type == MONS_PLAYER_GHOST) lastrat--;
 
         for (sumcount = 0; sumcount < sumcount2; ++sumcount)
         {
-            monster_type rats[] = { MONS_WEASEL, MONS_RIVER_RAT, MONS_RAT };
-
-            const monster_type mon = (one_chance_in(3) ? MONS_BAT
-                                                       : RANDOM_ELEMENT(rats));
+            const monster_type mon = (one_chance_in(3) ? MONS_BAT : 
+                                      rats[random2(lastrat)]);
             create_monster(
                 mgen_data(mon, SAME_ATTITUDE(mons), mons->pos(), mons->foe)
                 .set_summoned(mons, 5, spell_cast, god));
         }
         return;
-
+    }
     case SPELL_STICKS_TO_SNAKES:
     {
         const int pow = (mons->spell_hd(spell_cast) * 15) / 10;
