@@ -1432,24 +1432,25 @@ static bool _slot_conflict(equipment_type eq, bool eqonly = false)
     return false;
 }
 
-static mutation_type _beastly_appendage()
+static mutation_type _beastly_appendage(bool repeat = false)
 {
     mutation_type chosen = NUM_MUTATIONS;
     int tried = 0; bool foundany = false;
-    int durations = (you.elapsed_time - you.props[APPENDAGE_TIME].get_int()) /
+    int overflow = (you.elapsed_time - you.props[APPENDAGE_TIME].get_int()) /
         (BASELINE_DELAY * nominal_duration(SPELL_BEASTLY_APPENDAGE));
-    int overflow = random2avg(durations + 1, 2);
     vector <mutation_type> possible_appendages;
     for (appendage_selection app : appendages)
     {
         for (int i=app.weight; i > 0; i--) {
             tried++;
-            if (_slot_conflict(beastly_slot(app.mutation), 
-                               (app.mutation == MUT_BEAK))) continue;
-            if (physiology_mutation_conflict(app.mutation)) continue;
+            if (!repeat || (app.mutation != you.attribute[ATTR_APPENDAGE])) {
+                if (_slot_conflict(beastly_slot(app.mutation), 
+                                   (app.mutation == MUT_BEAK))) continue;
+                if (physiology_mutation_conflict(app.mutation)) continue;
+            }
             foundany = true;
             if (tried <= overflow) continue;
-            if (!((tried >= nice_appendage_weights + overflow) && foundany)) {
+            if (!((tried > nice_appendage_weights + overflow) && foundany)) {
                 possible_appendages.push_back(app.mutation);
             }
         }
@@ -2204,4 +2205,9 @@ void cycle_beastly_appendage() {
             transform(15, transformation::appendage,false,false); 
         }
     }
+}
+
+bool any_appendage_possible() {
+    const mutation_type app = _beastly_appendage(true);
+    return (app != NUM_MUTATIONS);
 }

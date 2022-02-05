@@ -1173,12 +1173,17 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
             return "darkness is useless against divine light.";
         break;
 
+    case SPELL_BEASTLY_APPENDAGE:
+        if (temp && !any_appendage_possible()) {
+            return "you have no suitable free body parts to transform.";
+        }
+        goto otherforms;
+
     case SPELL_STATUE_FORM:
         if (SP_GARGOYLE == you.species)
             return "you're already a statue.";
         // fallthrough to other forms
-
-    case SPELL_BEASTLY_APPENDAGE:
+    otherforms:
     case SPELL_BLADE_HANDS:
     case SPELL_DRAGON_FORM:
     case SPELL_HYDRA_FORM:
@@ -1334,6 +1339,7 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
             (you.max_magic_points <= spell_mana(SPELL_INFUSION))) {
             return "you would have no MP left to infuse your attacks with.";
         } 
+
     default:
         break;
     }
