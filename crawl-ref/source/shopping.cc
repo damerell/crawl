@@ -1052,8 +1052,8 @@ class ShopEntry : public InvEntry
 
     virtual void select(int qty = -1) override
     {
-        if (shopping_list.is_on_list(*item, &menu.pos) && qty != 0)
-            shopping_list.del_thing(*item, &menu.pos);
+//        if (shopping_list.is_on_list(*item, &menu.pos) && qty != 0)
+//            shopping_list.del_thing(*item, &menu.pos);
 
         InvEntry::select(qty);
     }
