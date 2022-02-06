@@ -1079,6 +1079,7 @@ skeletal_warrior MONS_SKELETAL_WARRIOR
 ancient_champion MONS_ANCIENT_CHAMPION
 %rim 0
 flaming_corpse MONS_FLAMING_CORPSE
+flaming_corpse_water MONS_FLAMING_CORPSE_WATER
 %rim 1
 %sdir mon/undead
 curse_skull MONS_CURSE_SKULL
