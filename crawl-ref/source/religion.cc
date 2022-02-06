@@ -2031,6 +2031,37 @@ bool ihpix_take_item(item_def &item, bool justcheck, bool quiet) {
     return false;
 }
 
+int ihpix_quan_ammo(const missile_type missile) {
+    static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
+    for (int i = 0; i < ihpix_nr_ammos; i++) {
+        item_def &ammo = ammo_vec[i].get_item();
+        if (missile == ammo.sub_type) {
+            return ammo.quantity;
+        }
+    }
+    mprf(MSGCH_ERROR, "BUG: ihpix_quan_ammo called with a kind of ammo we don't know about.");
+    return 0;
+}
+
+bool ihpix_got_ammo(const item_def &weapon) {
+    missile_type missile = fires_ammo_type(weapon);
+    if (missile == MI_NONE) return false;
+    if (ihpix_quan_ammo(missile) > 0) return true;
+    if ((missile==MI_STONE) && (ihpix_quan_ammo(MI_SLING_BULLET) > 0)) {
+        return true;
+    }
+    return false;
+}
+
+missile_type ihpix_preferred_ammo(const item_def &weapon) {
+    missile_type missile = fires_ammo_type(weapon);
+    if ((missile==MI_STONE) && (ihpix_quan_ammo(MI_SLING_BULLET) > 0) &&
+        ((ihpix_quan_ammo(MI_STONE) == 0) || 
+         you.props[IHPIX_USE_BULLETS].get_bool())) {
+        missile = MI_SLING_BULLET;
+    }
+    return missile;
+}
 /**
  * Setup an ancestor's weapon after their class is chosen, when the player
  * levels up, or after they're resummoned (or initially created for wrath).

@@ -2148,6 +2148,8 @@ bool is_throwable(const actor *actor, const item_def &wpn, bool force)
     if (wpn.base_type != OBJ_MISSILES)
         return false;
 
+    if (!force && (actor->is_player()) && you_worship(GOD_IHPIX)) return false;
+
     const size_type bodysize = actor->body_size();
 
     if (!force)

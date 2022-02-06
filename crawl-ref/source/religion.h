@@ -152,6 +152,8 @@ void ihpix_eat_inventory();
 bool ihpix_take_item(item_def &item, bool justcheck = false,
 		     bool quiet = true);
 int ihpix_quan_ammo(missile_type missile);
+bool ihpix_got_ammo(const item_def &weapon);
+missile_type ihpix_preferred_ammo(const item_def &weapon);
 
 bool god_hates_attacking_friend(god_type god, const monster& fr);
 

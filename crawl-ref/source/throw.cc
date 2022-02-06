@@ -28,6 +28,7 @@
 #include "items.h"
 #include "item-use.h"
 #include "macro.h"
+#include "makeitem.h"
 #include "message.h"
 #include "mon-behv.h"
 #include "output.h"
@@ -95,10 +96,17 @@ class fire_target_behaviour : public targeting_behaviour
 public:
     fire_target_behaviour()
         : chosen_ammo(false),
+          ihpix_armoury(have_passive(passive_t::ihpix_gather)),
           selected_from_inventory(false),
           need_redraw(false)
     {
         m_slot = you.m_quiver.get_fire_item(&m_noitem_reason);
+        if (ihpix_armoury) {
+            ihpix_prospective.base_type=OBJ_MISSILES;
+            ihpix_prospective.sub_type = ihpix_preferred_ammo(*you.weapon());
+            ihpix_prospective.quantity = 1;
+            chosen_ammo=(ihpix_prospective.sub_type != MI_NONE);
+        }
         set_prompt();
     }
 
@@ -114,6 +122,8 @@ public:
     // FIXME: these should be privatized and given accessors.
     int m_slot;
     bool chosen_ammo;
+    bool ihpix_armoury;
+    item_def ihpix_prospective;
 
 private:
     void set_prompt();
@@ -135,6 +145,7 @@ void fire_target_behaviour::update_top_prompt(string* p_top_prompt)
 
 const item_def* fire_target_behaviour::active_item() const
 {
+    if (ihpix_armoury) return &ihpix_prospective;
     if (m_slot == -1)
         return nullptr;
     else
@@ -148,7 +159,12 @@ void fire_target_behaviour::set_prompt()
 
     // Figure out if we have anything else to cycle to.
     const int next_item = get_next_fire_item(m_slot, +1);
-    const bool no_other_items = (next_item == -1 || next_item == m_slot);
+    const bool no_other_items = ihpix_armoury ? 
+        (((ihpix_prospective.sub_type == MI_STONE) && 
+          (ihpix_quan_ammo(MI_SLING_BULLET) > 0)) ||
+         ((ihpix_prospective.sub_type == MI_SLING_BULLET) && 
+          (ihpix_quan_ammo(MI_STONE) > 0))) :
+        (next_item == -1 || next_item == m_slot);
 
     ostringstream msg;
 
@@ -169,14 +185,21 @@ void fire_target_behaviour::set_prompt()
     }
 
     // And a key hint.
-    string key_hint = no_other_items
-                        ? "(<w>%</w> - inventory) "
-                        : "(<w>%</w> - inventory. <w>%</w>/<w>%</w> - cycle) ";
-    insert_commands(key_hint,
-                    { CMD_DISPLAY_INVENTORY,
-                      CMD_CYCLE_QUIVER_BACKWARD,
-                      CMD_CYCLE_QUIVER_FORWARD });
+    if (!(ihpix_armoury && no_other_items)) {
+        string key_hint = ihpix_armoury ? "" : "(<w>%</w> - inventory) ";
+        key_hint += no_other_items ? "" : "<w>%</w>/<w>%</w> - cycle) ";
+        if (ihpix_armoury) {
+            insert_commands(key_hint,
+                            {   CMD_CYCLE_QUIVER_BACKWARD,
+                                CMD_CYCLE_QUIVER_FORWARD });
+        } else {
+            insert_commands(key_hint,
+                            { CMD_DISPLAY_INVENTORY,
+                                    CMD_CYCLE_QUIVER_BACKWARD,
+                                    CMD_CYCLE_QUIVER_FORWARD });
+        }
     msg << key_hint;
+    }
 
     // Describe the selected item for firing.
     if (!active_item())
@@ -202,12 +225,18 @@ void fire_target_behaviour::set_prompt()
 // fire item.
 void fire_target_behaviour::cycle_fire_item(bool forward)
 {
-    const int next = get_next_fire_item(m_slot, forward ? 1 : -1);
-    if (next != m_slot && next != -1)
-    {
-        m_slot = next;
-        selected_from_inventory = false;
-        chosen_ammo = true;
+    if (ihpix_armoury) {
+        ihpix_prospective.sub_type =         
+            ihpix_prospective.sub_type == MI_STONE ?
+            MI_SLING_BULLET : MI_STONE;
+    } else {
+        const int next = get_next_fire_item(m_slot, forward ? 1 : -1);
+        if (next != m_slot && next != -1)
+        {
+            m_slot = next;
+            selected_from_inventory = false;
+            chosen_ammo = true;
+        }
     }
     set_prompt();
 }
@@ -259,7 +288,7 @@ command_type fire_target_behaviour::get_command(int key)
         {
         case CMD_CYCLE_QUIVER_BACKWARD: cycle_fire_item(true);  return CMD_NO_CMD;
         case CMD_CYCLE_QUIVER_FORWARD: cycle_fire_item(false); return CMD_NO_CMD;
-        case CMD_DISPLAY_INVENTORY: pick_fire_item_from_inventory(); return CMD_NO_CMD;
+        case CMD_DISPLAY_INVENTORY: if (!ihpix_armoury) pick_fire_item_from_inventory(); return CMD_NO_CMD;
         case CMD_DISPLAY_COMMANDS: display_help(); return CMD_NO_CMD;
         default: break;
         }
@@ -351,6 +380,8 @@ static int _get_dart_chance(const int hd)
  *                      was successful.
  */
 static bool _fire_choose_item_and_target(int& slot, dist& target,
+                                         item_def& ihpix_shot,
+                                         bool with_ihpix,
                                          bool teleport = false)
 {
     fire_target_behaviour beh;
@@ -358,6 +389,9 @@ static bool _fire_choose_item_and_target(int& slot, dist& target,
 
     if (was_chosen)
     {
+        if (with_ihpix) {
+            mprf(MSGCH_ERROR, "BUG?: firing prechosen item with ihpix");
+        }
         string warn;
         if (!_fire_validate_item(slot, warn))
         {
@@ -393,9 +427,13 @@ static bool _fire_choose_item_and_target(int& slot, dist& target,
         return false;
     }
 
-    you.m_quiver.on_item_fired(*beh.active_item(), beh.chosen_ammo);
     you.redraw_quiver = true;
-    slot = beh.m_slot;
+    if (!beh.ihpix_armoury) {
+        you.m_quiver.on_item_fired(*beh.active_item(), beh.chosen_ammo);
+        slot = beh.m_slot;
+    } else {
+        ihpix_shot = beh.ihpix_prospective;
+    }
 
     return true;
 }
@@ -418,6 +456,16 @@ static int _fire_prompt_for_item()
     return slot;
 }
 
+static bool _ihpix_validate(int item, bool verbose) {
+    if (you_worship(GOD_IHPIX) && (item != -1) &&
+        (!(is_launched(&you, you.weapon(), you.inv[item]) == 
+           launch_retval::LAUNCHED))) {
+        if (verbose) simple_god_message(" forbids you to throw objects.");
+        return false;
+    }
+    return true;
+}
+
 // Returns false and err text if this item can't be fired.
 static bool _fire_validate_item(int slot, string &err)
 {
@@ -431,6 +479,9 @@ static bool _fire_validate_item(int slot, string &err)
     else if (item_is_worn(slot))
     {
         err = "You are wearing that object!";
+        return false;
+    } else if (!_ihpix_validate(slot, false)) {
+        err = god_name(GOD_IHPIX) + " forbids you to throw objects.";
         return false;
     }
     return true;
@@ -499,12 +550,15 @@ static bool _autoswitch_to_ranged()
     const item_def& launcher = you.inv[item_slot];
     if (!is_range_weapon(launcher))
         return false;
-    if (none_of(you.inv.begin(), you.inv.end(), [&launcher](const item_def& it)
-                { return it.launched_by(launcher);}))
-    {
-        return false;
+    if (have_passive(passive_t::ihpix_gather)) {
+        if (!ihpix_got_ammo(launcher)) return false;
+    } else {
+        if (none_of(you.inv.begin(), you.inv.end(), [&launcher]
+                    (const item_def& it){ return it.launched_by(launcher);}))
+        {
+            return false;
+        }
     }
-
     if (!wield_weapon(true, item_slot))
         return false;
 
@@ -514,8 +568,9 @@ static bool _autoswitch_to_ranged()
     return true;
 }
 
-int get_ammo_to_shoot(int item, dist &target, bool teleport)
+int get_ammo_to_shoot(int item, dist &target, bool with_ihpix, bool teleport)
 {
+    item_def ihpix_shot;
     if (fire_warn_if_impossible())
     {
         flush_input_buffer(FLUSH_ON_FAILURE);
@@ -528,14 +583,29 @@ int get_ammo_to_shoot(int item, dist &target, bool teleport)
         return -1;
     }
 
-    if (!_fire_choose_item_and_target(item, target, teleport))
+    if (!_ihpix_validate(item, true)) {
+        return -1;
+    }
+
+    if (with_ihpix &&
+        (!ihpix_got_ammo(*you.weapon()))) {
+        simple_god_message(" has no ammunition for your weapon.");
+        return -1;
+    }
+
+    if (!_fire_choose_item_and_target(item, target, ihpix_shot, with_ihpix, 
+                                      teleport))
         return -1;
 
-    string warn;
-    if (!_fire_validate_item(item, warn))
-    {
-        mpr(warn);
-        return -1;
+    if (!with_ihpix) {
+        string warn;
+        if (!_fire_validate_item(item, warn))
+        {
+            mpr(warn);
+            return -1;
+        }
+    } else {
+        item = ihpix_shot.sub_type;
     }
     return item;
 }
@@ -557,23 +627,32 @@ void fire_thing(int item)
 #ifdef USE_SOUND
     parse_sound(FIRE_PROMPT_SOUND);
 #endif
+    bool with_ihpix = have_passive(passive_t::ihpix_gather);
 
     dist target;
-    item = get_ammo_to_shoot(item, target, is_pproj_active());
-    if (item == -1)
+    item = get_ammo_to_shoot(item, target, with_ihpix, is_pproj_active());
+    if (item == -1) 
         return;
 
     // First we check items's not !f
     // and check either (we have no weapon or wrong ammo) and item's not !t
     //           or     our weapon's not !f
-    if (check_warning_inscriptions(you.inv[item], OPER_FIRE) &&
-        ((!you.weapon() || (is_launched(&you, you.weapon(), you.inv[item]) !=
-                            launch_retval::LAUNCHED)) ?
-         check_warning_inscriptions(you.inv[item], OPER_THROW) :
-         check_warning_inscriptions(*you.weapon(), OPER_FIRE)))
-    {
+    bool throwok = false;
+    if (with_ihpix) {
+        if (check_warning_inscriptions(*you.weapon(), OPER_FIRE)) {
+            throwok = true;
+        }
+    } else if (check_warning_inscriptions(you.inv[item], OPER_FIRE) &&
+               ((!you.weapon() || 
+                 (is_launched(&you, you.weapon(), you.inv[item]) !=
+                  launch_retval::LAUNCHED)) ?
+                check_warning_inscriptions(you.inv[item], OPER_THROW)  :
+                check_warning_inscriptions(*you.weapon(), OPER_FIRE))) {
+        throwok = true;
+    }
+    if (throwok) {
         bolt beam;
-        throw_it(beam, item, &target);
+        throw_it(beam, item, with_ihpix, &target);
     }
 }
 
@@ -581,6 +660,11 @@ void fire_thing(int item)
 // the quiver.
 void throw_item_no_quiver()
 {
+    if (have_passive(passive_t::ihpix_gather)) {
+        simple_god_message(" forbids you to throw objects.");
+        return;
+    }
+
     if (fire_warn_if_impossible())
     {
         flush_input_buffer(FLUSH_ON_FAILURE);
@@ -609,7 +693,7 @@ void throw_item_no_quiver()
     }
 
     bolt beam;
-    throw_it(beam, slot);
+    throw_it(beam, slot, false);
 }
 
 static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
@@ -768,7 +852,7 @@ static void _throw_noise(actor* act, const bolt &pbolt, const item_def &ammo)
 //
 // Return value is only relevant if dummy_target is non-nullptr, and returns
 // true if dummy_target is hit.
-bool throw_it(bolt &pbolt, int throw_2, dist *target)
+bool throw_it(bolt &pbolt, int throw_2, bool with_ihpix, dist *target)
 {
     dist thr;
     bool returning   = false;    // Item can return to pack.
@@ -798,7 +882,14 @@ bool throw_it(bolt &pbolt, int throw_2, dist *target)
     }
     pbolt.set_target(thr);
 
-    item_def& thrown = you.inv[throw_2];
+    item_def thrown;
+    if (with_ihpix) {
+        thrown.base_type = OBJ_MISSILES; 
+        thrown.sub_type = throw_2;
+        thrown.quantity = 1;
+    } else {
+        thrown = you.inv[throw_2];
+    }
     ASSERT(thrown.defined());
 
     // Figure out if we're thrown or launched.
@@ -807,7 +898,7 @@ bool throw_it(bolt &pbolt, int throw_2, dist *target)
     // Making a copy of the item: changed only for venom launchers.
     item_def item = thrown;
     item.quantity = 1;
-    item.slot     = index_to_letter(item.link);
+    item.slot     = with_ihpix ? 'Z' : index_to_letter(item.link);
 
     string ammo_name;
 
@@ -871,7 +962,7 @@ bool throw_it(bolt &pbolt, int throw_2, dist *target)
     pbolt.is_tracer = false;
 
     bool unwielded = false;
-    if (throw_2 == you.equip[EQ_WEAPON] && thrown.quantity == 1)
+    if (!with_ihpix && throw_2 == you.equip[EQ_WEAPON] && thrown.quantity == 1)
     {
         if (!wield_weapon(true, SLOT_BARE_HANDS, true, false, true, false))
             return false;
@@ -933,7 +1024,7 @@ bool throw_it(bolt &pbolt, int throw_2, dist *target)
     }
 
     // check for returning ammo
-    if (teleport)
+    if (teleport || with_ihpix)
         returning = false;
 
     if (returning && projected != launch_retval::FUMBLED)

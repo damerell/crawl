@@ -30,12 +30,14 @@ bool is_penetrating_attack(const actor& attacker, const item_def* weapon,
 bool item_is_quivered(const item_def &item);
 bool fire_warn_if_impossible(bool silent = false);
 int get_next_fire_item(int current, int offset);
-int get_ammo_to_shoot(int item, dist &target, bool teleport = false);
+int get_ammo_to_shoot(int item, dist &target, bool with_ihpix,
+		      bool teleport = false);
 bool is_pproj_active();
 void fire_thing(int item = -1);
 void throw_item_no_quiver();
 
-bool throw_it(bolt &pbolt, int throw_2, dist *target = nullptr);
+bool throw_it(bolt &pbolt, int throw_2, bool with_ihpix, 
+	      dist *target = nullptr);
 
 bool thrown_object_destroyed(item_def *item, const coord_def& where);
 

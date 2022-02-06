@@ -3282,6 +3282,7 @@ void tile_item_use_secondary(int idx)
 {
     const item_def item = you.inv[idx];
 
+    // is_throwable stops ihpixies
     if (item.base_type == OBJ_WEAPONS && is_throwable(&you, item))
     {
         if (check_warning_inscriptions(item, OPER_FIRE))

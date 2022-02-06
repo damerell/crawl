@@ -89,6 +89,12 @@ int player_quiver::get_fire_item(string* no_item_reason) const
             *no_item_reason = "You can't grasp things well enough to throw them.";
         return -1;
     }
+    if (have_passive(passive_t::ihpix_gather)) {
+        if (no_item_reason != nullptr)
+            *no_item_reason = "Worshippers in good standing receive ammunition from the divine armoury.";
+        return -1;
+    }
+        
     int slot;
     const item_def* desired_item;
 
@@ -237,18 +243,6 @@ void ihpix_quiver() {
         }
     }
     you.redraw_quiver = true;
-}
-
-int ihpix_quan_ammo(missile_type missile) {
-    static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
-    for (int i = 0; i < ihpix_nr_ammos; i++) {
-        item_def &ammo = ammo_vec[i].get_item();
-        if (missile == ammo.sub_type) {
-            return ammo.quantity;
-        }
-    }
-    mprf(MSGCH_ERROR, "BUG: ihpix_quan_ammo called with a kind of ammo we don't know about.");
-    return 0;
 }
 
 // Notification that item was fired with 'f'.
