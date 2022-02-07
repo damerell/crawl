@@ -1004,9 +1004,9 @@ A way out of the dungeon, letting you finish this lesson.
 ########################################################################
 haloed
 
-This area is lit by a divine halo, decreasing your stealth, preventing
-invisibility, and increasing the accuracy of attacks against any illuminated
-creatures.
+This area is lit by a divine halo or powerful magical light, decreasing your
+stealth, preventing invisibility, and increasing the accuracy of attacks
+against any illuminated creatures.
 %%%%
 umbraed
 

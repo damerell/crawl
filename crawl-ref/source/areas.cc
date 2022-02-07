@@ -593,10 +593,11 @@ int monster::halo_radius() const
     if (weap && is_unrandom_artefact(*weap, UNRAND_EOS))
         size = 3;
 
-    if (!(holiness() & MH_HOLY))
+    if ((holiness() & MH_HOLY)) {
+        return max(size, _mons_class_halo_radius(type));
+    } else {
         return size;
-
-    return _mons_class_halo_radius(type);
+    }
 }
 
 //////////////////////

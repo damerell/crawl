@@ -877,6 +877,9 @@ void monster::equip_weapon_message(item_def &item)
         else
             set_ident_flags(item, ISFLAG_KNOW_TYPE);
     }
+    if (is_unrandom_artefact(item, UNRAND_EOS)) {
+        invalidate_agrid(true);
+    }
 }
 
 /**
@@ -1244,6 +1247,9 @@ bool monster::drop_item(mon_inv_type eslot, bool msg)
 
             return false;
         }
+    }
+    if (is_unrandom_artefact(pitem, UNRAND_EOS)) {
+        invalidate_agrid(true);
     }
 
     if (props.exists("wand_known") && msg && was_wand)
