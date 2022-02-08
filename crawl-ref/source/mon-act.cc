@@ -1489,6 +1489,11 @@ static void _pre_monster_move(monster& mons)
             mons.del_ench(ENCH_HEXED);
     }
 
+    if (mons.has_ench(ENCH_WARNING_FLASH)) {
+        mons.del_ench(ENCH_WARNING_FLASH);
+        invalidate_agrid(true);
+    }
+    
     if (mons.type == MONS_SNAPLASHER_VINE
         && mons.props.exists("vine_awakener"))
     {

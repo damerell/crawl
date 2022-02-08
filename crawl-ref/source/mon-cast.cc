@@ -142,6 +142,7 @@ static bool _worth_hexing(const monster &caster, spell_type spell);
 static bool _torment_vulnerable(actor* victim);
 static function<bool(const monster&)> _should_selfench(enchant_type ench);
 static void _cast_grasping_roots(monster &caster, mon_spell_slot, bolt&);
+static void _cast_warning_flash(monster &caster, mon_spell_slot, bolt&);
 
 enum spell_logic_flag
 {
@@ -467,6 +468,7 @@ static const map<spell_type, mons_spell_logic> spell_to_logic = {
             const actor* foe = caster.get_foe();
             return foe && caster.can_constrict(foe, false);
         }, _cast_grasping_roots, } },
+    { SPELL_WARNING_FLASH, { _caster_has_foe, _cast_warning_flash, } },
 };
 
 /// Is the 'monster' actually a proxy for the player?
@@ -834,6 +836,52 @@ static void _cast_grasping_roots(monster &caster, mon_spell_slot, bolt&)
     {
         caster.add_ench(mon_enchant(ENCH_GRASPING_ROOTS, 0, foe,
                     turns * BASELINE_DELAY));
+    }
+}
+
+static void _cast_warning_flash(monster &caster, mon_spell_slot slot, bolt&) {
+    actor* foe = caster.get_foe();
+    ASSERT(foe);
+
+    // yes I do mean to check for the ench not being invisible
+    if (caster.confused() || caster.has_ench(ENCH_INVIS)) return;
+
+    caster.add_ench(mon_enchant(ENCH_WARNING_FLASH, 0, &caster, 1));
+
+    for (monster_near_iterator mi(&caster); mi; ++mi) {
+        // Fireflies and spriggans are attuned enough to the light
+        // to wake in response, while other creatures sleep through it
+        if (mi->asleep() && (mi->type == MONS_FIREFLY
+                             // genus might change
+                             || mi->type == MONS_SPRIGGAN_RIDER
+                             || mons_genus(mi->type) == MONS_SPRIGGAN)) {
+            behaviour_event(*mi, ME_DISTURB, foe, caster.pos());
+
+            // Give spriggans a chance to shout and alert their companions
+            // (this won't otherwise happen if the player is still out
+            // of their sight)
+            if (mi->behaviour == BEH_WANDER && coinflip())
+                monster_attempt_shout(**mi);
+        }
+
+        if (!mi->asleep()) {
+            // We consider the firefly's foe to be the 'source' of the
+            // light here so that monsters wandering around for the player
+            // will be alerted by fireflies signaling in response to the
+            // player, but ignore signals in response to other monsters
+            // if they're already in pursuit of the player.
+            behaviour_event(*mi, ME_ALERT, foe, caster.pos());
+            if (mi->target == caster.pos()) {
+                monster_pathfind mp;
+                if (mp.init_pathfind(*mi, caster.pos())) {
+                    mi->travel_path = mp.calc_waypoints();
+                    if (!mi->travel_path.empty()) {
+                        mi->target = mi->travel_path[0];
+                        mi->travel_target = MTRAV_PATROL;
+                    }
+                }
+            }
+        }
     }
 }
 

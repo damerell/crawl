@@ -564,7 +564,9 @@ static int _mons_class_halo_radius(monster_type type)
     // The values here depend on 1. power, 2. sentience. Thus, high-ranked
     // sentient celestials have really big haloes, while holy animals get
     // little or none.
-    switch (type)
+    // It's intentional we keep this for holies-only rather than trying
+    // to get fireflies in
+    switch (type) 
     {
     case MONS_ANGEL:
         return 4;
@@ -590,8 +592,14 @@ int monster::halo_radius() const
     item_def* weap = mslot_item(MSLOT_WEAPON);
     int size = -1;
 
+    if (type == MONS_FIREFLY) size = 1;
+    
     if (weap && is_unrandom_artefact(*weap, UNRAND_EOS))
         size = 3;
+    
+    if (has_ench(ENCH_WARNING_FLASH)) {
+        size = LOS_RADIUS;
+    }
 
     if ((holiness() & MH_HOLY)) {
         return max(size, _mons_class_halo_radius(type));

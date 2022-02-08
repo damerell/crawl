@@ -1182,7 +1182,7 @@ ENDMAP
 NAME:   forest_entry_grove
 DEPTH:  Lair:2-, !Lair:$
 MONS:   centaur w:4 / spriggan
-MONS:   wolf, black bear, polar bear
+MONS:   wolf / firefly w:2, black bear, polar bear
 KMONS:  P = plant / bush
 NSUBST: Q = 2:1 / *:.
 NSUBST: R = 3:2 / 1:3 / 1:4 / *:.
@@ -1228,7 +1228,7 @@ NAME:    grunt_forest_large_clearings
 TAGS:    transparent no_pool_fixup
 DEPTH:   Lair
 WEIGHT:  15
-MONS:    wolf, black bear / polar bear, spriggan / centaur w:4
+MONS:    wolf / firefly w:2, black bear / polar bear, spriggan / centaur w:4
 KMONS:   9 = 9
 KMONS:   * = spriggan rider / faun w:4
 KMONS:   P = plant / bush
@@ -1709,6 +1709,23 @@ MAP
    76ZWSPpswz57
     772XTtx177
       777777
+ENDMAP
+
+NAME: nicolae_lair_firefly_meadow
+DEPTH: Lair
+TAGS: transparent
+MONS: firefly
+NSUBST: . = 5:1
+MAP
+ .......
+.........
+.........
+.........
+.........
+.........
+.........
+.........
+ .......
 ENDMAP
 
 NAME:    nicolae_lair_grove_arrangements
@@ -2520,7 +2537,7 @@ NAME:    wormcave
 TAGS:    no_wall_fixup no_monster_gen no_rotate
 PLACE:   Lair:$
 ORIENT:  southeast
-MONS:    torpor snail, brain worm, lindwurm, hornet
+MONS:    torpor snail, brain worm, lindwurm, firefly
 MONS:    fire dragon / ice dragon
 KMONS:   p = plant
 SHUFFLE: ABC
@@ -2929,7 +2946,7 @@ ENDMAP
 NAME:   minmay_lair_end_enchanted_forest
 PLACE:  Lair:$
 ORIENT: northwest
-MONS:   black bear / polar bear w:12, wolf, dream sheep / hornet w:20
+MONS:   black bear / polar bear w:12, wolf, dream sheep / firefly w:20
 MONS:   spriggan, spriggan rider, boggart
 KITEM:  * = gold no_pickup, star_item no_pickup, star_item no_pickup
 KITEM:  | = gold no_pickup, superb_item no_pickup, star_item no_pickup

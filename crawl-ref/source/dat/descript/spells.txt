@@ -1621,6 +1621,10 @@ Warning Cry spell
 
 Generates a loud noise, alerting nearby enemies.
 %%%%
+Warning Flash spell
+
+Generates a bright flash of light, alerting nearby enemies.
+%%%%
 Waterstrike spell
 
 Causes the water around or under the target to violently swirl, dealing damage.

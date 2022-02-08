@@ -99,6 +99,7 @@ queen_bee CORPSE_QUEEN_BEE
 vampire_mosquito CORPSE_VAMPIRE_MOSQUITO
 hornet CORPSE_HORNET
 spark_wasp CORPSE_SPARK_WASP
+firefly CORPSE_FIREFLY
 ghost_moth CORPSE_GHOST_MOTH
 moth_of_wrath CORPSE_MOTH_OF_WRATH
 %sdir mon/demihumanoids

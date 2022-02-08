@@ -360,7 +360,7 @@ function arena_sprint_get_monster_set(round, boss)
                 -- Misc
                 "centaur w:15 / centaur warrior w:5 / nessos w:1",
                 "w:15 ugly thing / w:1 kirke",
-                "vampire mosquito / hornet",
+                "vampire mosquito / firefly",
                 "ogre mage / w:5 deep elf mage / vampire mage / naga mage",
                 "troll / deep troll / iron troll",
                 "rime drake w:5 / swamp drake / swamp dragon /\
@@ -513,7 +513,7 @@ function arena_sprint_get_monster_set(round, boss)
                 "ghost moth / w:30 lorocyproca / eye of draining",
                 "floating eye w:5 / ettin",
                 "executioner / w:1 ignacio",
-                "ghost moth / moth of wrath / w:30 vampire mosquito"
+                "ghost moth / moth of wrath / w:15 vampire mosquito / w:15 firefly"
             }
         elseif round <= 36 then
             mon_set = {
@@ -579,7 +579,7 @@ function arena_sprint_get_monster_set(round, boss)
                 "ghost moth / w:30 lorocyproca / eye of draining",
                 "floating eye w:5 / tentacled monstrosity",
                 "executioner / w:1 ignacio / w:5 death drake",
-                "ghost moth / moth of wrath / vampire mosquito",
+                "ghost moth / moth of wrath / w:5 vampire mosquito / w:5 firefly",
                 -- Aaaarggghhhhh!
                 "daeva / w:15 angel",
                 "greater mummy / mummy priest / guardian mummy",

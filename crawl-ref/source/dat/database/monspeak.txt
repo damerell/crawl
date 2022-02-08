@@ -6529,6 +6529,10 @@ default electric golem
 
 SOUND:@The_monster@ crackles and sizzles.
 %%%%
+default confused firefly
+
+@default confused winged insect@
+%%%%
 ################## Frilled lizard ##############################
 frilled lizard
 

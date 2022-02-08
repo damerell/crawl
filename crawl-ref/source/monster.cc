@@ -5396,16 +5396,17 @@ bool monster::is_icy() const
 static bool _mons_is_fiery(int mc)
 {
     return mc == MONS_FIRE_VORTEX
-           || mc == MONS_FIRE_ELEMENTAL
-           || mc == MONS_FLAMING_CORPSE
-           || mc == MONS_EFREET
-           || mc == MONS_AZRAEL
-           || mc == MONS_LAVA_SNAKE
-           || mc == MONS_SALAMANDER
-           || mc == MONS_SALAMANDER_MYSTIC
-           || mc == MONS_SALAMANDER_FIREBRAND
-           || mc == MONS_MOLTEN_GARGOYLE
-           || mc == MONS_ORB_OF_FIRE;
+        || mc == MONS_FIRE_ELEMENTAL
+        || mc == MONS_FLAMING_CORPSE
+        || mc == MONS_EFREET
+        || mc == MONS_AZRAEL
+        || mc == MONS_LAVA_SNAKE
+        || mc == MONS_SALAMANDER
+        || mc == MONS_SALAMANDER_MYSTIC
+        || mc == MONS_SALAMANDER_FIREBRAND
+        || mc == MONS_MOLTEN_GARGOYLE
+        || mc == MONS_FIREFLY
+        || mc == MONS_ORB_OF_FIRE;
 }
 
 bool monster::is_fiery() const

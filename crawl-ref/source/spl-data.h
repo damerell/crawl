@@ -4316,6 +4316,18 @@ static const struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_WARNING_FLASH, "Warning Flash",
+    SPTYP_NONE,
+    SPFLAG_MONSTER,
+    1,
+    25,
+    -1, -1,
+    0, 0,
+    TILEG_GENERIC_MONSTER_SPELL,
+    PERMA_NO_PERMA,
+},
+
+{
     SPELL_NO_SPELL, "nonexistent spell",
     SPTYP_NONE,
     SPFLAG_TESTING,

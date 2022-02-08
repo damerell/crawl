@@ -331,6 +331,10 @@ Slug Dart cast
 Paralysis Gaze cast
 
 @The_monster@ gazes piercingly through @target@!
+%%%%
+Warning Flash cast
+
+@The_monster@ flashes a warning beacon!
 ########################################################################
 # Unique monsters
 ########################################################################

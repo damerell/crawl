@@ -1112,6 +1112,11 @@ felid
 A feline creature that has been granted sentience by magical means. It uses the
 gift of speech to demand milk, treats and catnip.
 %%%%
+firefly
+Unlike its mundane counterparts that are merely half an inch big, this enormous
+flying insect is as large as the spriggans it lives with. When threatened, it
+can flash warning signals to its kin (and anyone else close enough to observe).
+%%%%
 fire bat
 
 A bat whose leathery body burns with a hot flame.

@@ -301,6 +301,7 @@ void monster::add_enchantment_effect(const mon_enchant &ench, bool quiet)
 
     case ENCH_LIQUEFYING:
     case ENCH_SILENCE:
+    case ENCH_WARNING_FLASH:
         invalidate_agrid(true);
         break;
 
@@ -1012,7 +1013,11 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
     case ENCH_STILL_WINDS:
         end_still_winds();
         break;
-
+        
+    case ENCH_WARNING_FLASH:
+        invalidate_agrid();
+        break;
+        
     default:
         break;
     }
@@ -1442,6 +1447,7 @@ void monster::apply_enchantment(const mon_enchant &me)
 
     case ENCH_SILENCE:
     case ENCH_LIQUEFYING:
+    case ENCH_WARNING_FLASH:
         decay_enchantment(en);
         invalidate_agrid();
         break;
@@ -2140,7 +2146,7 @@ static const char *enchant_names[] =
     "idealised", "bound_soul", "infestation",
     "stilling the winds", "thunder_ringed", "pinned_by_whirlwind",
     "vortex", "vortex_cooldown", "vile_clutch", "wu_tohit",
-    "buggy concentrate venom", "buggy",
+    "buggy concentrate venom", "warning_flash", "buggy",
 };
 
 static const char *_mons_enchantment_name(enchant_type ench)

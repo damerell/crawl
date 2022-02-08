@@ -1190,7 +1190,7 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
     }
 
     // Holy monsters need their halo!
-    if (mon->holiness() & MH_HOLY)
+    if (mon->halo_radius() > 0)
         invalidate_agrid(true);
     if (mg.cls == MONS_SILENT_SPECTRE || mg.cls == MONS_PROFANE_SERVITOR)
         invalidate_agrid(true);
@@ -2218,7 +2218,8 @@ static const map<band_type, vector<member_possibilites>> band_membership = {
     { BAND_CAUSTIC_SHRIKE,      {{{MONS_CAUSTIC_SHRIKE, 1}}}},
     { BAND_DANCING_WEAPONS,     {{{MONS_DANCING_WEAPON, 1}}}},
     { BAND_SLIME_CREATURES,     {{{MONS_SLIME_CREATURE, 1}}}},
-    { BAND_SPRIGGAN_RIDERS,     {{{MONS_SPRIGGAN_RIDER, 1}}}},
+    { BAND_SPRIGGAN_RIDERS,     {{{MONS_SPRIGGAN_RIDER, 3},
+                                  {MONS_FIREFLY, 1}}}},
     { BAND_MOLTEN_GARGOYLES,    {{{MONS_MOLTEN_GARGOYLE, 1}}}},
     { BAND_SKELETAL_WARRIORS,   {{{MONS_SKELETAL_WARRIOR, 1}}}},
     { BAND_THRASHING_HORRORS,   {{{MONS_THRASHING_HORROR, 1}}}},
@@ -2350,7 +2351,8 @@ static const map<band_type, vector<member_possibilites>> band_membership = {
 
     { BAND_SPRIGGANS,           {{{MONS_SPRIGGAN_RIDER, 11},
                                   {MONS_SPRIGGAN_AIR_MAGE, 4},
-                                  {MONS_SPRIGGAN_BERSERKER, 3}}}},
+                                  {MONS_SPRIGGAN_BERSERKER, 3},
+                                  {MONS_FIREFLY, 1}}}},
 
     { BAND_SPRIGGAN_ELITES,     {{{MONS_SPRIGGAN_DEFENDER, 18},
                                   {MONS_SPRIGGAN_RIDER, 11},
@@ -2359,22 +2361,25 @@ static const map<band_type, vector<member_possibilites>> band_membership = {
 
                                  {{MONS_SPRIGGAN_RIDER, 11},
                                   {MONS_SPRIGGAN_AIR_MAGE, 4},
-                                  {MONS_SPRIGGAN_BERSERKER, 3}}}},
+                                  {MONS_SPRIGGAN_BERSERKER, 3},
+                                  {MONS_FIREFLY, 1}}}},
 
     { BAND_ENCHANTRESS,         {{{MONS_SPRIGGAN_DEFENDER, 1}},
-
+                                 
                                  {{MONS_SPRIGGAN_DEFENDER, 1}},
-
+                                 
                                  {{MONS_SPRIGGAN_DEFENDER, 1}},
-
+                                 
                                  {{MONS_SPRIGGAN_AIR_MAGE, 1}},
-
+                                 
                                  {{MONS_SPRIGGAN_AIR_MAGE, 1},
                                   {MONS_SPRIGGAN_BERSERKER, 1},
                                   {MONS_SPRIGGAN_RIDER, 1},
+                                  {MONS_FIREFLY, 1},
                                   {MONS_SPRIGGAN, 3}}}},
-
+    
     { BAND_SPRIGGAN_DRUID,      {{{MONS_SPRIGGAN, 2},
+                                  {MONS_FIREFLY, 1},
                                   {MONS_SPRIGGAN_RIDER, 1}}}},
 
     { BAND_SALAMANDER_ELITES,   {{{MONS_SALAMANDER_MYSTIC, 1},
