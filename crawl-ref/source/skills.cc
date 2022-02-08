@@ -1991,7 +1991,7 @@ vector<skill_type> get_crosstrain_skills(skill_type sk)
         return { SK_AXES, SK_STAVES };
     case SK_SLINGS:
         if (have_passive(passive_t::ihpix_crosstrain)) {
-            return { SK_BOWS, SK_CROSSBOWS };
+            return { SK_BOWS, SK_CROSSBOWS, SK_THROWING };
         } else {
             return { SK_THROWING };
         }
