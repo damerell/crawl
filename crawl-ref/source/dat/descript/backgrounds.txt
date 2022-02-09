@@ -45,7 +45,7 @@ spell. More earthen spells are in their set of starting spells.
 Enchanter
 
 Enchanters use spells from the book of Maledictions to incapacitate their foes,
-and are equipped with an enchanted dagger.
+and are equipped with an enchanted dagger and a potion of invisibility.
 %%%%
 Fighter
 

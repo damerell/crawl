@@ -2073,8 +2073,8 @@ Conjurers
 Enchanters
   The Enchanter specialises in the subtle art of hexes. Instead of directly
   damaging foes, hexes disable and debilitate them, allowing the Enchanter to
-  finish the helpless creatures in combat. The Enchanter begins with lightly
-  enchanted weapons and armour, as well as the Corona spell.
+  finish the helpless creatures in combat. The Enchanter begins with a lightly
+  enchanted dagger, a robe, a potion of invisibility, and a selection of hexes.
 
 Summoners
   The Summoner specialises in calling creatures from this and other worlds to

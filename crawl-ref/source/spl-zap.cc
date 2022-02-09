@@ -41,7 +41,6 @@ static pair<spell_type, zap_type> _spl_zaps[] =
     // Should only be available from Staff of Dispater and Sceptre
     // of Asmodeus.
     { SPELL_HURL_DAMNATION, ZAP_DAMNATION },
-    { SPELL_CORONA, ZAP_CORONA },
     { SPELL_CHARMING, ZAP_CHARMING },
     { SPELL_BANISHMENT, ZAP_BANISHMENT },
     { SPELL_SLOW, ZAP_SLOW },
@@ -77,6 +76,7 @@ static pair<spell_type, zap_type> _spl_zaps[] =
     { SPELL_SAP_MAGIC, ZAP_SAP_MAGIC },
     { SPELL_DRAIN_MAGIC, ZAP_DRAIN_MAGIC },
     { SPELL_HARPOON_SHOT, ZAP_HARPOON_SHOT},
+    { SPELL_CORONA, ZAP_CORONA },
 
     // These are all for zap -> spell lookup.
     { SPELL_QUICKSILVER_BOLT, ZAP_QUICKSILVER_BOLT },
@@ -119,8 +119,6 @@ int spell_zap_power(spell_type spell, int pow)
 {
     switch (spell)
     {
-    case SPELL_CORONA:
-        return pow + 10;
     case SPELL_HIBERNATION:
         return stepdown_value(pow * 9 / 10, 5, 35, 45, 50);
     default:
@@ -139,8 +137,6 @@ int spell_zap_power_cap(spell_type spell)
 
     switch (spell)
     {
-    case SPELL_CORONA:
-        return max<int>(cap - 10, 0);
     case SPELL_HIBERNATION:
         return 50;
     default:
