@@ -148,10 +148,12 @@ void upgrade_hepliaklqana_ancestor(bool quiet_force = false);
 void upgrade_hepliaklqana_weapon(monster_type mtyp, item_def &item);
 void upgrade_hepliaklqana_shield(const monster& ancestor, item_def &item);
 
-void ihpix_eat_inventory();
-bool ihpix_take_item(item_def &item, bool justcheck = false,
-		     bool quiet = true);
+
+extern const missile_type ihpix_ammo[];
+extern const int ihpix_nr_ammos;
+bool ihpix_take_item(item_def &item, bool quiet = true);
 int ihpix_quan_ammo(missile_type missile);
+void ihpix_eat_inventory();
 bool ihpix_got_ammo(const item_def &weapon);
 missile_type ihpix_preferred_ammo(const item_def &weapon);
 
@@ -218,6 +220,3 @@ void set_god_ability_slots();
 vector<god_power> get_god_powers(god_type god);
 const god_power* god_power_from_ability(ability_type abil);
 bool god_power_usable(const god_power& power, bool ignore_piety=false, bool ignore_penance=false);
-
-extern const missile_type ihpix_ammo[];
-extern const int ihpix_nr_ammos;

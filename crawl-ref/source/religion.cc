@@ -2004,37 +2004,22 @@ void ihpix_eat_inventory() {
     }
 }
 
-// Do we want this item in the ammo supply?
-bool ihpix_take_item(item_def &item, bool justcheck, bool quiet) {
+// Put this item in the ammo supply?
+bool ihpix_take_item(item_def &item, bool quiet) {
+    if (!(ihpix_wants(item))) return false;
     static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
-    for (int i = 0; i < ihpix_nr_ammos; i++) {
-        item_def &ammo = ammo_vec[i].get_item();
-        if ((item.base_type == OBJ_MISSILES) && 
-            (item.sub_type == ammo.sub_type)) {
-            if (!justcheck) {
-                ammo.quantity += item.quantity;
-                if (!quiet) {
-                    string message = " gathers up " + item.name(DESC_A) + ".";
-                    simple_god_message(message.c_str());
-                }
-                you.redraw_quiver = true;
-            }
-            return true;
-        }
+    item_def &ammo = ammo_vec[ihpix_index(item.sub_type)].get_item();
+    ammo.quantity += item.quantity;
+    if (!quiet) {
+        string message = " gathers up " + item.name(DESC_A) + ".";
+        simple_god_message(message.c_str());
     }
-    return false;
+    you.redraw_quiver = true; return true;
 }
 
 int ihpix_quan_ammo(const missile_type missile) {
     static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
-    for (int i = 0; i < ihpix_nr_ammos; i++) {
-        item_def &ammo = ammo_vec[i].get_item();
-        if (missile == ammo.sub_type) {
-            return ammo.quantity;
-        }
-    }
-    mprf(MSGCH_ERROR, "BUG: ihpix_quan_ammo called with a kind of ammo we don't know about.");
-    return 0;
+    return ammo_vec[ihpix_index(missile)].get_item().quantity;
 }
 
 bool ihpix_got_ammo(const item_def &weapon) {

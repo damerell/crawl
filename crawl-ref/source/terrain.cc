@@ -1116,19 +1116,11 @@ static void _dgn_check_terrain_items(const coord_def &pos, bool preserve_items)
         item = mitm[item].link;
 
         if (have_passive(passive_t::ihpix_gather)) {
-            if (mitm[curr].base_type == OBJ_MISSILES) {
-                CrawlVector &ammo_vec = 
-                    you.props[IHPIX_AMMO_KEY].get_vector();
-                for (int i = 0; i < ihpix_nr_ammos; i++) {
-                    item_def &ammo = ammo_vec[i].get_item();
-                    if (ammo.sub_type == mitm[curr].sub_type) {
-                        ammo.quantity += mitm[curr].quantity;
-                    }
-                    item_was_destroyed(mitm[curr]);
-                    destroy_item(curr);
-                    you.redraw_quiver = true;
-                    print_stats();
-                }
+            if (ihpix_take_item(mitm[curr])) {
+                item_was_destroyed(mitm[curr]);
+                destroy_item(curr);
+                you.redraw_quiver = true;
+                print_stats();
             }
         }
         if (!feat_is_solid(feat) && !feat_destroys_items(feat))
