@@ -207,6 +207,23 @@ bool fill_status_info(int status, status_info& inf)
         }
         break;
 
+    case STATUS_IHPIX_INFUSE:
+        if (you.attribute[ATTR_IHPIX_INFUSE]) {
+            inf.light_text = "Ranged+";
+            inf.short_text = "infusing ranged";
+            if (enough_mp(1, true, false)) {
+                inf.light_colour = LIGHTBLUE;
+                inf.long_text = 
+                "You are channeling magical energy into your ranged attacks.";
+            } else {
+                inf.light_colour = BLUE;
+                inf.long_text = 
+                "You have no magical energy to support your ranged attacks.";
+                inf.short_text = "infusing ranged (no MP)";
+            }
+        }
+        break;
+        
     case DUR_CORROSION:
         inf.light_text = make_stringf("Corr (%d)",
                           (-4 * you.props["corrosion_amount"].get_int()));
@@ -912,7 +929,6 @@ bool fill_status_info(int status, status_info& inf)
                     inf.light_colour = BLUE;
                     inf.long_text = 
                         "You would infuse your attacks, but you don't have any MP.";
-
                 }
             } else {
                 inf.light_colour = DARKGREY;

@@ -201,6 +201,7 @@ enum duration_type
     DUR_ACQUIREMENT,
     DUR_APPENDAGE,
     DUR_BLINK_COOLDOWN,
+    DUR_IHPIX_FOF,
 #endif
     NUM_DURATIONS
 };

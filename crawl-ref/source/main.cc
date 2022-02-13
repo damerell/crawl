@@ -439,7 +439,7 @@ NORETURN static void _launch_game()
     if (!crawl_state.game_is_tutorial()) {
         mpr("Press <w>?</w> for a list of commands and other information.");
         if (game_start) {
-            mpr("See http://crawl.montres.org.uk/about-dev.html for Stoat Soup changes.\nRecent change: teleportitis is now \"short teleport\" mutation.");
+            mpr("See http://crawl.montres.org.uk/about-dev.html for Stoat Soup changes.\nRecent change: Ihp'ix, god of the archers.");
         }
     }
 
@@ -1656,6 +1656,10 @@ static void _do_cycle_quiver(int dir)
     if (you.species == SP_FELID)
     {
         mpr("You can't grasp things well enough to throw them.");
+        return;
+    }
+    if (have_passive(passive_t::ihpix_gather)) {
+        ihpix_quiver();
         return;
     }
 

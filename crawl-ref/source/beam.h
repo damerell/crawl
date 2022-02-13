@@ -87,6 +87,7 @@ struct bolt
                                     // isn't in view.
     bool   pierce = false;        // Can the beam pass through a target and
                                   // hit another target behind the first?
+    bool   ihpierce = false;      // Fired with ihpix Piercing Fire
     bool   is_explosion = false;
     bool   aimed_at_spot = false; // aimed at (x, y), should not cross
     string aux_source = "";       // source of KILL_MISC beams

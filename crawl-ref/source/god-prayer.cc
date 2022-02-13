@@ -102,8 +102,13 @@ static bool _pray_ecumenical_altar()
 
         if (you_worship(GOD_RU))
             you.props[RU_SACRIFICE_PROGRESS_KEY] = 9999;
-        else
+        else {
             gain_piety(20, 1, false);
+            if (you_worship(GOD_IHPIX)) {
+                ihpix_bennies(you.char_class == JOB_MONK);
+            }
+        }
+            
 
         mark_milestone("god.ecumenical", "prayed at an ecumenical altar.");
         return true;

@@ -69,7 +69,8 @@ static const char *conducts[] =
     "Kill Slime", "Kill Plant", "Was Hasty", "Corpse Violation",
     "Carrion Rot", "Souled Friend Died", "Attack In Sanctuary",
     "Kill Artificial", "Exploration", "Desecrate Holy Remains", "Seen Monster",
-    "Fire", "Kill Fiery", "Sacrificed Love", "Channel", "Hurt Foe", "Use Wizardly Item",
+    "Fire", "Kill Fiery", "Sacrificed Love", "Channel", "Hurt Foe", 
+    "Use Wizardly Item", "Threw Something",
 };
 COMPILE_CHECK(ARRAYSZ(conducts) == NUM_CONDUCTS);
 
@@ -475,6 +476,12 @@ static peeve_map divine_peeves[] =
     peeve_map(),
     // GOD_WU_JIAN,
     peeve_map(),
+    // GOD_IHPIX
+    {
+        { DID_THROW, {
+                "you engage in the crude and unsophisticated practice of throwing objects at your adversaries", true, 1, 1, nullptr, 
+                " thinks you shouldn't throw things.", nullptr }},
+    }
 };
 
 string get_god_dislikes(god_type which_god)
@@ -684,6 +691,19 @@ static like_response okawaru_kill(const char* desc)
             }
             else if (piety > 9) // might still be miniscule
                 simple_god_message(" accepts your kill.");
+        }
+    };
+}
+
+static like_response ihpix_kill(const char* desc, mon_holy_type holiness) {
+    return {
+        desc, false, _piety_bonus_for_holiness(holiness), 18, 0,
+        " accepts your kill.",
+        [] (int &piety, int &denom, const monster* victim) {
+            piety *= (victim->props.exists("ihpix_damage") ? 
+                      victim->props["ihpix_damage"].get_int() :
+                      1);
+            denom = (denom * victim->damage_total * 4);
         }
     };
 }
@@ -1015,6 +1035,15 @@ static like_map divine_likes[] =
         { DID_KILL_HOLY, KILL_HOLY_RESPONSE },
         { DID_KILL_NONLIVING, KILL_NONLIVING_RESPONSE },
     },
+    // GOD_IHPIX
+    {
+        { DID_KILL_LIVING, ihpix_kill("you kill living beings", MH_NATURAL) },
+        { DID_KILL_UNDEAD, ihpix_kill("you destroy the undead", MH_UNDEAD) },
+        { DID_KILL_DEMON, ihpix_kill("you kill demons", MH_DEMONIC) },
+        { DID_KILL_HOLY, ihpix_kill("you kill holy beings", MH_HOLY) },
+        { DID_KILL_NONLIVING, ihpix_kill("you destroy nonliving beings",
+                MH_NONLIVING) },
+    }
 };
 
 /**
@@ -1190,6 +1219,10 @@ string get_god_likes(god_type which_god)
         }
     }
 
+    if (which_god == GOD_IHPIX) {
+        text += " " + uppercase_first(god_name(which_god)) +
+        " is better pleased when you strike down your enemies with ranged weapons.";
+    }
     return text;
 }
 

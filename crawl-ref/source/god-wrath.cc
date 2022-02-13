@@ -89,6 +89,7 @@ static const char *_god_wrath_adjectives[] =
     "fury",             // Uskayaw
     "memory",           // Hepliaklqana (unused)
     "rancor",           // Wu Jian
+    "unerring aim",     // Ihp'ix
 };
 COMPILE_CHECK(ARRAYSZ(_god_wrath_adjectives) == NUM_GODS);
 
@@ -1754,6 +1755,7 @@ bool divine_retribution(god_type god, bool no_bonus, bool force)
     case GOD_RU:
     case GOD_HEPLIAKLQANA:
     case GOD_PAKELLAS:
+    case GOD_IHPIX:
         // No reduction with time.
         return false;
 

@@ -50,6 +50,7 @@
 #include "level-state-type.h"
 #include "libutil.h"
 #include "makeitem.h"
+#include "mapdef.h"
 #include "message.h"
 #include "mon-gear.h" // give_shield
 #include "mon-place.h"
@@ -351,7 +352,30 @@ const vector<god_power> god_powers[NUM_GODS] =
            "summon a storm of heavenly clouds" },
       { 5, "pin monsters in place when making spinning attacks during Heavenly Storm", "pin monsters with Heavenly Storm" },
     },
+    // Ihp'ix active powers
+    { // 0 piety passive not in here since active for all non-apostates
+        { 1, ABIL_IHPIX_TEMP_WEAPON, "request use of a weapon from the divine armoury" },
+        { 2, ABIL_IHPIX_INFUSE, "channel your magical energy into your ranged attacks" },
+        { 2, "Increasing your skill with any ranged weapon increases your skill with other ranged weapons.",
+          "Increasing your skill with any ranged weapon will no longer increase your skill with other ranged weapons." },
+        { 3, "Ihp'ix will sometimes gather up ammunition your enemies are about to fire at you.",
+          "Ihp'ix will no longer gather up ammunition your enemies are about to fire at you." },
+        { 4, "Ihp'ix may suppress your targets' magical defences against missiles.",
+        "Ihp'ix no longer suppresses your targets' magical defences." }, 
+        { 5, ABIL_IHPIX_FOF, "cause shots you fire to pierce your enemies and spare your allies" },
+        { 6, ABIL_IHPIX_SUPERIOR_WEAPON, "request superior weapons from the divine armoury" },
+    },
 };
+
+// The ordering here matters in order that the "other" sling ammo shows up
+// after the selected one. This is a bit of a bodge. Sorry.
+const missile_type ihpix_ammo[] = {
+    MI_ARROW,
+    MI_BOLT,
+    MI_SLING_BULLET,
+    MI_STONE
+};
+const int ihpix_nr_ammos = sizeof(ihpix_ammo) / sizeof(ihpix_ammo[0]);
 
 vector<god_power> get_god_powers(god_type god)
 {
@@ -511,6 +535,7 @@ bool active_penance(god_type god)
            && !is_unavailable_god(god)
            && god != GOD_ASHENZARI
            && god != GOD_GOZAG
+           && god != GOD_IHPIX
            && god != GOD_RU
            && god != GOD_HEPLIAKLQANA
            && god != GOD_PAKELLAS
@@ -527,6 +552,7 @@ bool xp_penance(god_type god)
            && (god == GOD_ASHENZARI
                || god == GOD_GOZAG
                || god == GOD_HEPLIAKLQANA
+               || god == GOD_IHPIX
                || god == GOD_PAKELLAS
                || god == GOD_ELYVILON)
            && god_hates_your_god(god, you.religion);
@@ -800,6 +826,8 @@ static void _inc_penance(god_type god, int val)
                 you.duration[DUR_CHANNEL_ENERGY] = 0;
             if (you.attribute[ATTR_DIVINE_ENERGY])
                 you.attribute[ATTR_DIVINE_ENERGY] = 0;
+        } else if (god == GOD_IHPIX) {
+            leave_or_penance(god);
         }
 
         if (you_worship(god))
@@ -1978,6 +2006,185 @@ static special_armour_type _hepliaklqana_shield_ego(int HD)
     return HD < 13 ? SPARM_NORMAL : SPARM_REFLECTION;
 }
 
+// store any ammo in the player's inventory in the divine armoury
+void ihpix_eat_inventory() {
+    for (auto &item : you.inv) {
+        if (ihpix_take_item(item)) {
+            dec_inv_item_quantity(item.link, item.quantity);
+        }
+    }
+}
+
+// Put this item in the ammo supply?
+// It is the caller's responsibility to destroy the item
+bool ihpix_take_item(item_def &item, bool quiet) {
+    if (!(ihpix_wants(item))) return false;
+    static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
+    item_def &ammo = ammo_vec[ihpix_index(item.sub_type)].get_item();
+    ammo.quantity += item.quantity;
+    if (!quiet) {
+        string message = " gathers up " + item.name(DESC_A) + ".";
+        simple_god_message(message.c_str());
+    }
+    you.redraw_quiver = true; return true;
+}
+
+int ihpix_quan_ammo(const missile_type missile) {
+    static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
+    return ammo_vec[ihpix_index(missile)].get_item().quantity;
+}
+
+bool ihpix_got_ammo(const item_def &weapon) {
+    missile_type missile = fires_ammo_type(weapon);
+    if (missile == MI_NONE) return false;
+    if (ihpix_quan_ammo(missile) > 0) return true;
+    if ((missile==MI_STONE) && (ihpix_quan_ammo(MI_SLING_BULLET) > 0)) {
+        return true;
+    }
+    return false;
+}
+
+missile_type ihpix_preferred_ammo(const item_def &weapon) {
+    if (!ihpix_got_ammo(weapon)) {
+        return MI_NONE;
+    }
+    missile_type missile = fires_ammo_type(weapon);
+    if ((missile==MI_STONE) && (ihpix_quan_ammo(MI_SLING_BULLET) > 0) &&
+        ((ihpix_quan_ammo(MI_STONE) == 0) || 
+         you.props[IHPIX_USE_BULLETS].get_bool())) {
+        missile = MI_SLING_BULLET;
+    }
+    return missile;
+}
+
+item_def ihpix_item_def(int phase, bool superior) {
+    item_def item;
+    vector<int> potentials;
+    skill_type skill;
+    if (phase == 3) phase = random2(3);
+    switch (phase) {
+    case 0:
+        skill = SK_BOWS;
+        break;
+    case 1:
+        skill = SK_CROSSBOWS;
+        break;
+    case 2:
+        skill = SK_SLINGS;
+        break;
+    default:
+        skill = SK_MACES_FLAILS; // ie can't happen
+        break;
+    }
+    static vector<weapon_type> ihpix_weapons =
+    { WPN_SHORTBOW, WPN_LONGBOW, WPN_HAND_CROSSBOW, WPN_ARBALEST,
+      WPN_TRIPLE_CROSSBOW, WPN_HUNTING_SLING, WPN_FUSTIBALUS };
+    for (auto j : ihpix_weapons) {
+        const int wskill = item_attack_skill(OBJ_WEAPONS, j);
+        if (wskill == skill) {
+            item_def wpn;
+            wpn.base_type = OBJ_WEAPONS;
+            wpn.sub_type = j;
+            if (you.could_wield(wpn, true, true)) potentials.push_back(j);
+        }
+    }
+    if (potentials.empty()) {
+        mprf(MSGCH_ERROR, "BUG: could not find a suitable ihpix item at all!");
+        return item;
+    }
+    int thing_created = NON_ITEM;
+    thing_created = items(false, OBJ_WEAPONS, potentials[0], ISPEC_BORING,
+                          SP_FORBID_EGO, GOD_IHPIX);
+    if (!ihpix_got_ammo(mitm[thing_created])) {
+        destroy_item(thing_created);
+        return item;
+    }
+    if (thing_created == NON_ITEM) {
+        mprf(MSGCH_ERROR, "BUG: failed to make Ihp'ix item!");
+        return item;
+    }
+    item = mitm[thing_created]; item.plus = superior ? 4 : 0;
+    item.sub_type = potentials[0]; int posn = 0;
+    vector<ihpix_gift_entry> upgrades;
+    int total = 4;
+    if (superior) {
+        upgrades.push_back({IHPIX_VORPAL, 2});
+        upgrades.push_back({IHPIX_VORPAL, 2});
+    } else {
+        upgrades.push_back({IHPIX_VORPAL, 4});
+    }
+    for (std::vector<int>::size_type j = 1; j < potentials.size(); j++) {
+        int scope = superior ? 2 : 3;
+        upgrades.push_back({IHPIX_UPGRADE, scope}); total += scope;
+    }
+    for (int j = 0; j < (superior ? 6 : 4); j++) {
+        upgrades.push_back({IHPIX_PLUS, 1}); total++;
+    }
+    // Always at least 1 since ** piety is 50
+    int successes = div_rand_round(you.piety, 50);
+    for (int j = 0 ; j < (superior ? 8 : 7); j++) {
+        // Not superior; get moderate invo to not fail. Superior; very
+        // high invo to get the full package
+        if ((superior ? random2(27) : random2avg(27, 2))
+            < you.skill(SK_INVOCATIONS) - 1) successes++;
+    }
+    bool anyleft;
+    if (successes > 0) {
+        do {
+            int i = random_range(1, total);
+            for (auto itr = upgrades.begin(); itr != upgrades.end(); ++itr) {
+                if ((itr->prob > 0) && (i <= itr->prob)) {
+                    if (successes >= itr->prob) {
+                        total -= itr->prob; successes -= itr->prob;
+                        switch (itr->upgrade) {
+                        case IHPIX_VORPAL:
+                            if (item.brand == SPWPN_VORPAL) {
+                                item.brand =
+                                random_choose(SPWPN_FLAMING,SPWPN_FREEZING,
+                                              SPWPN_ELECTROCUTION);
+                            } else {
+                                item.brand = SPWPN_VORPAL;
+                            }
+                            break;
+                        case IHPIX_UPGRADE:
+                            item.sub_type = potentials[++posn];
+                            break;
+                        case IHPIX_PLUS:
+                            item.plus++;
+                            break;
+                        }
+                        itr->prob = 0;
+                    }
+                    break;
+                } else {
+                    i -= itr->prob;
+                }
+            }
+            anyleft = false;
+            for (auto itr = upgrades.begin(); itr != upgrades.end(); ++itr) {
+                if (itr->prob > 0) anyleft = true;
+            }
+        } while ((total > 0) && (successes > 0) && anyleft);
+        if (!anyleft && (total > 0)) {
+            mprf(MSGCH_ERROR, "BUG: no upgrades left for divine weapon?");
+        }
+    }
+    set_ident_flags(item,
+                    ISFLAG_IDENT_MASK | ISFLAG_NOTED_ID | ISFLAG_NOTED_GET);
+    destroy_item(thing_created);
+    return item;
+}
+
+void ihpix_bennies (bool silent) {
+    static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
+    item_def &bullets = ammo_vec[ihpix_index(MI_SLING_BULLET)].get_item();
+    bullets.quantity += roll_dice(3, 10);
+    item_def &arrow = ammo_vec[ihpix_index(MI_ARROW)].get_item();
+    arrow.quantity += roll_dice(3, 10);
+    item_def &bolt = ammo_vec[ihpix_index(MI_BOLT)].get_item();
+    bolt.quantity += roll_dice(3, 10);
+    if (!silent) simple_god_message(" issues you some ammunition.");
+}
 /**
  * Setup an ancestor's weapon after their class is chosen, when the player
  * levels up, or after they're resummoned (or initially created for wrath).
@@ -2128,7 +2335,8 @@ string god_name(god_type which_god, bool long_name)
     case GOD_PAKELLAS:      return "Pakellas";
     case GOD_USKAYAW:       return "Uskayaw";
     case GOD_HEPLIAKLQANA:  return "Hepliaklqana";
-    case GOD_WU_JIAN:     return "Wu Jian";
+    case GOD_WU_JIAN:       return "Wu Jian";
+    case GOD_IHPIX:         return "Ihp'ix";
     case GOD_JIYVA: // This is handled at the beginning of the function
     case GOD_ECUMENICAL:    return "an unknown god";
     case NUM_GODS:          return "Buggy";
@@ -2396,6 +2604,10 @@ static void _gain_piety_point()
             if (power.rank == rank
                 || power.rank == 7 && can_do_capstone_ability(you.religion))
             {
+                if ((you.religion == GOD_IHPIX) && (you.species == SP_GNOLL) &&
+                    (power.abil == ABIL_NON_ABILITY) && (power.rank == 2)) {
+                    continue;
+                }
                 power.display(true, "You can now %s.");
 #ifdef USE_TILE_LOCAL
                 tiles.layout_statcol();
@@ -2408,6 +2620,12 @@ static void _gain_piety_point()
                     replace(begin(you.ability_letter_table),
                             end(you.ability_letter_table),
                             ABIL_YRED_ANIMATE_REMAINS, ABIL_YRED_ANIMATE_DEAD);
+                }
+                if (power.abil == ABIL_IHPIX_SUPERIOR_WEAPON) {
+                    replace(begin(you.ability_letter_table),
+                            end(you.ability_letter_table),
+                            ABIL_IHPIX_TEMP_WEAPON,
+                            ABIL_IHPIX_SUPERIOR_WEAPON);
                 }
             }
         }
@@ -2522,6 +2740,7 @@ bool gain_piety(int original_gain, int denominator, bool should_scale_piety)
         {
             mark_milestone("god.maxpiety", "became the Champion of "
                            + god_name(you.religion) + ".");
+            if (you.props.exists(IHPIX_XP_KEY)) you.props.erase(IHPIX_XP_KEY);
         }
         you.piety_max[you.religion] = you.piety;
     }
@@ -2592,6 +2811,9 @@ void lose_piety(int pgn)
                 // Deactivate the toggle
                 if (power.abil == ABIL_SIF_MUNA_DIVINE_ENERGY)
                     you.attribute[ATTR_DIVINE_ENERGY] = 0;
+
+                if (power.abil == ABIL_IHPIX_INFUSE)
+                    you.attribute[ATTR_IHPIX_INFUSE] = 0;
             }
         }
 #ifdef USE_TILE_LOCAL
@@ -2697,6 +2919,7 @@ int initial_wrath_penance_for(god_type god)
         case GOD_ELYVILON:
         case GOD_GOZAG:
         case GOD_HEPLIAKLQANA:
+        case GOD_IHPIX:
         case GOD_LUGONU:
         case GOD_NEMELEX_XOBEH:
         case GOD_TROG:
@@ -2850,6 +3073,14 @@ void excommunication(bool voluntary, god_type new_god)
         you.duration[DUR_VEHUMET_GIFT] = 0;
         break;
 
+    case GOD_IHPIX:
+        leave_or_penance(old_god);
+        you.start_train.insert(SK_THROWING);
+        you.exp_docked[old_god] = exp_needed(min<int>(you.max_level, 27) + 1)
+                                  - exp_needed(min<int>(you.max_level, 27));
+        you.exp_docked_total[old_god] = you.exp_docked[old_god];
+        break;
+        
     case GOD_MAKHLEB:
         make_god_gifts_disappear();
         break;
@@ -3153,6 +3384,8 @@ bool player_can_join_god(god_type which_god)
     if (you.species == SP_DEMIGOD)
         return false;
 
+    if ((you.species == SP_FELID) && (which_god == GOD_IHPIX)) return false;
+
     if (you.has_any_permabuff()) {
         for (unsigned int i = PERMA_FIRST_PERMA; i <= PERMA_LAST_PERMA ; i++) {
             if (you.has_permabuff(permabuff_spell[i]) &&
@@ -3331,8 +3564,12 @@ static void _apply_monk_bonus()
         you.props[RU_SACRIFICE_PROGRESS_KEY] = 9999;
     else if (you_worship(GOD_USKAYAW))  // Gaining piety past this point does nothing
         gain_piety(15, 1, false); // of value with this god and looks weird.
-    else
+    else if (you_worship(GOD_IHPIX)) {
+        gain_piety(20, 1, false);
+    } else {
         gain_piety(35, 1, false);
+    }
+
 }
 
 /// Transfer some piety from an old good god to a new one, if applicable.
@@ -3633,6 +3870,32 @@ static void _join_cheibriados()
     notify_stat_change();
 }
 
+// Setup for not being able to think of a joke about Ihp'ix
+static void _join_ihpix()
+{
+    simple_god_message(" begins to gather up any ammunition you see and pass it to you as needed.");
+    if (!you.props.exists(IHPIX_AMMO_KEY)) {
+        you.props[IHPIX_AMMO_KEY].new_vector(SV_ITEM);
+        CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
+        int ammo_created = NON_ITEM; item_def ammo_item; 
+        for (missile_type missile : ihpix_ammo) {
+            ammo_created = 
+                items(false, OBJ_MISSILES, missile, 0, 0, GOD_IHPIX);
+            if (ammo_created == NON_ITEM) {
+                mprf(MSGCH_ERROR, "BUG: Failed to make Ihp'ix ammo!");
+            } else {
+                ammo_item = mitm[ammo_created];
+                ammo_item.quantity = 0;
+                ammo_vec.push_back(ammo_item);
+                destroy_item(ammo_created, true);
+                ammo_created = NON_ITEM;
+            }
+        }
+    }
+    ihpix_eat_inventory();
+    you.props[IHPIX_USE_BULLETS] = (ihpix_quan_ammo(MI_SLING_BULLET) > 0);
+}
+
 /// What special things happen when you join a god?
 static const map<god_type, function<void ()>> on_join = {
     { GOD_ASHENZARI, []() { ash_check_bondage(); }},
@@ -3665,6 +3928,7 @@ static const map<god_type, function<void ()>> on_join = {
     { GOD_RU, _join_ru },
     { GOD_TROG, _join_trog },
     { GOD_ZIN, _join_zin },
+    { GOD_IHPIX, _join_ihpix },
 };
 
 bool join_religion(god_type which_god)
@@ -3748,6 +4012,10 @@ bool join_religion(god_type which_god)
     if (join_effect != nullptr)
         (*join_effect)();
 
+    // Can't go in _apply_monk_bonus, ammo not yet set up
+    if ((you.religion == GOD_IHPIX) && (you.char_class == JOB_MONK) &&
+        (had_gods() == 0)) ihpix_bennies();
+
     // after join_effect() so that gozag's service fee is right for monks
     if (you.worshipped[you.religion] < 100)
         you.worshipped[you.religion]++;
@@ -3768,6 +4036,7 @@ bool join_religion(god_type which_god)
     vector<ability_type> abilities = get_god_abilities();
     for (ability_type abil : abilities)
         you.start_train.insert(abil_skill(abil));
+    if (you_worship(GOD_IHPIX)) you.stop_train.insert(SK_THROWING);
     update_can_train();
 
     // now that you have a god, you can't save any piety from your prev god
@@ -3875,6 +4144,11 @@ void god_pitch(god_type which_god)
                                "loathsome form!",
                                which_god);
         }
+        else if ((you.species == SP_FELID) && (which_god == GOD_IHPIX)) {
+            simple_god_message(" prefers worshippers with hands to hold bows "
+                               "and slings.", which_god);
+        }
+
         else
         {
             simple_god_message(" does not accept worship from those such as"
@@ -3884,7 +4158,8 @@ void god_pitch(god_type which_god)
         return;
     }
 
-    if (which_god == GOD_LUGONU && you.penance[GOD_LUGONU])
+    if ((which_god == GOD_LUGONU && you.penance[GOD_LUGONU]) ||
+        (which_god == GOD_IHPIX && you.penance[GOD_IHPIX]))
     {
         you.turn_is_over = false;
         simple_god_message(" refuses to forgive you so easily!", which_god);
@@ -4219,6 +4494,7 @@ void handle_god_time(int /*time_delta*/)
         case GOD_PAKELLAS:
         case GOD_JIYVA:
         case GOD_WU_JIAN:
+        case GOD_IHPIX:
             if (one_chance_in(17))
                 lose_piety(1);
             break;
@@ -4826,4 +5102,41 @@ const god_power* god_power_from_ability(ability_type abil)
         }
     }
     return nullptr;
+}
+
+bool any_divine_drops() {
+    return (divine_drops().size() > 0);
+}
+
+vector<item_def> divine_drops() {
+    vector<item_def> items;
+    for (auto &item : you.inv) {
+        if (item.props.exists(DIVINE_DROP_KEY)) {
+            items.push_back(item);
+        }
+    }
+    return items;
+}
+
+// This function is for logic shared between inc_penance and excommunication
+// Right now it only works for Ihp'ix so as to keep vanilla commits applying
+void leave_or_penance(god_type god) {
+    switch (god) {
+    case GOD_IHPIX:
+                you.attribute[ATTR_IHPIX_INFUSE] = 0;
+                if (you.attribute[ATTR_IHPIX_INFUSE]) {
+                    you.attribute[ATTR_IHPIX_INFUSE] = 0;
+                }
+                if (you.duration[DUR_IHPIX_FOF]) {
+                    you.duration[DUR_IHPIX_FOF] = 0;
+                }
+                for (auto &item : divine_drops()) {
+                    mprf("%s folds in on itself and vanishes.",
+                         item.name(DESC_YOUR, false, false, false).c_str());
+                    dec_inv_item_quantity(item.link, 1);
+                }
+        break;
+    default:
+        mprf(MSGCH_ERROR, "Bug: leave_or_penance called with unhandled god");
+    }
 }

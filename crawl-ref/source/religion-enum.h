@@ -25,8 +25,15 @@ enum nemelex_gift_types
 };
 #endif
 
+enum ihpix_upgrades {
+    IHPIX_VORPAL,
+    IHPIX_UPGRADE,
+    IHPIX_PLUS
+};
+
 #define ACQUIRE_KEY "acquired" // acquirement source prop on acquired items
 #define ACQUIRE_ITEMS_KEY "acquire_items" // acquirement items player prop
+#define IHPIX_ITEMS_KEY "ihpix_items" // Ihp'ix pseudo-acq items
 
 /// the name of the ally hepliaklqana granted the player
 #define HEPLIAKLQANA_ALLY_NAME_KEY "hepliaklqana_ally_name"

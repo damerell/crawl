@@ -658,23 +658,25 @@ struct missile_def
     int         mulch_rate;
     int         price;
     bool        throwable;
+    bool        ihpix;
 };
 
 static int Missile_index[NUM_MISSILES];
+static int Ihpix_index[NUM_MISSILES];
 static const missile_def Missile_prop[] =
 {
-    { MI_DART,          "dart",          0, 12, 2,  true  },
+    { MI_DART,          "dart",          0, 12, 2,  true,  false },
 #if TAG_MAJOR_VERSION == 34
-    { MI_NEEDLE,        "needle",        0, 12, 2,  false },
+    { MI_NEEDLE,        "needle",        0, 12, 2,  false, false },
 #endif
-    { MI_STONE,         "stone",         2, 8,  1,  true  },
-    { MI_ARROW,         "arrow",         0, 8,  2,  false },
-    { MI_BOLT,          "bolt",          0, 8,  2,  false },
-    { MI_LARGE_ROCK,    "large rock",   20, 25, 7,  true  },
-    { MI_SLING_BULLET,  "sling bullet",  4, 8,  5,  false },
-    { MI_JAVELIN,       "javelin",      10, 20, 8,  true  },
-    { MI_THROWING_NET,  "throwing net",  0, 0,  30, true  },
-    { MI_BOOMERANG,     "boomerang",     6, 20, 5,  true  },
+    { MI_STONE,         "stone",         2, 8,  1,  true,  true  },
+    { MI_ARROW,         "arrow",         0, 8,  2,  false, true  },
+    { MI_BOLT,          "bolt",          0, 8,  2,  false, true  },
+    { MI_LARGE_ROCK,    "large rock",   20, 25, 7,  true,  false },
+    { MI_SLING_BULLET,  "sling bullet",  4, 8,  5,  false, true  },
+    { MI_JAVELIN,       "javelin",      10, 20, 8,  true,  false },
+    { MI_THROWING_NET,  "throwing net",  0, 0,  30, true,  false },
+    { MI_BOOMERANG,     "boomerang",     6, 20, 5,  true,  false },
 };
 
 struct food_def
@@ -740,8 +742,12 @@ void init_properties()
     for (int i = 0; i < NUM_WEAPONS; i++)
         Weapon_index[ Weapon_prop[i].id ] = i;
 
-    for (int i = 0; i < NUM_MISSILES; i++)
+    for (int i = 0; i < NUM_MISSILES; i++) {
         Missile_index[ Missile_prop[i].id ] = i;
+        Ihpix_index[i] = -1;
+    }
+    for (int i = 0; i < ihpix_nr_ammos; i++)
+        Ihpix_index[ ihpix_ammo[i] ] = i;
 
     for (int i = 0; i < NUM_FOODS; i++)
         Food_index[ Food_prop[i].id ] = i;
@@ -1907,6 +1913,8 @@ bool is_brandable_weapon(const item_def &wpn, bool allow_ranged, bool divine)
     if (is_artefact(wpn))
         return false;
 
+    if (wpn.props.exists(DIVINE_DROP_KEY)) return false;
+    
     if (!allow_ranged && is_range_weapon(wpn)
 #if TAG_MAJOR_VERSION == 34
         || wpn.sub_type == WPN_BLOWGUN
@@ -2149,6 +2157,8 @@ bool is_throwable(const actor *actor, const item_def &wpn, bool force)
 {
     if (wpn.base_type != OBJ_MISSILES)
         return false;
+
+    if (!force && (actor->is_player()) && you_worship(GOD_IHPIX)) return false;
 
     const size_type bodysize = actor->body_size();
 
@@ -3240,4 +3250,14 @@ int missile_base_price(missile_type type)
 int armour_base_price(armour_type type)
 {
     return Armour_prop[ Armour_index[type] ].price;
+}
+
+bool ihpix_wants(item_def &item) {
+    if (item.base_type != OBJ_MISSILES) return false;
+    return Missile_prop[Missile_index[item.sub_type]].ihpix;
+}
+
+int ihpix_index(int missile) {
+    ASSERT (Ihpix_index[missile] != -1);
+    return Ihpix_index[missile];
 }

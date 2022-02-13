@@ -1,0 +1,37 @@
+##############################################################################
+# Ihp'ix tridude-shaped altar
+NAME:   ihpix_tridude
+TAGS:   uniq_altar_ihpix temple_overflow_ihpix
+TAGS:   no_item_gen no_monster_gen no_trap_gen no_rotate
+DEPTH:  D:3-
+KFEAT:  _ = altar_ihpix
+SUBST: 1 = JKL
+FTILE:  .JKL = FLOOR_PEBBLE_LIGHTGREEN
+FTILE:  M = FLOOR_W_MARBLE
+FTILE:  N = FLOOR_VAULT
+FTILE:  O = FLOOR_PEBBLE_GREEN
+COLOUR: . = lightgreen
+COLOUR: 1 = lightgreen
+COLOUR: M = white
+COLOUR: N = black
+COLOUR: O = green
+KFEAT: JKL = .
+KITEM: J = shortbow mundane, arrow q:12
+KITEM: K = hand crossbow mundane, bolt q:12
+KITEM: L = hunting sling mundane, sling bullet q:12
+MAP
+   vvvvvvvv
+  vvMvMMvMvv
+  vM.MMMM.Mv
+  vM.MNNM.Mv
+  vM.MMMM.Mv
+  vv..MM..vv
+  vvO._1.Ovv
+ vvO......Ovv
+vvO........Ovv
+vO...OOOO...Ov
+v...OvOOvO...v
+v..OvvOOvvO..v
+v.OvvvvvvvvO.v
+v+vv      vv+v
+ENDMAP

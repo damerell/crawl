@@ -14,12 +14,14 @@
 #include "env.h"
 #include "fprop.h"
 #include "god-conduct.h"
+#include "god-passive.h"
 #include "item-prop.h"
 #include "message.h"
 #include "mon-behv.h"
 #include "mon-util.h"
 #include "monster.h"
 #include "player.h"
+#include "religion.h"
 #include "spl-selfench.h"
 #include "stringutil.h"
 #include "teleport.h"
@@ -58,6 +60,14 @@ ranged_attack::ranged_attack(actor *attk, actor *defn, item_def *proj,
                  (is_vowel(proj_name[0]) ? "n" : ""), proj_name.c_str(),
                  attacker->name(DESC_A).c_str());
     }
+    if (attacker->is_player() && (launch_type == launch_retval::LAUNCHED) &&
+        you_worship(GOD_IHPIX)) {
+        if (weapon->props.exists(DIVINE_DROP_KEY)) {
+            ihpix_likes = 2;
+        } else {
+            ihpix_likes = 4;
+        }
+    }
 
     needs_message = defender_visible;
 
@@ -81,7 +91,7 @@ int ranged_attack::calc_to_hit(bool random)
             : 3 * attacker->as_monster()->get_hit_dice();
     }
 
-    int hit = orig_to_hit;
+    int hit = orig_to_hit; if (random) ihsuppress = hit;
     const int defl = defender->missile_deflection();
     if (defl)
     {
@@ -105,6 +115,24 @@ bool ranged_attack::attack()
         handle_phase_killed();
         handle_phase_end();
         return true;
+    }
+
+    if (defender->missile_deflection() && attacker->is_player() &&
+        (launch_type == launch_retval::LAUNCHED) && you_worship(GOD_IHPIX) &&
+        have_passive(passive_t::ihpix_suppress) &&
+        x_chance_in_y(you.piety, MAX_PIETY)) {
+        monster* victim = defender->as_monster();
+        if (victim->has_ench(ENCH_DEFLECT_MISSILES) ||
+            victim->has_ench(ENCH_REPEL_MISSILES)) {
+            mprf(MSGCH_GOD, "Ihp'ix removes magical defences from %s!",
+                 defender->name(DESC_THE).c_str());
+            if (one_chance_in(9)) lose_piety(1);
+            victim->del_ench(ENCH_REPEL_MISSILES);
+            victim->del_ench(ENCH_DEFLECT_MISSILES);
+        } else {
+            if (one_chance_in(27)) lose_piety(1);
+        }
+        to_hit = ihsuppress;
     }
 
     const int ev = defender->evasion(ev_ignore::none, attacker);
@@ -238,7 +266,7 @@ bool ranged_attack::handle_phase_dodged()
 
     const int orig_ev_margin =
         test_hit(orig_to_hit, ev, !attacker->is_player());
-
+    
     if (defender->missile_deflection() && orig_ev_margin >= 0)
     {
         if (needs_message && defender_visible)
@@ -300,9 +328,26 @@ bool ranged_attack::handle_phase_hit()
     }
     else
     {
-        damage_done = calc_damage();
+        bool ihpix_infuse = false; damage_done = 0;
+        if (attacker->is_player() && using_weapon() &&
+            you.attribute[ATTR_IHPIX_INFUSE]) {
+            if (enough_mp(1, true, false)) {
+                const int dmg = 1 + div_rand_round(you.piety, 40);
+                const int hurt =
+                defender->apply_ac
+                (dmg, 0,
+                 (x_chance_in_y(you.skill(SK_INVOCATIONS), 27) ?
+                  AC_HALF : AC_NORMAL));
+                if (hurt > 0) {
+                    damage_done += hurt;
+                    ihpix_infuse = true;
+                }
+            }
+        }
+        damage_done += calc_damage();
         if (damage_done > 0 || projectile->is_type(OBJ_MISSILES, MI_DART))
         {
+            if (ihpix_infuse) dec_mp(1);
             if (!handle_phase_damaged())
                 return false;
         }

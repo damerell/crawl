@@ -122,6 +122,7 @@ enum permabuff_state {
     PB_MULTI_TRANSFORM,
     PB_TOO_DEAD, // bloodless vampire
     PB_CONFUSED, // only applies to portal proj
+    PB_IHPIX_FOF, // suppresses pproj
     PB_EXCRU_NOWEP,
 };
 
@@ -771,7 +772,8 @@ public:
              string source = "",
              string aux = "",
              bool cleanup_dead = true,
-             bool attacker_effects = true) override;
+             bool attacker_effects = true,
+	     int ihpix_likes = 1) override;
 
     bool wont_attack() const override { return true; };
     mon_attitude_type temp_attitude() const override { return ATT_FRIENDLY; };

@@ -45,6 +45,7 @@
 #include "travel.h"
 #include "unicode.h"
 #include "unwind.h"
+#include "view.h"
 #include "viewmap.h"
 #ifdef USE_TILE
 # include "tilepick.h"
@@ -279,6 +280,21 @@ void Stash::update()
     else
         feat_desc = feature_description_at(pos, false, DESC_A, false);
 
+    // Let Ihpixies pick ammo up
+    bool ihpix_redraw = false;
+    if (have_passive(passive_t::ihpix_gather)) {
+        for (stack_iterator si(pos, true); si; ++si) {
+            if (ihpix_take_item(*si, false)) {
+                item_was_destroyed(*si);
+                destroy_item(si->index());
+                ihpix_redraw = true;
+            }
+        }
+    }
+    if (ihpix_redraw) {
+        print_stats();
+        viewwindow();
+    }
     // If this is your position, you know what's on this square
     if (pos == you.pos())
     {

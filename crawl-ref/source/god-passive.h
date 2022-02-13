@@ -253,6 +253,12 @@ enum class passive_t
     wu_jian_lunge,
     wu_jian_whirlwind,
     wu_jian_wall_jump,
+
+    // ihpix
+    ihpix_gather,
+    ihpix_crosstrain,
+    ihpix_steal,
+    ihpix_suppress,
 };
 
 enum ru_interference

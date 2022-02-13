@@ -80,3 +80,4 @@ private:
 
 void quiver_item(int slot);
 void choose_item_for_quiver();
+void ihpix_quiver();

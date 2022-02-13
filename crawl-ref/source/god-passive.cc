@@ -420,6 +420,14 @@ static const vector<god_passive> god_passives[] =
         { 1, passive_t::wu_jian_whirlwind, "lightly attack monsters in place by moving around them." },
         { 2, passive_t::wu_jian_wall_jump, "perform airborne attacks by moving against a solid obstacle." },
     },
+
+    // Ihp'ix
+    {
+        { 0, passive_t::ihpix_gather, "GOD NOW gathers up any ammunition you see and passes it to you as needed." },
+        { 2, passive_t::ihpix_crosstrain, "Increasing your skill with any ranged weapon will NOW increase your skill with other ranged weapons." },
+        { 3, passive_t::ihpix_steal, "GOD will NOW sometimes take missiles your enemies are about to fire at you." },
+        { 4, passive_t::ihpix_suppress, "GOD will NOW sometimes suppress your enemies' magical defences." },
+    },
 };
 COMPILE_CHECK(ARRAYSZ(god_passives) == NUM_GODS);
 
@@ -431,6 +439,8 @@ bool have_passive(passive_t passive)
                   {
                       return p.pasv == passive
                           && piety_rank() >= p.rank
+                          && ((you.species != SP_GNOLL) ||
+                              (p.pasv != passive_t::ihpix_crosstrain))
                           && (!player_under_penance() || p.rank < 0);
                   });
 }
@@ -441,7 +451,9 @@ bool will_have_passive(passive_t passive)
     return any_of(begin(pasvec), end(pasvec),
                   [passive] (const god_passive &p) -> bool
                   {
-                      return p.pasv == passive;
+                      return p.pasv == passive
+                      && ((you.species != SP_GNOLL) ||
+                          (p.pasv != passive_t::ihpix_crosstrain));
                   });
 }
 

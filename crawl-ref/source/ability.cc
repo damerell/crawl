@@ -653,6 +653,21 @@ static const ability_def Ability_List[] =
     { ABIL_WU_JIAN_WALLJUMP, "Wall Jump",
         0, 0, 0, 0, {}, abflag::starve_ok | abflag::berserk_ok },
 
+    // Ihp'ix
+    { ABIL_IHPIX_INFUSE, "Infuse Ranged Attacks",
+      0, 0, 0, 0, { fail_basis::invo }, abflag::starve_ok },
+    { ABIL_IHPIX_STOP_INFUSE, "Stop Infusing Ranged Attacks",
+      0, 0, 0, 0, { fail_basis::invo }, abflag::starve_ok },
+    // The piety cost is nominal here because XP cooldown and mostly collected
+    // via piety loss on kills
+    { ABIL_IHPIX_TEMP_WEAPON, "Request Divine Weapon",
+      0, 0, 0, 2, { fail_basis::invo }, abflag::none },
+    // Fail chances from Heroism/Finesse for original low-Invo design?
+    { ABIL_IHPIX_FOF, "Piercing Fire",
+      0, 0, 100, 4, { fail_basis::invo, 30, 6, 20 }, abflag::none},
+    { ABIL_IHPIX_SUPERIOR_WEAPON, "Superior Divine Weapon",
+      0, 0, 0, 20, { fail_basis::invo }, abflag::none},
+    
     { ABIL_STOP_RECALL, "Stop Recall", 0, 0, 0, 0, {fail_basis::invo}, abflag::starve_ok },
     { ABIL_RENOUNCE_RELIGION, "Renounce Religion",
       0, 0, 0, 0, {fail_basis::invo}, abflag::starve_ok },
@@ -1014,6 +1029,16 @@ ability_type fixup_ability(ability_type ability)
             return ABIL_NON_ABILITY;
         else
             return ability;
+
+    case ABIL_IHPIX_INFUSE:
+        if (you.attribute[ATTR_IHPIX_INFUSE]) return ABIL_IHPIX_STOP_INFUSE;
+        return ability;
+
+    case ABIL_IHPIX_TEMP_WEAPON:
+        // a la Yred abilities
+        if (in_good_standing(GOD_IHPIX, 5))
+            return ABIL_NON_ABILITY;
+        return ability;
 
     default:
         return ability;
@@ -1530,6 +1555,47 @@ static bool _check_ability_possible(const ability_def& abil, bool quiet = false)
                     mpr("No corpses are in range.");
                 else
                     canned_msg(MSG_OK);
+            }
+            return false;
+        }
+        return true;
+    }
+
+    case ABIL_IHPIX_TEMP_WEAPON:
+    case ABIL_IHPIX_SUPERIOR_WEAPON: {
+        if (you.props.exists(IHPIX_XP_KEY)) {
+            if (!quiet) mpr("You must slay more foes before you can request another weapon.");
+            return false;
+        }
+        if (any_divine_drops()) {
+            if (!quiet) mpr("You already have a weapon from the divine armoury (drop it to return it before using this ability).");
+            return false;
+        }
+        bool anyammo = false;
+        static CrawlVector &ammo_vec =
+        you.props[IHPIX_AMMO_KEY].get_vector();
+        for (int i = 0; i < ihpix_nr_ammos; i++) {
+            item_def ammo = ammo_vec[i].get_item();
+            if (ammo.quantity > 0) {
+                anyammo = true;
+            }
+        }
+        if (!anyammo) {
+            if (!quiet)
+                mpr("With no projectiles, you need no ranged weapons.");
+            return false;
+        }
+        if (inv_count() >= ENDOFPACK) {
+            if (!quiet) mpr("You have no space in your pack."); 
+            return false;
+        }
+        return true;
+    }
+
+    case ABIL_IHPIX_FOF: {
+        if (!you.weapon() || !ihpix_got_ammo(*you.weapon())) {
+            if (!quiet) {
+                mpr("You need a ranged weapon (and missiles) to use this ability.");
             }
             return false;
         }
@@ -3133,6 +3199,35 @@ static spret _do_ability(const ability_def& abil, bool fail)
         }
         return spret::abort;
 
+    case ABIL_IHPIX_INFUSE:
+        mpr("You start channeling your magic into your ranged attacks.");
+        you.attribute[ATTR_IHPIX_INFUSE] = 1;
+        break;
+
+    case ABIL_IHPIX_STOP_INFUSE:
+        mpr("You stop channeling your magic into your ranged attacks.");
+        you.attribute[ATTR_IHPIX_INFUSE] = 0;
+        break;
+
+    case ABIL_IHPIX_TEMP_WEAPON:
+        if (!acquirement_menu(true, false)) {
+            return spret::fail; // can this happen?
+        }
+        break;
+    case ABIL_IHPIX_SUPERIOR_WEAPON:
+        if (!acquirement_menu(true, true)) {
+            return spret::fail;
+        }
+        break;
+
+    case ABIL_IHPIX_FOF:
+        fail_check();
+        mprf(MSGCH_GOD, "Your weapon is infused with divine power!");
+        you.increase_duration(DUR_IHPIX_FOF,
+                              8 + random2avg(you.skill(SK_INVOCATIONS, 4), 2),
+                              100);
+        break;
+
     case ABIL_NON_ABILITY:
         fail_check();
         mpr("Sorry, you can't do that.");
@@ -3671,6 +3766,18 @@ int find_ability_slot(const ability_type abil, char firstletter)
     // not already used & harder to type by accident
     case ABIL_END_PERMABUFFS:
         first_slot = letter_to_index('E');
+        break;
+    case ABIL_IHPIX_INFUSE:
+    case ABIL_IHPIX_STOP_INFUSE:
+        first_slot = letter_to_index('I');
+        break;
+    case ABIL_IHPIX_TEMP_WEAPON:
+    case ABIL_IHPIX_SUPERIOR_WEAPON:
+        first_slot = letter_to_index('W');
+        break;
+    case ABIL_IHPIX_FOF:
+        first_slot = letter_to_index('a');
+        break;
     default:
         break;
     }

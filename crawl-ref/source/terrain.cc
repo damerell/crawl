@@ -25,6 +25,7 @@
 #include "feature.h"
 #include "fprop.h"
 #include "god-abil.h"
+#include "god-passive.h"
 #include "item-prop.h"
 #include "items.h"
 #include "level-state-type.h"
@@ -37,6 +38,7 @@
 #include "mon-poly.h"
 #include "mon-util.h"
 #include "ouch.h"
+#include "output.h"
 #include "player.h"
 #include "random.h"
 #include "religion.h"
@@ -530,6 +532,7 @@ static const pair<god_type, dungeon_feature_type> _god_altars[] =
     { GOD_USKAYAW, DNGN_ALTAR_USKAYAW },
     { GOD_HEPLIAKLQANA, DNGN_ALTAR_HEPLIAKLQANA },
     { GOD_WU_JIAN, DNGN_ALTAR_WU_JIAN },
+    { GOD_IHPIX, DNGN_ALTAR_IHPIX },
     { GOD_ECUMENICAL, DNGN_ALTAR_ECUMENICAL },
 };
 
@@ -1112,6 +1115,14 @@ static void _dgn_check_terrain_items(const coord_def &pos, bool preserve_items)
         const int curr = item;
         item = mitm[item].link;
 
+        if (have_passive(passive_t::ihpix_gather)) {
+            if (ihpix_take_item(mitm[curr])) {
+                item_was_destroyed(mitm[curr]);
+                destroy_item(curr);
+                you.redraw_quiver = true;
+                print_stats();
+            }
+        }
         if (!feat_is_solid(feat) && !feat_destroys_items(feat))
             continue;
 

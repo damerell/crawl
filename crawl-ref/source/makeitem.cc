@@ -439,8 +439,9 @@ static void _generate_weapon_item(item_def& item, bool allow_uniques,
     const bool force_good = item_level >= ISPEC_GIFT;
     const bool forced_ego = item.brand > 0;
     const bool no_brand   = item.brand == SPWPN_FORBID_BRAND;
+    const bool boring     = item_level == ISPEC_BORING;
 
-    if (no_brand)
+    if (no_brand || boring)
         set_item_ego_type(item, OBJ_WEAPONS, SPWPN_NORMAL);
 
     // If it's forced to be a good item, reroll clubs.
@@ -449,6 +450,8 @@ static void _generate_weapon_item(item_def& item, bool allow_uniques,
 
     item.plus = 0;
 
+    if (boring) return;
+        
     if (item_level < 0)
     {
         // Thoroughly damaged, could had been good once.
@@ -1901,7 +1904,7 @@ int items(bool allow_uniques,
 
     item.quantity = 1;          // generally the case
 
-    if (force_ego < SP_FORBID_EGO)
+    if ((force_ego < SP_FORBID_EGO) && (item_level != ISPEC_BORING))
     {
         const int unrand_id = -force_ego;
         if (get_unique_item_status(unrand_id) == UNIQ_NOT_EXISTS)

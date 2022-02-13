@@ -316,6 +316,46 @@ Forget Spell ability
 
 Removes a known spell from memory, so as to free memory to learn others.
 %%%%
+# Ihp'ix
+Infuse Ranged Attacks ability
+
+Akin to the Infusion charm, this lets you charge ranged attacks with magical
+energy to do slightly more damage. Piety improves the damage, and Invocations
+reduces the effect of the defender's armour.
+%%%%
+Stop Infusing Ranged Attacks ability
+
+Stop charging ranged attacks with magical energy.
+%%%%
+Request Divine Weapon ability
+
+Request temporary use of a weapon from the divine armoury. The weapon
+will return to the armoury if dropped; otherwise you may retain it as
+long as you please, but Ihp'ix is better pleased when you strike down
+your enemies with your own ranged weapons.
+
+After using this ability, you cannot use it again until you have defeated
+a sufficient number of enemies and returned the previous weapon to the
+divine armoury.
+%%%%
+Superior Divine Weapon ability
+
+Akin to Request Divine Weapon, but the piety cost is considerable and the
+weapon will be of high quality, especially with high Invocations skill.
+
+The weapon will return to the divine armoury if dropped; otherwise you
+may retain it as long as you please, but Ihp'ix is better pleased when
+you strike down your enemies with your own ranged weapons.
+
+After using this ability, you cannot use it again until you have
+defeated a sufficient number of enemies and returned the previous
+weapon to the divine armoury.
+%%%%
+Piercing Fire ability
+
+For the duration of this ability, your shots will pierce your enemies and spare
+your friends.
+%%%%
 # Trog
 Berserk ability
 

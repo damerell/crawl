@@ -57,4 +57,5 @@ private:
     int orig_to_hit;
     bool should_alert_defender;
     launch_retval launch_type;
+    int ihsuppress; // to-hit on the assumption that ihpix intervenes
 };

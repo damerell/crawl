@@ -20,6 +20,7 @@
 #include "art-enum.h"
 #include "colour.h"
 #include "describe.h"
+#include "describe-god.h"
 #include "dungeon.h"
 #include "food.h"
 #include "god-item.h"
@@ -55,6 +56,11 @@ static armour_type _acquirement_armour_for_slot(equipment_type, bool);
 static armour_type _acquirement_shield_type();
 static armour_type _acquirement_body_armour(bool);
 static armour_type _useless_armour_type();
+
+namespace {
+    string acq_key;
+    bool ihpix;
+}
 
 /**
  * Get a randomly rounded value for the player's specified skill, unmodified
@@ -1262,7 +1268,8 @@ int acquirement_create_item(object_class_type class_wanted,
     ASSERT(class_wanted != OBJ_RANDOM);
 
     const bool divine = (agent == GOD_OKAWARU || agent == GOD_XOM
-                         || agent == GOD_TROG || agent == GOD_PAKELLAS);
+                         || agent == GOD_TROG || agent == GOD_PAKELLAS 
+                         || agent == GOD_IHPIX);
     int thing_created = NON_ITEM;
     int quant = 1;
 #define MAX_ACQ_TRIES 40
@@ -1571,19 +1578,20 @@ public:
 
 AcquireMenu::AcquireMenu(CrawlVector &aitems)
     : InvMenu(MF_SINGLESELECT | MF_NO_SELECT_QTY | MF_QUIET_SELECT
-              | MF_ALWAYS_SHOW_MORE | MF_ALLOW_FORMATTING),
+              | MF_ALWAYS_SHOW_MORE | MF_ALLOW_FORMATTING
+              | (ihpix ? MF_UNCANCEL : 0x0)),
       acq_items(aitems)
 {
     menu_action = ACT_EXECUTE;
     set_flags(get_flags() & ~MF_USE_TWO_COLUMNS);
 
-    set_tag("acquirement");
+    set_tag(ihpix ? "divine weapon" : "acquirement");
 
     init_entries();
 
     update_help();
 
-    set_title("Choose an item to acquire.");
+    set_title(ihpix ? "Choose a weapon." : "Choose an item to acquire.");
 }
 
 void AcquireMenu::init_entries()
@@ -1616,21 +1624,27 @@ void AcquireMenu::update_help()
 {
     string top_line = string(80, ' ') + '\n';
 
+    const char* theverb = ihpix ? "request" : "acquire";
     set_more(formatted_string::parse_string(top_line + make_stringf(
         //[!] acquire|examine item  [a-i] select item to acquire
         //[Esc/R-Click] exit
-        "%s  [%s] %s\n"
+        ihpix ? "%s  [%s] %s\n%s" :
+        "%s  [%s] %s\n%s"
         "[Esc/R-Click] exit",
-        menu_action == ACT_EXECUTE ? "[<w>!</w>] <w>acquire</w>|examine items" :
-                                     "[<w>!</w>] acquire|<w>examine</w> items",
+        menu_action == ACT_EXECUTE ?
+        make_stringf("[<w>!</w>] <w>%s</w>|examine items", theverb).c_str() :
+        make_stringf("[<w>!</w>] %s|<w>examine</w> items", theverb).c_str(),
         _hyphenated_letters(item_count(), 'a').c_str(),
-        menu_action == ACT_EXECUTE ? "select item for acquirement"
-                                   : "examine item")));
+        menu_action == ACT_EXECUTE ? (ihpix ?
+                                      "request an item" :
+                                      "select item for acquirement")
+                                       : "examine item",
+        ihpix ? divine_armoury().c_str() : "")));
 }
 
 static void _create_acquirement_item(item_def &item)
 {
-    auto &acq_items = you.props[ACQUIRE_ITEMS_KEY].get_vector();
+    auto &acq_items = you.props[acq_key].get_vector();
 
     // Now that we have a selection, mark any generated unrands as not having
     // been generated, so they go back in circulation. Exclude the selected
@@ -1645,20 +1659,34 @@ static void _create_acquirement_item(item_def &item)
         }
     }
 
-    take_note(Note(NOTE_ACQUIRE_ITEM, 0, 0, item.name(DESC_A),
-              origin_desc(item)));
+    if (ihpix) {
+        take_note(Note(NOTE_GOD_GIFT, 0, GOD_IHPIX, item.name(DESC_A)));
+    } else {
+        take_note(Note(NOTE_ACQUIRE_ITEM, 0, 0, item.name(DESC_A),
+                       origin_desc(item)));
+    }
     item.flags |= (ISFLAG_NOTED_ID | ISFLAG_NOTED_GET);
 
     set_ident_type(item, true);
 
-    if (copy_item_to_grid(item, you.pos()))
-        canned_msg(MSG_SOMETHING_APPEARS);
-    else
-        canned_msg(MSG_NOTHING_HAPPENS);
+    if (ihpix) {
+        item.props[DIVINE_DROP_KEY] = true;
+        item.inscription = "divine";
+        if (!move_item_to_inv(item)) {
+            mprf(MSGCH_ERROR, "BUG: could not move Ihp'ix item to inventory!");
+        }
+        you.props[IHPIX_XP_KEY] =
+        int(exp_needed(max(4,you.experience_level + 1)) / 4);
+    } else {
+        if (copy_item_to_grid(item, you.pos()))
+            canned_msg(MSG_SOMETHING_APPEARS);
+        else
+            canned_msg(MSG_NOTHING_HAPPENS);
+        you.duration[DUR_ACQUIREMENT] = 0;
+    }
 
     acq_items.clear();
-    you.props.erase(ACQUIRE_ITEMS_KEY);
-    you.duration[DUR_ACQUIREMENT] = 0;
+    you.props.erase(acq_key);
 }
 
 bool AcquireMenu::acquire_selected()
@@ -1671,6 +1699,8 @@ bool AcquireMenu::acquire_selected()
     update_help();
     const formatted_string old_more = more;
     more = formatted_string::parse_string(make_stringf(
+               ihpix ?
+               "<%s>Request %s? (%s/%s)</%s>\n" :
                "<%s>Acquire %s? (%s/%s)</%s>\n",
                col.c_str(),
                entry.text.c_str(),
@@ -1752,7 +1782,8 @@ static item_def _acquirement_item_def(object_class_type item_type)
 {
     item_def item;
 
-    const int item_index = acquirement_create_item(item_type, AQ_SCROLL, true);
+    const int item_index =
+    acquirement_create_item(item_type, AQ_SCROLL, true);
 
     if (item_index != NON_ITEM)
     {
@@ -1769,8 +1800,22 @@ static item_def _acquirement_item_def(object_class_type item_type)
     return item;
 }
 
-static void _make_acquirement_items()
+static void _make_acquirement_items(bool superior = false)
 {
+    CrawlVector &acq_items = you.props[acq_key].get_vector();
+
+    acq_items.empty();
+
+    if (ihpix) {
+        for (int i = 0; i < (superior ? 4 : 3); i++) {
+            auto item = ihpix_item_def(i, superior);
+            if (item.defined()) {
+                acq_items.push_back(item);
+            }
+        }
+        return;
+    }
+        
     vector<object_class_type> rand_classes;
 
     if (you.species != SP_FELID)
@@ -1788,9 +1833,6 @@ static void _make_acquirement_items()
 
     const int num_wanted = min(3, (int) rand_classes.size());
     shuffle_array(rand_classes);
-
-    CrawlVector &acq_items = you.props[ACQUIRE_ITEMS_KEY].get_vector();
-    acq_items.empty();
 
     // Generate item defs until we have enough, skipping any random classes
     // that fail to generate an item.
@@ -1827,16 +1869,20 @@ static void _make_acquirement_items()
  *
  * returns True if the scroll was used, false if it was canceled.
 */
-bool acquirement_menu()
+bool acquirement_menu(bool with_ihpix, bool superior)
 {
     ASSERT(!crawl_state.game_is_arena());
 
-    if (!you.props.exists(ACQUIRE_ITEMS_KEY)) {
+    ihpix = with_ihpix;
+    acq_key = ihpix ? IHPIX_ITEMS_KEY : ACQUIRE_ITEMS_KEY;
+    
+    if (ihpix) {
+        _make_acquirement_items(superior);
+    } else if (!you.props.exists(acq_key)) {
         _make_acquirement_items();
         you.set_duration(DUR_ACQUIREMENT, 500);
     }
-
-    auto &acq_items = you.props[ACQUIRE_ITEMS_KEY].get_vector();
+    auto &acq_items = you.props[acq_key].get_vector();
 
 #ifdef CLUA_BINDINGS
     int index = 0;
@@ -1854,8 +1900,13 @@ bool acquirement_menu()
 
     AcquireMenu acq_menu(acq_items);
     acq_menu.show();
-
-    return !you.props.exists(ACQUIRE_ITEMS_KEY);
+    
+    bool success = !you.props.exists(acq_key);
+    if (ihpix && !success) {
+        acq_items.clear();
+        you.props.erase(acq_key);
+    }
+    return success;
 }
 void waste_acquirement() {
     int thing_created = items(false, OBJ_SCROLLS, SCR_RANDOM_USELESSNESS, 

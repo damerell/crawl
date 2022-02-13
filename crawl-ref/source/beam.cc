@@ -2718,7 +2718,14 @@ void bolt::drop_object()
             }
         }
 
-        copy_item_to_grid(*item, pos(), 1);
+        if (have_passive(passive_t::ihpix_gather) && ihpix_wants(*item) &&
+            (you.see_cell(pos()) || you.see_cell(source) ||
+             you.see_cell(target))) {
+            ihpix_take_item(*item);
+            item_was_destroyed(*item);
+        } else {
+            copy_item_to_grid(*item, pos(), 1);
+        }
     }
     else
         item_was_destroyed(*item);
@@ -4827,13 +4834,17 @@ void bolt::affect_monster(monster* mon)
         {
             if (testbits(mon->flags, MF_DEMONIC_GUARDIAN))
                 mpr("Your demonic guardian avoids your attack.");
-            else if (!bush_immune(*mon))
-            {
-                simple_god_message(
-                    make_stringf(" protects %s plant from harm.",
-                        attitude == ATT_FRIENDLY ? "your" : "a").c_str(),
-                    GOD_FEDHAS);
-            }
+            else if (!bush_immune(*mon)) {
+                if (ihpierce) {
+                    mprf("The %s speeds past %s.", name.c_str(),
+                         mon->name(DESC_THE).c_str());
+                } else {
+                    simple_god_message(
+                        make_stringf(" protects %s plant from harm.",
+                                     attitude == ATT_FRIENDLY ?
+                                     "your" : "a").c_str(), GOD_FEDHAS);
+                }
+            } 
         }
     }
 
@@ -6722,7 +6733,7 @@ bool shoot_through_monster(const bolt& beam, const monster* victim)
     if (!victim || !originator)
         return false;
 
-    bool origin_worships_fedhas;
+    bool origin_worships_fedhas; 
     mon_attitude_type origin_attitude;
     if (originator->is_player())
     {
@@ -6738,8 +6749,9 @@ bool shoot_through_monster(const bolt& beam, const monster* victim)
         origin_attitude = temp->attitude;
     }
 
-    return (origin_worships_fedhas
-            && fedhas_protects(*victim))
+    return (beam.ihpierce && (victim->friendly() || victim->good_neutral()))
+           || (origin_worships_fedhas
+               && fedhas_protects(*victim))
            || (originator->is_player()
                && testbits(victim->flags, MF_DEMONIC_GUARDIAN))
            && !beam.is_enchantment()

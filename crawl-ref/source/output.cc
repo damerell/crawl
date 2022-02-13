@@ -961,29 +961,76 @@ static void _print_stats_qv(int y)
 {
     int col;
     string text;
-
-    int q = you.m_quiver.get_fire_item();
-    ASSERT_RANGE(q, -1, ENDOFPACK);
     char hud_letter = '-';
-    if (q != -1 && !fire_warn_if_impossible(true))
+
+    string prefix;
+
+    if (fire_warn_if_impossible(true))
     {
-        const item_def& quiver = you.inv[q];
-        hud_letter = index_to_letter(quiver.link);
-        const string prefix = item_prefix(quiver);
-        const int prefcol =
-            menu_colour(quiver.name(DESC_PLAIN), prefix, "stats");
-        if (prefcol != -1)
-            col = prefcol;
-        else
-            col = LIGHTGREY;
-        text = quiver.name(DESC_PLAIN, true);
-    }
-    else
-    {
-        if (fire_warn_if_impossible(true))
-        {
+        col  = DARKGREY;
+        text = "Quiver unavailable";
+    } else if (have_passive(passive_t::ihpix_gather)) {
+        bool anyammo = false; int otherammo = 0; bool curwep = false;
+        static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
+        string seperator = "";
+        bool slingpix = false;
+        for (int i = 0; i < ihpix_nr_ammos; i++) {
+            item_def ammo = ammo_vec[i].get_item();
+            if (ammo.quantity > 0) {
+                if (!anyammo) {
+                    prefix = item_prefix(ammo);
+                    // sorry, you can't prefcol a mixed quiver
+                    col = LIGHTGREY;
+                }
+                if (is_launched(&you, you.weapon(), ammo) == 
+                    launch_retval::LAUNCHED) {
+                    curwep = true;
+                    if (!(((ammo.sub_type == MI_STONE) && 
+                           you.props[IHPIX_USE_BULLETS].get_bool()) ||
+                          ((ammo.sub_type == MI_SLING_BULLET) && 
+                           !(you.props[IHPIX_USE_BULLETS].get_bool())))) {
+                        text = ammo.name(DESC_A) + seperator + text;
+                    } else {
+                        slingpix = true;
+                        text += seperator + ammo.name(DESC_A);
+                    }
+                    seperator = ", ";
+                } else {
+                    otherammo += ammo.quantity;
+                }
+                anyammo = true; 
+            }
+        }
+        if (otherammo > 0) {
+            if (curwep) {
+                if (!slingpix) text +=
+                               " ("+ to_string(otherammo) + " other missiles)";
+            } else {
+                text = to_string(otherammo) + " ammo for " +
+                (you.weapon() && is_range_weapon(*you.weapon()) ?
+                 "other ": "") + "ranged weapons";
+            }
+        }
+        if (!anyammo) {
             col  = DARKGREY;
-            text = "Quiver unavailable";
+            text = "No projectiles at all";
+        }
+    } else {
+        int q = you.m_quiver.get_fire_item();
+        ASSERT_RANGE(q, -1, ENDOFPACK);
+        if (q != -1 && !fire_warn_if_impossible(true))
+        {
+            const item_def& quiver = you.inv[q];
+            hud_letter = index_to_letter(quiver.link);
+            prefix = item_prefix(quiver);
+            const int prefcol =
+                menu_colour(quiver.name(DESC_PLAIN), prefix, "stats");
+            if (prefcol != -1) {
+                col = prefcol;
+            } else {
+                col = LIGHTGREY;
+            }
+            text = quiver.name(DESC_PLAIN, true);
         }
         else
         {
@@ -992,8 +1039,10 @@ static void _print_stats_qv(int y)
         }
     }
     CGOTOXY(1, y, GOTO_STAT);
-    textcolour(HUD_CAPTION_COLOUR);
-    CPRINTF("%c) ", hud_letter);
+    if (!have_passive(passive_t::ihpix_gather)) {
+        textcolour(HUD_CAPTION_COLOUR);
+        CPRINTF("%c) ", hud_letter);
+    }
     textcolour(col);
 #ifdef USE_TILE_LOCAL
     int w = crawl_view.hudsz.x - (tiles.is_using_small_layout()?0:4);

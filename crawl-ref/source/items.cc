@@ -1280,7 +1280,8 @@ string origin_desc(const item_def &item)
                 if (iorig > GOD_NO_GOD && iorig < NUM_GODS)
                 {
                     desc += god_name(static_cast<god_type>(iorig))
-                        + " gifted " + _article_it(item) + " to you ";
+                    + (iorig != GOD_IHPIX ? " gifted " : " issued ")
+                    + _article_it(item) + " to you ";
                 }
                 else
                 {
@@ -2387,6 +2388,12 @@ bool copy_item_to_grid(item_def &item, const coord_def& p,
     if (quant_drop == 0)
         return false;
 
+    if (item.props.exists(DIVINE_DROP_KEY)) {
+        mprf("%s neatly folds in on itself and vanishes.",
+             item.name(DESC_THE, false, false, false).c_str());
+        item_was_destroyed(item);
+        return true;
+    }
     if (!silenced(p) && !silent)
         feat_splash_noise(grd(p));
 
@@ -2598,13 +2605,15 @@ bool drop_item(int item_dropped, int quant_drop)
 
     ASSERT(item.defined());
 
+    mprf("You drop %s.", quant_name(item, quant_drop, DESC_A).c_str());
+
     if (!copy_item_to_grid(item, you.pos(), quant_drop, true, true))
     {
+        // yes, this can be a funny message order but so is sizzling
+        // splashes and the like coming before "You drop" ...
         mpr("Too many items on this level, not dropping the item.");
         return false;
     }
-
-    mprf("You drop %s.", quant_name(item, quant_drop, DESC_A).c_str());
 
     // If you drop an item in as a merfolk, it is below the water line and
     // makes no noise falling.
@@ -3423,7 +3432,8 @@ bool item_def::held_by_monster() const
 //        rules for unused objects might change).
 bool item_def::defined() const
 {
-    return base_type != OBJ_UNASSIGNED && quantity > 0;
+    return base_type != OBJ_UNASSIGNED && 
+        ((quantity > 0) || (origin_as_god_gift(*this) == GOD_IHPIX));
 }
 /**
  * Has this item's appearance been initialized?

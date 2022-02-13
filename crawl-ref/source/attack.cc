@@ -65,7 +65,7 @@ attack::attack(actor *attk, actor *defn, actor *blame)
       attacker_armour_tohit_penalty(0), attacker_shield_tohit_penalty(0),
       defender_shield(nullptr), miscast_level(-1), miscast_type(SPTYP_NONE),
       miscast_target(nullptr), fake_chaos_attack(false), simu(false),
-      aux_source(""), kill_type(KILLED_BY_MONSTER)
+      ihpix_likes(1), aux_source(""), kill_type(KILLED_BY_MONSTER)
 {
     // No effective code should execute, we'll call init_attack again from
     // the child class, since initializing an attack will vary based the within
@@ -936,7 +936,7 @@ int attack::inflict_damage(int dam, beam_type flavour, bool clean)
         defender->props["reaper"].get_int() = attacker->mid;
     }
     return defender->hurt(responsible, dam, flavour, kill_type,
-                          "", aux_source.c_str(), clean);
+                          "", aux_source.c_str(), clean, true, ihpix_likes);
 }
 
 /* If debug, return formatted damage done

@@ -1071,6 +1071,7 @@ bool item_is_selected(const item_def &i, int selector)
     case OSEL_ENCHANTABLE_WEAPON:
         return itype == OBJ_WEAPONS
                && !is_artefact(i)
+               && !i.props.exists(DIVINE_DROP_KEY)
                && (!item_ident(i, ISFLAG_KNOW_PLUSES)
                    || i.plus < MAX_WPN_ENCHANT);
 
@@ -1583,6 +1584,11 @@ bool needs_handle_warning(const item_def &item, operation_types oper,
         return true;
     }
 
+    if ((oper == OPER_DROP || oper == OPER_DESTROY || oper == OPER_THROW) &&
+        item.props.exists(DIVINE_DROP_KEY)) {
+        penance = false; return true;
+    }
+
     // Everything else depends on knowing the item subtype/brand.
     if (!item_type_known(item))
         return false;
@@ -1759,7 +1765,7 @@ bool check_warning_inscriptions(const item_def& item,
             if (item.cursed())
                 return true;
         }
-
+        
         // XXX: duplicates a check in delay.cc:_finish_delay()
         string prompt = "Really " + _operation_verb(oper) + " ";
         prompt += (in_inventory(item) ? item.name(DESC_INVENTORY)
@@ -1772,6 +1778,10 @@ bool check_warning_inscriptions(const item_def& item,
         prompt += "?";
         if (penance)
             prompt += " This could place you under penance!";
+        if (item.props.exists(DIVINE_DROP_KEY)) {
+            prompt += " This divinely granted item will be lost.";
+        }
+                
         return yesno(prompt.c_str(), false, 'n')
                && check_old_item_warning(item, oper);
     }

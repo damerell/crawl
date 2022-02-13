@@ -2231,6 +2231,10 @@ string get_item_description(const item_def &item, bool verbose,
                     description << "\nIt is an ancient artefact.";
                 }
             }
+            if (item.props.exists(DIVINE_DROP_KEY) &&
+                (item.base_type == OBJ_WEAPONS)) {
+                description << "\nLike any weapon from the divine armoury, it cannot be enchanted or branded. Drop it to return it to the armoury.";
+            }
         }
     }
 

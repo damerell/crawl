@@ -2702,6 +2702,16 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain)
     _reduce_abyss_xp_timer(skill_xp);
     _handle_xp_drain(skill_xp);
 
+    if (you.props.exists(IHPIX_XP_KEY)) {
+        int signed_xp = skill_xp;
+        int ihpix_xp = you.props[IHPIX_XP_KEY].get_int();
+        if (signed_xp >= ihpix_xp) {
+            you.props.erase(IHPIX_XP_KEY);
+            mprf(MSGCH_GOD, "You may request a replacement weapon from the divine armoury.");
+        } else {
+            you.props[IHPIX_XP_KEY] = ihpix_xp - signed_xp;
+        }
+    }
     if (player_under_penance(GOD_HEPLIAKLQANA))
         return; // no xp for you!
 
@@ -5137,8 +5147,9 @@ permabuff_state player::permabuff_notworking(permabuff_type pb) {
         (you.hunger_state <= HS_STARVING)) {
         return PB_STARVING;
     }
-    if ((pb == PERMA_PPROJ) && (you.confused())) {
-        return PB_CONFUSED;
+    if (pb == PERMA_PPROJ) {
+        if (you.confused()) return PB_CONFUSED;
+        if (you.duration[DUR_IHPIX_FOF]) return PB_IHPIX_FOF;
     }
     if (pb == PERMA_EXCRU) {
         if (!you.weapon()) {
@@ -5193,6 +5204,8 @@ string player::permabuff_whynot(permabuff_type pb) {
         return "your current blood level is insufficient";
     case PB_CONFUSED:
         return "you are too confused";
+    case PB_IHPIX_FOF:
+        return "the spell can't be used with Piercing Fire";
     case PB_EXCRU_NOWEP:
     {
         if (you.weapon()) {
@@ -6964,7 +6977,8 @@ void player::teleport(bool now, bool wizard_tele)
 
 int player::hurt(const actor *agent, int amount, beam_type flavour,
                  kill_method_type kill_type, string source, string aux,
-                 bool /*cleanup_dead*/, bool /*attacker_effects*/)
+                 bool /*cleanup_dead*/, bool /*attacker_effects*/,
+                 int ihpix_likes)
 {
     // We ignore cleanup_dead here.
     if (!agent)

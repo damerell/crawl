@@ -21,6 +21,10 @@
 #define NUM_PIETY_STARS 6
 #define FAITH_WORKING "faith working"
 #define FAITH_TOTAL "faith total"
+#define DIVINE_DROP_KEY "divine drop" // special treatment if dropped
+#define IHPIX_AMMO_KEY "ihpix_ammo_key" // WTF did this go?
+#define IHPIX_XP_KEY "ihpix_xp_key" // XP for another divine weapon
+#define IHPIX_USE_BULLETS "ihpix_use_bullets"
 
 #define MAX_OVERFLOW_LEVEL 9
 #define MIN_OVERFLOW_LEVEL 2
@@ -146,6 +150,22 @@ void upgrade_hepliaklqana_ancestor(bool quiet_force = false);
 void upgrade_hepliaklqana_weapon(monster_type mtyp, item_def &item);
 void upgrade_hepliaklqana_shield(const monster& ancestor, item_def &item);
 
+
+extern const missile_type ihpix_ammo[];
+extern const int ihpix_nr_ammos;
+bool ihpix_take_item(item_def &item, bool quiet = true);
+int ihpix_quan_ammo(missile_type missile);
+void ihpix_eat_inventory();
+bool ihpix_got_ammo(const item_def &weapon);
+missile_type ihpix_preferred_ammo(const item_def &weapon);
+item_def ihpix_item_def(int i, bool superior = false);
+void ihpix_bennies(bool silent = false);
+
+struct ihpix_gift_entry {
+    ihpix_upgrades upgrade;
+    int prob;
+};
+
 bool god_hates_attacking_friend(god_type god, const monster& fr);
 
 void religion_turn_start();
@@ -209,3 +229,6 @@ void set_god_ability_slots();
 vector<god_power> get_god_powers(god_type god);
 const god_power* god_power_from_ability(ability_type abil);
 bool god_power_usable(const god_power& power, bool ignore_piety=false, bool ignore_penance=false);
+bool any_divine_drops();
+vector<item_def> divine_drops();
+void leave_or_penance(god_type god);

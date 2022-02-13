@@ -255,3 +255,6 @@ static inline bool is_weapon(const item_def &item)
 void remove_whitespace(string &str);
 
 void auto_id_inventory();
+
+bool ihpix_wants(item_def &item);
+int ihpix_index(int missile);

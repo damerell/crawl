@@ -567,6 +567,10 @@ vector<conduct_type> item_conducts(const item_def &item)
     if (is_potentially_evil_item(item, false))
         conducts.push_back(DID_EVIL);
 
+    if (is_throwable(&you, item, true) && (item.sub_type != MI_STONE)) {
+        conducts.push_back(DID_THROW);
+    }
+
     return conducts;
 }
 
