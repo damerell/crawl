@@ -3695,6 +3695,19 @@ w:50
 
 @The_monster@ says, "No way as a way? Sounds like nonsense."
 %%%%
+Ihp'ix Donald
+
+w:50
+@_generic_Donald_@
+
+@The_monster@ says, "Couldn't you just hit things up close?"
+
+@The_monster@ says, "I hated target practice."
+
+@The_monster@ says, "I hate bows. And crossbows. And slings."
+
+@The_monster@ says, "I hate it when people shoot at me."
+%%%%
 No God Donald
 
 w:50

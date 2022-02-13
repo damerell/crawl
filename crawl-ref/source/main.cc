@@ -1658,6 +1658,10 @@ static void _do_cycle_quiver(int dir)
         mpr("You can't grasp things well enough to throw them.");
         return;
     }
+    if (have_passive(passive_t::ihpix_gather)) {
+        ihpix_quiver();
+        return;
+    }
 
     const int cur = you.m_quiver.get_fire_item();
     const int next = get_next_fire_item(cur, dir);

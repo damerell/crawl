@@ -573,6 +573,8 @@ static bool _any_crosstrained()
         // Assumes crosstraining is symmetric; otherwise we should
         // iterate over the result of get_crosstrain_skills and
         // check the levels of *those* skills
+        // This is not _technically_ true for Ihp'ixies but in practice
+        // it will work. DJSD
         if (you.skill_points[sk]
             && !get_crosstrain_skills(sk).empty())
         {

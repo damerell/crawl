@@ -1990,9 +1990,25 @@ vector<skill_type> get_crosstrain_skills(skill_type sk)
     case SK_POLEARMS:
         return { SK_AXES, SK_STAVES };
     case SK_SLINGS:
-        return { SK_THROWING };
+        if (have_passive(passive_t::ihpix_crosstrain)) {
+            return { SK_BOWS, SK_CROSSBOWS };
+        } else {
+            return { SK_THROWING };
+        }
     case SK_THROWING:
         return { SK_SLINGS };
+    case SK_BOWS:
+        if (have_passive(passive_t::ihpix_crosstrain)) {
+            return { SK_SLINGS, SK_CROSSBOWS };
+        } else {
+            return {};
+        }
+    case SK_CROSSBOWS:
+        if (have_passive(passive_t::ihpix_crosstrain)) {
+            return { SK_SLINGS, SK_BOWS };
+        } else {
+            return {};
+        }
     default:
         return {};
     }
@@ -2005,7 +2021,14 @@ int get_crosstrain_points(skill_type sk)
 {
     int points = 0;
     for (skill_type cross : get_crosstrain_skills(sk))
-        points += you.skill_points[cross] * 2 / 5;
+        if (have_passive(passive_t::ihpix_crosstrain) &&
+            ((sk == SK_CROSSBOWS) || (sk == SK_BOWS) || (sk == SK_SLINGS)) &&
+            ((cross == SK_CROSSBOWS) || (cross == SK_BOWS) || 
+             (cross == SK_SLINGS))) {
+            points += you.skill_points[cross] * 3 / 5;
+        } else {
+            points += you.skill_points[cross] * 2 / 5;
+        }
     return points;
 
 }

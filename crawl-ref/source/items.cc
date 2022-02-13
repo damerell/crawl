@@ -3423,7 +3423,8 @@ bool item_def::held_by_monster() const
 //        rules for unused objects might change).
 bool item_def::defined() const
 {
-    return base_type != OBJ_UNASSIGNED && quantity > 0;
+    return base_type != OBJ_UNASSIGNED && 
+        ((quantity > 0) || (origin_as_god_gift(*this) == GOD_IHPIX));
 }
 /**
  * Has this item's appearance been initialized?

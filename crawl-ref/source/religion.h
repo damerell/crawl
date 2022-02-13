@@ -21,6 +21,8 @@
 #define NUM_PIETY_STARS 6
 #define FAITH_WORKING "faith working"
 #define FAITH_TOTAL "faith total"
+#define IHPIX_AMMO_KEY "ihpix_ammo_key" // WTF did this go?
+#define IHPIX_USE_BULLETS "ihpix_use_bullets"
 
 #define MAX_OVERFLOW_LEVEL 9
 #define MIN_OVERFLOW_LEVEL 2
@@ -146,6 +148,11 @@ void upgrade_hepliaklqana_ancestor(bool quiet_force = false);
 void upgrade_hepliaklqana_weapon(monster_type mtyp, item_def &item);
 void upgrade_hepliaklqana_shield(const monster& ancestor, item_def &item);
 
+void ihpix_eat_inventory();
+bool ihpix_take_item(item_def &item, bool justcheck = false,
+		     bool quiet = true);
+int ihpix_quan_ammo(missile_type missile);
+
 bool god_hates_attacking_friend(god_type god, const monster& fr);
 
 void religion_turn_start();
@@ -209,3 +216,6 @@ void set_god_ability_slots();
 vector<god_power> get_god_powers(god_type god);
 const god_power* god_power_from_ability(ability_type abil);
 bool god_power_usable(const god_power& power, bool ignore_piety=false, bool ignore_penance=false);
+
+extern const missile_type ihpix_ammo[];
+extern const int ihpix_nr_ammos;

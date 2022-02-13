@@ -420,6 +420,13 @@ static const vector<god_passive> god_passives[] =
         { 1, passive_t::wu_jian_whirlwind, "lightly attack monsters in place by moving around them." },
         { 2, passive_t::wu_jian_wall_jump, "perform airborne attacks by moving against a solid obstacle." },
     },
+
+    // Ihp'ix
+    {
+        { 0, passive_t::ihpix_gather, "GOD NOW gathers up any ammunition you see and passes it to you as needed." },
+        { 1, passive_t::ihpix_crosstrain, "Increasing your skill with any ranged weapon will NOW increase your skill with other ranged weapons." },
+        { 3, passive_t::ihpix_steal, "GOD will NOW sometimes gather up ammunition your enemies are about to fire at you." },
+    },
 };
 COMPILE_CHECK(ARRAYSZ(god_passives) == NUM_GODS);
 

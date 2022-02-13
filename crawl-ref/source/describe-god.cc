@@ -235,6 +235,9 @@ static const char *divine_title[][8] =
     // Wu Jian -- animal/chinese martial arts monk theme
     {"Wooden Rat",          "Young Dog",             "Young Crane",              "Young Tiger",
         "Young Dragon",     "Red Sash",               "Golden Sash",              "Sifu"},
+    // Ihp'ix -- punny, because all the serious ones are taken by skill titles
+    {"Butt of the Joke", "Loose", "Cranky", "Quivering", "Quarrelsome", 
+     "Flighty", "Tightly Wound", "Highly Strung"},
 };
 COMPILE_CHECK(ARRAYSZ(divine_title) == NUM_GODS);
 
@@ -915,6 +918,34 @@ static formatted_string _describe_god_powers(god_type which_god)
     case GOD_LUGONU:
         have_any = true;
         cprintf("You are protected from the effects of unwielding distortion weapons.\n");
+        break;
+
+    case GOD_IHPIX:
+        have_any = true;
+        if (have_passive(passive_t::ihpix_gather)) {
+            desc.textcolour(god_colour(which_god));
+        } else {
+            desc.textcolour(DARKGREY);
+        }
+        desc.cprintf("%s gathers up ammunition and passes it to you.\n",
+                     uppercase_first(god_name(which_god)).c_str());
+        if (have_passive(passive_t::ihpix_gather)) {
+            desc.cprintf("The divine armoury contains ");
+            static CrawlVector &ammo_vec = 
+                you.props[IHPIX_AMMO_KEY].get_vector();
+            bool anyammo = false; string separator = "";
+            for (int i = 0; i < ihpix_nr_ammos; i++) {
+                item_def ammo = ammo_vec[i].get_item();
+                if (ammo.quantity > 0) {
+                    anyammo = true;
+                    desc.cprintf(separator); separator = ", ";
+                    desc.cprintf(ammo.name(DESC_A));
+                }
+            }
+            if (!anyammo) desc.cprintf("no ammunition at all!");
+                else desc.cprintf(".");
+            desc.cprintf("\n");
+        }
         break;
 
     default:

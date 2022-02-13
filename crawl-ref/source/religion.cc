@@ -351,7 +351,24 @@ const vector<god_power> god_powers[NUM_GODS] =
            "summon a storm of heavenly clouds" },
       { 5, "pin monsters in place when making spinning attacks during Heavenly Storm", "pin monsters with Heavenly Storm" },
     },
+    // Ihp'ix FIXME active powers
+    { // 0 piety passive not in here since active for all non-apostates
+        { 1, "Increasing your skill with any ranged weapon will now increase your skill with other ranged weapons.",
+          "Increasing your skill with any ranged weapon will no longer increase your skill with other ranged weapons." },
+        { 3, "Ihp'ix will sometimes gather up ammunition your enemies are about to fire at you.",
+          "Ihp'ix will no longer gather up ammunition your enemies are about to fire at you." },
+    },
 };
+
+// The ordering here matters in order that the "other" sling ammo shows up
+// after the selected one. This is a bit of a bodge. Sorry.
+const missile_type ihpix_ammo[] = {
+    MI_ARROW,
+    MI_BOLT,
+    MI_SLING_BULLET,
+    MI_STONE
+};
+const int ihpix_nr_ammos = sizeof(ihpix_ammo) / sizeof(ihpix_ammo[0]);
 
 vector<god_power> get_god_powers(god_type god)
 {
@@ -1984,6 +2001,36 @@ static special_armour_type _hepliaklqana_shield_ego(int HD)
     return HD < 13 ? SPARM_NORMAL : SPARM_REFLECTION;
 }
 
+// store any ammo in the player's inventory in the divine armoury
+void ihpix_eat_inventory() {
+    for (auto &item : you.inv) {
+        if (ihpix_take_item(item)) {
+            dec_inv_item_quantity(item.link, item.quantity);
+        }
+    }
+}
+
+// Do we want this item in the ammo supply?
+bool ihpix_take_item(item_def &item, bool justcheck, bool quiet) {
+    static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
+    for (int i = 0; i < ihpix_nr_ammos; i++) {
+        item_def &ammo = ammo_vec[i].get_item();
+        if ((item.base_type == OBJ_MISSILES) && 
+            (item.sub_type == ammo.sub_type)) {
+            if (!justcheck) {
+                ammo.quantity += item.quantity;
+                if (!quiet) {
+                    string message = " gathers up " + item.name(DESC_A) + ".";
+                    simple_god_message(message.c_str());
+                }
+                you.redraw_quiver = true;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
 /**
  * Setup an ancestor's weapon after their class is chosen, when the player
  * levels up, or after they're resummoned (or initially created for wrath).
@@ -2134,7 +2181,8 @@ string god_name(god_type which_god, bool long_name)
     case GOD_PAKELLAS:      return "Pakellas";
     case GOD_USKAYAW:       return "Uskayaw";
     case GOD_HEPLIAKLQANA:  return "Hepliaklqana";
-    case GOD_WU_JIAN:     return "Wu Jian";
+    case GOD_WU_JIAN:       return "Wu Jian";
+    case GOD_IHPIX:         return "Ihp'ix";
     case GOD_JIYVA: // This is handled at the beginning of the function
     case GOD_ECUMENICAL:    return "an unknown god";
     case NUM_GODS:          return "Buggy";
@@ -3159,6 +3207,8 @@ bool player_can_join_god(god_type which_god)
     if (you.species == SP_DEMIGOD)
         return false;
 
+    if ((you.species == SP_FELID) && (which_god == GOD_IHPIX)) return false;
+
     if (you.has_any_permabuff()) {
         for (unsigned int i = PERMA_FIRST_PERMA; i <= PERMA_LAST_PERMA ; i++) {
             if (you.has_permabuff(permabuff_spell[i]) &&
@@ -3639,6 +3689,32 @@ static void _join_cheibriados()
     notify_stat_change();
 }
 
+// Setup for not being able to think of a joke about Ihp'ix
+static void _join_ihpix()
+{
+    simple_god_message(" begins to gather up any ammunition you see and pass it to you as needed.");
+    if (!you.props.exists(IHPIX_AMMO_KEY)) {
+        you.props[IHPIX_AMMO_KEY].new_vector(SV_ITEM);
+        CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
+        int ammo_created = NON_ITEM; item_def ammo_item; 
+        for (missile_type missile : ihpix_ammo) {
+            ammo_created = 
+                items(false, OBJ_MISSILES, missile, 0, 0, GOD_IHPIX);
+            if (ammo_created == NON_ITEM) {
+                mprf(MSGCH_ERROR, "BUG: Failed to make Ihp'ix ammo!");
+            } else {
+                ammo_item = mitm[ammo_created];
+                ammo_item.quantity = 0;
+                ammo_vec.push_back(ammo_item);
+                destroy_item(ammo_created, true);
+                ammo_created = NON_ITEM;
+            }
+        }
+    }
+    ihpix_eat_inventory();
+    you.props[IHPIX_USE_BULLETS] = (ihpix_quan_ammo(MI_SLING_BULLET) > 0);
+}
+
 /// What special things happen when you join a god?
 static const map<god_type, function<void ()>> on_join = {
     { GOD_ASHENZARI, []() { ash_check_bondage(); }},
@@ -3671,6 +3747,7 @@ static const map<god_type, function<void ()>> on_join = {
     { GOD_RU, _join_ru },
     { GOD_TROG, _join_trog },
     { GOD_ZIN, _join_zin },
+    { GOD_IHPIX, _join_ihpix },
 };
 
 bool join_religion(god_type which_god)
@@ -3881,6 +3958,11 @@ void god_pitch(god_type which_god)
                                "loathsome form!",
                                which_god);
         }
+        else if ((you.species == SP_FELID) && (which_god == GOD_IHPIX)) {
+            simple_god_message(" prefers worshippers with hands to hold bows "
+                               "and slings.", which_god);
+        }
+
         else
         {
             simple_god_message(" does not accept worship from those such as"
@@ -4225,6 +4307,7 @@ void handle_god_time(int /*time_delta*/)
         case GOD_PAKELLAS:
         case GOD_JIYVA:
         case GOD_WU_JIAN:
+        case GOD_IHPIX:
             if (one_chance_in(17))
                 lose_piety(1);
             break;

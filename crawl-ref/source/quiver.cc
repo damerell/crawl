@@ -14,12 +14,14 @@
 #include <algorithm>
 
 #include "env.h"
+#include "god-passive.h"
 #include "invent.h"
 #include "item-prop.h"
 #include "items.h"
 #include "options.h"
 #include "player.h"
 #include "prompt.h"
+#include "religion.h"
 #include "sound.h"
 #include "stringutil.h"
 #include "tags.h"
@@ -178,6 +180,10 @@ void choose_item_for_quiver()
         mpr("You can't grasp things well enough to throw them.");
         return;
     }
+    if (have_passive(passive_t::ihpix_gather)) {
+        ihpix_quiver();
+        return;
+    }
 
     int slot = prompt_invent_item("Quiver which item? (- for none, * to show all)",
                                   MT_INVLIST, OSEL_THROWABLE, OPER_QUIVER,
@@ -210,6 +216,39 @@ void choose_item_for_quiver()
         }
     }
     quiver_item(slot);
+}
+
+void ihpix_quiver() {
+    bool anystones = (ihpix_quan_ammo(MI_STONE) > 0); 
+    bool anybullets = (ihpix_quan_ammo(MI_SLING_BULLET) > 0);
+    if (you.props[IHPIX_USE_BULLETS].get_bool()) {
+        you.props[IHPIX_USE_BULLETS] = false;
+        if (anystones) {
+            mpr("Quivering stones for slings.");
+        } else {
+            mpr("Ihp'ix will give you stones when possible.");
+        }
+    } else {
+        you.props[IHPIX_USE_BULLETS] = true;
+        if (anybullets) {
+            mpr("Quivering sling bullets for slings.");
+        } else {
+            mpr("Ihp'ix will give you sling bullets when possible.");
+        }
+    }
+    you.redraw_quiver = true;
+}
+
+int ihpix_quan_ammo(missile_type missile) {
+    static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
+    for (int i = 0; i < ihpix_nr_ammos; i++) {
+        item_def &ammo = ammo_vec[i].get_item();
+        if (missile == ammo.sub_type) {
+            return ammo.quantity;
+        }
+    }
+    mprf(MSGCH_ERROR, "BUG: ihpix_quan_ammo called with a kind of ammo we don't know about.");
+    return 0;
 }
 
 // Notification that item was fired with 'f'.

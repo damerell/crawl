@@ -68,6 +68,14 @@ ancestor into the world; as they explore and form new experiences, they will
 find themselves able to shape and control their ancestor's memory, eventually
 bringing them into the ranks of the mythical heroes.
 %%%%
+Ihp'ix
+
+Ihp'ix is the god of archers and, after months of debate and prayer at
+the Trifold Laitian Council a millenium ago, those who wield slings.
+When an arrow hits the bullseye or a hundred longbows spread death on
+a battlefield, when a shepherd defends a flock from wolves or when an
+assassin's bolt slays, Ihp'ix is there.
+%%%%
 Wu Jian
 
 The Wu Jian Council is a congregation of martial monks, ascended to divinity
@@ -299,6 +307,19 @@ Hepliaklqana will call it forth again not long after. Further advancement in
 Hepliaklqana's service allows worshippers to restore and strengthen their
 ancestor, to swap them with other creatures, and to choose how to remember
 their life's talents.
+%%%%
+Ihp'ix powers
+
+As worshippers of Ihp'ix gain skill with a bow, crossbow, or sling,
+they gain skill with the other weapons at an increased rate.
+Worshippers need never carry ammunition; Ihp'ix gathers it up into a
+vast divine armoury, then places it in worshippers' hands as it is
+needed. Especially devout worshippers will find Ihp'ix will even
+gather up shots their foes are about to fire.
+
+Worshippers may infuse their shots with magical energy, temporarily
+make use of weapons from the divine armoury, and call upon Ihp'ix to
+have their shots pierce their opponents and spare their allies.
 %%%%
 Jiyva powers
 
@@ -540,6 +561,14 @@ denied to the unfortunate apostate, until Hepliaklqana decides they have
 been punished enough. The life essence sacrificed to manifest an ancestor will
 not be returned until Hepliaklqana is mollified, and this will not be quick:
 unlike some, Hepliaklqana has a long memory.
+%%%%
+Ihp'ix wrath
+
+Sinners will find their foes' ranged weapons empowered against them at
+the most inconvenient of moments.
+
+Naturally, the use of ammunition and weapons from the divine armoury
+is reserved for those who have not strayed.
 %%%%
 Gozag wrath
 
