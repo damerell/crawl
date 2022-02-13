@@ -1004,8 +1004,8 @@ static void _print_stats_qv(int y)
                 text += " ("+ to_string(otherammo) + " other)";
             } else {
                 text = to_string(otherammo) + " ammo for " +
-                    (is_range_weapon(*you.weapon()) ? "other ": "") +
-                    "ranged weapons";
+                (you.weapon() && is_range_weapon(*you.weapon()) ?
+                 "other ": "") + "ranged weapons";
             }
         }
         if (!anyammo) {

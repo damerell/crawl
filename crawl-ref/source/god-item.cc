@@ -567,6 +567,15 @@ vector<conduct_type> item_conducts(const item_def &item)
     if (is_potentially_evil_item(item, false))
         conducts.push_back(DID_EVIL);
 
+    if (is_throwable(&you, item, true)) conducts.push_back(DID_THROW);
+
+    if ((get_armour_ego_type(item) == SPARM_REPULSION) ||
+        (get_armour_ego_type(item) == SPARM_REFLECTION) ||
+        ((item.base_type == OBJ_JEWELLERY) && 
+         (item.sub_type == AMU_REFLECTION)) ||
+        (is_artefact(item) && artefact_property(item, ARTP_RMSL))) {
+        conducts.push_back(DID_REFLECT_ETC);
+    }
     return conducts;
 }
 

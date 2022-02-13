@@ -587,10 +587,14 @@ int get_ammo_to_shoot(int item, dist &target, bool with_ihpix, bool teleport)
         return -1;
     }
 
-    if (with_ihpix &&
-        (!ihpix_got_ammo(*you.weapon()))) {
-        simple_god_message(" has no ammunition for your weapon.");
-        return -1;
+    if (with_ihpix && you.weapon()) {
+        if (!is_range_weapon(*you.weapon())) {
+            mpr("You are wielding a melee weapon.");
+            return -1;
+        } else if (!ihpix_got_ammo(*you.weapon())) {
+            simple_god_message(" has no ammunition for your weapon.");
+            return -1;
+        }
     }
 
     if (!_fire_choose_item_and_target(item, target, ihpix_shot, with_ihpix, 
