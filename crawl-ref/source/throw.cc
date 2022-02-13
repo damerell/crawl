@@ -1038,6 +1038,13 @@ bool throw_it(bolt &pbolt, int throw_2, bool with_ihpix, dist *target)
 
     you.time_taken = you.attack_delay(&item).roll();
 
+    if (with_ihpix) {
+        static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
+        item_def &ammo = ammo_vec[ihpix_index(thrown.sub_type)].get_item();
+        ammo.quantity--;
+        ASSERT(ammo.quantity >= 0);
+    }
+        
     // Create message.
     mprf("You %s%s %s.",
           teleport ? "magically " : "",

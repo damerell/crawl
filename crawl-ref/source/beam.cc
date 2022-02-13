@@ -2717,7 +2717,14 @@ void bolt::drop_object()
             }
         }
 
-        copy_item_to_grid(*item, pos(), 1);
+        if (have_passive(passive_t::ihpix_gather) && ihpix_wants(*item) &&
+            (you.see_cell(pos()) || you.see_cell(source) ||
+             you.see_cell(target))) {
+            ihpix_take_item(*item);
+            item_was_destroyed(*item);
+        } else {
+            copy_item_to_grid(*item, pos(), 1);
+        }
     }
     else
         item_was_destroyed(*item);
