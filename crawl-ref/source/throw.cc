@@ -1250,7 +1250,17 @@ bool mons_throw(monster* mons, bolt &beam, int msl, bool teleport)
         // build beam name
         beam.name = item.name(DESC_PLAIN, false, false, false);
     }
-    msg += ".";
+    bool ihpixstole = false;
+    if (have_passive(passive_t::ihpix_steal)) {
+        // There is an assumption here monsters never throw away launcher ammo
+        if (x_chance_in_y(you.piety,
+                          MAX_PIETY * (ihpix_wants(item) ? 2 : 1))) {
+            ihpixstole = true;
+            msg += ", but Ihp'ix snatches the missile away!";
+        }
+    } else {
+        msg += ".";
+    }
 
     if (mons->observable())
     {
@@ -1262,7 +1272,7 @@ bool mons_throw(monster* mons, bolt &beam, int msl, bool teleport)
 
     // decrease inventory
     bool really_returns;
-    if (returning && !one_chance_in(mons_power(mons->type) + 3))
+    if (returning && !ihpixstole && !one_chance_in(mons_power(mons->type) + 3))
         really_returns = true;
     else
         really_returns = false;
@@ -1272,21 +1282,23 @@ bool mons_throw(monster* mons, bolt &beam, int msl, bool teleport)
     // Redraw the screen before firing, in case the monster just
     // came into view and the screen hasn't been updated yet.
     viewwindow();
-    if (teleport)
-    {
-        beam.use_target_as_pos = true;
-        beam.affect_cell();
-        beam.affect_endpoint();
-        if (!really_returns)
-            beam.drop_object();
-    }
-    else
-    {
-        beam.fire();
-
-        // The item can be destroyed before returning.
-        if (really_returns && thrown_object_destroyed(&item, beam.target))
-            really_returns = false;
+    if (!ihpixstole) {
+        if (teleport)
+        {
+            beam.use_target_as_pos = true;
+            beam.affect_cell();
+            beam.affect_endpoint();
+            if (!really_returns)
+                beam.drop_object();
+        }
+        else
+        {
+            beam.fire();
+            
+            // The item can be destroyed before returning.
+            if (really_returns && thrown_object_destroyed(&item, beam.target))
+                really_returns = false;
+        }
     }
 
     if (really_returns)
@@ -1323,7 +1335,10 @@ bool mons_throw(monster* mons, bolt &beam, int msl, bool teleport)
 
     if (beam.special_explosion != nullptr)
         delete beam.special_explosion;
-
+    
+    if (ihpixstole) {
+        ihpix_take_item(item);
+    }
     return true;
 }
 
