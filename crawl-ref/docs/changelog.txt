@@ -45,6 +45,7 @@ Vanilla changes messed around with
 * Goliath beetles, griffons, vipers, brain worms, clay golems, flaming corpses,
   rotting hulks, salamander firebrands, fireflies, and Maud return.
 * Swamp worms go back to being submerged ambush predators.
+* The armour of Talos returns.
 
 Changes swiped from other variants
 ----------------------------------
