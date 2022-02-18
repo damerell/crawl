@@ -20,6 +20,7 @@
 #include "mon-cast.h"
 #include "mon-transit.h"
 #include "ng-input.h"
+#include "options.h"
 #include "skills.h"
 #include "spl-util.h"
 #include "state.h"
@@ -688,11 +689,14 @@ spell_type ghost_demon::translate_spell(spell_type spell) const
     return spell;
 }
 
-const vector<ghost_demon> ghost_demon::find_ghosts(monster_type slayer_type)
+const vector<ghost_demon> ghost_demon::find_ghosts(monster_type slayer_type,
+                                                   bool include_player)
 {
     vector<ghost_demon> gs;
+    if (Options.no_player_bones)
+        include_player = false;
 
-    if (you.undead_state(false) == US_ALIVE)
+    if (include_player && you.undead_state(false) == US_ALIVE)
     {
         ghost_demon player;
         player.init_player_ghost(true,slayer_type);

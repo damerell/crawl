@@ -57,7 +57,9 @@ public:
 
 
 public:
-    static const vector<ghost_demon> find_ghosts(monster_type slayer_type=MONS_NO_MONSTER);
+    static const vector<ghost_demon>
+    find_ghosts(monster_type slayer_type=MONS_NO_MONSTER,
+                bool include_player = true);
     static int max_ghosts_per_level(int absdepth);
     static bool ghost_eligible();
 
