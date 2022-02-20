@@ -44,6 +44,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <map>
+#include <ostream>
 #include <set>
 #include <stdint.h>
 #include <vector>
