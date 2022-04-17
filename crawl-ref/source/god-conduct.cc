@@ -1026,8 +1026,14 @@ static like_map divine_likes[] =
         { DID_KILL_HOLY, KILL_HOLY_RESPONSE },
         { DID_KILL_NONLIVING, KILL_NONLIVING_RESPONSE },
     },
-    // GOD_IHPIX FIXME special kill handing for IHPIX
-    like_map(),
+    // GOD_IHPIX
+    {
+        { DID_KILL_LIVING, KILL_LIVING_RESPONSE },
+        { DID_KILL_UNDEAD, KILL_UNDEAD_RESPONSE },
+        { DID_KILL_DEMON, KILL_DEMON_RESPONSE },
+        { DID_KILL_HOLY, KILL_HOLY_RESPONSE },
+        { DID_KILL_NONLIVING, KILL_NONLIVING_RESPONSE },
+    }
 };
 
 /**
@@ -1203,6 +1209,10 @@ string get_god_likes(god_type which_god)
         }
     }
 
+    if (which_god == GOD_IHPIX) {
+        text += " " + uppercase_first(god_name(which_god)) +
+        " is better pleased when you strike down your enemies with ranged weapons.";
+    }
     return text;
 }
 

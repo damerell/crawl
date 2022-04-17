@@ -93,6 +93,8 @@ public:
 
     bool simu;
 
+    int ihpix_likes; // 0 no, 1 loaned weapon, 2 your own weapon
+    
 // Public Methods
 public:
     attack(actor *attk, actor *defn, actor *blame = 0);

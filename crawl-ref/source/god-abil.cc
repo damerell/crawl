@@ -3457,40 +3457,21 @@ spret fedhas_evolve_flora(bool fail)
     return spret::success;
 }
 
-static bool _lugonu_warp_monster(monster& mon, int pow)
+static bool _lugonu_warp_monster(monster& mon)
 {
-    if (coinflip())
+    // XXX: should this ignore mon.no_tele(), as with the player?
+    if (mon.wont_attack() || mon.no_tele() || coinflip())
         return false;
 
-    if (!mon.friendly())
-        behaviour_event(&mon, ME_ANNOY, &you);
-
-    mon.hurt(&you, 1 + random2(pow / 6));
-
-    if (mon.alive() && !mon.no_tele(true, false))
-        mon.blink();
-
+    mon.blink();
     return true;
-}
-
-static void _lugonu_warp_area(int pow)
-{
-    apply_monsters_around_square([pow] (monster& mon) {
-        return _lugonu_warp_monster(mon, pow);
-    }, you.pos());
 }
 
 void lugonu_bend_space()
 {
-    const int pow = 4 + skill_bump(SK_INVOCATIONS);
-    const bool area_warp = random2(pow) > 9;
-
-    mprf("Space bends %saround you!", area_warp ? "sharply " : "");
-
-    if (area_warp)
-        _lugonu_warp_area(pow);
-
+    mpr("Space bends violently around you!");
     uncontrolled_blink(true);
+    apply_monsters_around_square(_lugonu_warp_monster, you.pos());
 }
 
 void cheibriados_time_bend(int pow)

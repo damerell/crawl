@@ -65,7 +65,7 @@ attack::attack(actor *attk, actor *defn, actor *blame)
       attacker_armour_tohit_penalty(0), attacker_shield_tohit_penalty(0),
       defender_shield(nullptr), miscast_level(-1), miscast_type(SPTYP_NONE),
       miscast_target(nullptr), fake_chaos_attack(false), simu(false),
-      aux_source(""), kill_type(KILLED_BY_MONSTER)
+      ihpix_likes(0), aux_source(""), kill_type(KILLED_BY_MONSTER)
 {
     // No effective code should execute, we'll call init_attack again from
     // the child class, since initializing an attack will vary based the within

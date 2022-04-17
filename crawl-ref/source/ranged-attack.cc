@@ -20,6 +20,7 @@
 #include "mon-util.h"
 #include "monster.h"
 #include "player.h"
+#include "religion.h"
 #include "spl-selfench.h"
 #include "stringutil.h"
 #include "teleport.h"
@@ -51,6 +52,10 @@ ranged_attack::ranged_attack(actor *attk, actor *defn, item_def *proj,
         aux_source = make_stringf("Shot with a%s %s by %s",
                  (is_vowel(proj_name[0]) ? "n" : ""), proj_name.c_str(),
                  attacker->name(DESC_A).c_str());
+        if (you_worship(GOD_IHPIX)) {
+            ihpix_likes = 2;
+            // FIXME check for loaned weapon
+        }
     }
     else
     {
@@ -301,7 +306,8 @@ bool ranged_attack::handle_phase_hit()
     else
     {
         bool ihpix_infuse = false; damage_done = 0;
-        if (attacker->is_player() && you.attribute[ATTR_IHPIX_INFUSE]) {
+        if (attacker->is_player() && using_weapon() &&
+            you.attribute[ATTR_IHPIX_INFUSE]) {
             if (enough_mp(1, true, false)) {
                 damage_done += 1 + div_rand_round(you.piety, 40);
                 ihpix_infuse = true;
