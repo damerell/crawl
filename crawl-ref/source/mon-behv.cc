@@ -364,7 +364,7 @@ void handle_behaviour(monster* mon)
     {
         if (you.pet_target != MHITNOT)
             mon->foe = you.pet_target;
-        else if (mons_class_is_stationary(mon->type))
+        else
             set_nearest_monster_foe(mon);
     }
 
