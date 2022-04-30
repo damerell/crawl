@@ -1436,6 +1436,7 @@ static void _xom_animate_monster_weapon(int sever)
 
     destroy_item(dancing->inv[MSLOT_WEAPON]);
 
+    dancing->props[TUKIMA_WEAPON] = true;
     dancing->inv[MSLOT_WEAPON] = wpn;
     mitm[wpn].set_holding_monster(*dancing);
     dancing->colour = mitm[wpn].get_colour();
