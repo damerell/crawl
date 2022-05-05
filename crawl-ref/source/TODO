@@ -1,5 +1,7 @@
 0c20d95af202992997bb2805f6a9f9d865ec3ee4 (stairs)
 
+faith message could be better
+
 https://github.com/crawl/crawl/blob/nostalgia/crawl-ref/docs/changelog.txt
 (Hive)
 
@@ -11,6 +13,7 @@ spell failure chance rounding
 
 ebering vault cleanup re d:1 in 2021
 
+acq wording
 your weapon aura of protection ..  on riposte?
 
 cloak etc ego recognition
@@ -20,11 +23,8 @@ spawns on disjoint levels
 
 faster than you
 
-Call Canine Familiar as permabuff - ceb says nameable like ancestor
-
 autoexplore above water STILL
 vanilla's new XOM
-should the ancestor dodge RoF?
 zap lighting rod near ancestor
 portal exit drop
 abyss cycling
@@ -169,3 +169,7 @@ d63ab3c59aa384f4d63c7ca8d95804740299a244 monster intelligence levels
 
 angband: mixed blessing mushrooms? some vaults? some egos? some curses?
 Bees embalm creatures that die in hives, if they are too large to remove in order to prevent decay inside of hive.
+
+wontfix
+climb stairs covered by nymph - dracoomega says by design
+should the ancestor dodge RoF? no
