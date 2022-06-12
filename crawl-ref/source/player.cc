@@ -5325,6 +5325,9 @@ string player::cannot_renew_pbs_because(permabuff_type pb) {
     if (get_contamination_level() > 1) {
         return "of your excessive magical contamination";
     }
+    if (you.duration[DUR_SAP_MAGIC]) {
+        return "your magic has been sapped";
+    }
     return "";
 }
 
