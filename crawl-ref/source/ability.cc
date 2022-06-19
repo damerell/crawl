@@ -653,6 +653,12 @@ static const ability_def Ability_List[] =
     { ABIL_WU_JIAN_WALLJUMP, "Wall Jump",
         0, 0, 0, 0, {}, abflag::starve_ok | abflag::berserk_ok },
 
+    // Ihp'ix
+    { ABIL_IHPIX_INFUSE, "Infuse Ranged Attacks",
+      0, 0, 0, 0, { fail_basis::invo }, abflag::starve_ok },
+    { ABIL_IHPIX_STOP_INFUSE, "Stop Infusing Ranged Attacks",
+      0, 0, 0, 0, { fail_basis::invo }, abflag::starve_ok },
+    
     { ABIL_STOP_RECALL, "Stop Recall", 0, 0, 0, 0, {fail_basis::invo}, abflag::starve_ok },
     { ABIL_RENOUNCE_RELIGION, "Renounce Religion",
       0, 0, 0, 0, {fail_basis::invo}, abflag::starve_ok },
@@ -1014,6 +1020,10 @@ ability_type fixup_ability(ability_type ability)
             return ABIL_NON_ABILITY;
         else
             return ability;
+
+    case ABIL_IHPIX_INFUSE:
+        if (you.attribute[ATTR_IHPIX_INFUSE]) return ABIL_IHPIX_STOP_INFUSE;
+        return ability;
 
     default:
         return ability;
@@ -3123,6 +3133,16 @@ static spret _do_ability(const ability_def& abil, bool fail)
             break;
         }
         return spret::abort;
+
+    case ABIL_IHPIX_INFUSE:
+        mpr("You start channeling your magic into your ranged attacks.");
+        you.attribute[ATTR_IHPIX_INFUSE] = 1;
+        break;
+
+    case ABIL_IHPIX_STOP_INFUSE:
+        mpr("You stop channeling your magic into your ranged attacks.");
+        you.attribute[ATTR_IHPIX_INFUSE] = 0;
+        break;
 
     case ABIL_NON_ABILITY:
         fail_check();

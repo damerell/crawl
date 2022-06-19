@@ -355,6 +355,8 @@ const vector<god_power> god_powers[NUM_GODS] =
     { // 0 piety passive not in here since active for all non-apostates
         { 1, "Increasing your skill with any ranged weapon will now increase your skill with other ranged weapons.",
           "Increasing your skill with any ranged weapon will no longer increase your skill with other ranged weapons." },
+        { 2, ABIL_IHPIX_INFUSE, "You may channel your magical energy into your ranged attacks.",
+          "You can no longer channel your magical energy into your ranged attacks." },
         { 3, "Ihp'ix will sometimes gather up ammunition your enemies are about to fire at you.",
           "Ihp'ix will no longer gather up ammunition your enemies are about to fire at you." },
     },
@@ -817,6 +819,9 @@ static void _inc_penance(god_type god, int val)
                 you.duration[DUR_CHANNEL_ENERGY] = 0;
             if (you.attribute[ATTR_DIVINE_ENERGY])
                 you.attribute[ATTR_DIVINE_ENERGY] = 0;
+        } else if (god == GOD_IHPIX) {
+            if (you.attribute[ATTR_IHPIX_INFUSE])
+                you.attribute[ATTR_IHPIX_INFUSE] = 0;
         }
 
         if (you_worship(god))
@@ -2656,6 +2661,9 @@ void lose_piety(int pgn)
                 // Deactivate the toggle
                 if (power.abil == ABIL_SIF_MUNA_DIVINE_ENERGY)
                     you.attribute[ATTR_DIVINE_ENERGY] = 0;
+
+                if (power.abil == ABIL_IHPIX_INFUSE)
+                    you.attribute[ATTR_IHPIX_INFUSE] = 0;
             }
         }
 #ifdef USE_TILE_LOCAL
@@ -3090,6 +3098,10 @@ void excommunication(bool voluntary, god_type new_god)
         you.props[XOM_PIETY_KEY] = old_piety;
         break;
 
+    case GOD_IHPIX:
+        you.attribute[ATTR_IHPIX_INFUSE] = 0;
+        break;
+        
     default:
         break;
     }

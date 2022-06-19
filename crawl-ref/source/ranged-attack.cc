@@ -300,9 +300,17 @@ bool ranged_attack::handle_phase_hit()
     }
     else
     {
-        damage_done = calc_damage();
+        bool ihpix_infuse = false; damage_done = 0;
+        if (attacker->is_player() && you.attribute[ATTR_IHPIX_INFUSE]) {
+            if (enough_mp(1, true, false)) {
+                damage_done += 1 + div_rand_round(you.piety, 40);
+                ihpix_infuse = true;
+            }
+        }
+        damage_done += calc_damage();
         if (damage_done > 0 || projectile->is_type(OBJ_MISSILES, MI_DART))
         {
+            if (ihpix_infuse) dec_mp(1);
             if (!handle_phase_damaged())
                 return false;
         }

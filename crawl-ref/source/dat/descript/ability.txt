@@ -313,6 +313,16 @@ Forget Spell ability
 
 Removes a known spell from memory, so as to free memory to learn others.
 %%%%
+# Ihp'ix
+Infuse Ranged Attacks ability
+
+Akin to the Infusion charm, this lets you charge ranged attacks with magical
+energy to do slightly more damage.
+%%%%
+Stop Infusing Ranged Attacks ability
+
+Stop charging ranged attacks with magical energy.
+%%%%
 # Trog
 Berserk ability
 

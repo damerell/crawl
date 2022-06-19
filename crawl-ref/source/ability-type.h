@@ -257,6 +257,11 @@ enum ability_type
     ABIL_WU_JIAN_WHIRLWIND,
     ABIL_WU_JIAN_WALLJUMP,
 
+    // Ihp'ix - more to come
+    ABIL_IHPIX_INFUSE = 1300,
+    ABIL_IHPIX_STOP_INFUSE,
+    ABIL_IHPIX_TEMP_WEAPON,
+    
     // For both Yred and Beogh
     ABIL_STOP_RECALL = 1500,
 
