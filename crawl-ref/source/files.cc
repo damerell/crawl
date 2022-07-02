@@ -1348,6 +1348,7 @@ static void _place_player(dungeon_feature_type stair_taken,
     monster *mon = monster_at(you.pos());
     if (mon && !fedhas_passthrough(mon))
     {
+        take_note(Note(NOTE_MESSAGE, 0, 0, "Displaced on stairs"), true);
         for (distance_iterator di(you.pos()); di; ++di)
         {
             if (!monster_at(*di) && mon->is_habitable(*di))
