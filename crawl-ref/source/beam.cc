@@ -1327,30 +1327,24 @@ void bolt::do_fire()
             string prompt = "Your line of fire to ";
             const monster* mon = monster_at(target);
 
+            string blockee;
             if (mon && mon->observable())
-                prompt += mon->name(DESC_THE);
+                blockee = mon->name(DESC_THE);
             else
             {
-                prompt += "the targeted "
-                        + feature_description_at(target, false, DESC_PLAIN, false);
+                blockee = "the targeted "
+                        + feature_description_at(target, false, DESC_PLAIN);
             }
 
-            prompt += " is blocked by "
-                    + (feat_is_solid(feat) ?
-                        feature_description_at(pos(), false, DESC_A, false) :
-                        monster_at(pos())->name(DESC_A));
+            const string blocker = feat_is_solid(feat) ?
+            feature_description_at(pos(), false, DESC_A, false) :
+            monster_at(pos())->name(DESC_A);
 
-            prompt += ". Continue anyway?";
-
-            if (!yesno(prompt.c_str(), false, 'n'))
-            {
-                canned_msg(MSG_OK);
-                beam_cancelled = true;
-                finish_beam();
-                return;
-            }
-
-            // Well, we warned them.
+            mprf("Your line of fire to %s is blocked by %s.",
+                 blockee.c_str(), blocker.c_str());
+            beam_cancelled = true;
+            finish_beam();
+            return;
         }
 
         // digging is taken care of in affect_cell
