@@ -3231,6 +3231,8 @@ bool player_can_join_god(god_type which_god)
 
     if ((you.species == SP_FELID) && (which_god == GOD_IHPIX)) return false;
 
+    if (which_god == GOD_IHPIX) return false;
+    
     if (you.has_any_permabuff()) {
         for (unsigned int i = PERMA_FIRST_PERMA; i <= PERMA_LAST_PERMA ; i++) {
             if (you.has_permabuff(permabuff_spell[i]) &&
@@ -4869,6 +4871,7 @@ static bool _is_temple_god(god_type god)
     case GOD_LUGONU:
     case GOD_BEOGH:
     case GOD_JIYVA:
+    case GOD_IHPIX:
         return false;
 
     default:
