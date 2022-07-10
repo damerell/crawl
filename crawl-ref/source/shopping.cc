@@ -412,50 +412,37 @@ unsigned int item_value(item_def item, bool ident)
             valued += 40;
         else
         {
-            // true if the wand is of a good type, a type with significant
-            // inherent value even when empty. Good wands are less expensive
-            // per charge.
-            bool good = false;
             switch (item.sub_type)
             {
             case WAND_CLOUDS:
             case WAND_SCATTERSHOT:
-                valued += 120;
-                good = true;
+                valued += 62 * item.plus;
                 break;
 
             case WAND_ACID:
             case WAND_DIGGING:
-                valued += 80;
-                good = true;
+                valued += 42 * item.plus;
                 break;
 
             case WAND_ICEBLAST:
-            case WAND_MINDBURST:
-                valued += 40;
-                good = true;
+            case WAND_CHARMING:
+            case WAND_PARALYSIS:
+                valued += 24 * item.plus;
                 break;
 
-            case WAND_CHARMING:
             case WAND_POLYMORPH:
-            case WAND_PARALYSIS:
-                valued += 20;
+            case WAND_MINDBURST:
+                valued += 14 * item.plus;
                 break;
 
             case WAND_FLAME:
             case WAND_RANDOM_EFFECTS:
-                valued += 10;
+                valued += 7 * item.plus;
                 break;
 
             default:
-                valued += 6;
+                valued += 4 * item.plus;
                 break;
-            }
-
-            if (item_ident(item, ISFLAG_KNOW_PLUSES))
-            {
-                if (good) valued += (valued * item.plus) / 4;
-                else      valued += (valued * item.plus) / 2;
             }
         }
         break;
