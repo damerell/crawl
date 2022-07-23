@@ -309,6 +309,9 @@ static bool _apply_weapon_spec(const mon_weapon_spec &spec, item_def &item,
  */
 int make_mons_weapon(monster_type type, int level, bool melee_only)
 {
+    // XXX the sense of primary and secondary unhelpful here and we need
+    // to generate her claymore first if she has one
+    if (type == MONS_CAVALIER) melee_only = !melee_only;
     static const weapon_list GOBLIN_WEAPONS = // total 10
     {   { WPN_DAGGER,           3 },
         { WPN_CLUB,             3 },
@@ -926,6 +929,13 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
               { WPN_DEMON_BLADE,        4 },
               { WPN_BROADSWORD,       1 }, },
         } },
+        { MONS_CAVALIER, {
+                { { WPN_RAPIER, 80 },
+                  { WPN_CLAYMORE, 1 }, },
+                {},
+                {},
+                9,
+            } },
     };
 
     static const weapon_list ORC_KNIGHT_BOWS =
@@ -987,6 +997,15 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
               { NUM_WEAPONS,                    40 }, }, // 1/3 odds of weap
             {}, {}, 1,
         } },
+        { MONS_CAVALIER, 
+          { { { WPN_DAGGER, 5 },
+              { WPN_SHORT_SWORD, 5 },
+              { WPN_QUICK_BLADE, 1 },
+              { WPN_CLUB, 1 },
+              { WPN_WHIP, 3 },
+              { WPN_MACE, 2 },
+              { WPN_TRIDENT, 2 },
+              }, } },
     };
 
     bool force_item = false;
@@ -1296,6 +1315,13 @@ static void _give_weapon(monster *mon, int level, bool second_weapon = false)
         return;
     }
 
+    if (mon->type == MONS_CAVALIER && mon->weapon()) {
+        const item_def &first_sword = *mon->weapon();
+        if (first_sword.sub_type == WPN_CLAYMORE) {
+            return;
+        }
+    }
+    
     const int thing_created = make_mons_weapon(mon->type, level, second_weapon);
     if (thing_created == NON_ITEM)
         return;
@@ -1309,7 +1335,8 @@ static void _give_weapon(monster *mon, int level, bool second_weapon = false)
     if ((i.base_type != OBJ_WEAPONS
                 && i.base_type != OBJ_STAVES
                 && i.base_type != OBJ_MISCELLANY) // don't double-gift geryon horn
-               || is_range_weapon(i))
+                || is_range_weapon(i)
+                || mon->type == MONS_CAVALIER)
     {
         _give_weapon(mon, level, true);
     }
@@ -2122,6 +2149,13 @@ int make_mons_armour(monster_type type, int level)
         item.sub_type  = random_choose(ARM_LEATHER_ARMOUR, ARM_ROBE);
         break;
 
+    case MONS_CAVALIER:
+        item.base_type = OBJ_ARMOUR;
+        item.sub_type  = random_choose_weighted( 3, ARM_ROBE,
+                                                 1, ARM_LEATHER_ARMOUR,
+                                                 1, ARM_RING_MAIL);
+        break;
+        
     default:
         return NON_ITEM;
     }

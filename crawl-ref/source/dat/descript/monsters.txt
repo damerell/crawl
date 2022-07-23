@@ -746,6 +746,11 @@ caustic shrike
 A swift, nightmarish bird whose razor-sharp metallic feathers drip with
 corrosive acid.
 %%%%
+cavalier
+
+Many necromancers have cavaliers; talented melee combatants sworn irrevocably
+to their service. Cavaliers often favour facepaint depicting the human skull.
+%%%%
 centaur
 
 A hybrid with the torso of a human atop the body of a horse. It is highly

@@ -921,6 +921,16 @@ giant_club_slant GIANT_CLUB_SLANT
 giant_club_spike GIANT_CLUB_SPIKE
 giant_club_spike_slant GIANT_CLUB_SPIKE_SLANT
 giant_club_plain GIANT_CLUB_PLAIN
+club CLUB
+club_slant CLUB_SLANT
+club_two CLUB2
+club_three CLUB3
+whip WHIP
+whip2 WHIP_1
+mace MACE
+mace2 MACE_1
+trident_two TRIDENT2
+trident_two2 TRIDENT2_1
 %end_ctg
 
 ###Hair

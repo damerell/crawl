@@ -285,6 +285,27 @@ mcache_monster::mcache_monster(const monster_info& mon)
                 case TILEP_HAND1_GIANT_CLUB_PLAIN:
                     m_shd_tile = TILEP_HAND2_GIANT_CLUB_PLAIN;
                     break;
+                case TILEP_HAND1_CLUB_SLANT:
+                    m_shd_tile = TILEP_HAND2_CLUB_SLANT;
+                    break;
+                case TILEP_HAND1_WHIP:
+                    m_shd_tile = TILEP_HAND2_WHIP;
+                    break;
+                case TILEP_WHIP_1:
+                    m_shd_tile = TILEP_HAND2_WHIP_1;
+                    break;
+                case TILEP_HAND1_MACE:
+                    m_shd_tile = TILEP_HAND2_MACE;
+                    break;
+                case TILEP_MACE_1:
+                    m_shd_tile = TILEP_HAND2_MACE_1;
+                    break;
+                case TILEP_HAND1_TRIDENT2:
+                    m_shd_tile = TILEP_HAND2_TRIDENT2;
+                    break;
+                case TILEP_TRIDENT2_1:
+                    m_shd_tile = TILEP_HAND2_TRIDENT2_1;
+                    break;
             };
         }
         else
@@ -330,6 +351,7 @@ bool mcache_monster::get_weapon_offset(tileidx_t mon_tile,
     case TILEP_MONS_ANCESTOR_BATTLEMAGE:
     case TILEP_MONS_RAGGED_HIEROPHANT:
     case TILEP_MONS_FAERIE_DRAGON:
+    case TILEP_MONS_CAVALIER:
         *ofs_x = 0;
         *ofs_y = 0;
         break;
@@ -849,6 +871,7 @@ bool mcache_monster::get_shield_offset(tileidx_t mon_tile,
     case TILEP_MONS_OCTOPODE:
     case TILEP_MONS_CHERUB:
     case TILEP_MONS_MENNAS:
+    case TILEP_MONS_CAVALIER:
         *ofs_x = 0;
         *ofs_y = 0;
         break;

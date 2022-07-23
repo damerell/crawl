@@ -1378,7 +1378,8 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
     {
         give_item(mon, place.absdepth(), summoned);
         // Give these monsters a second weapon. - bwr
-        if (mons_class_wields_two_weapons(mg.cls))
+        if (mons_class_wields_two_weapons(mg.cls) &&
+            (mon->type != MONS_CAVALIER))
             give_weapon(mon, place.absdepth());
 
         unwind_var<int> save_speedinc(mon->speed_increment);
@@ -2250,7 +2251,8 @@ static const map<band_type, vector<member_possibilites>> band_membership = {
                                   {MONS_SMOKE_DEMON, 1}}}},
     { BAND_CACODEMON,           {{{MONS_SIXFIRHY, 1},
                                   {MONS_ORANGE_DEMON, 1}}}},
-    { BAND_NECROMANCER,         {{{MONS_ZOMBIE, 5},
+    { BAND_NECROMANCER,         {{{MONS_CAVALIER, 1}},
+                                 {{MONS_ZOMBIE, 5},
                                   {MONS_SKELETON, 5},
                                   {MONS_SIMULACRUM, 1},
                                   {MONS_ROTTING_HULK, 1},

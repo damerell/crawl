@@ -1554,8 +1554,10 @@ bool monster::wants_weapon(const item_def &weap) const
 
     // Blademasters and master archers like their starting weapon and
     // don't want another, thank you.
+    // So do cavaliers
     if (type == MONS_DEEP_ELF_BLADEMASTER
-        || type == MONS_DEEP_ELF_MASTER_ARCHER)
+        || type == MONS_DEEP_ELF_MASTER_ARCHER
+        || type == MONS_CAVALIER)
     {
         return false;
     }

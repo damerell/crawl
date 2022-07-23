@@ -6488,6 +6488,13 @@ VISUAL:@The_monster@ rams the @surface@ with @possessive@ head heavily.
 
 @The_monster@ snuffles in challenge.
 %%%%
+################## cavalier ##################################
+cavalier
+
+VISUAL:@The_monster@ looks around for @possessive@ necromancer.
+
+@The_monster@ exclaims, "One flesh, one end!"
+%%%%
 ################## Crystal guardian ###########################
 crystal guardian
 

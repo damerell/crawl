@@ -550,6 +550,7 @@ human3
 hell_knight MONS_HELL_KNIGHT
 death_knight MONS_DEATH_KNIGHT
 necromancer MONS_NECROMANCER
+cavalier MONS_CAVALIER
 wizard MONS_WIZARD
 vault_guard MONS_VAULT_GUARD
 vault_warden MONS_VAULT_WARDEN
