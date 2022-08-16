@@ -528,7 +528,9 @@ static const string BATTY_TURNS_KEY = "BATTY_TURNS";
 
 static void _be_batty(monster &mons)
 {
-    mons.behaviour = BEH_WANDER;
+    if (!mons_is_batty(mons))
+        return;
+    mons.behaviour = BEH_BATTY;
     set_random_target(&mons);
     mons.props[BATTY_TURNS_KEY] = 0;
 }
@@ -2450,7 +2452,7 @@ static void _post_monster_move(monster* mons)
         place_ghost(*mons,ghost);
     }
 
-    if (mons->foe != MHITNOT && mons_is_wandering(*mons) && mons_is_batty(*mons))
+    if (mons->foe != MHITNOT && mons->behaviour == BEH_BATTY)
     {
         int &bat_turns = mons->props[BATTY_TURNS_KEY].get_int();
         bat_turns++;
