@@ -528,6 +528,8 @@ static void _check_stop_train()
             continue;
         if (skill_has_manual(sk))
             continue;
+        if (!training_restricted(sk))
+            continue;
 
         if (skill_trained(sk) && you.training[sk])
             skills.insert(sk);
