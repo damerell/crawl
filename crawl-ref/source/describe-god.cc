@@ -561,19 +561,36 @@ static string _get_god_misc_info(god_type which_god)
     string info = "";
     skill_type skill = invo_skill(which_god);
 
-    switch (skill)
-    {
+    bool haspowers = false;
+    for (const auto& power : get_god_powers(which_god)) {
+        if (power.abil != ABIL_NON_ABILITY) haspowers = true;
+    }
+    if (!haspowers) {
+        info += uppercase_first(god_name(which_god)) +
+        " offers no active powers to worshippers."; 
+    } else if (which_god != GOD_GOZAG) {
+        // Intentionally nothing for Gozag whose lack of piety mentioned
+        // on the overview of their description
+        switch (skill) {
         case SK_INVOCATIONS:
+            if (which_god != GOD_USKAYAW) {
+                info += uppercase_first(apostrophise(god_name(which_god))) +
+                " powers are improved by the Invocations skill and piety.";
+            } else {
+                info += uppercase_first(apostrophise(god_name(which_god))) +
+                " powers are improved by the Invocations skill (and piety, which comes and goes quickly).";
+            }
             break;
         case SK_NONE:
             info += uppercase_first(apostrophise(god_name(which_god))) +
-                " powers are not affected by the Invocations skill.";
+            " powers are improved by piety, but not the Invocations skill.";
             break;
         default:
             info += uppercase_first(apostrophise(god_name(which_god))) +
-                    " powers are based on " + skill_name(skill) + " instead"
-                    " of Invocations skill.";
+            " powers are based on " + skill_name(skill) + " instead"
+            " of Invocations skill.";
             break;
+        }
     }
 
     if (!info.empty())
