@@ -120,6 +120,22 @@ LUARET2(you_mp, number, you.magic_points, you.max_magic_points)
  */
 LUARET1(you_base_mp, number, get_real_mp(false, false))
 LUARET1(you_frozen_mp, number, you.mp_frozen)
+/*** Armour class.
+ * @treturn int
+ * @function ac
+ */
+LUARET1(you_ac, number, you.armour_class())
+/*** Evasion.
+ * @treturn int
+ * @function ev
+ */
+LUARET1(you_ev, number, you.evasion())
+/*** Shield class.
+ * @treturn int
+ * @function sh
+ */
+LUARET1(you_sh, number, player_displayed_shield_class())
+
 /*** How much rot.
  * @treturn int
  * @function rot
@@ -1142,6 +1158,9 @@ static const struct luaL_reg you_clib[] =
     { "rot"         , you_rot },
     { "hunger"      , you_hunger },
     { "hunger_name" , you_hunger_name },
+    { "ac"          , you_ac },
+    { "ev"          , you_ev },
+    { "sh"          , you_sh },
     { "strength"    , you_strength },
     { "intelligence", you_intelligence },
     { "dexterity"   , you_dexterity },
