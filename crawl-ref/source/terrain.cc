@@ -1954,7 +1954,9 @@ void set_terrain_changed(const coord_def p)
 
     if (grd(p) == DNGN_SLIMY_WALL)
         env.level_state |= LSTATE_SLIMY_WALL;
-    else if (grd(p) == DNGN_OPEN_DOOR)
+    if (env.grid(p) == DNGN_PASSAGE_OF_GOLUBRIA)
+        env.level_state |= LSTATE_GOLUBRIA;
+    else if (env.grid(p) == DNGN_OPEN_DOOR)
     {
         // Restore colour from door-change markers
         for (map_marker *marker : env.markers.get_markers_at(p))
