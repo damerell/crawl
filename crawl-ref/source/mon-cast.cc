@@ -469,6 +469,7 @@ static const map<spell_type, mons_spell_logic> spell_to_logic = {
             return foe && caster.can_constrict(foe, false);
         }, _cast_grasping_roots, } },
     { SPELL_WARNING_FLASH, { _caster_has_foe, _cast_warning_flash, } },
+    { SPELL_ENTROPIC_WEAVE, { _caster_sees_foe } },
 };
 
 /// Is the 'monster' actually a proxy for the player?
