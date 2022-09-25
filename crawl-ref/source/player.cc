@@ -2590,6 +2590,7 @@ static void _transfer_knowledge(int exp)
 
 static void _handle_rot(int exp) {
     if (!you.hp_max_adj_temp) return;
+    if (you.species == SP_GHOUL) return;
 
     int loss = div_rand_round(exp, 40 * calc_skill_cost(you.skill_cost_level));
 
