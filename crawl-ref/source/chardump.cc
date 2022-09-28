@@ -660,6 +660,8 @@ static void _sdump_location(dump_params &par)
 static void _sdump_religion(dump_params &par)
 {
     string &text(par.text);
+    string xom = par.se ? "were" : "are";
+    xom += " " + describe_xom_favour() + "\n";
     if (!you_worship(GOD_NO_GOD))
     {
         if (par.se)
@@ -683,16 +685,16 @@ static void _sdump_religion(dump_params &par)
                 text += uppercase_first(god_name(you.religion));
                 text += " " + verb + " demanding penance.\n";
             }
+            if (you.char_class == JOB_CHAOS_KNIGHT) {
+                text += "Additionally, you " + xom;
+            }
         }
         else
         {
-            if (par.se)
-                text += "You were ";
-            else
-                text += "You are ";
-            text += describe_xom_favour();
-            text += "\n";
+            text += "You " + xom;
         }
+    } else if (you.char_class == JOB_CHAOS_KNIGHT) {
+        text += "You " + xom;
     }
 }
 

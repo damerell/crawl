@@ -1155,7 +1155,11 @@ void describe_god(god_type which_god)
 {
     if (which_god == GOD_NO_GOD) //mv: No god -> say it and go away.
     {
-        mpr("You are not religious.");
+        if (you.char_class == JOB_CHAOS_KNIGHT) {
+            mpr("You are not religious; unfortunately, Xom believes in you.");
+        } else {
+            mpr("You are not religious.");
+        }
         return;
     }
 
