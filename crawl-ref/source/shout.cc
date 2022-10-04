@@ -788,6 +788,18 @@ bool noisy(int original_loudness, const coord_def& where,
     if (original_loudness <= 0)
         return false;
 
+    actor* actor = nullptr;
+    if (who == MID_NOBODY) {
+        actor = actor_at(where);
+    } else {
+        actor = monster_by_mid(who);
+    }
+    if (actor) {
+        if (actor->wearing(EQ_RINGS, RING_LOUDNESS, true)) {
+            original_loudness *= 4; original_loudness /= 3;
+        }
+    }
+    
     // high ambient noise makes sounds harder to hear
     const int ambient = ambient_noise();
     const int loudness =
