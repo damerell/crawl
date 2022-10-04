@@ -239,6 +239,7 @@ const char* jewellery_base_ability_string(int subtype)
 #if TAG_MAJOR_VERSION == 34
     case RING_TELEPORT_CONTROL:   return "+cTele";
 #endif
+    case RING_LOUDNESS:           return "+Noise";
     case AMU_HARM:                return "Harm";
     case AMU_MANA_REGENERATION:   return "RegenMP";
     case AMU_THE_GOURMAND:        return "Gourm";
@@ -490,6 +491,8 @@ static const char* _jewellery_base_ability_description(int subtype)
     case RING_TELEPORT_CONTROL:
         return "It can be evoked for teleport control.";
 #endif
+    case RING_LOUDNESS:
+        return "It makes you noisier than normal.";
     case AMU_HARM:
         return "It increases damage dealt and taken; the latter effect lingers after removal.";
     case AMU_MANA_REGENERATION:

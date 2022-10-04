@@ -837,9 +837,11 @@ ring of resist corrosion
 
 A ring that provides partial protection from all sources of acid and corrosion.
 %%%%
-ring of attention
+ring of loudness
 
-A ring that makes the player less stealthy.
+A ring that makes any noise in proximity to the wearer louder. These
+rings are believed to have been originally devised to aid bardic
+performances, pre-battle speeches, and town criers.
 %%%%
 ring of magical power
 
