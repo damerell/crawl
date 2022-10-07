@@ -342,14 +342,14 @@ static const ability_def Ability_List[] =
     // any reason to label them as "Evoke" in the text, they don't
     // use or train Evocations (the others do).  -- bwr
     { ABIL_EVOKE_BLINK, "Evoke Blink",
-      1, 0, 50, 0, {fail_basis::evo, 40, 2}, abflag::none },
+      0, 0, 50, 0, {fail_basis::evo, 40, 2}, abflag::none },
     { ABIL_HEAL_WOUNDS, "Heal Wounds",
       0, 0, 0, 0, {fail_basis::xl, 45, 2}, abflag::none },
     { ABIL_EVOKE_BERSERK, "Evoke Berserk Rage",
       0, 0, 600, 0, {fail_basis::evo, 50, 2}, abflag::none },
 
     { ABIL_EVOKE_TURN_INVISIBLE, "Evoke Invisibility",
-        2, 0, 250, 0, {fail_basis::evo, 60, 2}, abflag::skill_drain },
+        0, 0, 250, 0, {fail_basis::evo, 60, 2}, abflag::skill_drain },
 #if TAG_MAJOR_VERSION == 34
     { ABIL_EVOKE_TURN_VISIBLE, "Turn Visible",
       0, 0, 0, 0, {}, abflag::starve_ok },
