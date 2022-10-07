@@ -12,12 +12,12 @@ aptitudes:
   fighting: -1
   short_blades: -1
   long_blades: -1
-  axes: -1
+  axes: -2
   maces_and_flails: -1
-  polearms: -1
-  staves: -1
+  polearms: 0
+  staves: 0
   slings: -1
-  bows: -1
+  bows: -2
   crossbows: -1
   throwing: -1
   armour: -2
@@ -25,6 +25,10 @@ aptitudes:
   stealth: 3
   shields: -1
   evocations: -1
+  poison_magic: 1
+  fire_magic: -2
+  necromancy: -1
+  transmutations: -1
 str: 10
 int: 8
 dex: 9

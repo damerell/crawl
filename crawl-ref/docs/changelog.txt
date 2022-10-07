@@ -15,6 +15,7 @@ Stoat Soup 0.23 "The Masque of the Red Death"
 * Vehumet gifts do not expire.
 * Rot is gradually healed by gaining XP.
 * Necromancers are joined by cavaliers.
+* One or two species have less utterly flat aptitudes.
 
 Vanilla changes messed around with
 ----------------------------------
