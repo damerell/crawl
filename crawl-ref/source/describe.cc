@@ -3145,12 +3145,17 @@ static string _player_spell_desc(spell_type spell)
                 int costdiff = adjcost - basecost;
                 description <<
                     make_stringf
-                    (", %d.%02d MP of which is caused by your spell failure chance.\n",
+                    (", %d.%02d MP of which is caused by your spell failure chance",
                      costdiff / 100, costdiff % 100);
-            } else {
-                description << ".\n";
-            }            
+            } 
+            description << ".\n\n";
+            description << "If the total cost of your enchantments is too high, they will drain your MP gradually if they keep providing a benefit.";
         }
+        if ((spell == SPELL_SHROUD_OF_GOLUBRIA) ||
+            (spell == SPELL_DEFLECT_MISSILES)) {
+            description << " However, because this spell may be broken because it is providing you with a benefit when attacked, it is unlikely to persist long enough to drain your MP. Instead, reconstructing it consumes your MP regeneration, so is faster with more MP available.";
+        }
+        description << "\n";
     }
     
     return description.str();
