@@ -1546,7 +1546,7 @@ static const struct spell_desc spelldata[] =
     spflag::dir_or_target | spflag::not_self | spflag::needs_tracer
         | spflag::MR_check,
     2,
-    56,
+    50,
     LOS_RADIUS, LOS_RADIUS,
     0, 0, //putting a monster to sleep should be silent
     TILEG_ENSORCELLED_HIBERNATION,
