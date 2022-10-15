@@ -124,6 +124,8 @@ function species_mock(e)
     e.kmons("1 = deep dwarf zombie")
   elseif you.race() == "Deep Elf" then
     e.kmons("1 = insubstantial wisp")
+  elseif you.race() == "Faerie Dragon" then
+    e.kmons("1 = spriggan rider")
   elseif you.race() == "Halfling" then
     e.kmons("1 = hobgoblin ; mundane hunting sling")
   elseif you.race() == "High Elf" then
@@ -146,6 +148,8 @@ function species_mock(e)
     e.kmons("1 = bullfrog")
   elseif you.race() == "Minotaur" then
     e.kmons("1 = yak")
+  elseif you.race() == "Mountain Dwarf" then
+    e.kmons("1 = dwarf zombie")
   elseif you.race() == "Mummy" then
     e.kmons("1 = human zombie")
   elseif you.race() == "Naga" then
@@ -154,6 +158,8 @@ function species_mock(e)
     e.kmons("1 = tentacled monstrosity")
   elseif you.race() == "Ogre" then
     e.kmons("1 = ettin skeleton")
+  elseif you.race() == "Sludge Elf" then
+    e.kmons("1 = ooze")
   elseif you.race() == "Spriggan" then
     e.kmons("1 = unseen horror")
   elseif you.race() == "Tengu" then
