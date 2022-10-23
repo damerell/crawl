@@ -27,6 +27,7 @@
 #include "ng-restr.h"
 #include "options.h"
 #include "prompt.h"
+#include "skills.h"
 #include "species-groups.h"
 #include "state.h"
 #include "stringutil.h"
@@ -1431,7 +1432,7 @@ static weapon_type _fixup_weapon(weapon_type wp,
     return WPN_UNKNOWN;
 }
 
-static const int WEAPON_COLUMN_WIDTH = 40;
+static const int WEAPON_COLUMN_WIDTH = 60;
 static void _construct_weapon_menu(const newgame_def& ng,
                                    const weapon_type& defweapon,
                                    const vector<weapon_choice>& weapons,
@@ -1442,6 +1443,7 @@ static void _construct_weapon_menu(const newgame_def& ng,
 #else
     static const int ITEMS_START_Y = 5;
 #endif
+    int apt;
     string text;
     const char *thrown_name = nullptr;
     coord_def min_coord(0,0);
@@ -1477,11 +1479,13 @@ static void _construct_weapon_menu(const newgame_def& ng,
         {
         case WPN_UNARMED:
             text += species_has_claws(ng.species) ? "claws" : "unarmed";
+            apt = species_apt(SK_UNARMED_COMBAT, ng.species);
 #ifdef USE_TILE_LOCAL
             tmp->add_tile(tile_def(DNGN_UNSEEN, TEX_DEFAULT));
 #endif
             break;
         case WPN_THROWN:
+            apt = species_apt(SK_THROWING, ng.species);
             // We don't support choosing among multiple thrown weapons.
             ASSERT(!thrown_name);
 #ifdef USE_TILE_LOCAL
@@ -1513,10 +1517,11 @@ static void _construct_weapon_menu(const newgame_def& ng,
             break;
         default:
             text += weapon_base_name(wpn_type);
-#ifdef USE_TILE_LOCAL
             item_def dummy;
             dummy.base_type = OBJ_WEAPONS;
             dummy.sub_type = wpn_type;
+            apt = species_apt(item_attack_skill(dummy), ng.species);
+#ifdef USE_TILE_LOCAL
             tmp->add_tile(tile_def(tileidx_item(dummy), TEX_DEFAULT));
 #endif
             if (is_ranged_weapon_type(wpn_type))
@@ -1529,7 +1534,10 @@ static void _construct_weapon_menu(const newgame_def& ng,
             break;
         }
         // Fill to column width to give extra padding for the highlight
-        text.append(WEAPON_COLUMN_WIDTH - text.size() - 1 , ' ');
+        text.append(WEAPON_COLUMN_WIDTH - text.size() - 14, ' ');
+        text += (apt == 0 ? " (aptitude " : "(aptitude ");
+        text += (apt > 0 ? "+" : "");
+        text += to_string(apt) + ")";
         tmp->set_text(text);
 
         min_coord.x = X_MARGIN;
