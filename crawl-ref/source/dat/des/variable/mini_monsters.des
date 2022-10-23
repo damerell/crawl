@@ -2265,14 +2265,14 @@ MONS:  goliath beetle / boulder beetle w:8 / demonic crawler w:2 / \
        nothing
 MAP
 ..........
-.m.mmmmmm.
-.mx.x.x*m.
-.m.x2x2xm.
-.mx2x1x.m.
-.m.x1x2xm.
-.mx2x2x.m.
-.m*x.x.xm.
-.mmmmmm.m.
+.x.xxxxxx.
+.xx.x.x*x.
+.x.x2x2xx.
+.xx2x1x.x.
+.m.x1x2xx.
+.xx2x2x.x.
+.x*x.x.xx.
+.xxxxxx.x.
 ..........
 ENDMAP
 
