@@ -2995,6 +2995,10 @@ static string _player_spell_stats(const spell_type spell)
     return description;
 }
 
+static bool _cmp_spell_difficulty(const spell_type &a,
+                                  const spell_type &b) {
+    return spell_difficulty(a) < spell_difficulty(b);
+}
 string get_skill_description(skill_type skill, bool need_title)
 {
     string lookup = skill_name(skill);
@@ -3036,7 +3040,31 @@ string get_skill_description(skill_type skill, bool need_title)
             // No further information.
             break;
     }
-
+    if (is_magic_skill(skill) && skill != SK_SPELLCASTING) {
+        result += "\n";
+        vector<spell_type> spells;
+        for (spell_type st = SPELL_NO_SPELL; st < NUM_SPELLS; st++) {
+            if (!is_player_spell(st)) continue;
+            skill_set skills;
+            spell_skills(st, skills);
+            for (auto spellskill: skills) {
+                if (skill == spellskill) {
+                    spells.push_back(st);
+                    break;
+                }
+            }
+        }
+        if (spells.size() == 0) {
+            result += "Apparently this skill pertains to no spells at all. Weird.";
+        } else {
+            result += "Spells which use this skill, sorted by level:";
+            sort(spells.begin(), spells.end(), _cmp_spell_difficulty);
+            for (auto spell: spells) {
+                result += "\n" + to_string(spell_difficulty(spell)) + " " +
+                spell_title(spell);
+            }
+        }
+    }
     return result;
 }
 
