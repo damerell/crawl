@@ -52,10 +52,6 @@ ranged_attack::ranged_attack(actor *attk, actor *defn, item_def *proj,
         aux_source = make_stringf("Shot with a%s %s by %s",
                  (is_vowel(proj_name[0]) ? "n" : ""), proj_name.c_str(),
                  attacker->name(DESC_A).c_str());
-        if (you_worship(GOD_IHPIX)) {
-            ihpix_likes = 2;
-            // FIXME check for loaned weapon
-        }
     }
     else
     {
@@ -64,6 +60,14 @@ ranged_attack::ranged_attack(actor *attk, actor *defn, item_def *proj,
                  attacker->name(DESC_A).c_str());
     }
 
+    if (launch_type == launch_retval::LAUNCHED) {
+        if (you_worship(GOD_IHPIX)) {
+            ihpix_likes = 3;
+            mpr("Sqook");
+            // FIXME check for loaned weapon
+        }
+    }
+    
     needs_message = defender_visible;
 
     if (!using_weapon())

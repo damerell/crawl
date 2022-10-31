@@ -486,9 +486,10 @@ public:
              string source = "",
              string aux = "",
              bool cleanup_dead = true,
-             bool attacker_effects = true) override;
+             bool attacker_effects = true,
+	     int ihpix_likes = 1) override;
     bool heal(int amount) override;
-    void blame_damage(const actor *attacker, int amount);
+    void blame_damage(const actor *attacker, int amount, int ihpix_likes = 1);
     void blink() override;
     void teleport(bool right_now = false,
                   bool wizard_tele = false) override;

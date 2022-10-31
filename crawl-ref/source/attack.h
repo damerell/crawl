@@ -93,7 +93,7 @@ public:
 
     bool simu;
 
-    int ihpix_likes; // 0 no, 1 loaned weapon, 2 your own weapon
+    int ihpix_likes; // 1 no, 2 loaned weapon, 3 your own weapon
     
 // Public Methods
 public:

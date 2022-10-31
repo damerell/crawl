@@ -742,7 +742,7 @@ void init_properties()
 
     for (int i = 0; i < NUM_MISSILES; i++) {
         Missile_index[ Missile_prop[i].id ] = i;
-        Ihpix_index[ ihpix_ammo[i] ] = -1;
+        Ihpix_index[i] = -1;
     }
     for (int i = 0; i < ihpix_nr_ammos; i++)
         Ihpix_index[ ihpix_ammo[i] ] = i;

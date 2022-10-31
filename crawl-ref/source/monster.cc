@@ -2893,7 +2893,7 @@ void monster::banish(actor *agent, const string &, const int, bool force)
         // remaining hp is effectively halved. No need to pass flags this way.
         damage_total *= 2;
         damage_friendly *= 2;
-        blame_damage(agent, hit_points);
+        blame_damage(agent, hit_points, 1);
         // Note: we do not set MF_PACIFIED, the monster is usually not
         // distinguishable from others of the same kind in the Abyss.
 
@@ -3528,7 +3528,7 @@ bool monster::heal(int amount)
     return success;
 }
 
-void monster::blame_damage(const actor* attacker, int amount)
+void monster::blame_damage(const actor* attacker, int amount, int ihpix_likes)
 {
     ASSERT(amount >= 0);
     damage_total = min<int>(MAX_DAMAGE_COUNTER, damage_total + amount);
@@ -3537,6 +3537,14 @@ void monster::blame_damage(const actor* attacker, int amount)
         damage_friendly = min<int>(MAX_DAMAGE_COUNTER * 2,
                       damage_friendly + amount * exp_rate(attacker->mindex()));
     }
+    if (!props.exists("ihpix_damage")) {
+        props["ihpix_damage"] = amount * ihpix_likes;
+    } else {
+        props["ihpix_damage"] = min<int>(MAX_DAMAGE_COUNTER,
+                                         props["ihpix_damage"].get_int() +
+                                         amount * ihpix_likes);
+    }
+    mprf ("%d damage, %d ihpix", amount, props["ihpix_damage"].get_int());
 }
 
 void monster::suicide(int hp_target)
@@ -3544,7 +3552,7 @@ void monster::suicide(int hp_target)
     ASSERT(hp_target <= 0);
     const int dam = hit_points - hp_target;
     if (dam > 0)
-        blame_damage(nullptr, dam);
+        blame_damage(nullptr, dam, 1);
     hit_points = hp_target;
 }
 
@@ -4404,9 +4412,11 @@ void monster::splash_with_acid(const actor* evildoer, int /*acid_strength*/,
 }
 
 int monster::hurt(const actor *agent, int amount, beam_type flavour,
-                   kill_method_type kill_type, string /*source*/,
-                   string /*aux*/, bool cleanup_dead, bool attacker_effects)
+                  kill_method_type kill_type, string /*source*/,
+                  string /*aux*/, bool cleanup_dead, bool attacker_effects,
+                  int ihpix_likes)
 {
+    mprf ("Ihpix likes %d", ihpix_likes);
     if (mons_is_projectile(type)
         || mid == MID_ANON_FRIEND
         || type == MONS_PLAYER_SHADOW)
@@ -4532,7 +4542,7 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
                 mirror_damage_fineff::schedule(valid_agent, this, amount * 2 / 3);
         }
 
-        blame_damage(agent, amount);
+        blame_damage(agent, amount, ihpix_likes);
     }
 
     if (cleanup_dead && (hit_points <= 0 || get_hit_dice() <= 0)
