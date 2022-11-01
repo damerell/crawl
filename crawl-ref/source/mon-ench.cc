@@ -342,6 +342,12 @@ void monster::add_enchantment_effect(const mon_enchant &ench, bool quiet)
         break;
     }
 
+    // belt and braces
+    case ENCH_PARALYSIS:
+    case ENCH_SLEEP_WARY:
+        stop_constricting_all(false);
+        break;
+        
     default:
         break;
     }
