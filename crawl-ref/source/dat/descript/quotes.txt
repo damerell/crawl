@@ -471,6 +471,11 @@ Darkness spell
      And hug it in my arms.”
     -William Shakespeare, “Measure for Measure”
 %%%%
+death knight
+
+“And the battlefield of Cowdenbeath fell silent, as the black gates of the fortress of Crail opened wide. Atop a horde of undead eagles, the grim armies of the Deathknights of Crail rode out to meet the forces of justice. And at the vanguard of this terrible host stood the Grandmaster himself, Dreadlord Proletius!”
+    -Gloryhammer, _The Fires of Ancient Cosmic Destiny_, 2019
+%%%%
 Dispater
 
 “Hoc idem magis ostendit antiquius Iovis nomen: nam olim Diovis et Diespiter
