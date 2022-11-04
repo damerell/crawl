@@ -904,9 +904,10 @@ spret cast_conjure_ball_lightning(int pow, god_type god, bool fail)
     fail_check();
     bool success = false;
 
-    mgen_data cbl =_pal_data(MONS_BALL_LIGHTNING, 0, god,
+    mgen_data cbl = _pal_data(MONS_BALL_LIGHTNING, 0, god,
                              SPELL_CONJURE_BALL_LIGHTNING);
     cbl.hd = max(1, div_rand_round(pow, 6) - 6);
+    cbl.foe = MHITNOT;
 
     for (int i = 0; i < 3; ++i)
     {
