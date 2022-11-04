@@ -184,16 +184,6 @@ static bool _explode_corpse(item_def& corpse, const coord_def& where)
     // Don't want chunks to show up behind the player.
     los_def ld(where, opc_no_actor);
 
-    if (mons_class_leaves_hide(corpse.mon_type)
-        && mons_genus(corpse.mon_type) == MONS_DRAGON)
-    {
-        // Uh... dragon hide is tough stuff and it keeps the monster in
-        // one piece?  More importantly, it prevents a flavour feature
-        // from becoming a trap for the unwary.
-
-        return false;
-    }
-
     ld.update();
 
     const int max_chunks = max_corpse_chunks(corpse.mon_type);
@@ -2158,15 +2148,27 @@ item_def* monster_die(monster& mons, killer_type killer,
             // Under Gozag, permanent dancing weapons get turned to gold.
             if (have_passive(passive_t::goldify_corpses))
             {
-                simple_monster_message(mons,
-                                       " turns to gold and falls from the air.",
-                                       MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
+                if (mons.flags & MF_EXPLODE_KILL) {
+                    simple_monster_message(mons,
+                                           " explodes in a shower of gold.",
+                                           MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
+                } else {
+                    simple_monster_message(mons,
+                                           " turns to gold and falls from the air.",
+                                           MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
+                }
                 killer = KILL_RESET;
             }
             else
             {
-                simple_monster_message(mons, " falls from the air.",
-                                       MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
+                if (mons.flags & MF_EXPLODE_KILL) {
+                    simple_monster_message(mons, " shatters into fragments!",
+                                           MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
+                    drop_items = false;
+                } else {
+                    simple_monster_message(mons, " falls from the air.",
+                                           MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
+                }
                 silent = true;
             }
         }

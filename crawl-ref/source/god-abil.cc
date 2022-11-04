@@ -6894,8 +6894,10 @@ spret uskayaw_grand_finale(bool fail)
                                         mons->name(DESC_THE, false).c_str());
         trj_spawn_fineff::schedule(&you, mons, mons->pos(), mons->hit_points);
     }
-    else
+    // message given in mon-death.cc
+    else if (mons->type != MONS_DANCING_WEAPON) {
         mprf("%s explodes violently!", mons->name(DESC_THE, false).c_str());
+    }
     mons->flags |= MF_EXPLODE_KILL;
     if (!mons->is_insubstantial())
     {
