@@ -647,7 +647,8 @@ static bool _teleport_player(bool wizard_tele, bool teleportitis)
         int tries = 500;
         do
         {
-            newpos = random_in_bounds();
+            newpos = random_in_bounds(you.get_mutation_level
+                                      (MUT_SHORT_TELEPORT));
         }
         while (--tries > 0
                && (_cell_vetoes_teleport(newpos)

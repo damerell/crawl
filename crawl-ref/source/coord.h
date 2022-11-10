@@ -1,6 +1,6 @@
 #pragma once
 
-coord_def random_in_bounds();
+coord_def random_in_bounds(int constrain = 0);
 
 static inline bool in_bounds_x(int x)
 {

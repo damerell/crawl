@@ -19,6 +19,8 @@ Stoat Soup 0.23 "The Masque of the Red Death"
 * Species gear considers a return in the form of the dwarven roundshield.
 * When "Done exploring", a count of the stairs is returned, to aid with
   detecting disjoint or otherwise oddball levels.
+* Teleportitis is replaced with a less game-changing "short teleport"
+  mutation.
 
 Vanilla changes messed around with
 ----------------------------------

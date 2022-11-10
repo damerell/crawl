@@ -379,7 +379,7 @@ mutation_activity_type mutation_activity_level(mutation_type mut)
         return mutation_activity_type::INACTIVE;
 
     if (you.form == transformation::tree
-        && (mut == MUT_BLINK || mut == MUT_TELEPORT))
+        && (mut == MUT_BLINK))
     {
         return mutation_activity_type::INACTIVE;
     }
@@ -1299,7 +1299,7 @@ bool physiology_mutation_conflict(mutation_type mutat)
         // Antennae provides SInv, so acute vision is pointless.
         if (mutat == MUT_BERSERK
             || mutat == MUT_BLINK
-            || mutat == MUT_TELEPORT
+            || mutat == MUT_SHORT_TELEPORT
             || mutat == MUT_ACUTE_VISION)
         {
             return true;
@@ -1546,8 +1546,8 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
     if (!_is_valid_mutation(mutat))
         return false;
 
-    // [Cha] don't allow teleportitis in sprint
-    if (mutat == MUT_TELEPORT && crawl_state.game_is_sprint())
+    // no effect in sprint
+    if (mutat == MUT_SHORT_TELEPORT && crawl_state.game_is_sprint())
         return false;
 
     if (physiology_mutation_conflict(mutat))

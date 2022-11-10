@@ -299,20 +299,21 @@ static const mutation_def mut_data[] =
 },
 #endif
 
-{ MUT_TELEPORT, 3, 3, mutflag::bad, false,
-  "teleportitis",
+{ MUT_SHORT_TELEPORT, 3, 3, mutflag::bad, false,
+  "short teleport",
 
-  {"You are occasionally teleported next to monsters.",
-   "You are sometimes teleported next to monsters.",
-   "You are often teleported next to monsters."},
+      {"The distance you can be teleported is somewhat limited.",
+        "The distance you can be teleported is limited.",
+        "The distance you can be teleported is extremely limited."},
 
-  {"You feel weirdly uncertain.",
-   "You feel even more weirdly uncertain.",
-   "You feel even more weirdly uncertain."},
 
-  {"You feel stable.",
-   "You feel stable.",
-   "You feel stable."},
+  {"You feel anchored in space.",
+   "You feel even more anchored in space.",
+   "You feel even more anchored in space."},
+
+  {"You feel less constrained when teleporting.",
+   "You feel less constrained when teleporting.",
+   "You feel unconstrained when teleporting."},
 },
 
 { MUT_MAGIC_RESISTANCE, 5, 3, mutflag::good, false,

@@ -45,7 +45,7 @@ coord_def clip(const coord_def &p)
     return coord_def(x, y);
 }
 
-coord_def random_in_bounds()
+coord_def random_in_bounds(int constrain)
 {
     if (crawl_state.game_is_arena())
     {
@@ -54,10 +54,20 @@ coord_def random_in_bounds()
 
         return coord_def(random_range(ul.x, lr.x - 1),
                          random_range(ul.y, lr.y - 1));
+    } else {
+        int minx = MAPGEN_BORDER; int maxx = GXM-MAPGEN_BORDER - 1;
+        int miny = MAPGEN_BORDER; int maxy = GYM-MAPGEN_BORDER - 1;
+        // XXX we assume only called with constrain relative to you.pos!
+        if (constrain > 0) {
+            int factor = 1 + 2 * constrain;
+            minx = max(minx,you.pos().x-(GXM / factor));
+            maxx = min(maxx,you.pos().x+(GXM / factor));
+            miny = max(miny,you.pos().y-(GYM / factor));
+            maxy = min(maxy,you.pos().y+(GYM / factor));
+        }
+        return coord_def(random_range(minx, maxx),
+                         random_range(miny, maxy));
     }
-    else
-        return coord_def(random_range(MAPGEN_BORDER, GXM - MAPGEN_BORDER - 1),
-                         random_range(MAPGEN_BORDER, GYM - MAPGEN_BORDER - 1));
 }
 
 // Coordinate system conversions.
