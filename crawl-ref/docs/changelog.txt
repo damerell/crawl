@@ -17,6 +17,8 @@ Stoat Soup 0.23 "The Masque of the Red Death"
 * Necromancers are joined by cavaliers.
 * One or two species have less utterly flat aptitudes.
 * Species gear considers a return in the form of the dwarven roundshield.
+* When "Done exploring", a count of the stairs is returned, to aid with
+  detecting disjoint or otherwise oddball levels.
 
 Vanilla changes messed around with
 ----------------------------------

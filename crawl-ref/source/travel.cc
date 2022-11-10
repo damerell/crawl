@@ -757,7 +757,93 @@ static void _explore_find_target_square()
         const bool unknown_trans = _level_has_unknown_transporters();
         if (!estatus && !unknown_trans)
         {
-            mpr("Done exploring.");
+            LevelInfo *li = travel_cache.find_level_info(level_id::current());
+            li->update();
+            vector<stair_info> &stairs = li->get_stairs();
+            int upstairs = 0; int branchexit = 0; int dungeonexit = 0;
+            int downstairs_in = 0; int downstairs_out = 0;
+            int uphatch = 0; int downhatch = 0;
+            int unknown_upstairs = 0;
+            for (const auto &stair : stairs) {
+                dungeon_feature_type feat = grd(stair.position);
+                if (feat_is_stone_stair_up(feat)) {
+                    upstairs++;
+                    if (is_unknown_stair(stair.position)) {
+                        unknown_upstairs++;
+                    }
+                }
+                if (feat_is_stone_stair_down(feat)) {
+                    downstairs_in++;
+                }
+                if (feat_is_branch_exit(feat)) {
+                    if (feat == DNGN_EXIT_DUNGEON){
+                        dungeonexit++;
+                    } else {
+                        branchexit++;
+                    }
+                }
+                if (feat_is_branch_entrance(feat)) downstairs_out++;
+                if (feat_is_escape_hatch(feat)) {
+                    if (feat_stair_direction(feat) == CMD_GO_UPSTAIRS) {
+                        uphatch++;
+                    } else {
+                        downhatch++;
+                    }
+                } 
+            }
+            string stairdesc = "";
+            if (branchexit + upstairs + downstairs_out + downstairs_in > 0) {
+                stairdesc = "; "; bool following = false;
+                if (dungeonexit > 0) {
+                    stairdesc += make_stringf("%d exit%s from the Dungeon",
+                                              dungeonexit,
+                                              dungeonexit > 1 ? "s" : "");
+                    following = true;
+                }
+                if (branchexit > 0) {
+                    if (following) stairdesc += ", ";
+                    stairdesc += make_stringf("%d exit%s from this branch",
+                                              branchexit,
+                                              branchexit > 1 ? "s" : "");
+                    following = true;
+                }
+                if (upstairs > 0) {
+                    stairdesc += make_stringf("%d up staircase%s", upstairs,
+                                              upstairs > 1 ? "s" : "");
+                    following = true;
+                    if (unknown_upstairs > 0) {
+                        stairdesc += make_stringf(" (%d unexplored)",
+                                                  unknown_upstairs);
+                    }
+                }
+                if (uphatch > 0) {
+                    if (following) stairdesc += ", ";
+                    stairdesc += make_stringf("%d hatch%s up", uphatch,
+                                              uphatch > 1 ? "es" : "");
+                    following = true;
+                }
+                if (downstairs_in > 0) {
+                    if (following) stairdesc += ", ";
+                    stairdesc += make_stringf("%d down staircase%s",
+                                              downstairs_in,
+                                              downstairs_in > 1 ? "s" : "");
+                    following = true;
+                }
+                if (downhatch > 0) {
+                    if (following) stairdesc += ", ";
+                    stairdesc += make_stringf("%d hatch%s down", downhatch,
+                                              downhatch > 1 ? "es" : "");
+                    following = true;
+                }
+                if (downstairs_out > 0) {
+                    if (following) stairdesc += ", ";
+                    stairdesc += make_stringf
+                    ("%d entrance%s to %s",
+                     downstairs_out, downstairs_out > 1 ? "s" : "",
+                     downstairs_out > 1 ? "other branches" : "another branch");
+                }
+            }
+            mprf("Done exploring%s.", stairdesc.c_str());
             learned_something_new(HINT_DONE_EXPLORE);
         }
         else
