@@ -21,6 +21,7 @@ Stoat Soup 0.23 "The Masque of the Red Death"
   detecting disjoint or otherwise oddball levels.
 * Teleportitis is replaced with a less game-changing "short teleport"
   mutation.
+* Slow regeneration with monsters visible returns as a mutation.
 
 Vanilla changes messed around with
 ----------------------------------

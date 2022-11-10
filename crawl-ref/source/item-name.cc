@@ -3709,7 +3709,7 @@ bool is_useless_item(const item_def &item, bool temp)
         case AMU_REGENERATION:
             return you.get_mutation_level(MUT_NO_REGENERATION) > 0
                    || (temp
-                       && you.get_mutation_level(MUT_INHIBITED_REGENERATION) > 0
+                       && you.get_mutation_level(MUT_INHIBITED_REGENERATION) > 1
                        && regeneration_is_inhibited())
                    || (temp && you.species == SP_VAMPIRE
                        && you.hunger_state <= HS_STARVING);

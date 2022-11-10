@@ -3258,8 +3258,9 @@ static void tag_read_you(reader &th)
         you.mutation[MUT_HERBIVOROUS] *= 3;
     }
 
-    // Slow regeneration split into two single-level muts:
-    // * Inhibited regeneration (no regen in los of monsters, what Gh get)
+    // Slow regeneration split into two muts:
+    // * Inhibited regeneration (limited/no regen in los of monsters,
+    //   Gh get this at level 2)
     // * No regeneration (what DDs get)
     {
         if (you.species == SP_DEEP_DWARF
@@ -3272,13 +3273,13 @@ static void tag_read_you(reader &th)
             you.mutation[MUT_NO_REGENERATION] = 1;
         }
         else if (you.species == SP_GHOUL
-                 && you.mutation[MUT_INHIBITED_REGENERATION] > 1)
+                 && you.mutation[MUT_INHIBITED_REGENERATION] != 2)
         {
-            you.innate_mutation[MUT_INHIBITED_REGENERATION] = 1;
-            you.mutation[MUT_INHIBITED_REGENERATION] = 1;
+            you.innate_mutation[MUT_INHIBITED_REGENERATION] = 2;
+            you.mutation[MUT_INHIBITED_REGENERATION] = 2;
         }
-        else if (you.mutation[MUT_INHIBITED_REGENERATION] > 1)
-            you.mutation[MUT_INHIBITED_REGENERATION] = 1;
+        else if (you.mutation[MUT_INHIBITED_REGENERATION] > 2)
+            you.mutation[MUT_INHIBITED_REGENERATION] = 2;
     }
 
     if (you.species == SP_YELLOW_DRACONIAN)

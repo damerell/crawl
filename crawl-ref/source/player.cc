@@ -1090,32 +1090,25 @@ static int _player_bonus_regen(bool reporting)
     return rr;
 }
 
+static int _slow_regeneration_rate() {
+    for (monster_near_iterator mi(you.pos(), LOS_NO_TRANS); mi; ++mi) {
+        if (mons_is_threatening(**mi)
+            && !mi->wont_attack()
+            && !mi->neutral()
+            && !mi->submerged()) {
+            return 2 - you.get_mutation_level(MUT_INHIBITED_REGENERATION);
+        }
+    }
+    return 2;
+}
+
 // Inhibited regeneration: stops regeneration when monsters are visible
 bool regeneration_is_inhibited()
 {
-    switch (you.get_mutation_level(MUT_INHIBITED_REGENERATION))
-    {
-    case 0:
-      return false;
-    case 1:
-      {
-        for (monster_near_iterator mi(you.pos(), LOS_NO_TRANS); mi; ++mi)
-        {
-            if (mons_is_threatening(**mi)
-                && !mi->wont_attack()
-                && !mi->neutral()
-                && !mi->submerged())
-            {
-                return true;
-            }
-        }
-        return false;
-      }
-    default:
-      die("Unknown inhibited regeneration level.");
-      break;
-    }
+    int regen = _slow_regeneration_rate();
+    return (regen == 0);
 }
+
 
 int player_regen(bool reporting)
 {
@@ -1144,6 +1137,13 @@ int player_regen(bool reporting)
             rr /= 2;  // Halved regeneration for hungry vampires.
         else if (you.hunger_state >= HS_FULL)
             rr += 20; // Bonus regeneration for full vampires.
+    }
+
+    // Slow regeneration mutation.
+    if (you.get_mutation_level(MUT_INHIBITED_REGENERATION) > 0)
+    {
+        rr *= _slow_regeneration_rate();
+        rr /= 2;
     }
 
     if (you.duration[DUR_COLLAPSE])

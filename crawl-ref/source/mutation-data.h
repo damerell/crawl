@@ -220,14 +220,19 @@ static const mutation_def mut_data[] =
    "Your rate of healing slows."},
 },
 
-{ MUT_INHIBITED_REGENERATION, 3, 1, mutflag::bad, false,
+{ MUT_INHIBITED_REGENERATION, 3, 2, mutflag::bad, false,
   "inhibited regeneration",
 
-  {"You do not regenerate when monsters are visible.", "", ""},
+  {"You regenerate slowly when monsters are visible.",
+   "You do not regenerate when monsters are visible.", ""},
 
-  {"Your regeneration stops near monsters.", "", ""},
+  {"Your regeneration weakens near monsters.",
+   "Your regeneration stops near monsters.", ""},
 
-  {"You begin to regenerate regardless of the presence of monsters.", "", ""},
+  {"Your regeneration returns to normal.",
+   "Your regeneration begins to work slowly in the presence of monsters.",
+   ""},
+
 },
 
 { MUT_FAST_METABOLISM, 0, 3, mutflag::bad, false,
