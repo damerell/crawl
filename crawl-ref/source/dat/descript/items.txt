@@ -415,6 +415,24 @@ double sword
 
 A magical weapon with two razor-sharp blades.
 %%%%
+dwarven roundshield
+
+A shield crafted in the dwarven forges. Slightly larger than a kite
+shield, it is of an ideal size and shape for a wielder who happens to
+be the size and shape of a dwarf.  It is cumbersome to wear, and
+impedes the evasion, spellcasting ability, and attack speed of an
+unskilled wearer.
+
+{{
+    if you.race() == "Mountain Dwarf"
+        or you.race() == "Deep Dwarf"
+    then
+        return "It is less cumbersome for you than for non-dwarves."
+    else
+        return "For reasons unknown to you, it is engraved with an image of an elephant and a dwarf. The elephant is striking down the dwarf."
+    end
+}}
+%%%%
 eggplant
 
 A rotten eggplant which you can throw at the Crawl developers. It's a bug if

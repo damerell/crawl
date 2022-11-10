@@ -216,11 +216,13 @@ static armour_type _acquirement_armour_for_slot(equipment_type slot_type,
  */
 static armour_type _acquirement_shield_type()
 {
+    const bool dwarf = species_is_dwarven(you.species);
     const int scale = 256;
     vector<pair<armour_type, int>> weights = {
         { ARM_BUCKLER,       player_shield_racial_factor() * 4 * scale
                                 - _skill_rdiv(SK_SHIELDS, scale) },
-        { ARM_KITE_SHIELD,        10 * scale },
+        { ARM_KITE_SHIELD,        (dwarf ? 2 : 8) * scale },
+        { ARM_DWARVEN_ROUNDSHIELD,        (dwarf ? 8 : 2) * scale },
         { ARM_TOWER_SHIELD,  20 * scale
                              - player_shield_racial_factor() * 4 * scale
                              + _skill_rdiv(SK_SHIELDS, scale / 2) },

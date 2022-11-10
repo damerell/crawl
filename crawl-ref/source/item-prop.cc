@@ -148,8 +148,10 @@ static const armour_def Armour_prop[] =
     // to calculate adjusted shield penalty.
     { ARM_BUCKLER,              "buckler",                3,  -8,   45,
         EQ_SHIELD,      SIZE_LITTLE, SIZE_MEDIUM, true },
-    { ARM_KITE_SHIELD,               "kite shield",                 8,  -30,  45,
+    { ARM_KITE_SHIELD,          "kite shield",            8,  -30,  45,
         EQ_SHIELD,      SIZE_SMALL,  SIZE_BIG, true    },
+    { ARM_DWARVEN_ROUNDSHIELD,  "dwarven roundshield",    9,  -34,  50,
+        EQ_SHIELD,      SIZE_SMALL,  SIZE_BIG, true   },
     { ARM_TOWER_SHIELD,         "tower shield",          13,  -50,  45,
         EQ_SHIELD,      SIZE_MEDIUM, SIZE_GIANT, true  },
 

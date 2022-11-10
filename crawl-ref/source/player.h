@@ -1208,6 +1208,8 @@ void player_end_berserk();
 
 void handle_player_drowning(int delay);
 
+int shield_evasion_for_dwarves(const item_def &item) PURE;
+
 // Determines if the given grid is dangerous for the player to enter.
 bool is_feat_dangerous(dungeon_feature_type feat, bool permanently = false,
                        bool ignore_flight = false);
@@ -1221,3 +1223,4 @@ bool need_expiration_warning(coord_def p = you.pos());
 
 bool player_has_orb();
 bool player_on_orb_run();
+

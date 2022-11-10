@@ -427,6 +427,10 @@ tower_shield1 ARM_TOWER_SHIELD
 tower_shield2
 tower_shield3
 
+roundshield1 ARM_DWARVEN_ROUNDSHIELD
+roundshield2
+roundshield3
+
 kite_shield_dd KITE_SHIELD_DEEP_DWARF
 kite_shield_dd_scion KITE_SHIELD_DEEP_DWARF_SCION
 tower_shield_dd_dk TOWER_SHIELD_DEEP_DWARF_DEATH_KNIGHT

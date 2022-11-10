@@ -43,6 +43,11 @@ enum armour_type
     ARM_KITE_SHIELD,
     ARM_TOWER_SHIELD,
     ARM_LAST_SHIELD = ARM_TOWER_SHIELD,
+    // It is intentional that Beogh won't upgrade to roundshields
+#if TAG_MAJOR_VERSION > 34
+    ARM_DWARVISH_ROUNDSHIELD,
+#endif
+
 
 #if TAG_MAJOR_VERSION == 34
     ARM_CRYSTAL_PLATE_ARMOUR,
@@ -102,7 +107,9 @@ enum armour_type
     ARM_QUICKSILVER_DRAGON_ARMOUR,
 #endif
     ARM_SCARF,
-
+#if TAG_MAJOR_VERSION == 34
+    ARM_DWARVEN_ROUNDSHIELD,
+#endif
     NUM_ARMOURS
 };
 

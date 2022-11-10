@@ -828,6 +828,10 @@ tower_shield_quartered TOWER_SHIELD_QUARTERED
 tower_shield_teal TOWER_SHIELD_TEAL
 tower_shield_spiral TOWER_SHIELD_SPIRAL TOWER_SHIELD_LAST_NORM
 
+roundshield1 ROUNDSHIELD1
+roundshield2 ROUNDSHIELD2
+roundshield3 ROUNDSHIELD3
+
 ##unrand (or unique) shields
 buckler_spriggan BUCKLER_SPRIGGAN
 buckler_warlock BUCKLER_WARLOCK

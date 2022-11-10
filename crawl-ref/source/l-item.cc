@@ -964,7 +964,7 @@ IDEF(encumbrance)
         return 0;
 
     if (item->base_type == OBJ_ARMOUR)
-        lua_pushnumber(ls, -property(*item, PARM_EVASION) / 10);
+        lua_pushnumber(ls, shield_evasion_for_dwarves(*item) / 10);
     else
         lua_pushnil(ls);
 

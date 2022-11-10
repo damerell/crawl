@@ -2276,6 +2276,9 @@ static tileidx_t _tileidx_armour_base(const item_def &item)
     case ARM_TOWER_SHIELD:
         return TILE_ARM_TOWER_SHIELD;
 
+    case ARM_DWARVEN_ROUNDSHIELD:
+        return TILE_ARM_DWARVEN_ROUNDSHIELD;
+        
     case ARM_CENTAUR_BARDING:
         return TILE_ARM_CENTAUR_BARDING;
 

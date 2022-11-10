@@ -9,6 +9,7 @@
 #include "describe.h"
 #include "item-name.h"
 #include "item-prop.h"
+#include "item-status-flag-type.h"
 #include "player.h"
 #include "tile-flags.h"
 #include "tile-player-flag-cut.h"
@@ -292,6 +293,14 @@ tileidx_t tilep_equ_shield(const item_def &item)
         case ARM_TOWER_SHIELD:
             return _modrng(item.rnd, TILEP_HAND2_TOWER_SHIELD_FIRST_NORM,
                            TILEP_HAND2_TOWER_SHIELD_LAST_NORM);
+        case ARM_DWARVEN_ROUNDSHIELD:
+            if (is_artefact(item)) {
+                return TILEP_HAND2_ROUNDSHIELD3;
+            } else if (item.flags & ISFLAG_COSMETIC_MASK) {
+                return TILEP_HAND2_ROUNDSHIELD2;
+            } else {
+                return TILEP_HAND2_ROUNDSHIELD1;
+            }
         default: return 0;
     }
 }

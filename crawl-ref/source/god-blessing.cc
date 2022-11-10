@@ -353,6 +353,7 @@ static void _upgrade_shield(item_def &sh)
     // Promote from buckler up through tower shield.
     if (sh.sub_type >= ARM_FIRST_SHIELD && sh.sub_type < ARM_LAST_SHIELD)
         sh.sub_type++;
+    if (sh.sub_type == ARM_DWARVEN_ROUNDSHIELD) sh.sub_type = ARM_TOWER_SHIELD;
 }
 
 static void _upgrade_body_armour(item_def &arm)

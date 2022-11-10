@@ -81,7 +81,7 @@
       elseif s == "D" then i = { "book of death", "book of debilitation",
        "book of dreams", "book of the dragon", "dagger", "demon blade",
        "demon trident", "demon whip", "dire flail",
-       "ring of dexterity", "manual of dodging",
+       "ring of dexterity", "manual of dodging", "dwarven roundshield",
        "disc of storms", "staff of death", "wand of digging", "dart" }
 
       elseif s == "E" then i = { "book of enchantments", "manual of evocations",
@@ -145,7 +145,7 @@
 
       elseif s == "R" then i = { "amulet of rage", "amulet of reflection",
        "amulet of regeneration", "rapier", "ring of resist corrosion",
-       "potion of resistance", "robe", "ring mail",
+       "potion of resistance", "robe", "ring mail", "dwarven roundshield",
        "scroll of random uselessness", "scroll of remove curse",
        "wand of random effects" }
 

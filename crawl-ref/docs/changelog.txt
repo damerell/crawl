@@ -16,6 +16,7 @@ Stoat Soup 0.23 "The Masque of the Red Death"
 * Rot is gradually healed by gaining XP.
 * Necromancers are joined by cavaliers.
 * One or two species have less utterly flat aptitudes.
+* Species gear considers a return in the form of the dwarven roundshield.
 
 Vanilla changes messed around with
 ----------------------------------

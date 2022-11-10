@@ -2327,8 +2327,11 @@ int player_shield_class(bool incap)
     if (you.shield() && !incap)
     {
         const item_def& item = you.inv[you.equip[EQ_SHIELD]];
-        int size_factor = (you.body_size(PSIZE_TORSO) - SIZE_MEDIUM)
-                        * (item.sub_type - ARM_TOWER_SHIELD);
+        int size_factor = (you.body_size(PSIZE_TORSO) - SIZE_MEDIUM) *
+        (item.sub_type == ARM_TOWER_SHIELD ? 0 :
+         (((item.sub_type == ARM_KITE_SHIELD) ||
+           (item.sub_type == ARM_DWARVEN_ROUNDSHIELD)) ? -1 : 
+          (item.sub_type == ARM_BUCKLER ? -2 : 100))); // 100 should break
         int base_shield = property(item, PARM_AC) * 2 + size_factor;
 
         // bonus applied only to base, see above for effect:
@@ -5353,6 +5356,15 @@ void handle_player_drowning(int delay)
     }
 }
 
+int shield_evasion_for_dwarves(const item_def &item) {
+    int evp = -property(item, PARM_EVASION);
+    if ((item.sub_type == ARM_DWARVEN_ROUNDSHIELD) &&
+        species_is_dwarven(you.species)) {
+        evp -=6;
+    }
+    return evp;
+}
+
 int count_worn_ego(int which_ego)
 {
     int result = 0;
@@ -6081,6 +6093,7 @@ int player::adjusted_body_armour_penalty(int scale) const
            * scale / (5 * (strength() + 3)) / 450;
 }
 
+
 /**
  * The encumbrance penalty to the player for their worn shield.
  *
@@ -6093,15 +6106,15 @@ int player::adjusted_shield_penalty(int scale) const
     if (!shield_l)
         return 0;
 
-    const int base_shield_penalty = -property(*shield_l, PARM_EVASION);
+    const int base_shield_penalty = shield_evasion_for_dwarves(*shield_l);
     return max(0, ((base_shield_penalty * scale) - skill(SK_SHIELDS, scale)
                   / player_shield_racial_factor() * 10) / 10);
 }
 
 float player::get_shield_skill_to_offset_penalty(const item_def &item)
 {
-    int evp = property(item, PARM_EVASION);
-    return -1 * evp * player_shield_racial_factor() / 10.0;
+    int evp = shield_evasion_for_dwarves(item);
+    return evp * player_shield_racial_factor() / 10.0;
 }
 
 int player::armour_tohit_penalty(bool random_factor, int scale) const
