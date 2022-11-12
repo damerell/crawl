@@ -1698,6 +1698,10 @@ bolt mons_spell_beam(const monster* mons, spell_type spell_cast, int power,
         beam.hit      = 5 + power / 3;
         break;
 
+    case SPELL_CORRUPT_BODY:
+        beam.flavour  = BEAM_CORRUPT_BODY;
+        break;
+        
     case SPELL_SHADOW_BOLT:
         beam.name     = "shadow bolt";
         beam.pierce   = true;
@@ -3231,7 +3235,8 @@ static void _corrupting_pulse(monster *mons)
         {
             int num_mutations = one_chance_in(4) ? 2 : 1;
             for (int i = 0; i < num_mutations; ++i)
-                temp_mutate(RANDOM_CORRUPT_MUTATION, "wretched star");
+                temp_mutate(RANDOM_CORRUPT_MUTATION, mons->name(DESC_PLAIN),
+                    true);
         }
     }
 

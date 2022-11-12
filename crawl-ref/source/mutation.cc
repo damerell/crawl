@@ -1438,12 +1438,13 @@ bool undead_mutation_rot()
  * @param force_mutation    whether to override mutation protection and the like.
  * @param god_gift          is this a god gift? Entails overriding mutation resistance if not forced.
  * @param mutclass          is the mutation temporary, regular, or permanent (innate)? permanent entails force_mutation.
+ * @param major             do two levels for Corrupting Pulse
  *
  * @return whether the mutation succeeded.
  */
 bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
             bool force_mutation, bool god_gift, bool beneficial,
-            mutation_permanence_class mutclass)
+            mutation_permanence_class mutclass, bool major)
 {
     if (which_mutation == RANDOM_BAD_MUTATION
         && mutclass == MUTCLASS_NORMAL
@@ -1594,8 +1595,8 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
     const unsigned int old_talents = your_talents(false).size();
 
     const int levels = (which_mutation == RANDOM_CORRUPT_MUTATION
-                         || which_mutation == RANDOM_QAZLAL_MUTATION)
-                       ? min(2, mdef.levels - you.get_base_mutation_level(mutat))
+                        || which_mutation == RANDOM_QAZLAL_MUTATION)
+    ? min((major ? 2 : 1), mdef.levels - you.get_base_mutation_level(mutat))
                        : 1;
     ASSERT(levels > 0); //TODO: is > too strong?
 
@@ -2625,9 +2626,10 @@ bool perma_mutate(mutation_type which_mut, int how_much, const string &reason)
     return levels > 0;
 }
 
-bool temp_mutate(mutation_type which_mut, const string &reason)
+bool temp_mutate(mutation_type which_mut, const string &reason, bool major)
 {
-    return mutate(which_mut, reason, false, false, false, false, MUTCLASS_TEMPORARY);
+    return mutate(which_mut, reason, false, false, false, false,
+                  MUTCLASS_TEMPORARY, major);
 }
 
 int temp_mutation_roll()

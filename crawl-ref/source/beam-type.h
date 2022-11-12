@@ -45,6 +45,7 @@ enum beam_type                  // bolt::flavour
     BEAM_TELEPORT,
     BEAM_POLYMORPH,
     BEAM_MALMUTATE,
+    BEAM_CORRUPT_BODY,
     BEAM_CHARM,
     BEAM_BANISH,
     BEAM_PAIN,

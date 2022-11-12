@@ -39,7 +39,8 @@ bool mutate(mutation_type which_mutation, const string &reason,
             bool failMsg = true,
             bool force_mutation = false, bool god_gift = false,
             bool beneficial = false,
-            mutation_permanence_class mutclass = MUTCLASS_NORMAL);
+            mutation_permanence_class mutclass = MUTCLASS_NORMAL,
+	    bool major = true); // for corrupting pulse
 
 void display_mutations();
 int mut_check_conflict(mutation_type mut, bool innate_only = false);
@@ -67,7 +68,8 @@ string mutation_desc(mutation_type which_mutat, int level = -1,
 void roll_demonspawn_mutations();
 
 bool perma_mutate(mutation_type which_mut, int how_much, const string &reason);
-bool temp_mutate(mutation_type which_mut, const string &reason);
+bool temp_mutate(mutation_type which_mut, const string &reason,
+		 bool major = true);
 int temp_mutation_roll();
 bool temp_mutation_wanes();
 
