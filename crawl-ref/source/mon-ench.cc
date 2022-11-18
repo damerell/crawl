@@ -1023,6 +1023,10 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
     case ENCH_WARNING_FLASH:
         invalidate_agrid();
         break;
+
+    case ENCH_FEAR_INSPIRING:
+        you.remove_fearmonger(this);
+        break;
         
     default:
         break;

@@ -18,6 +18,7 @@ const enchant_type dispellable_enchantments[] =
     ENCH_MIGHT,
     ENCH_AGILE,
     ENCH_FEAR,
+    ENCH_FEAR_INSPIRING,
     ENCH_CONFUSION,
     ENCH_CORONA,
     ENCH_STICKY_FLAME,
