@@ -151,10 +151,12 @@ item_def* newgame_make_item(object_class_type base,
             item.sub_type = ARM_ROBE;
         }
     }
-    if (item.sub_type == WPN_SHORT_SWORD && you.species == SP_OGRE) {
+    if (item.base_type == OBJ_WEAPONS && item.sub_type == WPN_SHORT_SWORD &&
+        you.species == SP_OGRE) {
 	item.sub_type = WPN_CLUB;
     }
-    if (item.sub_type == ARM_KITE_SHIELD && species_is_dwarven(you.species)) {
+    if (item.base_type == OBJ_ARMOUR && item.sub_type == ARM_KITE_SHIELD &&
+        species_is_dwarven(you.species)) {
         item.sub_type = ARM_DWARVEN_ROUNDSHIELD;
     }
     
