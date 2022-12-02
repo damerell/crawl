@@ -337,8 +337,6 @@ static bool _missile_brand_is_prefix(special_missile_type brand)
     {
     case SPMSL_POISONED:
     case SPMSL_CURARE:
-    case SPMSL_BLINDING:
-    case SPMSL_FRENZY:
     case SPMSL_EXPLODING:
 #if TAG_MAJOR_VERSION == 34
     case SPMSL_SILVER:
@@ -394,7 +392,7 @@ const char* missile_brand_name(const item_def &item, mbn_type t)
         return t == MBN_TERSE ? "sick" : "sickness";
 #endif
     case SPMSL_FRENZY:
-        return t == MBN_NAME ? "datura-tipped" : "datura";
+        return "frenzy";
     case SPMSL_CHAOS:
         return "chaos";
     case SPMSL_PENETRATION:
@@ -402,7 +400,7 @@ const char* missile_brand_name(const item_def &item, mbn_type t)
     case SPMSL_DISPERSAL:
         return t == MBN_TERSE ? "disperse" : "dispersal";
     case SPMSL_BLINDING:
-        return t == MBN_NAME ? "atropa-tipped" : "atropa";
+        return t == MBN_TERSE ? "blind" : "blinding";
     case SPMSL_NORMAL:
         return "";
     default:
