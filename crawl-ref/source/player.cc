@@ -2592,9 +2592,9 @@ static void _handle_rot(int exp) {
     if (!you.hp_max_adj_temp) return;
     if (you.species == SP_GHOUL) return;
 
-    int loss = div_rand_round(exp, 40 * calc_skill_cost(you.skill_cost_level));
+    int loss = div_rand_round(exp, 60 * calc_skill_cost(you.skill_cost_level));
 
-    dprf("Lost %d of %d draining points", loss, -you.hp_max_adj_temp);
+    dprf("Lost %d of %d rotted HP", loss, -you.hp_max_adj_temp);
 
     if (loss == 0) return; 
 
