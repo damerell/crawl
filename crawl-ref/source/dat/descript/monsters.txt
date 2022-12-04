@@ -2371,7 +2371,9 @@ stench.
 %%%%
 swamp worm
 
-A large slimy worm, adept at traversing swamps and marshes.
+An ambush predator in the shape of a large slimy worm, adept at traversing
+swamps and marshes; it bursts from the water in a brief biting frenzy to bring
+down its prey.
 %%%%
 tarantella
 

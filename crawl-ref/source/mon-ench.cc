@@ -765,6 +765,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             mpr("Something invisible bursts forth from the water.");
             interrupt_activity(AI_FORCE_INTERRUPT);
         }
+        this->add_ench(mon_enchant(ENCH_MIGHT, 1, this, 10+roll_dice(4,10)));
         break;
 
     case ENCH_SOUL_RIPE:
