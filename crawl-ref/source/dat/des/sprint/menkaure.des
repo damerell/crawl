@@ -218,6 +218,7 @@ KFEAT:  e = altar_elyvilon
 KFEAT:  f = altar_fedhas
 KFEAT:  g = altar_gozag
 KFEAT:  h = altar_hepliaklqana
+KFEAT:  i = altar_ihpix
 KFEAT:  j = altar_jiyva
 KFEAT:  k = altar_kikubaaqudgha
 KFEAT:  l = altar_lugonu
@@ -237,7 +238,7 @@ KFEAT:  z = altar_zin
 KFEAT:  1 = altar_the_shining_one
 MAP
 ..q.w.1.
-.h.r.x..
+.h.r.x.i
 b.j.s.y.
 .c.k.t.z
 ..d.l.u.

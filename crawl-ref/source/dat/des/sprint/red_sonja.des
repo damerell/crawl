@@ -108,6 +108,7 @@ KFEAT: E = altar_elyvilon
 KFEAT: F = altar_fedhas
 KFEAT: G = altar_gozag
 KFEAT: H = altar_hepliaklqana
+KFEAT: I = altar_ihpix
 KFEAT: K = altar_kikubaaqudgha
 KFEAT: N = altar_nemelex_xobeh
 KFEAT: O = altar_okawaru
@@ -127,7 +128,7 @@ xxxxx+xxxxx+x
 xxxx$$c$$$c*c
 xEZxxxc$$cc*c
 x'OTFQcc+cW.+
-xK.s..2+...Sc
+xK.sI.2+...Sc
 xY..UHccV1x+x
 cDRCGNccx+x*x
 ccccccccx.xxx

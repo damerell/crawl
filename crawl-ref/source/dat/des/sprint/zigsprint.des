@@ -707,6 +707,7 @@ KFEAT:  e = altar_elyvilon
 KFEAT:  f = altar_fedhas
 KFEAT:  g = altar_gozag
 KFEAT:  h = altar_hepliaklqana
+KFEAT:  i = altar_ihpix
 KFEAT:  j = altar_jiyva
 KFEAT:  k = altar_kikubaaqudgha
 KFEAT:  l = altar_lugonu
@@ -822,7 +823,7 @@ d..JE.....S...q
 c......L..O...r
 ^...C..K..N...^
 b...B.{.......s
-^.............^
+^...........i.^
 a.............t
 ^1^z^y^x^w^v^u^
 ENDMAP

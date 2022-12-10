@@ -980,6 +980,7 @@ KFEAT:   e = altar_elyvilon
 KFEAT:   f = altar_fedhas
 KFEAT:   g = altar_gozag
 KFEAT:   h = altar_hepliaklqana
+KFEAT:   i = altar_ihpix
 KFEAT:   j = altar_jiyva
 KFEAT:   k = altar_kikubaaqudgha
 KFEAT:   l = altar_lugonu
@@ -1001,9 +1002,9 @@ KFEAT:   ' = altar_the_shining_one
 : general_item_setup(_G)
 : base_monster_setup(_G)
 MAP
-abcdefghj.
-klmnoqrst.
-uvwxyz'...
+abcdefghi.
+jklmnoqrs.
+tuvwxyz'..
 ENDMAP
 
 ################################################################################
