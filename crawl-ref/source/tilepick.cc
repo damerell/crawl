@@ -453,6 +453,8 @@ tileidx_t tileidx_feature_base(dungeon_feature_type feat)
         return TILE_DNGN_ALTAR_HEPLIAKLQANA;
     case DNGN_ALTAR_WU_JIAN:
         return TILE_DNGN_ALTAR_WU_JIAN;
+    case DNGN_ALTAR_IHPIX:
+        return TILE_DNGN_ALTAR_IHPIX;
     case DNGN_ALTAR_ECUMENICAL:
         return TILE_DNGN_ALTAR_ECUMENICAL;
     case DNGN_FOUNTAIN_BLUE:
@@ -3653,6 +3655,17 @@ tileidx_t tileidx_ability(const ability_type ability)
         return TILEG_ABILITY_HEP_BATTLEMAGE;
     case ABIL_HEPLIAKLQANA_TYPE_HEXER:
         return TILEG_ABILITY_HEP_HEXER;
+        // Ihp'ix
+    case ABIL_IHPIX_INFUSE:
+        return TILEG_ABILITY_IHPIX_INFUSE;
+    case ABIL_IHPIX_STOP_INFUSE:
+        return TILEG_ABILITY_IHPIX_STOP_INFUSE;
+    case ABIL_IHPIX_FOF:
+        return TILEG_ABILITY_IHPIX_FOF;
+    case ABIL_IHPIX_TEMP_WEAPON:
+        return TILEG_ABILITY_IHPIX_TEMP_WEAPON;
+    case ABIL_IHPIX_SUPERIOR_WEAPON:
+        return TILEG_ABILITY_IHPIX_SUPERIOR_WEAPON;
     // usk
    case ABIL_USKAYAW_STOMP:
         return TILEG_ABILITY_USKAYAW_STOMP;
