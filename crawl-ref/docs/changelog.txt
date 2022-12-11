@@ -22,6 +22,7 @@ Stoat Soup 0.23 "The Masque of the Red Death"
 * Teleportitis is replaced with a less game-changing "short teleport"
   mutation.
 * Slow regeneration with monsters visible returns as a mutation.
+* Ihp'ix, a god for ranged weapons.
 
 Vanilla changes messed around with
 ----------------------------------
@@ -63,8 +64,7 @@ bcrawl:
 * Chaos Knights are always Xom's playthings.
 * Irradiate discourages repeated casts with Sap Magic.
 Gooncrawl:
-* Malmutate is gone; nexos got paralyse, cacos entropic weave, shining eyes
-  polymorph. OOFs got Corrupting Pulse and the new stat draining malmutate.
+* Malmutate is gone; nexos got paralyse, cacos and shining eyes Corrupt Body, a  weaker Corrupting Pulse. OOFs got a new stat draining malmutate.
 
 Stoat Soup 0.22 "Spirits of the Dead"
 -------------------------------------
