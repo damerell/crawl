@@ -23,6 +23,7 @@
 #include "env.h"
 #include "files.h"
 #include "food.h"
+#include "god-passive.h"
 #include "invent.h"
 #include "item-name.h"
 #include "item-prop.h"
@@ -38,6 +39,7 @@
 #include "place.h"
 #include "player.h"
 #include "prompt.h"
+#include "religion.h"
 #include "rot.h"
 #include "spl-book.h"
 #include "stash.h"
@@ -925,6 +927,12 @@ static bool _purchase(shop_struct& shop, const level_pos& pos, int index)
         set_ident_flags(item, ISFLAG_IDENT_MASK);
     }
 
+    if (have_passive(passive_t::ihpix_gather) && ihpix_wants(item)) {
+        ihpix_take_item(item);
+        item_was_destroyed(item);
+        return true;
+    }
+        
     // Shopkeepers will place goods you can't carry outside the shop.
     if (item_is_stationary(item)
         || !move_item_to_inv(item))
