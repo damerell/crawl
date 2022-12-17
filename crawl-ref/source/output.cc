@@ -968,7 +968,8 @@ static void _print_stats_qv(int y)
     {
         col  = DARKGREY;
         text = "Quiver unavailable";
-    } else if (have_passive(passive_t::ihpix_gather)) {
+    } else if (have_passive(passive_t::ihpix_gather) &&
+               (you.props.exists(IHPIX_AMMO_KEY)))  {
         bool anyammo = false; int otherammo = 0; bool curwep = false;
         static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
         string seperator = "";

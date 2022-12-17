@@ -1807,7 +1807,7 @@ static void _make_acquirement_items(bool superior = false)
     acq_items.empty();
 
     if (ihpix) {
-        for (int i = 0; i < (superior ? 4 : 3); i++) {
+        for (int i = 0; i < 3; i++) {
             auto item = ihpix_item_def(i, superior);
             if (item.defined()) {
                 acq_items.push_back(item);
