@@ -264,6 +264,10 @@ void change_monster_type(monster* mons, monster_type targetc)
     {
         name   = "shaped Serpent of Hell";
         flags |= MF_NAME_SUFFIX;
+    } else if (mons->mons_species() == MONS_TRICERATOPS ||
+               mons->mname == "shaped triceratops"){
+        name = "shaped triceratops";
+        flags |= MF_NAME_SUFFIX;
     }
     else if (!mons->mname.empty())
     {
