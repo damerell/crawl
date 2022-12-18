@@ -543,7 +543,8 @@ void SkillMenuEntry::set_cost()
     else
         m_progress->set_fg_colour(CYAN);
 
-    auto ratio = scaled_skill_cost(m_sk);
+    auto ratio = scaled_skill_cost(m_sk, skm.get_state(SKM_LEVEL) ==
+                                   SKM_LEVEL_ENHANCED);
     // Don't let the displayed number go greater than 4 characters
     if (ratio > 0)
         m_progress->set_text(make_stringf("%4.*f", ratio < 100 ? 1 : 0, ratio));
@@ -664,8 +665,12 @@ string SkillMenuSwitch::get_help()
                "knowledge. The donating skill is marked with <cyan>*</cyan>.";
     case SKM_VIEW_COST:
     {
+        string rubric = (_any_crosstrained() ?
+                         (skm.get_state(SKM_LEVEL) == SKM_LEVEL_ENHANCED ?
+                          "'s effective level" : "'s base level") :
+                         "");
         string result =
-               "The relative cost of raising each skill is in "
+               "The relative cost of raising each skill" + rubric + " is in "
                "<cyan>cyan</cyan>";
         if (skm.is_set(SKMF_MANUAL))
         {

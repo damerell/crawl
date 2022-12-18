@@ -182,29 +182,34 @@ int skill_cost_baseline()
  * The skill cost to increase the given skill from its current level by one.
  *
  * @param sk the skill to check the player's level of
+ * @param crosstrain show the cost as if at the crosstrained level
  * @returns the XP needed to increase from floor(level) to ceiling(level)
  */
-int one_level_cost(skill_type sk)
+int one_level_cost(skill_type sk, bool crosstrain)
 {
     if (you.skills[sk] >= MAX_SKILL_LEVEL)
         return 0;
-    return skill_exp_needed(you.skills[sk] + 1, sk)
-           - skill_exp_needed(you.skills[sk], sk);
+    int defactoskill =
+    min(MAX_SKILL_LEVEL -1 ,
+        (crosstrain ? you.skill(sk, 1, false, false, false) : you.skills[sk]));
+    return skill_exp_needed(defactoskill + 1, sk)
+           - skill_exp_needed(defactoskill, sk);
 }
 
 /**
  * The number displayed in the 'cost' interface on the m screen.
  *
  * @param sk the skill to compute the cost of
+ * @param crosstrain show the cost as if at the crosstrained level
  * @returns the cost of raising sk from floor(level) to ceiling(level),
  *          as a multiple of skill_cost_baseline()
  */
-float scaled_skill_cost(skill_type sk)
+float scaled_skill_cost(skill_type sk, bool crosstrain)
 {
     if (you.skills[sk] == MAX_SKILL_LEVEL || is_useless_skill(sk))
         return 0;
     int baseline = skill_cost_baseline();
-    int next_level = one_level_cost(sk);
+    int next_level = one_level_cost(sk, crosstrain);
     if (skill_has_manual(sk))
         baseline *= 2;
 
