@@ -1358,6 +1358,9 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
         && !there_are_monsters_nearby(true,true,false) && temp) {
         return "no visible enemies are threatening you.";
     }
+    if (is_permabuff(spell) && you.duration[DUR_SAP_MAGIC]) {
+        return "you cannot concentrate on a new charm while your magic is sapped.";
+    }
     return "";
 }
 
