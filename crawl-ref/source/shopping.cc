@@ -53,6 +53,13 @@
 #include "unicode.h"
 #include "unwind.h"
 
+enum purchase_result
+{
+    PRCH_OK = 0,
+    PRCH_IHPIX,
+    PRCH_NOROOM,
+};
+
 ShoppingList shopping_list;
 
 static int _shop_get_item_value(const item_def& item, int greed, bool id)
@@ -886,7 +893,7 @@ static int _count_identical(const vector<item_def>& stock, const item_def& item)
  *  @param index the index of the item to buy in shop.stock
  *  @returns true if it went in your inventory, false otherwise.
  */
-static bool _purchase(shop_struct& shop, const level_pos& pos, int index)
+static purchase_result _purchase(shop_struct& shop, const level_pos& pos, int index)
 {
     item_def item = shop.stock[index]; // intentional copy
     const int cost = item_price(item, shop);
@@ -930,7 +937,7 @@ static bool _purchase(shop_struct& shop, const level_pos& pos, int index)
     if (have_passive(passive_t::ihpix_gather) && ihpix_wants(item)) {
         ihpix_take_item(item);
         item_was_destroyed(item);
-        return true;
+        return PRCH_IHPIX;
     }
         
     // Shopkeepers will place goods you can't carry outside the shop.
@@ -938,9 +945,9 @@ static bool _purchase(shop_struct& shop, const level_pos& pos, int index)
         || !move_item_to_inv(item))
     {
         copy_item_to_grid(item, shop.pos);
-        return false;
+        return PRCH_NOROOM;
     }
-    return true;
+    return PRCH_OK;
 }
 
 static string _hyphenated_letters(int how_many, char first)
@@ -1213,6 +1220,7 @@ void ShopMenu::purchase_selected()
          });
     vector<int> bought_indices;
     int outside_items = 0;
+    bool ihpix = false;
 
     // Store last_pickup in case we need to restore it.
     // Then clear it to fill with items purchased.
@@ -1231,13 +1239,18 @@ void ShopMenu::purchase_selected()
             continue;
         const int quant = item.quantity;
 
-        if (!_purchase(shop, pos, i))
-        {
+        switch (_purchase(shop, pos, i)) {
+        case PRCH_NOROOM:
             // The purchased item didn't fit into your
             // knapsack.
             outside_items += quant;
+        break;
+        case PRCH_IHPIX:
+            ihpix = true;
+            break;
+        case PRCH_OK:
+            break;
         }
-
         bought_indices.push_back(i);
         bought_something = true;
     }
@@ -1251,6 +1264,9 @@ void ShopMenu::purchase_selected()
     init_entries();
     resort();
 
+    if (ihpix) {
+        simple_god_message(" gathers up the projectiles you bought.");
+    }
     if (outside_items)
     {
         update_help();
