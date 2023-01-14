@@ -1599,6 +1599,12 @@ static bool _check_ability_possible(const ability_def& abil, bool quiet = false)
             }
             return false;
         }
+        if (player_equip_unrand(UNRAND_DAMNATION)) {
+            if (!quiet) {
+                mpr("You can't use Piercing Fire when your shots would explode on impact.");
+            }
+            return false;
+        }
         return true;
     }
 

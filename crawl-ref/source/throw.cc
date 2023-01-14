@@ -10,6 +10,7 @@
 #include <cmath>
 #include <sstream>
 
+#include "art-enum.h"
 #include "artefact.h"
 #include "chardump.h"
 #include "command.h"
@@ -62,7 +63,8 @@ bool is_penetrating_attack(const actor& attacker, const item_def* weapon,
            || weapon
               && is_launched(&attacker, weapon, projectile) == launch_retval::LAUNCHED
               && ((get_weapon_brand(*weapon) == SPWPN_PENETRATION)
-                  || (attacker.is_player() && you.duration[DUR_IHPIX_FOF]));
+                  || (attacker.is_player() && you.duration[DUR_IHPIX_FOF] &&
+                      !player_equip_unrand(UNRAND_DAMNATION)));
 }
 
 bool item_is_quivered(const item_def &item)
@@ -743,7 +745,8 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     beam.flavour      = BEAM_MISSILE;
     beam.ihpierce     = agent->is_player() && launcher &&
     you.duration[DUR_IHPIX_FOF] &&
-    (is_launched(agent, launcher, item) == launch_retval::LAUNCHED);
+    (is_launched(agent, launcher, item) == launch_retval::LAUNCHED) &&
+    !player_equip_unrand(UNRAND_DAMNATION);
     beam.pierce       = is_penetrating_attack(*agent, launcher, item);
 
     beam.aux_source.clear();

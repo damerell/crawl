@@ -2243,6 +2243,10 @@ string get_item_description(const item_def &item, bool verbose,
         description << "\n\n" << uppercase_first(god_name(you.religion))
                     << " disapproves of the use of such an item.";
     }
+    if (you_worship(GOD_IHPIX) &&
+        is_unrandom_artefact(item, UNRAND_DAMNATION)) {
+        description << "\n\nIhp'ix's Piercing Fire ability will not work with shots that explode on impact.";
+    }
 
     if (verbose && origin_describable(item))
         description << "\n" << origin_desc(item) << ".";
