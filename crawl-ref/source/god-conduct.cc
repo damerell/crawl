@@ -703,7 +703,7 @@ static like_response ihpix_kill(const char* desc, mon_holy_type holiness) {
             piety *= (victim->props.exists("ihpix_damage") ? 
                       victim->props["ihpix_damage"].get_int() :
                       1);
-            denom = (denom * victim->damage_total * 4);
+            denom = (denom * victim->damage_total * 3);
         }
     };
 }

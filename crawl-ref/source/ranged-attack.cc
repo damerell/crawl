@@ -65,7 +65,7 @@ ranged_attack::ranged_attack(actor *attk, actor *defn, item_def *proj,
         if (weapon->props.exists(DIVINE_DROP_KEY)) {
             ihpix_likes = 2;
         } else {
-            ihpix_likes = 4;
+            ihpix_likes = 3;
         }
     }
 
