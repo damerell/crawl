@@ -2808,6 +2808,13 @@ void lose_piety(int pgn)
                             end(you.ability_letter_table),
                             ABIL_YRED_ANIMATE_DEAD, ABIL_YRED_ANIMATE_REMAINS);
                 }
+                if (power.abil == ABIL_IHPIX_SUPERIOR_WEAPON) {
+                    replace(begin(you.ability_letter_table),
+                            end(you.ability_letter_table),
+                            ABIL_IHPIX_SUPERIOR_WEAPON,
+                            ABIL_IHPIX_TEMP_WEAPON);
+                }
+
                 // Deactivate the toggle
                 if (power.abil == ABIL_SIF_MUNA_DIVINE_ENERGY)
                     you.attribute[ATTR_DIVINE_ENERGY] = 0;

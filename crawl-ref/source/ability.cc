@@ -661,7 +661,7 @@ static const ability_def Ability_List[] =
     // The piety cost is nominal here because XP cooldown and mostly collected
     // via piety loss on kills
     { ABIL_IHPIX_TEMP_WEAPON, "Request Divine Weapon",
-      0, 0, 0, 2, { fail_basis::invo }, abflag::none },
+      0, 0, 0, 0, { fail_basis::invo }, abflag::none },
     // Fail chances from Heroism/Finesse for original low-Invo design?
     { ABIL_IHPIX_FOF, "Piercing Fire",
       0, 0, 100, 4, { fail_basis::invo, 30, 6, 20 }, abflag::none},
@@ -788,7 +788,7 @@ const string make_cost_description(ability_type ability)
         ret += ", Hunger"; // randomised and exact amount hidden from player
     }
 
-    if (abil.piety_cost || abil.flags & abflag::piety)
+    if (abil.piety_cost || abil.flags & abflag::piety || ability == ABIL_IHPIX_TEMP_WEAPON)
         ret += ", Piety"; // randomised and exact amount hidden from player
 
     if (abil.flags & abflag::breath)
@@ -897,6 +897,14 @@ static const string _detailed_cost_description(ability_type ability)
             int avgcost = abil.piety_cost.base + abil.piety_cost.add / 2;
             ret << _get_piety_amount_str(avgcost);
         }
+    }
+    if (ability == ABIL_IHPIX_TEMP_WEAPON) {
+        have_cost = true;
+        ret << "\nPiety gains reduced while using the weapon";
+    }
+    if (ability == ABIL_IHPIX_SUPERIOR_WEAPON) {
+        have_cost = true;
+        ret << " (and gains reduced while using the weapon)";
     }
 
     if (abil.flags & abflag::gold)
