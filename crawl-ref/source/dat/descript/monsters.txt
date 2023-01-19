@@ -2011,6 +2011,12 @@ raiju
 A profoundly unnatural hound, crackling with electricity. It travels in packs,
 and covers great distances by bursting into living lightning.
 %%%%
+raven
+
+An opportunistic scavenger bird that is quite proactive in the production of
+carrion. It has a particularly unhealthy fascination with eyeballs and things
+resembling eyeballs, such as pickled onions, walnuts and olives.
+%%%%
 reaper
 
 A skeletal form wielding a giant scythe, ceaselessly harvesting the souls of

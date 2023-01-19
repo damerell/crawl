@@ -2348,6 +2348,12 @@ reaper
 
     -Buck Dharma, Blue Öyster Cult, “(Don't Fear) The Reaper”. 1976.
 %%%%
+raven
+
+“The Hatter opened his eyes very wide on hearing this; but all he said was ‘Why
+is a raven like a writing-desk?’”
+    -Lewis Carroll, Alice’s Adventures in Wonderland
+%%%%
 ring
 
 “A ring of gold and a milk-white dove

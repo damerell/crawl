@@ -932,12 +932,16 @@ void treant_release_fauna(monster& mons)
     int count = mons.mangrove_pests;
     bool created = false;
 
-    monster_type fauna_t = MONS_HORNET;
+    monster_type base_t = (coinflip() ? MONS_HORNET : MONS_RAVEN);
 
     mon_enchant abj = mons.get_ench(ENCH_ABJ);
 
     for (int i = 0; i < count; ++i)
     {
+        monster_type fauna_t = (base_t == MONS_HORNET && one_chance_in(3)
+                                ? MONS_BUMBLEBEE
+                                : base_t);
+        
         mgen_data fauna_data(fauna_t, SAME_ATTITUDE(&mons),
                             mons.pos(),  mons.foe);
         fauna_data.set_summoned(&mons, 0, SPELL_NO_SPELL);
@@ -959,8 +963,16 @@ void treant_release_fauna(monster& mons)
 
     if (created && you.can_see(mons))
     {
-        mprf("Angry insects surge out from beneath %s foliage!",
-             mons.name(DESC_ITS).c_str());
+        if (base_t == MONS_HORNET)
+        {
+                mprf("Angry insects surge out from beneath %s foliage!",
+                        mons.name(DESC_ITS).c_str());
+        }
+        else if (base_t == MONS_RAVEN)
+        {
+                mprf("Agitated ravens fly out from beneath %s foliage!",
+                        mons.name(DESC_ITS).c_str());
+        }
     }
 }
 

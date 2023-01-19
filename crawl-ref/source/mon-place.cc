@@ -1833,6 +1833,7 @@ struct band_info
     /// The type of the band; used to determine the type of followers.
     band_type type;
     /// The min & max # of followers; doesn't count the leader.
+    /// Bear in mind start <= range < end!
     random_var range;
     /// Should the band followers try very hard to stick to the leader?
     bool natural_leader;
@@ -1995,8 +1996,9 @@ static const map<monster_type, band_set> bands_by_leader = {
     { MONS_IRONHEART_PRESERVER, { {}, {{ BAND_DEEP_TROLLS, {3, 6}, true },
                                     { BAND_DEEP_ELF_HIGH_PRIEST, {3, 7}, true },
                                     { BAND_OGRE_MAGE_EXTERN, {4, 8}, true }}}},
-    { MONS_TENGU_CONJURER,  { {2}, {{ BAND_TENGU, {1, 2}, true }}}},
-    { MONS_TENGU_WARRIOR,   { {2}, {{ BAND_TENGU, {1, 2}, true }}}},
+    { MONS_TENGU_CONJURER,  { {}, {{ BAND_TENGU, {2, 5}, true }}}},
+    { MONS_TENGU_WARRIOR,   { {}, {{ BAND_TENGU, {2, 5}, true }}}},
+    { MONS_RAVEN,           { {}, {{ BAND_RAVENS, {1, 3}, true }}}},
     { MONS_SOJOBO,          { {}, {{ BAND_SOJOBO, {2, 3}, true }}}},
     { MONS_SPRIGGAN_RIDER,  { {3}, {{ BAND_SPRIGGAN_RIDERS, {1, 3} }}}},
     { MONS_SPRIGGAN_BERSERKER, { {2}, {{ BAND_SPRIGGANS, {2, 4} }}}},
@@ -2231,6 +2233,7 @@ static const map<band_type, vector<member_possibilites>> band_membership = {
     { BAND_INSUBSTANTIAL_WISPS, {{{MONS_INSUBSTANTIAL_WISP, 1}}}},
     { BAND_PHANTASMAL_WARRIORS, {{{MONS_PHANTASMAL_WARRIOR, 1}}}},
     { BAND_BUMBLEBEES,          {{{MONS_BUMBLEBEE, 1}}}},
+    { BAND_RAVENS,              {{{MONS_RAVEN, 1}}}},
     { BAND_DEEP_ELF_KNIGHT,     {{{MONS_DEEP_ELF_MAGE, 92},
                                   {MONS_DEEP_ELF_KNIGHT, 24},
                                   {MONS_DEEP_ELF_ARCHER, 24},
@@ -2351,7 +2354,8 @@ static const map<band_type, vector<member_possibilites>> band_membership = {
                                  {{MONS_FAUN, 1}}}},
 
     { BAND_TENGU,               {{{MONS_TENGU_WARRIOR, 1},
-                                  {MONS_TENGU_CONJURER, 1}}}},
+                                  {MONS_TENGU_CONJURER, 1}},
+                                 {{MONS_RAVEN, 1}}}},
 
     { BAND_SPRIGGANS,           {{{MONS_SPRIGGAN_RIDER, 11},
                                   {MONS_SPRIGGAN_AIR_MAGE, 4},

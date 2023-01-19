@@ -286,6 +286,7 @@ static const pop_entry pop_swamp[] =
   {  1,  4,  400, FLAT, MONS_SWAMP_DRAGON },
   {  1,  4,  100, FLAT, MONS_FIREFLY },
   {  1,  4,  335, FLAT, MONS_INSUBSTANTIAL_WISP },
+  {  1,  4,  345, FLAT, MONS_RAVEN },
   {  1,  4,  192, FLAT, MONS_HORNET },
   {  1,  4,  100, FALL, MONS_KOMODO_DRAGON },
   {  1,  4,   25, RISE, MONS_TENTACLED_MONSTROSITY },
