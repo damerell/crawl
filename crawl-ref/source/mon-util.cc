@@ -4685,6 +4685,9 @@ string do_mon_str_replacements(const string &in_msg, const monster& mons,
         "growls",
         "hisses",
         "sneers",       // S_DEMON_TAUNT
+#if TAG_MAJOR_VERSION == 34
+        "caws",
+#endif
         "says",         // S_CHERUB -- they just speak normally.
         "squeals",
         "roars",
