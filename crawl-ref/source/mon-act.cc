@@ -1860,7 +1860,7 @@ void handle_monster_move(monster* mons)
         // Calculates mmov based on monster target.
         _handle_movement(mons);
 
-        if (mons_is_confused(*mons))
+        if (mons_is_confused(*mons) || mons->type == MONS_THORN_LOTUS)
         {
             _confused_move_dir(mons);
 

@@ -1287,8 +1287,9 @@ static const pop_entry pop_water_depths[] =
 
 static const pop_entry pop_water_swamp[] =
 { // Swamp water monsters
-  {  1,  4,   600, FLAT, MONS_SWAMP_WORM },
-  {  1,  4,  1050, FLAT, MONS_NO_MONSTER },
+  {  1,  4,   500, FLAT, MONS_SWAMP_WORM },
+  {  1,  4,  1000, FLAT, MONS_NO_MONSTER },
+  {  2,  4,   165, SEMI, MONS_THORN_LOTUS },
   { 0,0,0,FLAT,MONS_0 }
 };
 

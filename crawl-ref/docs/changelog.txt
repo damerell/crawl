@@ -52,7 +52,8 @@ Vanilla changes messed around with
   randomly selectable without us actually putting them back in.
 * See Invisible and Insulation spells return.
 * Goliath beetles, griffons, vipers, brain worms, clay golems, flaming corpses,
-  rotting hulks, salamander firebrands, fireflies, Maud, and ravens return.
+  rotting hulks, salamander firebrands, fireflies, Maud, ravens, and thorn
+  lotuses return.
 * Swamp worms go back to being submerged ambush predators.
 * The armour of Talos returns.
 * Rings of loudness return, but now they make you loud. Malign Gateway's

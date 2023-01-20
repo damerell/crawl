@@ -1198,6 +1198,12 @@ static const mon_spellbook mspell_list[] =
       }
     },
 
+    { MST_THORN_LOTUS,
+      {
+	  { SPELL_THORN_VOLLEY, 80, MON_SPELL_NATURAL },
+      }
+    },
+
     // ('Q') Tengu.
     {  MST_TENGU_CONJURER_I,
       {
