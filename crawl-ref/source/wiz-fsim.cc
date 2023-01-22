@@ -143,7 +143,7 @@ static void _write_version(FILE * o)
 static void _write_matchup(FILE * o, monster &mon, bool defend, int iter_limit)
 {
     fprintf(o, "%s: %s %s vs. %s (%d rounds) (%s)\n",
-            defend ? "Defense" : "Attack",
+            defend ? "Defence" : "Attack",
             species_name(you.species).c_str(),
             get_job_name(you.char_class),
             mon.name(DESC_PLAIN, true).c_str(),

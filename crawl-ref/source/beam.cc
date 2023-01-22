@@ -3706,7 +3706,7 @@ void bolt::affect_player_enchantment(bool resistible)
 
     case BEAM_VULNERABILITY:
         if (!you.duration[DUR_LOWERED_MR])
-            mpr("Your magical defenses are stripped away!");
+            mpr("Your magical defences are stripped away!");
         you.increase_duration(DUR_LOWERED_MR, 12 + random2(18), 50);
         obvious_effect = true;
         break;
@@ -5731,7 +5731,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         {
             if (you.can_see(*mon))
             {
-                mprf("%s magical defenses are stripped away.",
+                mprf("%s magical defences are stripped away.",
                      mon->name(DESC_ITS).c_str());
                 obvious_effect = true;
             }

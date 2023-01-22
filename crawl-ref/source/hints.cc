@@ -1400,7 +1400,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         cmd.push_back(CMD_GO_UPSTAIRS);
 
 #ifdef USE_TILE
-        text << "\nAlternately, you can <w>left-click</w> on stairs you're "
+        text << "\nAlternatively, you can <w>left-click</w> on stairs you're "
                 "standing on to use them.";
 #endif
         break;

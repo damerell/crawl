@@ -3125,7 +3125,7 @@ void melee_attack::mons_apply_attack_flavour()
 
             if (needs_message && visible_effect)
             {
-                mprf("%s magical defenses are stripped away!",
+                mprf("%s magical defences are stripped away!",
                      def_name(DESC_ITS).c_str());
             }
         }
