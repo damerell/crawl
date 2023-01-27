@@ -153,7 +153,7 @@ void upgrade_hepliaklqana_shield(const monster& ancestor, item_def &item);
 
 extern const missile_type ihpix_ammo[];
 extern const int ihpix_nr_ammos;
-bool ihpix_take_item(item_def &item, bool quiet = true);
+bool ihpix_take_item(item_def &item, bool quiet = true, bool fromtrap = false);
 int ihpix_quan_ammo(missile_type missile);
 void ihpix_eat_inventory();
 bool ihpix_got_ammo(const item_def &weapon);

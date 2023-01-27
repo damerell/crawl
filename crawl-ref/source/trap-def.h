@@ -27,9 +27,9 @@ struct trap_def
     bool defined() const { return active(); }
     int max_damage(const actor& act);
     int to_hit_bonus();
+    item_def generate_trap_item();
 
 private:
     void shoot_ammo(actor& act, bool was_known);
-    item_def generate_trap_item();
     int shot_damage(actor& act);
 };

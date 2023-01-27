@@ -11,6 +11,7 @@
 #include "notes.h"
 #include "religion.h"
 #include "terrain.h"
+#include "traps.h"
 #ifdef USE_TILE
  #include "tilepick.h"
  #include "tileview.h"
@@ -131,6 +132,17 @@ void set_terrain_seen(const coord_def pos)
     {
         _automap_from(pos.x, pos.y, _map_quality());
 
+        if (trap_at(pos)) {
+            trap_type trap = get_trap_type(pos);
+            if ((trap == TRAP_ARROW || trap == TRAP_BOLT) &&
+                have_passive(passive_t::ihpix_gather)) {
+                trap_def* ptrap = trap_at(pos);
+                item_def projectile = ptrap->generate_trap_item();
+                projectile.quantity = ptrap->ammo_qty;
+                ihpix_take_item(projectile, false, true);
+                ptrap->destroy();
+            }
+        }
         if (!is_boring_terrain(feat))
         {
             string desc = feature_description_at(pos, false, DESC_A);

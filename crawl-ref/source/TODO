@@ -1,6 +1,7 @@
 all ammo seen
 
 disarm traps
+DNGN_UNDISCOVERED_TRAP
 
 polymorph
 
@@ -16,6 +17,6 @@ Pakellas
 
 Fulsome
 
-player cling
+player cling / boots of the hippo
 
 LCS the unrand

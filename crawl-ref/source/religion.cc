@@ -2017,13 +2017,14 @@ void ihpix_eat_inventory() {
 
 // Put this item in the ammo supply?
 // It is the caller's responsibility to destroy the item
-bool ihpix_take_item(item_def &item, bool quiet) {
+bool ihpix_take_item(item_def &item, bool quiet, bool fromtrap) {
     if (!(ihpix_wants(item))) return false;
     static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
     item_def &ammo = ammo_vec[ihpix_index(item.sub_type)].get_item();
     ammo.quantity += item.quantity;
     if (!quiet) {
-        string message = " gathers up " + item.name(DESC_A) + ".";
+        string message = " gathers up " + item.name(DESC_A) +
+        (fromtrap ? " from a trap" : "") + ".";
         simple_god_message(message.c_str());
     }
     you.redraw_quiver = true; return true;
