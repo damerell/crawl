@@ -206,13 +206,12 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_DISJUNCTION,
 },
 
-#if TAG_MAJOR_VERSION == 34
 {   // Book of Envenomations
     SPELL_SPIDER_FORM,
     SPELL_OLGREBS_TOXIC_RADIANCE,
     SPELL_INTOXICATE,
+    SPELL_NOXIOUS_BOG,
 },
-#endif
 
 {   // Book of Unlife
     SPELL_RECALL,
