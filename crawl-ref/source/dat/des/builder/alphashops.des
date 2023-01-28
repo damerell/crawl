@@ -87,7 +87,7 @@
       elseif s == "E" then i = { "book of enchantments", "manual of evocations",
        "eveningstar", "ring of evasion", "executioner's axe",
        "potion of experience q:1", "scroll of enchant armour", "staff of earth",
-       "book of the earth", "scroll of enchant weapon",
+       "book of the earth", "scroll of enchant weapon", "book of envenomations",
        "manual of earth magic", "staff of energy" }
 
       elseif s == "F" then i = { "book of fire", "book of flames", "flail",
