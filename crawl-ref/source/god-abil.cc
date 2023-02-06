@@ -1470,6 +1470,7 @@ bool vehumet_supports_spell(spell_type spell)
         || spell == SPELL_INNER_FLAME
         || spell == SPELL_IGNITION
         || spell == SPELL_POISONOUS_VAPOURS
+        || spell == SPELL_PERFECTED_RADIANCE
         || spell == SPELL_NOXIOUS_BOG)
     {
         return true;

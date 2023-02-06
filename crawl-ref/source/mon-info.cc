@@ -2119,7 +2119,8 @@ vector<monster_info_func> init_monster_info_funcs() {
     toret.push_back({"inflammable", "inflammable", 
                 [](const monster_info &mi, bool newconditions) {
                 return newconditions && mi.is(MB_FIRE_VULN); }});
-    toret.push_back({"easily poisoned", "easily poisoned", 
+    // make this terser with OPR in play
+    toret.push_back({"rPois-", "rPois-", 
                 [](const monster_info &mi, bool newconditions) {
                 return newconditions && mi.is(MB_POISON_VULN); }});
     toret.push_back({"misshapen", "misshapen", 

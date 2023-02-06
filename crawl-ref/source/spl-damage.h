@@ -56,7 +56,7 @@ vector<bolt> get_spray_rays(const actor *caster, coord_def aim, int range,
 spret cast_dazzling_spray(int pow, coord_def aim, bool fail);
 
 spret cast_toxic_radiance(actor *caster, int pow, bool fail = false,
-                               bool mon_tracer = false);
+                          bool mon_tracer = false, bool perfect = false);
 void toxic_radiance_effect(actor* agent, int mult);
 
 spret cast_searing_ray(int pow, bolt &beam, bool fail);

@@ -1721,7 +1721,10 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
         return fire_los_attack_spell(spell, powc, &you, nullptr, fail);
 
     case SPELL_OLGREBS_TOXIC_RADIANCE:
-        return cast_toxic_radiance(&you, powc, fail);
+        return cast_toxic_radiance(&you, powc, fail, false);
+
+    case SPELL_PERFECTED_RADIANCE:
+        return cast_toxic_radiance(&you, powc, fail, false, true);
 
     case SPELL_IGNITE_POISON:
         return cast_ignite_poison(&you, powc, fail);

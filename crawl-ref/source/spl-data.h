@@ -17,6 +17,7 @@ struct spell_desc
     min_range, max_range, (-1 if not applicable)
     noise, effect_noise
     tile
+    corresponding permabuff
 }
 */
 
@@ -4337,6 +4338,19 @@ static const struct spell_desc spelldata[] =
     2, 0,
     TILEG_NOXIOUS_BOG,
 },
+
+{
+    SPELL_PERFECTED_RADIANCE, "Olgreb's Perfected Radiance",
+    SPTYP_POISON | SPTYP_HEXES,
+    SPFLAG_AREA,
+    7,
+    200,
+    -1, -1,
+    2, 0,
+    TILEG_PERFECTED_RADIANCE,
+    PERMA_NO_PERMA,
+},
+
 
 {
     SPELL_NO_SPELL, "nonexistent spell",

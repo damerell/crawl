@@ -964,6 +964,12 @@ Olgreb's Toxic Radiance spell
 Causes the caster to radiate toxic energy, continuously inflicting poison on
 everything nearby for as long as the spell lasts.
 %%%%
+Olgreb's Perfected Radiance spell
+
+Attempts to reduce the poison resistance of everything nearby, then causes the
+caster to radiate toxic energy, continuously inflicting poison on everything
+nearby.
+%%%%
 Orb of Destruction spell
 
 Conjures an orb made of pure destructive magic. Compared to most other

@@ -1909,6 +1909,9 @@ spret mass_enchantment(enchant_type wh_enchant, int pow, bool fail)
 
         if ((wh_enchant == ENCH_INSANE && mi->go_frenzy(&you))
             || (wh_enchant == ENCH_CHARM && mi->has_ench(ENCH_HEXED))
+            || (wh_enchant == ENCH_POISON_VULN &&
+                mi->add_ench(mon_enchant(wh_enchant,
+                                         0, &you, 10 + random2(pow/3))))
             || (wh_enchant != ENCH_INSANE
                 && mi->add_ench(mon_enchant(wh_enchant, 0, &you))))
         {
@@ -1918,6 +1921,7 @@ spret mass_enchantment(enchant_type wh_enchant, int pow, bool fail)
             {
             case ENCH_FEAR:      msg = " looks frightened!";      break;
             case ENCH_CHARM:     msg = " submits to your will.";  break;
+            case ENCH_POISON_VULN: msg = " is vulnerable to poison."; break;
             default:             msg = nullptr;                   break;
             }
             if (msg && simple_monster_message(**mi, msg))

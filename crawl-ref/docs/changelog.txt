@@ -23,6 +23,8 @@ Stoat Soup 0.23 "The Masque of the Red Death"
   mutation.
 * Slow regeneration with monsters visible returns as a mutation.
 * Ihp'ix, a god for ranged weapons.
+* Olgreb's Perfected Radiance, an improved version of OTR in an effort to
+  help out poison magic.
 
 Vanilla changes messed around with
 ----------------------------------

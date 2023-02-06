@@ -108,6 +108,7 @@ borgnjors_vile_clutch BORGNJORS_VILE_CLUTCH
 alistairs_intoxication ALISTAIRS_INTOXICATION
 mephitic_cloud MEPHITIC_CLOUD
 olgrebs_toxic_radiance OLGREBS_TOXIC_RADIANCE
+perfected_radiance PERFECTED_RADIANCE
 poison_arrow POISON_ARROW
 poisonous_cloud POISONOUS_CLOUD
 spider_form SPIDER_FORM

@@ -211,6 +211,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_OLGREBS_TOXIC_RADIANCE,
     SPELL_INTOXICATE,
     SPELL_NOXIOUS_BOG,
+    SPELL_PERFECTED_RADIANCE,
 },
 
 {   // Book of Unlife
@@ -300,6 +301,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_PORTAL_PROJECTILE,
     SPELL_CAUSE_FEAR,
     SPELL_LEDAS_LIQUEFACTION,
+    SPELL_PERFECTED_RADIANCE,
 },
 
 {   // Book of the Dragon

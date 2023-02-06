@@ -2690,26 +2690,38 @@ spret cast_dazzling_spray(int pow, coord_def aim, bool fail)
     return spret::success;
 }
 
-static bool _toxic_can_affect(const actor *act)
+static bool _can_affect(const actor *act, bool perfect)
 {
     if (act->is_monster() && act->as_monster()->submerged())
         return false;
 
     // currently monsters are still immune at rPois 1
-    return act->res_poison() < (act->is_player() ? 3 : 1);
+    return act->res_poison() < (act->is_player() ? 3 : (perfect ? 2 : 1));
+}
+static bool _perfected_can_affect(const actor *act) {
+    return _can_affect(act, true);
+}
+static bool _toxic_can_affect(const actor *act) {
+    return _can_affect(act, false);
 }
 
-spret cast_toxic_radiance(actor *agent, int pow, bool fail, bool mon_tracer)
+spret cast_toxic_radiance(actor *agent, int pow, bool fail, bool mon_tracer,
+                          bool perfect)
 {
     if (agent->is_player())
     {
         targeter_los hitfunc(&you, LOS_NO_TRANS);
         {
-            if (stop_attack_prompt(hitfunc, "poison", _toxic_can_affect))
+            if (stop_attack_prompt
+                (hitfunc, "poison",
+                 (perfect ? _perfected_can_affect : _toxic_can_affect)))
                 return spret::abort;
         }
         fail_check();
 
+        if (perfect) {
+            mass_enchantment(ENCH_POISON_VULN, pow, fail);
+        }
         if (!you.duration[DUR_TOXIC_RADIANCE])
             mpr("You begin to radiate toxic energy.");
         else
