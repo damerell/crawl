@@ -1347,7 +1347,7 @@ update_ui:
 }
 
 string divine_armoury() {
-    string retval = "The divine armoury contains ";
+    string retval = "Divine armoury: ";
     static CrawlVector &ammo_vec = 
     you.props[IHPIX_AMMO_KEY].get_vector();
     bool anyammo = false; string separator = "";
