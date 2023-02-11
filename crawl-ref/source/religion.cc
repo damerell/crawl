@@ -411,6 +411,11 @@ void god_power::display(bool gaining, const char* fmt) const
     {
         return;
     }
+    // Don't mention this if it's on XP cooldown
+    if ((abil == ABIL_IHPIX_SUPERIOR_WEAPON) &&
+        you.props.exists(IHPIX_XP_KEY)) {
+        return;
+        }
     const char* str = gaining ? gain : loss;
     if (isupper(str[0]))
         god_speaks(you.religion, str);
