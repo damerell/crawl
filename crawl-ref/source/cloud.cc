@@ -498,7 +498,7 @@ static int _cloud_dissipation_rate(const cloud_struct &cloud)
     // Player-created non-opaque clouds vanish instantly when outside LOS.
     // (Opaque clouds don't to prevent cloud suicide.)
     if (cloud.source == MID_PLAYER && !you.see_cell_no_trans(cloud.pos)
-        && !is_opaque_cloud(cloud.type))
+        && !is_opaque_cloud(cloud.type) && !(cloud.type == CLOUD_FOREST_FIRE))
     {
         return cloud.decay;
     }
