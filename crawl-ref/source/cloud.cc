@@ -978,10 +978,12 @@ static bool _actor_apply_cloud_side_effects(actor *act,
     monster *mons = !player? act->as_monster() : nullptr;
     switch (cloud.type)
     {
+    case CLOUD_FOREST_FIRE:
     case CLOUD_FIRE:
     case CLOUD_STEAM:
         if (player)
             maybe_melt_player_enchantments(BEAM_FIRE, final_damage);
+        break;
     case CLOUD_RAIN:
     case CLOUD_STORM:
         if (act->is_fiery() && final_damage > 0)
