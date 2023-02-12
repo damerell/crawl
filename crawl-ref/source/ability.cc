@@ -1175,6 +1175,12 @@ string get_ability_desc(const ability_type ability, bool need_title)
                   + " frowns upon the use of this ability.\n";
     }
 
+    if (((ability == ABIL_IHPIX_TEMP_WEAPON) ||
+         (ability == ABIL_IHPIX_SUPERIOR_WEAPON)) &&
+        you.props.exists(IHPIX_XP_KEY)) {
+        lookup +=
+        "\nYou have not yet slain enough foes to use this ability again.\n";
+    }
     ostringstream res;
     if (need_title)
         res << name << "\n\n";

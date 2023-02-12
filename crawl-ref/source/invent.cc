@@ -1779,7 +1779,11 @@ bool check_warning_inscriptions(const item_def& item,
         if (penance)
             prompt += " This could place you under penance!";
         if (item.props.exists(DIVINE_DROP_KEY)) {
-            prompt += " This divinely granted item will be lost.";
+            if (you.props.exists(IHPIX_XP_KEY)) {
+                prompt += " You have not slain enough foes to request another divine weapon.";
+            } else {
+                prompt += " This divinely granted item will be lost.";
+            }
         }
                 
         return yesno(prompt.c_str(), false, 'n')
