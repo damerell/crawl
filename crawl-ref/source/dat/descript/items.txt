@@ -1200,6 +1200,9 @@ send powerful shockwaves through the dungeon as the spirits seek solid form
 within its rock. Those creatures standing near to walls will be pelted with
 falling rubble as the rocky surface heaves and crumbles, while others may be
 swallowed up by cracks in the earth itself.
+
+This item can destroy rock walls, generating earth elementals. It can
+generate rubble from rock and stone walls. Other walls are unaffected.
 %%%%
 shadow dragon scales
 
