@@ -1458,7 +1458,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_NEQOXEC,
       {
-       { SPELL_PARALYSE, 19, MON_SPELL_MAGICAL },
+       { SPELL_CORRUPT_BODY, 19, MON_SPELL_MAGICAL },
        { SPELL_BRAIN_FEED, 19, MON_SPELL_MAGICAL },
        { SPELL_SUMMON_MINOR_DEMON, 19, MON_SPELL_MAGICAL },
       }
@@ -1503,7 +1503,7 @@ static const mon_spellbook mspell_list[] =
        { SPELL_ENERGY_BOLT, 13, MON_SPELL_MAGICAL },
        { SPELL_SLOW, 13, MON_SPELL_MAGICAL },
        { SPELL_CONFUSE, 13, MON_SPELL_MAGICAL },
-       { SPELL_CORRUPT_BODY, 26, MON_SPELL_MAGICAL },
+       { SPELL_CORRUPT_BODY, 13, MON_SPELL_MAGICAL },
        { SPELL_DIG, 13, MON_SPELL_MAGICAL },
       }
     },
@@ -1577,7 +1577,7 @@ static const mon_spellbook mspell_list[] =
     {  MST_DEMONSPAWN_CORRUPTER,
       {
        { SPELL_PLANEREND, 40, MON_SPELL_PRIEST },
-       { SPELL_CORRUPTING_PULSE, 20, MON_SPELL_PRIEST },
+       { SPELL_CORRUPT_BODY, 20, MON_SPELL_PRIEST },
       }
     },
 
@@ -1671,7 +1671,8 @@ static const mon_spellbook mspell_list[] =
       {
        { SPELL_BOLT_OF_FIRE, 32, MON_SPELL_MAGICAL },
        { SPELL_FIREBALL, 32, MON_SPELL_MAGICAL },
-       { SPELL_MALMUTATE, 16, MON_SPELL_MAGICAL },
+       { SPELL_CORRUPT_BODY, 12, MON_SPELL_MAGICAL },
+       { SPELL_MALMUTATE, 4, MON_SPELL_MAGICAL },
       }
     },
 
