@@ -1355,7 +1355,12 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
         if (!prevent && temp && !you.permabuff[PERMA_INFUSION] && 
             (you.max_magic_points <= spell_mana(SPELL_INFUSION))) {
             return "you would have no MP left to infuse your attacks with.";
-        } 
+        }
+        
+    case SPELL_INSULATION:
+        if (you.innate_mutation[MUT_SHOCK_RESISTANCE]) {
+            return "you are inherently resistant to electricity.";
+        }
 
     default:
         break;
