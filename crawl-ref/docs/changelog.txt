@@ -67,7 +67,9 @@ bcrawl:
 * Chaos Knights are always Xom's playthings.
 * Irradiate discourages repeated casts with Sap Magic.
 Gooncrawl:
-* Malmutate is gone; nexos got paralyse, cacos and shining eyes Corrupt Body, a  weaker Corrupting Pulse. OOFs got a new stat draining malmutate.
+* Malmutate is gone, replaced with Corrupt Body, a weaker Corrupting Pulse.
+  OOFs got a new stat draining malmutate and Corrupt Body.
+* Iskenderun's Undoing - cast 8 orbs of destruction at once.
 
 Stoat Soup 0.22 "Spirits of the Dead"
 -------------------------------------
