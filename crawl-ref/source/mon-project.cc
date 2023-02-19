@@ -628,15 +628,23 @@ move_again:
                     return true;
                 }
             }
-            else
-            {
-                if (mon.observable())
-                    mpr("The orbs collide in a blinding explosion!");
-                else
-                    mpr("You hear a loud magical explosion!");
-                noisy(40, pos);
+            else {
+                if (in_bounds(pos)) {
+                    if (mon.observable())
+                        mpr("The orbs collide in a blinding explosion!");
+                    else {
+                        if (!silenced(you.pos())) {
+                            mpr("You hear a loud magical explosion!");
+                        }
+                    }
+                    noisy(40, pos);
+                }
                 monster_die(*mons, KILL_DISMISSED, NON_MONSTER);
-                _iood_hit(mon, pos, true);
+                if (in_bounds(pos)) {
+                    _iood_hit(mon, pos, true);
+                } else {
+                    monster_die(mon, KILL_DISMISSED, NON_MONSTER);
+                }
                 return true;
             }
         }
