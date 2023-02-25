@@ -3367,6 +3367,9 @@ int monster::armour_class(bool calc_unid) const
     if (has_ench(ENCH_WITHDRAWN))
         ac += 10;
 
+    // armour from artefacts
+    ac += scan_artefacts(ARTP_AC);
+
     // various enchantments
     if (has_ench(ENCH_OZOCUBUS_ARMOUR))
         ac += 4 + get_hit_dice() / 3;
@@ -3484,6 +3487,9 @@ int monster::evasion(ev_ignore_type evit, const actor* /*act*/) const
         ASSERT(abs(jewellery_plus) < 30); // sanity check
         ev += jewellery_plus;
     }
+
+    // evasion from artefacts
+    ev += scan_artefacts(ARTP_EVASION);
 
     if (has_ench(ENCH_AGILE))
         ev += 5;
