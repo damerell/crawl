@@ -842,11 +842,11 @@ Targets made from rock, stone, ice or bone will cause a small explosion. Metal
 targets will cause a small but more damaging explosion, and targets made from
 crystal will cause a large and more damaging explosion.
 
-At 5 bars of power, this spell will sometimes destroy rock
-walls. Stone and metal walls are too sturdy to be
-destroyed. Conversely, crystal walls are particularly brittle and have
-a chance of being destroyed at any power level. Walls well-supported by
-surrounding walls will not be destroyed.
+At 35 power, this spell will sometimes destroy rock walls. Stone and
+metal walls are too sturdy to be destroyed. Conversely, crystal walls
+are particularly brittle and have a chance of being destroyed at any
+power level. Walls well-supported by surrounding walls will not be
+destroyed.
 %%%% Legendary Destruction spell
 
 Conjures two explosive magical effects in instant succession. The effects can
