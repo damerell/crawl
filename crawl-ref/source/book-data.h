@@ -263,11 +263,11 @@ static const vector<spell_type> spellbook_templates[] =
 
 {   // Book of Power
     SPELL_BATTLESPHERE,
-    SPELL_VENOM_BOLT,
     SPELL_BOLT_OF_MAGMA,
     SPELL_IRON_SHOT,
     SPELL_IOOD,
     SPELL_SPELLFORGED_SERVITOR,
+    SPELL_PERFECTED_RADIANCE,
 },
 
 {   // Book of Cantrips
@@ -301,7 +301,6 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_PORTAL_PROJECTILE,
     SPELL_CAUSE_FEAR,
     SPELL_LEDAS_LIQUEFACTION,
-    SPELL_PERFECTED_RADIANCE,
 },
 
 {   // Book of the Dragon
