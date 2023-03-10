@@ -320,11 +320,11 @@ bool melee_attack::handle_phase_dodged()
 
         if (defender->is_player())
         {
-            const bool using_lbl = defender->weapon()
-                && item_attack_skill(*defender->weapon()) == SK_LONG_BLADES;
+            const bool wpn_ok = defender->weapon()
+            && is_riposteful(*defender->weapon());
             const bool using_fencers
                 = player_equip_unrand(UNRAND_FENCERS);
-            const int chance = using_lbl + using_fencers;
+            const int chance = wpn_ok + using_fencers;
 
             // Vexingly this is not _quite_ you.incapacitated()
             if (!you.caught() && !you.asleep() && !you.cannot_move() && 
