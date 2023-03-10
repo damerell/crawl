@@ -756,18 +756,12 @@ void move_player_action(coord_def move)
 
             if (you.duration[DUR_NOXIOUS_BOG])
             {
-                if (cell_is_solid(old_pos))
-                    ASSERT(you.wizmode_teleported_into_rock);
-                else
-                    noxious_bog_cell(old_pos);
+                if (!cell_is_solid(old_pos)) noxious_bog_cell(old_pos);
             }
 
             if (you.duration[DUR_CLOUD_TRAIL])
             {
-                if (cell_is_solid(old_pos))
-                    ASSERT(you.wizmode_teleported_into_rock);
-                else
-                {
+                if (!cell_is_solid(old_pos)) {
                     auto cloud = static_cast<cloud_type>(
                         you.props[XOM_CLOUD_TRAIL_TYPE_KEY].get_int());
                     ASSERT(cloud != CLOUD_NONE);
