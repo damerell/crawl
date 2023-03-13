@@ -1151,6 +1151,31 @@ static string _handedness_string(const item_def &item)
     return description;
 }
 
+static string _stat_weight_string(const item_def &item) {
+    string description;
+    weapon_stat_weight weight = weapon_str_weight(&item);
+    int effective = calc_stat_to_dam_base(&item, false);
+    switch (weight) {
+    case ALL_STR:
+        description = "Damage inflicted with this weapon is based purely on Strength (you have " + to_string(you.strength()) + ").";
+        break;
+    case FAVOUR_STR:
+    default: // can't happen but suppresses compiler warning
+        description = "Damage inflicted with this weapon is based on Strength and Dexterity; ideally, you would have Strength equal to twice your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + to_string(effective) + ".";
+        break;
+    case FAVOUR_DEX:
+        description = "Damage inflicted with this weapon is based on Strength and Dexterity; ideally, you would have Dexterity equal to twice your Strength. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + to_string(effective) + ".";
+        break;
+    case BALANCED:
+        description = "Damage inflicted with this weapon is based on Strength and Dexterity; ideally, you would have Strength equal to your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + to_string(effective) + ".";
+        break;
+    case ALL_DEX:
+        description = "Damage inflicted with this weapon is based purely on Dexterity (you have " + to_string(you.dex()) + ").";
+        break;
+    }
+    return description;
+}
+
 static string _describe_weapon(const item_def &item, bool verbose)
 {
     string description;
@@ -1198,6 +1223,10 @@ static string _describe_weapon(const item_def &item, bool verbose)
                                " unaware enemies.";
             }
             break;
+        case SK_CROSSBOWS:
+        {
+            description += "\n\nThe tension of this bow can be easily adjusted to suit the strength of the wielder.";
+        }
         default:
             break;
         }
@@ -1408,6 +1437,7 @@ static string _describe_weapon(const item_def &item, bool verbose)
                          skill == SK_FIGHTING ? "buggy" : skill_name(skill));
 
         description += _handedness_string(item);
+        description += " " + _stat_weight_string(item);
 
         if (!you.could_wield(item, true) && crawl_state.need_save)
             description += "\nIt is too large for you to wield.";

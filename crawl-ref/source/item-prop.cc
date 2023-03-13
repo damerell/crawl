@@ -1937,6 +1937,57 @@ bool is_brandable_weapon(const item_def &wpn, bool allow_ranged, bool divine)
     return true;
 }
 
+weapon_stat_weight weapon_str_weight(const item_def *wpn) {
+    if (wpn == nullptr) return FAVOUR_STR;
+    switch (item_attack_skill(*wpn)) {
+    case SK_BOWS:
+        return BALANCED;
+    case SK_MACES_FLAILS:
+        return ALL_STR;
+    case SK_SHORT_BLADES:
+        return FAVOUR_DEX;
+    case SK_LONG_BLADES:
+        if (is_riposteful(*wpn)) return BALANCED;
+    default:
+        return FAVOUR_STR;
+    }
+    return FAVOUR_STR;
+}
+
+int calc_stat_to_dam_base(const item_def *weapon, bool random) {
+    weapon_stat_weight weight = weapon_str_weight(weapon);
+    double effective;
+    switch (weight) {
+    case ALL_STR:
+        return you.strength();
+    case FAVOUR_STR:
+    default: // can't happen but suppresses compiler warning
+        effective = (((double) you.strength() * 2.0 / 3.0) +
+                     ((double) you.dex() / 3.0) +
+                     0.5 * min((double)you.dex(),
+                               ((double)you.strength() /2.0)));
+        break;
+    case BALANCED:
+        effective = (((double) you.strength() / 2.0) +
+                     ((double) you.dex() / 2.0) +
+                     0.45 * min((double)you.dex(), (double)you.strength()));
+        break;
+    case FAVOUR_DEX:
+        effective = (((double) you.dex() * 2.0 / 3.0) +
+                     ((double) you.strength() / 3.0) +
+                     0.5 * min((double)you.strength(),
+                               ((double)you.dex() /2.0)));
+        break;
+    case ALL_DEX:
+        return you.dex();
+    }
+    if (random) {
+        return rand_round(effective);
+    } else {
+        return int(0.5 + effective);
+    }
+}
+
 /**
  * Returns the skill used by the given item to attack.
  *

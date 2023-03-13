@@ -1089,11 +1089,13 @@ string attack::defender_name(bool allow_reflexive)
 
 int attack::player_stat_modify_damage(int damage)
 {
+    const int dam_stat_val = calc_stat_to_dam_base(weapon, true);
+    mprf("dam stat %i", dam_stat_val);
     // At 10 strength, damage is multiplied by 1.0
     // Each point of strength over 10 increases this by 0.025 (2.5%),
     // strength below 10 reduces the multiplied by the same amount.
     // Minimum multiplier is 0.01 (1%) (reached at -30 str).
-    damage *= max(1.0, 75 + 2.5 * you.strength());
+    damage *= max(1.0, 75 + 2.5 * dam_stat_val);
     damage /= 100;
 
     return damage;

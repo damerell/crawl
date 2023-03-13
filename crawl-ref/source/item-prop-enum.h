@@ -782,3 +782,11 @@ enum food_type
     FOOD_ROYAL_JELLY,
     NUM_FOODS
 };
+
+enum weapon_stat_weight {
+    ALL_STR = 0,
+    FAVOUR_STR = 1,
+    BALANCED = 2,
+    FAVOUR_DEX = 3,
+    ALL_DEX = 4
+};
