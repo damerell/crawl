@@ -2192,6 +2192,9 @@ string spell_noise_string(spell_type spell, int chop_wiz_display_width)
     if (spell == SPELL_TORNADO)
         effect_noise = 15;
 
+    // Almost all the time, some of the orbs collide
+    if (spell == SPELL_ISKENDERUNS_UNDOING) effect_noise = 40;
+
     const int noise = max(casting_noise, effect_noise);
 
     const char* noise_descriptions[] =
