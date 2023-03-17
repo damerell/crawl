@@ -95,8 +95,10 @@ private:
     void do_passive_heat();
 #endif
     void emit_foul_stench();
-    /* Race Effects */
+    /* Retaliation Effects */
+    bool retaliation_appropriate();
     void do_minotaur_retaliation();
+    void maybe_riposte();
 
     /* Brand / Attack Effects */
     bool do_knockback(bool trample = true);

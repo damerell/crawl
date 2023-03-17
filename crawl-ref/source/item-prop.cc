@@ -1938,7 +1938,7 @@ bool is_brandable_weapon(const item_def &wpn, bool allow_ranged, bool divine)
 }
 
 weapon_stat_weight weapon_str_weight(const item_def *wpn) {
-    if (wpn == nullptr) return FAVOUR_STR;
+    if (wpn == nullptr) return BALANCED;
     switch (item_attack_skill(*wpn)) {
     case SK_BOWS:
         return BALANCED;
@@ -1962,21 +1962,19 @@ int calc_stat_to_dam_base(const item_def *weapon, bool random) {
         return you.strength();
     case FAVOUR_STR:
     default: // can't happen but suppresses compiler warning
-        effective = (((double) you.strength() * 2.0 / 3.0) +
-                     ((double) you.dex() / 3.0) +
-                     0.5 * min((double)you.dex(),
-                               ((double)you.strength() /2.0)));
+        effective = (you.strength() > you.dex() * 2) ?
+        ((0.5 * (double)you.strength()) + (5.0 * (double)(you.dex()) / 4.0)) :
+        ((double)you.strength() + ((double)you.dex()) / 4.0);
         break;
     case BALANCED:
-        effective = (((double) you.strength() / 2.0) +
-                     ((double) you.dex() / 2.0) +
-                     0.45 * min((double)you.dex(), (double)you.strength()));
+        effective = (3.0 * (double)(you.strength() + you.dex()) / 4.0) -
+        0.33 * (double(max(you.strength(), you.dex()) -
+                       min(you.strength(), you.dex())));
         break;
     case FAVOUR_DEX:
-        effective = (((double) you.dex() * 2.0 / 3.0) +
-                     ((double) you.strength() / 3.0) +
-                     0.5 * min((double)you.strength(),
-                               ((double)you.dex() /2.0)));
+        effective = (you.dex() > you.strength() * 2) ?
+        ((0.5 * (double)you.dex()) + (5.0 * (double)you.strength() / 4.0)) :
+        ((double)you.dex() + ((double)you.strength()) / 4.0);
         break;
     case ALL_DEX:
         return you.dex();

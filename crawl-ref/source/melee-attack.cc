@@ -296,16 +296,7 @@ bool melee_attack::handle_phase_dodged()
     if (defender->is_player())
         count_action(CACT_DODGE, DODGE_EVASION);
 
-    if (attacker != defender && adjacent(defender->pos(), attack_position)
-        && attacker->alive() && defender->can_see(*attacker)
-        && !defender->cannot_act() && !defender->confused()
-        && (!defender->is_player() || (!you.duration[DUR_LIFESAVING]
-                                       && !attacker->as_monster()->neutral()))
-        && !mons_aligned(attacker, defender) // confused friendlies attacking
-        // Retaliation only works on the first attack in a round.
-        // FIXME: player's attack is -1, even for auxes
-        && effective_attack_number <= 0)
-    {
+    if (retaliation_appropriate()) {
         if (defender->is_player() ?
                 you.species == SP_MINOTAUR :
                 mons_species(mons_base_type(*defender->as_monster()))
@@ -320,18 +311,7 @@ bool melee_attack::handle_phase_dodged()
 
         if (defender->is_player())
         {
-            const bool wpn_ok = defender->weapon()
-            && is_riposteful(*defender->weapon());
-            const bool using_fencers
-                = player_equip_unrand(UNRAND_FENCERS);
-            const int chance = wpn_ok + using_fencers;
-
-            // Vexingly this is not _quite_ you.incapacitated()
-            if (!you.caught() && !you.asleep() && !you.cannot_move() && 
-                !you.confused() && x_chance_in_y(chance, 3) 
-                && !is_riposte) // no ping-pong!
-                riposte();
-
+            maybe_riposte();
             // Retaliations can kill!
             if (!attacker->alive())
                 return false;
@@ -339,6 +319,33 @@ bool melee_attack::handle_phase_dodged()
     }
 
     return true;
+}
+
+bool melee_attack::retaliation_appropriate() {
+    return (attacker != defender && adjacent(defender->pos(), attack_position)
+            && attacker->alive() && defender->can_see(*attacker)
+            && !defender->cannot_act() && !defender->confused()
+            && (!defender->is_player() || (!you.duration[DUR_LIFESAVING] &&
+                                           !attacker->as_monster()->neutral()))
+            // confused friendlies attacking
+            && !mons_aligned(attacker, defender) 
+            // Retaliation only works on the first attack in a round.
+            // FIXME: player's attack is -1, even for auxes
+            && effective_attack_number <= 0);
+}
+
+void melee_attack::maybe_riposte() {
+    const bool wpn_ok = defender->weapon()
+    && is_riposteful(*defender->weapon());
+    const bool using_fencers // we already know the defender is the player
+    = player_equip_unrand(UNRAND_FENCERS);
+    const int chance = wpn_ok + using_fencers;
+    
+    // Vexingly this is not _quite_ you.incapacitated()
+    if (!you.caught() && !you.asleep() && !you.cannot_move() && 
+        !you.confused() && x_chance_in_y(chance, 3) 
+        && !is_riposte) // no ping-pong!
+        riposte();
 }
 
 void melee_attack::apply_black_mark_effects()
@@ -873,10 +880,14 @@ bool melee_attack::attack()
            ev_margin = AUTOMATIC_HIT;
     }
 
-    if (shield_blocked)
+    if (shield_blocked) {
         handle_phase_blocked();
-    else
-    {
+        if (retaliation_appropriate() && defender->is_player() &&
+            (ev_margin < 0)) {
+            maybe_riposte();
+            if (!attacker->alive()) return false;
+        }
+    } else {
         if (attacker != defender && adjacent(defender->pos(), attack_position)
             && !is_riposte)
         {

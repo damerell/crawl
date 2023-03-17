@@ -126,8 +126,7 @@ speed in melee combat when barehanded. It also allows you to occasionally punch
 with your off hand as an additional melee attack, provided your hand is free to
 do so.
 
-Unarmed Combat favours Strength; ideally, your Strength would be twice your
-Dexterity when using it.
+Unarmed Combat uses both Strength and Dexterity; ideally, they would be equal.
 %%%%
 Spellcasting
 

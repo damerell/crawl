@@ -25,6 +25,9 @@ Stoat Soup 0.23 "The Masque of the Red Death"
 * Ihp'ix, a god for ranged weapons.
 * Olgreb's Perfected Radiance, an improved version of OTR in an effort to
   help out poison magic.
+* 2h melee weapon damage increased. Big long blades don't riposte, rapiers
+  do. Simplified strength weighting returns. Riposte on a block if you would
+  have dodged.
 
 Vanilla changes messed around with
 ----------------------------------
