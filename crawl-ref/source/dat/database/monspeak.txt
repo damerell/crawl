@@ -7209,7 +7209,7 @@ w:2
 %%%%
 _orc_priest_joke_
 #about 4x the weight of jokes
-w:28
+w:32
 __NONE
 
 w:1
@@ -7232,6 +7232,9 @@ w:1
 
 w:1
 @The_monster@ says, "What's green and smitey? An orc high priest! HAR HAR HAR!"
+
+w:1
+@The_monster says, "How many orc priests does it take to turn a thumbscrew? Two - one to turn it and one to laugh! HAR HAR HAR!"
 %%%%
 related beogh orc high priest
 
