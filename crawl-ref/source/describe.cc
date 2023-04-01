@@ -4399,7 +4399,6 @@ string serpent_of_hell_flavour(monster_type m)
 void get_monster_db_desc(const monster_info& mi, describe_info &inf,
                          bool &has_stat_desc, bool force_seen)
 {
-    monster& mons = *monster_at(mi.pos);
     if (inf.title.empty())
         inf.title = getMiscString(mi.common_name(DESC_DBNAME) + " title");
     if (inf.title.empty())
@@ -4494,20 +4493,25 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
 
     case MONS_PLAYER_GHOST:
         inf.body << "The apparition of " << get_ghost_description(mi) << ".\n";
-        if (mons.ghost->slayer != MONS_NO_MONSTER) {
-            inf.body << "Slain by " << 
-                mons_type_name(mons.ghost->slayer,DESC_A) <<
-                ", it craves vengeance; it ";
-        } else {
-            inf.body << "It ";
-        }
-        if (mons.attitude == ATT_HOSTILE) {
-            inf.body << "presently seems" 
-                     << ((mons.ghost->slayer != MONS_NO_MONSTER) ? 
-                         ", however, " : " ")
-                     << "to be furious with you.\n";
-        } else {
-            inf.body << "bears you no particular rancour, but may attack anything that stands in its way.\n";
+        if (!(mi.pos.origin() || !monster_at(mi.pos))) {
+            monster& mons = *monster_at(mi.pos);
+            if (you.can_see(mons)) {
+                if (mons.ghost->slayer != MONS_NO_MONSTER) {
+                    inf.body << "Slain by " << 
+                    mons_type_name(mons.ghost->slayer,DESC_A) <<
+                    ", it craves vengeance; it ";
+                } else {
+                    inf.body << "It ";
+                }
+                if (mons.attitude == ATT_HOSTILE) {
+                    inf.body << "presently seems" 
+                             << ((mons.ghost->slayer != MONS_NO_MONSTER) ? 
+                                 ", however, " : " ")
+                             << "to be furious with you.\n";
+                } else {
+                    inf.body << "bears you no particular rancour, but may attack anything that stands in its way.\n";
+                }
+            }
         }
         break;
 
@@ -4626,7 +4630,8 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
         return;
     if (mi.pos.origin() || !monster_at(mi.pos))
         return; // not a real monster
-
+    monster& mons = *monster_at(mi.pos);
+    
     if (mons.has_originating_map())
     {
         inf.body << make_stringf("\nPlaced by map: %s",
