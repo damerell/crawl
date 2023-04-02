@@ -1279,7 +1279,8 @@ int player_hunger_rate(bool temp)
     if (temp &&
         (you.hp < you.hp_max) &&
         ((you.permabuff_working(PERMA_REGEN) &&
-          you.props[REGEN_RESERVE].get_int() > 0) ||
+          you.props[REGEN_RESERVE].get_int() > 0 &&
+          (!you.get_mutation_level(MUT_MAGIC_ATTUNEMENT))) ||
          you.duration[DUR_TROGS_HAND]))
     {
         hunger += 4;
