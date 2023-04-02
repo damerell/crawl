@@ -1326,12 +1326,16 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
             return "you can't move.";
         break;
 
+    case SPELL_STICKS_TO_SNAKES:
+        if (have_passive(passive_t::ihpix_gather)) {
+            return "your god gathers up all arrows you see.";
+        }
+        // fall through
     case SPELL_ANIMATE_DEAD:
     case SPELL_ANIMATE_SKELETON:
     case SPELL_DEATH_CHANNEL:
     case SPELL_SIMULACRUM:
     case SPELL_INFESTATION:
-    case SPELL_STICKS_TO_SNAKES:
     case SPELL_TUKIMAS_DANCE:
         if (you.get_mutation_level(MUT_NO_LOVE))
             return "you cannot coerce anything to obey you.";
