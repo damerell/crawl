@@ -1124,32 +1124,6 @@ spret cast_summon_guardian_golem(int pow, god_type god, bool fail)
 }
 
 /**
- * Choose a type of imp to summon with Call Imp.
- *
- * @return      An appropriate imp type.
- */
-static monster_type _get_imp_type()
-{
-    if (x_chance_in_y(5, 18))
-        return MONS_WHITE_IMP;
-
-    // 3/13 * 13/18 = 1/6 chance of one of these two.
-    if (x_chance_in_y(3, 13))
-        return one_chance_in(3) ? MONS_IRON_IMP : MONS_SHADOW_IMP;
-
-    // 5/9 chance of getting, regrettably, a crimson imp.
-    return MONS_CRIMSON_IMP;
-}
-
-static map<monster_type, const char*> _imp_summon_messages = {
-    { MONS_WHITE_IMP,
-        "A beastly little devil appears in a puff of frigid air." },
-    { MONS_IRON_IMP, "A metallic apparition takes form in the air." },
-    { MONS_SHADOW_IMP, "A shadowy apparition takes form in the air." },
-    { MONS_CRIMSON_IMP, "A beastly little devil appears in a puff of flame." },
-};
-
-/**
  * Cast the spell Call Imp, summoning a friendly imp nearby.
  *
  * @param pow   The spellpower at which the spell is being cast.
@@ -1161,18 +1135,14 @@ spret cast_call_imp(int pow, god_type god, bool fail)
 {
     fail_check();
 
-    const monster_type imp_type = _get_imp_type();
+    const int dur = min(2 + div_rand_round(random2(1 + pow), 5), 6);
 
-    const int dur = min(2 + (random2(pow) / 4), 6);
-
-    mgen_data imp_data = _pal_data(imp_type, dur, god, SPELL_CALL_IMP);
-    imp_data.flags |= MG_FORCE_BEH; // disable player_angers_monster()
+    mgen_data imp_data = _pal_data(MONS_CERULEAN_IMP, dur, god, SPELL_CALL_IMP);
     if (monster *imp = create_monster(imp_data))
     {
-        mpr(_imp_summon_messages[imp_type]);
-
-        if (!player_angers_monster(imp))
-            _monster_greeting(imp, "_friendly_imp_greeting");
+        mpr("A tiny devil pulls itself out of the air.");
+        imp->weapon()->plus = div_rand_round(pow, 10) - 4;
+        _monster_greeting(imp, "_friendly_imp_greeting");
     }
     else
         canned_msg(MSG_NOTHING_HAPPENS);
