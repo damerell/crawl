@@ -576,6 +576,9 @@ enum monster_type                      // menv[].type
     MONS_UFETUBUS,
     MONS_IRON_IMP,
     MONS_SHADOW_IMP,
+#if TAG_MAJOR_VERSION > 34
+    MONS_CERULEAN_IMP,
+#endif
     MONS_RED_DEVIL,
     MONS_ROT_DEVIL,
     MONS_HELLWING,
@@ -1049,6 +1052,7 @@ enum monster_type                      // menv[].type
     MONS_CACTUS_GIANT,
     MONS_INUGAMI,
     MONS_ANGHARAD,
+    MONS_CERULEAN_IMP,
 #endif
 
     NUM_MONSTERS,               // used for polymorph
