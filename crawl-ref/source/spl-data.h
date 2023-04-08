@@ -887,7 +887,7 @@ static const struct spell_desc spelldata[] =
 #endif
 
 {
-    SPELL_DISPEL_UNDEAD, "Dispel Undead",
+    SPELL_DISPEL_UNDEAD, "Velakast's Disruption",
     SPTYP_NECROMANCY,
     SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
     5,
@@ -4340,7 +4340,7 @@ static const struct spell_desc spelldata[] =
 },
 
 {
-    SPELL_PERFECTED_RADIANCE, "Olgreb's Perfected Radiance",
+    SPELL_PERFECTED_RADIANCE, "Velakast's Perfected Radiance",
     SPTYP_POISON | SPTYP_HEXES,
     SPFLAG_AREA,
     7,
