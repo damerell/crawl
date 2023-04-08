@@ -120,7 +120,7 @@ bool ranged_attack::attack()
     if (defender->missile_deflection() && attacker->is_player() &&
         (launch_type == launch_retval::LAUNCHED) && you_worship(GOD_IHPIX) &&
         have_passive(passive_t::ihpix_suppress) &&
-        x_chance_in_y(you.piety, MAX_PIETY)) {
+        x_chance_in_y(you.piety, MAX_PIETY) && defender->is_monster()) {
         monster* victim = defender->as_monster();
         if (victim->has_ench(ENCH_DEFLECT_MISSILES) ||
             victim->has_ench(ENCH_REPEL_MISSILES)) {
