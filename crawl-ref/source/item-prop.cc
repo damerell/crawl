@@ -1979,6 +1979,14 @@ int calc_stat_to_dam_base(const item_def *weapon, bool random) {
     case ALL_DEX:
         return you.dex();
     }
+    double bonus = (weight == FAVOUR_DEX) ? effective - you.dex() :
+    effective - you.strength();
+    if (bonus <= 1.0) {
+        effective -= bonus;
+    } else {
+        double subbonus = max (1.0, ((bonus > 4.0) ? 4.0 : bonus));
+        effective -= subbonus / 2.0;
+    }
     if (random) {
         return rand_round(effective);
     } else {

@@ -1151,26 +1151,27 @@ static string _handedness_string(const item_def &item)
     return description;
 }
 
-static string _stat_weight_string(const item_def &item) {
+static string _stat_weight_string(const item_def &item, bool thrown = false) {
     string description;
     weapon_stat_weight weight = weapon_str_weight(&item);
-    int effective = calc_stat_to_dam_base(&item, false);
+    string effective = to_string(calc_stat_to_dam_base(&item, false));
+    string throwstring = thrown ? "by throwing this item" : "with this weapon";
     switch (weight) {
     case ALL_STR:
-        description = "Damage inflicted with this weapon is based purely on Strength (you have " + to_string(you.strength()) + ").";
+        description = "Damage inflicted " + throwstring + " is based purely on Strength (you have " + to_string(you.strength()) + ").";
         break;
     case FAVOUR_STR:
     default: // can't happen but suppresses compiler warning
-        description = "Damage inflicted with this weapon is based on Strength and Dexterity; ideally, you would have Strength equal to twice your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + to_string(effective) + ".";
+        description = "Damage inflicted " + throwstring + " is based on Strength and Dexterity; ideally, you would have Strength equal to twice your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
         break;
     case FAVOUR_DEX:
-        description = "Damage inflicted with this weapon is based on Strength and Dexterity; ideally, you would have Dexterity equal to twice your Strength. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + to_string(effective) + ".";
+        description = "Damage inflicted " + throwstring + " is based on Strength and Dexterity; ideally, you would have Dexterity equal to twice your Strength. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
         break;
     case BALANCED:
-        description = "Damage inflicted with this weapon is based on Strength and Dexterity; ideally, you would have Strength equal to your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + to_string(effective) + ".";
+        description = "Damage inflicted " + throwstring + " is based on Strength and Dexterity; ideally, you would have Strength equal to your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
         break;
     case ALL_DEX:
-        description = "Damage inflicted with this weapon is based purely on Dexterity (you have " + to_string(you.dex()) + ").";
+        description = "Damage inflicted " + throwstring + " is based purely on Dexterity (you have " + to_string(you.dex()) + ").";
         break;
     }
     return description;
@@ -1548,6 +1549,7 @@ static string _describe_ammo(const item_def &item)
         }
     }
 
+    string throwstring = "";
     const int dam = property(item, PWPN_DAMAGE);
     const bool player_throwable = is_throwable(&you, item, false);
     if (player_throwable)
@@ -1574,6 +1576,7 @@ static string _describe_ammo(const item_def &item)
         }
         if (could_set_target)
             _append_skill_target_desc(description, SK_THROWING, target_skill);
+        throwstring += "\n\n" + _stat_weight_string(item, true);
     }
 
     if (ammo_always_destroyed(item))
@@ -1581,6 +1584,8 @@ static string _describe_ammo(const item_def &item)
     else if (!ammo_never_destroyed(item))
         description += "\n\nIt may be destroyed on impact.";
 
+    if (player_throwable) description += throwstring;
+    
     return description;
 }
 
