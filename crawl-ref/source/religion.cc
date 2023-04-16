@@ -3907,6 +3907,7 @@ static void _join_ihpix()
     }
     ihpix_eat_inventory();
     you.props[IHPIX_USE_BULLETS] = (ihpix_quan_ammo(MI_SLING_BULLET) > 0);
+    you.train[SK_THROWING] = you.train_alt[SK_THROWING] = TRAINING_DISABLED;
 }
 
 /// What special things happen when you join a god?
@@ -3922,6 +3923,8 @@ static const map<god_type, function<void ()>> on_join = {
                 you.props.erase("sticky_flame_source");
                 you.props.erase("sticky_flame_aux");
             }
+            you.train[SK_FIRE_MAGIC] = you.train_alt[SK_FIRE_MAGIC] =
+            TRAINING_DISABLED;
         }},
     { GOD_FEDHAS, []() {
         mprf(MSGCH_MONSTER_ENCHANT, "The plants of the dungeon cease their "
@@ -4050,7 +4053,8 @@ bool join_religion(god_type which_god)
     for (ability_type abil : abilities)
         you.start_train.insert(abil_skill(abil));
     if (you_worship(GOD_IHPIX)) you.stop_train.insert(SK_THROWING);
-    update_can_train();
+    if (you_worship(GOD_DITHMENOS)) you.stop_train.insert(SK_FIRE_MAGIC);
+    update_can_train(); reset_training(); check_selected_skills();
 
     // now that you have a god, you can't save any piety from your prev god
     you.previous_good_god = GOD_NO_GOD;

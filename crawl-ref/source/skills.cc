@@ -1870,6 +1870,7 @@ bool is_useless_skill(skill_type skill)
         || (skill == SK_EVOCATIONS && you.get_mutation_level(MUT_NO_ARTIFICE))
         || (skill == SK_STEALTH && you.get_mutation_level(MUT_NO_STEALTH))
         || (skill == SK_THROWING && in_good_standing(GOD_IHPIX))
+        || (skill == SK_FIRE_MAGIC && in_good_standing(GOD_DITHMENOS))
     )
     {
         return true;
