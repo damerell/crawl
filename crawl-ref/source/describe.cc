@@ -1162,10 +1162,10 @@ static string _stat_weight_string(const item_def &item, bool thrown = false) {
         break;
     case FAVOUR_STR:
     default: // can't happen but suppresses compiler warning
-        description = "Damage inflicted " + throwstring + " is based on Strength and Dexterity; ideally, you would have Strength equal to twice your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
+        description = "Damage inflicted " + throwstring + " favours Strength, but some Dexterity is needed; ideally, at least half your Strength. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
         break;
     case FAVOUR_DEX:
-        description = "Damage inflicted " + throwstring + " is based on Strength and Dexterity; ideally, you would have Dexterity equal to twice your Strength. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
+        description = "Damage inflicted " + throwstring + " favours Dexterity, but some Strength is needed; ideally, at least half your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
         break;
     case BALANCED:
         description = "Damage inflicted " + throwstring + " is based on Strength and Dexterity; ideally, you would have Strength equal to your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";

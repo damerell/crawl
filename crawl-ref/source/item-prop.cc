@@ -1956,36 +1956,33 @@ weapon_stat_weight weapon_str_weight(const item_def *wpn) {
 
 int calc_stat_to_dam_base(const item_def *weapon, bool random) {
     weapon_stat_weight weight = weapon_str_weight(weapon);
-    double effective;
+    double youstr = you.strength(); double youdex = you.dex();
+    double matcher; double matchee;  bool balbonus = false;
     switch (weight) {
     case ALL_STR:
         return you.strength();
     case FAVOUR_STR:
     default: // can't happen but suppresses compiler warning
-        effective = (you.strength() > you.dex() * 2) ?
-        ((0.5 * (double)you.strength()) + (5.0 * (double)(you.dex()) / 4.0)) :
-        ((double)you.strength() + ((double)you.dex()) / 4.0);
+        matcher = youstr; matchee = youdex * 2.0;
         break;
     case BALANCED:
-        effective = (3.0 * (double)(you.strength() + you.dex()) / 4.0) -
-        0.33 * (double(max(you.strength(), you.dex()) -
-                       min(you.strength(), you.dex())));
+        if (youdex > youstr) {
+            double thumb = youdex; youdex = youstr; youstr = thumb;
+        }
+        matcher = youstr; matchee = (youdex * 3.0) / 2.0;
+        balbonus = true;
         break;
     case FAVOUR_DEX:
-        effective = (you.dex() > you.strength() * 2) ?
-        ((0.5 * (double)you.dex()) + (5.0 * (double)you.strength() / 4.0)) :
-        ((double)you.dex() + ((double)you.strength()) / 4.0);
+        matcher = youdex; matchee = youstr * 2.0;
         break;
     case ALL_DEX:
         return you.dex();
     }
-    double bonus = (weight == FAVOUR_DEX) ? effective - you.dex() :
-    effective - you.strength();
-    if (bonus <= 1.0) {
-        effective -= bonus;
-    } else {
-        double subbonus = max (1.0, ((bonus > 4.0) ? 4.0 : bonus));
-        effective -= subbonus / 2.0;
+    double effective = ((matcher > matchee) ?
+                        matchee + (matcher - matchee) / 3.0 :
+                        matcher);
+    if (balbonus && (matcher < matchee)) {
+        effective += (matchee - matcher) / 3.0;
     }
     if (random) {
         return rand_round(effective);
