@@ -1042,7 +1042,7 @@ int spell_effect_noise(spell_type spell)
     return _seekspell(spell)->effect_noise;
 }
 
-static bool _spell_is_empowered(spell_type spell)
+bool spell_is_empowered(spell_type spell)
 {
     switch (spell)
     {
@@ -1417,7 +1417,7 @@ int spell_highlight_by_utility(spell_type spell, int default_colour,
     if (spell_is_useless(spell, transient))
         return COL_USELESS;
 
-    if (_spell_is_empowered(spell))
+    if (spell_is_empowered(spell))
         return COL_EMPOWERED;
 
     return default_colour;
