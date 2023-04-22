@@ -1,5 +1,5 @@
 enum: SP_FAERIE_DRAGON
-monster: MONS_ACID_DRAGON
+monster: MONS_FAERIE_DRAGON
 name: "Faerie Dragon"
 short_name: "FD"
 adjective: "Faerie"
