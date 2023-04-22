@@ -482,6 +482,8 @@ brooch of Shielding
 A brooch with an intricate inlaid design, providing a range of magical
 protections. Back in the good old days, every adventurer had one of these handy
 devices. That, and a pony.
+
+It occupies the amulet slot.
 %%%%
 robe of Clouds
 
