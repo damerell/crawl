@@ -243,8 +243,8 @@ NAME:    abyss_greek_temple
 TAGS:    no_rotate
 NSUBST:  . = 3:1 / 2:2 / *:.
 SUBST:   ' = .
-COLOUR:  " : white w:5 / none
-FTILE:   "ABCDEFGHIJKLMNOPRQSTUV : floor_limestone w:5 / floor_nerves
+COLOUR:  "ABCDEFGHIJKLMNOPRQSTUVWXY : white w:5 / none
+FTILE:   "ABCDEFGHIJKLMNOPRQSTUVWXY : floor_limestone w:5 / floor_nerves
 SUBST:   " = .
 MONS:    plant, bush
 # Disable Wu in the stable version.
@@ -252,7 +252,7 @@ MONS:    plant, bush
 SHUFFLE: ABCDEFHIJKLMNOPQRSTU
 SUBST:   V = .
 : else
-SHUFFLE: ABCDEFHIJKLMNOPQRSTUV
+SHUFFLE: ABCDEFHIJKLMNOPQRSTUVWXY
 : end
 KFEAT:   A = altar_makhleb
 KFEAT:   B = altar_xom
@@ -275,16 +275,19 @@ KFEAT:   S = altar_qazlal
 KFEAT:   T = altar_uskayaw
 KFEAT:   U = altar_hepliaklqana
 KFEAT:   V = altar_wu_jian
+KFEAT:   W = altar_ihpix
+KFEAT:   X = altar_ru
+KFEAT:   Y = altar_lugonu
 MAP
 ''''''.................
 ''ccccccccccccccccccc..
-''G'c"""D"""""""P"""c..
+''G'c"""D"""Y"""P"""c..
 ''''c"A"""I"""L"""S"c..
 ''G'c"""E"""V"""Q"""ct.
 ''''+"B"""J"""N"""T"c..
-''G'c"""F"""""""R"""c..
+''G'c"""F"""W"""R"""c..
 ''''c"C"""K"""O"""U"c.t
-''G'c"""H"""""""S"""c..
+''G'c"""H"""X"""S"""c..
 ''ccccccccccccccccccc..
 .......t........ttt....
 ENDMAP
