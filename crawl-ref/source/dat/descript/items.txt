@@ -734,6 +734,10 @@ potion of cancellation
 A potion which ends most magical effects, good or bad, affecting one who drinks
 it. It also reduces magical contamination.
 %%%%
+potion of cure mutation
+
+A potion created by the grace of Zin which removes a number of mutations when consumed.
+%%%%
 potion of curing
 
 A potion which heals some wounds, clears the mind and cures poison and disease.

@@ -701,6 +701,68 @@ static bool _can_mutate(string *reason)
     return false;
 }
 
+class PotionCureMutation : public PotionEffect
+{
+private:
+    PotionCureMutation() : PotionEffect(POT_CURE_MUTATION) { }
+    DISALLOW_COPY_AND_ASSIGN(PotionCureMutation);
+public:
+    static const PotionCureMutation &instance()
+    {
+        static PotionCureMutation inst; return inst;
+    }
+
+    bool can_quaff(string *reason = nullptr) const override
+    {
+        if (!_can_mutate(reason))
+            return false;
+
+        if (!you.how_mutated(false, false, false))
+        {
+            if (reason)
+            {
+                *reason = make_stringf("You have no %smutations to cure!",
+                                       you.how_mutated(false, false, true)
+                                       ? "permanent " : "");
+            }
+            return false;
+        }
+        return true;
+    }
+
+    bool quaff(bool was_known) const override
+    {
+        if (was_known && !check_known_quaff())
+            return false;
+
+        if (was_known
+            && you.how_mutated(false, true) > you.how_mutated(false, true, false)
+            && !yesno("Your transient mutations will not be cured; Quaff anyway?",
+                      false, 'n'))
+        {
+            canned_msg(MSG_OK);
+            return false;
+        }
+        effect();
+        return true;
+    }
+
+    bool effect(bool=true, int=40, bool=true) const override
+    {
+        mpr("It has a very clean taste.");
+        bool mutated = false;
+        for (int i = 0; i < 7; i++)
+        {
+            if (random2(9) >= i)
+            {
+                mutated |= delete_mutation(RANDOM_MUTATION,
+                                           "potion of mutation", false);
+            }
+        }
+        return mutated;
+    }
+};
+
 class PotionResistance : public PotionEffect
 {
 private:
@@ -1143,68 +1205,6 @@ public:
     }
 };
 
-class PotionCureMutation : public PotionEffect
-{
-private:
-    PotionCureMutation() : PotionEffect(POT_CURE_MUTATION) { }
-    DISALLOW_COPY_AND_ASSIGN(PotionCureMutation);
-public:
-    static const PotionCureMutation &instance()
-    {
-        static PotionCureMutation inst; return inst;
-    }
-
-    bool can_quaff(string *reason = nullptr) const override
-    {
-        if (!_can_mutate(reason))
-            return false;
-
-        if (!you.how_mutated(false, false, false))
-        {
-            if (reason)
-            {
-                *reason = make_stringf("You have no %smutations to cure!",
-                                       you.how_mutated(false, false, true)
-                                       ? "permanent " : "");
-            }
-            return false;
-        }
-        return true;
-    }
-
-    bool quaff(bool was_known) const override
-    {
-        if (was_known && !check_known_quaff())
-            return false;
-
-        if (was_known
-            && you.how_mutated(false, true) > you.how_mutated(false, true, false)
-            && !yesno("Your transient mutations will not be cured; Quaff anyway?",
-                      false, 'n'))
-        {
-            canned_msg(MSG_OK);
-            return false;
-        }
-        effect();
-        return true;
-    }
-
-    bool effect(bool=true, int=40, bool=true) const override
-    {
-        mpr("It has a very clean taste.");
-        bool mutated = false;
-        for (int i = 0; i < 7; i++)
-        {
-            if (random2(9) >= i)
-            {
-                mutated |= delete_mutation(RANDOM_MUTATION,
-                                           "potion of mutation", false);
-            }
-        }
-        return mutated;
-    }
-};
-
 class PotionBeneficialMutation : public PotionEffect
 {
 private:
@@ -1318,9 +1318,7 @@ static const PotionEffect* potion_effects[] =
     &PotionPoison::instance(),
 #endif
     &PotionBerserk::instance(),
-#if TAG_MAJOR_VERSION == 34
     &PotionCureMutation::instance(),
-#endif
     &PotionMutation::instance(),
     &PotionResistance::instance(),
     &PotionBlood::instance(),

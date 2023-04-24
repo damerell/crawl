@@ -4675,8 +4675,7 @@ void unmarshallItem(reader &th, item_def &item)
         item.sub_type = POT_DEGENERATION;
     }
 
-    if (item.is_type(OBJ_POTIONS, POT_CURE_MUTATION)
-        || item.is_type(OBJ_POTIONS, POT_BENEFICIAL_MUTATION))
+    if (item.is_type(OBJ_POTIONS, POT_BENEFICIAL_MUTATION))
     {
         item.sub_type = POT_MUTATION;
     }

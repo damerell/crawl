@@ -855,8 +855,7 @@ i-magic POT_MAGIC
 i-restore-abilities POT_REMOVEME6
 i-strong-poison POT_REMOVEME7
 i-berserk-rage POT_BERSERK_RAGE
-# please remove POT_CURE_MUTATION when TAG_MAJOR_VERSION is bumped
-i-cure-mutation POT_REMOVEME8
+i-cure-mutation POT_CURE_MUTATION
 i-mutation POT_MUTATION
 i-resistance POT_RESISTANCE
 i-blood POT_BLOOD
