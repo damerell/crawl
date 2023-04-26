@@ -1200,7 +1200,7 @@ static const mon_spellbook mspell_list[] =
 
     { MST_THORN_LOTUS,
       {
-	  { SPELL_THORN_VOLLEY, 80, MON_SPELL_NATURAL },
+	  { SPELL_THORN_VOLLEY, 160, MON_SPELL_NATURAL },
       }
     },
 
@@ -1798,7 +1798,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_BRAIN_WORM,
       {
-       { SPELL_BRAIN_FEED, 55, MON_SPELL_MAGICAL },
+       { SPELL_BRAIN_FEED, 80, MON_SPELL_MAGICAL },
       }
     },
 
