@@ -379,15 +379,16 @@ void spell_drop_permabuffs(bool turn_off, bool end_durs, bool increase_durs,
 }
 
 // Why is this in spl-selfench? Hysterical raisins
-bool permabuff_fail_check(permabuff_type pb, const string &message, 
+bool permabuff_fail_check(const permabuff_type pb, const string &message,
                           bool ignoredur) {
-    permabuff_track(pb);
+    int dur = permabuff_track(pb);
     spell_type spell = permabuff_spell[pb];
+    // check for miscast
     if (ignoredur ||
-        one_chance_in((pb == PERMA_BATTLESPHERE) ?
-                      battlesphere_max_charges() :
-                      (BASELINE_DELAY * nominal_duration(spell)) /
-                      (max(1, you.time_taken) * pb_dur_fudge[pb]))) {
+        ((dur > 0) &&
+         one_chance_in((pb == PERMA_BATTLESPHERE) ?
+                       battlesphere_max_charges() :
+                       ((BASELINE_DELAY * nominal_duration(spell)) / dur)))) {
         int fail = failure_check(spell, true);
         if (fail) {
             mprf(MSGCH_DURATION, "%s", message.c_str());

@@ -3192,7 +3192,7 @@ static string _player_spell_desc(spell_type spell)
                     << "\n";
     }
     if (is_permabuff(spell)) {
-        description << "\nThis enchantment lasts indefinitely, until dispelled by the caster. ";
+        description << "\nThis enchantment lasts indefinitely, until dispelled by the caster, but it will work less effectively with a high spell failure chance. ";
         if (you.has_permabuff(spell)) {
             description <<
                 "Recast this spell to dispel the permanent enchantment. ";

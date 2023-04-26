@@ -2738,7 +2738,8 @@ item_def* monster_die(monster& mons, killer_type killer,
                           500)) {
             if (!permabuff_fail_check
                 (PERMA_DCHAN,
-                 "You fail to channel the dead.")) {
+                 "You fail to channel necromantic energy into the slain.") &&
+                just_check(SPELL_DEATH_CHANNEL)) {
                 _make_derived_undead(&mons, !death_message, false);
             }
         }

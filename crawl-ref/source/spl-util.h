@@ -143,7 +143,8 @@ const vector<spell_type> *soh_breath_spells(spell_type spell);
 
 permabuff_type permabuff_is(spell_type spell); // sigh
 bool is_permabuff(spell_type spell);
-void permabuff_track(int pb);
+// return value is number of auts additional tracking added
+int permabuff_track(int pb);
 bool permabuff_uses_charms_reserve(permabuff_type pb);
 
 int nominal_duration(spell_type spell);

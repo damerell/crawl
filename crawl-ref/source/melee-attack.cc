@@ -425,7 +425,8 @@ bool melee_attack::handle_phase_hit()
         if (enough_mp(1, true, false)) {
             if (!permabuff_fail_check
                 (PERMA_INFUSION, 
-                 "You lose control of your magical infusion.")) {
+                 "You lose control of your magical infusion.") &&
+                just_check(SPELL_INFUSION)) {
                 const int pow = calc_spell_power(SPELL_INFUSION, true);
                 const int dmg = 2 + div_rand_round(pow, 12);
                 const int hurt = defender->apply_ac(dmg);
@@ -556,8 +557,11 @@ bool melee_attack::handle_phase_damaged()
             }
             effectiveness +=  
                 div_rand_round(calc_spell_power(SPELL_SHROUD_OF_GOLUBRIA,
-                                                true),10) - 2;
-        } 
+                                                true),12) - 4;
+        }
+        if (!just_check(SPELL_SHROUD_OF_GOLUBRIA)) {
+            return true;
+        }
         // Chance of the shroud falling apart increases based on the
         // strain of it, i.e. the damage it is redirecting.
         if (x_chance_in_y(damage_done, effectiveness+damage_done))
@@ -961,8 +965,7 @@ bool melee_attack::attack()
                  "You lose control of the necromantic energies infusing your weapon.")) {
                 end_weapon_brand(*weapon);
             } else if (one_chance_in(
-                           nominal_duration(SPELL_EXCRUCIATING_WOUNDS) / 
-                           pb_dur_fudge[PERMA_EXCRU])) {
+                           nominal_duration(SPELL_EXCRUCIATING_WOUNDS))) {
                 string msg = "@Your_weapon@ shrieks terribly!";
                 item_noise(*weapon, msg, 15);
             }

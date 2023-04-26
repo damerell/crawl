@@ -73,13 +73,13 @@ spret cast_death_channel(int pow, god_type god, bool fail)
 {
     if (you.permabuff[PERMA_DCHAN]) {
         mpr(you.permabuff_working(PERMA_DCHAN) ?
-            "You stop channeling the dead." :
-            "You stop attempting to channel the dead.");
+            "You stop channeling necromantic energy into the slain." :
+            "You stop attempting to channel necromantic energy into the slain.");
         you.pb_off(PERMA_DCHAN, true); return spret::permacancel;
     } else {
         fail_check();
         mpr(you.duration[DUR_DEATH_CHANNEL] ?
-            "You will soon be channeling the dead." :
+            "You will soon be channeling necromantic energy into the slain." :
             "Malign forces permeate your being, awaiting release.");
         you.pb_on(PERMA_DCHAN); return spret::success;
     }

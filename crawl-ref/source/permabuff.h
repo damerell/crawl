@@ -2,6 +2,8 @@
 #pragma once
 #include "duration-type.h"
 
+#define PERMA_DURATION_DIVISOR 6
+
 enum permabuff_type {
 	PERMA_NO_PERMA,
 	PERMA_INFUSION,
@@ -66,25 +68,3 @@ static const permabuff_type pb_ordinary_mpregen[] = {
     PERMA_APPENDAGE,
 };
 static const int size_mpregen_pb = ARRAYSZ(pb_ordinary_mpregen);
-
-// This is the amount to divide the nominal duration by to determine how often
-// to check for a miscast. It is meant to somehow approximate the proportion
-// of turns you might reasonably expect to benefit from it normally - eg Regen
-// has '1' because a lot of the time when you regenerate you gain HP for the 
-// whole duration. Without this, we noticed miscasts almost never happen.
-// If I don't know what the answer should be, it'll be '2'
-static const int pb_dur_fudge[] = {
-    0,
-    2, // infusion (MP can run out)
-    2, // shroud (fizzles early)
-    1, // song
-    1, // regen
-    1, // pproj
-    2, // dmsl (not attacked all turns)
-    2, // excru (only fail checked if target actually hurt)
-    1, // DChan  (you might get many kills in a turn)
-    1, // rof (short duration, cast before unloading)
-    2, // battlesphere (but doesn't do anything because miscast frequency is
-       // done per-charge)
-    1, // beastly appendage (probably cast just before melee)
-};

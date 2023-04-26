@@ -490,15 +490,15 @@ static const duration_def duration_data[] =
     { DUR_DEATH_CHANNEL,
       YELLOW, "-DChan",
       "death channel suppressed", "",
-      "You are temporarily unable to channel the dead.", D_EXPIRES,
+      "You are temporarily unable to channel necromantic energy into the slain.", D_EXPIRES,
       {{ "", []() {
 		  if (_recheck_perma(PERMA_DCHAN)) {
 		      if (you.permabuff_could(PERMA_DCHAN)) {
 			  mprf(MSGCH_DURATION, 
 			       "You are once again %s.",
 			       (you.permabuff_working(PERMA_DCHAN) ? 
-				"channelling the dead" :
-				"able to channel the dead"));
+				"channelling necromantic energy into the slain" :
+				"able to channel necromantic energy into the slain"));
 		      }}}}}},
     { DUR_APPENDAGE,
       YELLOW, "-App",

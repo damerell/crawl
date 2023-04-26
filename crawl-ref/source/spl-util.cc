@@ -1687,7 +1687,7 @@ bool is_permabuff(spell_type spell) {
 }
 
 // It is safe to call this more than once in the same turn for the same PB
-void permabuff_track(int pb) {
+int permabuff_track(int pb) {
     spell_type spell = permabuff_spell[pb];
     ASSERT (is_permabuff(spell));
     int dur = BASELINE_DELAY * nominal_duration(spell);
@@ -1695,8 +1695,10 @@ void permabuff_track(int pb) {
         practise_casting(spell, true);
         count_action(CACT_CAST, spell);
     }
-    // The value of '8' is pretty arbitrary
-    you.perma_benefit[pb] = max(you.perma_benefit[pb], div_rand_round(dur, 8));
+    int old = you.perma_benefit[pb];
+    you.perma_benefit[pb] = max(you.perma_benefit[pb],
+                                div_rand_round(dur, PERMA_DURATION_DIVISOR));
+    int time = you.perma_benefit[pb] - old;
     you.perma_hunger[pb] = (100 * spell_hunger(spell)) / dur;
     int succ = 100 - (min(90, 
                           failure_rate_to_int
@@ -1705,18 +1707,16 @@ void permabuff_track(int pb) {
     dprf(DIAG_PERMABUFF, "%s: %d hunger, %d MP per aut, %d auts",
          spell_title(spell), you.perma_hunger[pb],
          you.perma_mp[pb],you.perma_benefit[pb]);
-    int time = min(you.time_taken,
-                   (you.elapsed_time - you.perma_last_track[pb]));
     you.perma_last_track[pb] = you.elapsed_time;
     if (time > 0) {
         string reason = you.cannot_renew_pbs_because();
-        if ((!reason.empty()) && 
-            one_chance_in(dur / (time * pb_dur_fudge[pb]))) {
+        if ((!reason.empty()) && one_chance_in(dur / time)) {
             mprf(MSGCH_DURATION, "You can't renew one of your enchantments because %s!", reason.c_str());
             // Duration reduced now _recheck_perma will silently renew it
             you.increase_duration(permabuff_durs[pb], roll_dice(2, 4));
         }
     }
+    return time;
 }
 
 bool permabuff_uses_charms_reserve(permabuff_type pb) {

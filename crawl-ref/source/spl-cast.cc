@@ -2392,48 +2392,56 @@ bool apply_miscast(spell_type spell, int fail, bool chatty) {
     return true;
 }
 
+bool just_check (spell_type spell) {
+    return (failure_check(spell, true, true) <= 0);
+}
+
 // For simplicity, on permabuffs, all gods work the same way
 // or we'd get potential double miscasts, very confusing
 // Also Kiku and Veh between them barely will support one permabuff
-int failure_check(spell_type spell, bool perma) {
+int failure_check(spell_type spell, bool perma, bool justcheck) {
     int spfl = random2avg(100, 3);
-    
-    if (!you_worship(GOD_SIF_MUNA)
-        && you.penance[GOD_SIF_MUNA] && one_chance_in(20)) {
-        god_speaks(GOD_SIF_MUNA, "You feel a surge of divine spite.");
-        // This will cause failure and increase the miscast effect.
-        spfl = -you.penance[GOD_SIF_MUNA];
-    } else if (spell_typematch(spell, SPTYP_NECROMANCY)
-             && !you_worship(GOD_KIKUBAAQUDGHA)
-             && you.penance[GOD_KIKUBAAQUDGHA]
-             && one_chance_in(20)) {
-        simple_god_message(" does not allow the disloyal to dabble in "
-                           "death!", GOD_KIKUBAAQUDGHA);
-        if (perma) {
-            spfl = -you.penance[GOD_KIKUBAAQUDGHA];
-        } else {
-            // And you thought you'd Necromutate your way out of penance...
-            // The spell still goes through, but you get a miscast anyway.
-            MiscastEffect(&you, nullptr, GOD_MISCAST + GOD_KIKUBAAQUDGHA,
-                          SPTYP_NECROMANCY,
-                          (you.experience_level / 2) + (spell_difficulty(spell) * 2),
-                          random2avg(88, 3), "the malice of Kikubaaqudgha");
-        }
-    } else if (vehumet_supports_spell(spell)
-                 && !you_worship(GOD_VEHUMET)
-                 && you.penance[GOD_VEHUMET]
-                 && one_chance_in(20)) {
-        simple_god_message(" does not allow the disloyal to dabble in "
-                           "destruction!", GOD_VEHUMET);
-        if (perma) {
-            spfl = -you.penance[GOD_VEHUMET];
-        } else {
-            // And you thought you'd Fire Storm your way out of penance...
-            // The spell still goes through, but you get a miscast anyway.
-            MiscastEffect(&you, nullptr, GOD_MISCAST + GOD_VEHUMET,
-                          SPTYP_CONJURATION,
-                          (you.experience_level / 2) + (spell_difficulty(spell) * 2),
-                          random2avg(88, 3), "the malice of Vehumet");
+
+    if (!justcheck) {
+        if (!you_worship(GOD_SIF_MUNA)
+            && you.penance[GOD_SIF_MUNA] && one_chance_in(20)) {
+            god_speaks(GOD_SIF_MUNA, "You feel a surge of divine spite.");
+            // This will cause failure and increase the miscast effect.
+            spfl = -you.penance[GOD_SIF_MUNA];
+        } else if (spell_typematch(spell, SPTYP_NECROMANCY)
+                   && !you_worship(GOD_KIKUBAAQUDGHA)
+                   && you.penance[GOD_KIKUBAAQUDGHA]
+                   && one_chance_in(20)) {
+            simple_god_message(" does not allow the disloyal to dabble in "
+                               "death!", GOD_KIKUBAAQUDGHA);
+            if (perma) {
+                spfl = -you.penance[GOD_KIKUBAAQUDGHA];
+            } else {
+                // And you thought you'd Necromutate your way out of penance...
+                // The spell still goes through, but you get a miscast anyway.
+                MiscastEffect(&you, nullptr, GOD_MISCAST + GOD_KIKUBAAQUDGHA,
+                              SPTYP_NECROMANCY,
+                              (you.experience_level / 2) +
+                              (spell_difficulty(spell) * 2),
+                              random2avg(88, 3), "the malice of Kikubaaqudgha");
+            }
+        } else if (vehumet_supports_spell(spell)
+                   && !you_worship(GOD_VEHUMET)
+                   && you.penance[GOD_VEHUMET]
+                   && one_chance_in(20)) {
+            simple_god_message(" does not allow the disloyal to dabble in "
+                               "destruction!", GOD_VEHUMET);
+            if (perma) {
+                spfl = -you.penance[GOD_VEHUMET];
+            } else {
+                // And you thought you'd Fire Storm your way out of penance...
+                // The spell still goes through, but you get a miscast anyway.
+                MiscastEffect(&you, nullptr, GOD_MISCAST + GOD_VEHUMET,
+                              SPTYP_CONJURATION,
+                              (you.experience_level / 2) +
+                              (spell_difficulty(spell) * 2),
+                              random2avg(88, 3), "the malice of Vehumet");
+            }
         }
     }
     int fail = raw_spell_fail(spell) - spfl;
