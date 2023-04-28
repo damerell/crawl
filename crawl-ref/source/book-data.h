@@ -267,9 +267,9 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_BATTLESPHERE,
     SPELL_BOLT_OF_MAGMA,
     SPELL_IRON_SHOT,
+    SPELL_PERFECTED_RADIANCE,
     SPELL_IOOD,
     SPELL_SPELLFORGED_SERVITOR,
-    SPELL_PERFECTED_RADIANCE,
 },
 
 {   // Book of Cantrips

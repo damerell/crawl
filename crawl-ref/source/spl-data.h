@@ -4343,7 +4343,7 @@ static const struct spell_desc spelldata[] =
     SPELL_PERFECTED_RADIANCE, "Velakast's Superior Radiance",
     SPTYP_POISON | SPTYP_HEXES,
     SPFLAG_AREA,
-    7,
+    6,
     200,
     -1, -1,
     2, 0,
