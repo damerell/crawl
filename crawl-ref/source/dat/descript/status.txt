@@ -626,8 +626,8 @@ You have been transformed into a lich. You are resistant to cold and hostile
 enchantments and completely immune to poison, rotting, negative energy and
 torment, and require no food at all for the duration of the transformation.
 Your necromancy spells are increased in power, and you gain a draining melee
-attack. However, you are also vulnerable to holy damage and Dispel Undead,
-and are unable to consume potions.
+attack. However, you are also vulnerable to holy damage and Velakast's
+Disruption, and are unable to consume potions.
 %%%%
 Bat status
 
