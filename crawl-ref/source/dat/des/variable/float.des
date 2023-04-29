@@ -2715,66 +2715,6 @@ cc..e....................e2.cc
               @@
 ENDMAP
 
-NAME:   ragdoll_tomb_raider
-TAGS:   no_item_gen no_monster_gen patrolling
-DEPTH:  D:14-, Depths, Crypt, !Crypt:$
-ORIENT: float
-KITEM:  $ = amulet_of_vitality / acquire any
-KITEM:  12345d = gold / any / nothing
-KITEM:  67M = superb_item / any
-KFEAT:  ~ = known zot trap
-KMONS:  1 = mummy
-KMONS:  25 = guardian mummy
-KMONS:  36 = mummy priest
-KMONS:  47 = greater mummy
-KMONS:  H = sphinx
-: if you.absdepth() <= 17 then
-SUBST: 12 = 12d, 3 = 123, 4 = 6, H = .
-: else
-SUBST: 4 = 67, 3 = 345, 2 = 23d, 1 = 12, H = H`
-: end
-: if you.in_branch("Crypt") then
-KMONS: M = Khufu, greater mummy
-: elseif you.absdepth() <= 17 then
-KMONS: M = Menkaure, mummy priest
-: else
-SUBST: M = 6
-: end
-SUBST:  C = c
-NSUBST: ~ = 2:~ / 1:~. / *:.
-COLOUR: G = yellow
-TILE:   G = dngn_sarcophagus_sealed
-COLOUR: c = yellow
-TILE:   c = wall_tomb
-COLOUR: C = white
-TILE:   C = wall_lab_stone
-FTILE:  .~cCG1234567M$ = floor_sandstone
-: set_feature_name("granite_statue", "sealed sarcophagus")
-MAP
-xxxxxxxxxxxxxxxxxxxxx
-xcccccccccccccccccccx
-xc3cccGcccMcccGccc3cx
-xc.c.....c.c.....c.cx
-xcc...c...c...c...ccx
-xccc.ccc.....ccc.cccx
-xcc...ccc...ccc...ccx
-xcGc...cc...cc...cGcx
-xccc....cC.Cc....cccx
-xc2.c...c.$.c...c.2cx
-xccccc.ccC4Ccc.cccccx
-xc2.c...ccGcc...c.2cx
-xccc.....ccc.....cccx
-xccG..C.......C..Gccx
-xccc.....c.c.....cccx
-xcc.c...cc3cc...c.ccx
-xc1ccc...ccc...ccc1cx
-xccccGc...c...cGccccx
-xccccccc.....cccccccx
-xccHHHcccC.CcccHHHccx
-xc`````cc```cc`````cx
-x`````````@`````````x
-ENDMAP
-
 ## Plants, beasts, and humanoids alike gather in a splendid palace devoted to
 ## the worship of a life-bringing water deity.
 NAME:     gammafunk_depths_water_palace
