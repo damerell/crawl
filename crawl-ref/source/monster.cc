@@ -6226,17 +6226,20 @@ void monster::react_to_damage(const actor *oppressor, int damage,
 
 reach_type monster::reach_range() const
 {
-    const mon_attack_def attk(mons_attack_spec(*this, 0));
-    if ((attk.flavour == AF_REACH || attk.flavour == AF_REACH_STING)
-        && attk.damage)
-    {
-        return REACH_TWO;
-    }
+     reach_type range = REACH_NONE;
+     
+     for (int i = 0; i < MAX_NUM_ATTACKS; ++i) {
+         const mon_attack_def attk(mons_attack_spec(*this, i));
+         if ((attk.flavour == AF_REACH || attk.flavour == AF_REACH_STING)
+             && attk.damage) {
+             range = REACH_TWO;
+         }
+     }
 
     const item_def *wpn = primary_weapon();
-    if (wpn)
-        return weapon_reach(*wpn);
-    return REACH_NONE;
+    if (wpn) range = max(range, weapon_reach(*wpn));
+    
+    return range;
 }
 
 bool monster::can_cling_to_walls() const
