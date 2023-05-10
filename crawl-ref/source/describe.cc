@@ -1214,7 +1214,7 @@ static string _describe_weapon(const item_def &item, bool verbose)
             break;
         case SK_LONG_BLADES:
             if (!is_riposteful(item)) {
-                description += "\n\nIt is too heavy to riposte, being "
+                description += "\n\nIt is too heavy to riposte with, being "
                 "better suited to delivering massive blows.";
             }
             break;
