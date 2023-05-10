@@ -738,6 +738,7 @@ static const artefact_prop_data artp_data[] =
     { "Ward", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0 }, // ARTP_WARDING
     { "Harm", ARTP_VAL_BOOL, 0, // ARTP_HARM,
         []() {return 1;}, nullptr, 0, 0},
+    { "Wiz", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0}, // ARTP_WIZARDRY
 };
 COMPILE_CHECK(ARRAYSZ(artp_data) == ARTP_NUM_PROPERTIES);
 // weights sum to 1000
@@ -869,6 +870,11 @@ static void _get_randart_properties(const item_def &item,
     if ((item_class == OBJ_ARMOUR) && (item.sub_type == ARM_SCARF)) {
         max_properties--;
     }
+    // The replacement of rCorr with wizardry is a buff
+    if ((item_class == OBJ_ARMOUR) &&
+        (item.sub_type == ARM_FD_ARMOUR)) {
+        max_properties--;
+    }    
     int enhance = 0;
     if (good + bad > max_properties)
     {
@@ -1730,6 +1736,8 @@ static void _make_faerie_armour(item_def &item)
         if (artefact_property(doodad, ARTP_PREVENT_SPELLCASTING))
             continue;
 
+        artefact_set_property(doodad, ARTP_WIZARDRY, 1);
+        
         if (one_chance_in(20))
             artefact_set_property(doodad, ARTP_CLARITY, 1);
         if (one_chance_in(20))

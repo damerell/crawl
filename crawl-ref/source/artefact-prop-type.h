@@ -63,5 +63,6 @@ enum artefact_prop_type
     ARTP_SHIELDING,
     ARTP_WARDING,
     ARTP_HARM,
+    ARTP_WIZARDRY,
     ARTP_NUM_PROPERTIES
 };

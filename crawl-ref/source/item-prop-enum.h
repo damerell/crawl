@@ -110,6 +110,7 @@ enum armour_type
 #if TAG_MAJOR_VERSION == 34
     ARM_DWARVEN_ROUNDSHIELD,
 #endif
+    ARM_FD_ARMOUR,
     NUM_ARMOURS
 };
 

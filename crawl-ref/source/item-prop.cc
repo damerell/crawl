@@ -155,6 +155,8 @@ static const armour_def Armour_prop[] =
     { ARM_TOWER_SHIELD,         "tower shield",          13,  -50,  45,
         EQ_SHIELD,      SIZE_MEDIUM, SIZE_GIANT, true  },
 
+    { ARM_FD_ARMOUR,            "faerie dragon scales",   4,  -30,  600,
+      EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT, false, ARMF_NO_FLAGS, 0 },
     // Following all ARM_ entries for the benefit of util/gather_items
     DRAGON_ARMOUR(STEAM,       "steam",                   5,   0,   400,
         ARMF_RES_STEAM),
@@ -1326,6 +1328,7 @@ static map<monster_type, armour_type> _monster_hides = {
     { MONS_PEARL_DRAGON,        ARM_PEARL_DRAGON_ARMOUR },
     { MONS_SHADOW_DRAGON,       ARM_SHADOW_DRAGON_ARMOUR },
     { MONS_QUICKSILVER_DRAGON,  ARM_QUICKSILVER_DRAGON_ARMOUR },
+    { MONS_FAERIE_DRAGON,       ARM_FD_ARMOUR },
 };
 
 /**
