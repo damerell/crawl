@@ -2100,15 +2100,6 @@ void untransform(bool skip_move, bool silent)
         you.transform_uncancellable = false;
 }
 
-void emergency_untransform()
-{
-    mpr("You quickly transform back into your natural form.");
-    untransform(true); // We're already entering the water.
-
-    if (you.species == SP_MERFOLK)
-        merfolk_start_swimming(false);
-}
-
 /**
  * Update whether a merfolk should be swimming.
  *

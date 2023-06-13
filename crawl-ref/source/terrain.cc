@@ -1607,19 +1607,13 @@ bool slide_feature_over(const coord_def &src, coord_def preferred_dest,
  */
 void fall_into_a_pool(dungeon_feature_type terrain)
 {
-    if (terrain == DNGN_DEEP_WATER)
+    if (terrain == DNGN_DEEP_WATER && (you.can_water_walk()
+                                       || form_likes_water()))
     {
-        if (you.can_water_walk() || form_likes_water())
-            return;
-
-        if (species_likes_water(you.species) && !you.transform_uncancellable)
-        {
-            emergency_untransform();
-            return;
-        }
+        return;
     }
 
-    mprf("You fall into the %s!",
+    mprf("You plummet towards the %s!",
          (terrain == DNGN_LAVA)       ? "lava" :
          (terrain == DNGN_DEEP_WATER) ? "water"
                                       : "programming rift");
