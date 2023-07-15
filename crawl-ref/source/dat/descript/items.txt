@@ -1274,7 +1274,8 @@ negative energy become available.
 %%%%
 wand of digging
 
-A magical device which drills tunnels through unworked rock.
+A magical device which drills tunnels through unworked rock. It cannot dig
+through harder materials.
 %%%%
 wand of charm monster
 

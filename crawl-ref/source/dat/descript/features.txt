@@ -196,8 +196,9 @@ like rock in most other aspects.
 %%%%
 A crystal wall
 
-A wall made from polished crystal and imbued with arcane magics. They prevent
-its easy destruction, and make it reflect heat and cold.
+A wall made from polished crystal and imbued with arcane magics. They make it
+reflect heat and cold; it cannot be destroyed by wands of digging, but is
+easily destroyed by magic.
 %%%%
 A translucent rock wall
 
