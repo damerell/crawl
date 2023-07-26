@@ -340,6 +340,7 @@ ynoxinul MONS_YNOXINUL
 
 # type '4' demons
 red_devil MONS_RED_DEVIL
+rot_devil MONS_ROT_DEVIL
 smoke_demon MONS_SMOKE_DEMON
 %rim 0
 sixfirhy MONS_SIXFIRHY

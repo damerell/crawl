@@ -2570,7 +2570,7 @@ static monster_type _band_member(band_type band, int which,
     case BAND_TORTUROUS_DEMONSPAWN:
         if (which == 1 || x_chance_in_y(2, 3))
         {
-            return random_choose_weighted( 2, MONS_ORANGE_DEMON,
+            return random_choose_weighted( 2, MONS_ROT_DEVIL,
                                            2, MONS_SIXFIRHY,
                                            3, MONS_TORTUROUS_DEMONSPAWN);
         }

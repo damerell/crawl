@@ -56,6 +56,7 @@ void init_pandemonium()
                                                     1, MONS_SHADOW_DEMON,
                                                     1, MONS_LOROCYPROCA,
                                                     1, MONS_HELLION,
+                                                    1, MONS_ROT_DEVIL,
                                                     1, MONS_TORMENTOR,
                                                     1, MONS_REAPER);
 

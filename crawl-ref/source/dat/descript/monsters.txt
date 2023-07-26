@@ -2991,6 +2991,18 @@ rotten bat
 
 A bat that is well past its sell-by date.
 %%%%
+rot devil
+
+A hideous, miserable creature covered in oozing sores, afflicted by some
+horrible disease. Bits and pieces fall from its body as it shambles toward its
+next victim.
+
+{{
+    if you.can_smell() then
+        return "It stinks."
+    end
+}}
+%%%%
 sickly merfolk siren
 
 A young merfolk that looks quite sick, but still has the power to mesmerize its

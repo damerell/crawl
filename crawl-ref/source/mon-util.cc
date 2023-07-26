@@ -4013,10 +4013,10 @@ static bool _mons_has_smite_attack(const monster* mons)
 bool monster_shover(const monster& m)
 {
     // Efreet and fire elementals are disqualified because they leave behind
-    // clouds of flame. Curse toes are disqualified because they trail
+    // clouds of flame. Rot devils are disqualified because they trail
     // clouds of miasma.
     if (mons_genus(m.type) == MONS_EFREET || m.type == MONS_FIRE_ELEMENTAL
-        || m.type == MONS_CURSE_TOE)
+        || m.type == MONS_ROT_DEVIL || m.type == MONS_CURSE_TOE)
     {
         return false;
     }

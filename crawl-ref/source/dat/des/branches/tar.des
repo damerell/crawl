@@ -104,7 +104,7 @@ NAME:   lemuel_nasty_pond
 DEPTH:  Tar
 TAGS:   no_pool_fixup no_rotate
 MONS:   withered plant
-MONS:   oklob plant, death ooze, necrophage, blizzard demon / green death
+MONS:   oklob plant, death ooze, rot devil, blizzard demon / green death
 SUBST:  W:w.
 SUBST:  Z:w.
 SUBST:  w = w .:1
@@ -133,7 +133,7 @@ ENDMAP
 NAME: grunt_tartarus_stairs_gauntlet_trap
 DEPTH: Tar, !Tar:$
 TAGS: generate_awake patrolling no_trap_gen
-MONS: Tzitzimitl, shadow demon / reaper, soul eater, necrophage, shadow imp
+MONS: Tzitzimitl, shadow demon / reaper, soul eater, rot devil, shadow imp
 {{
     dgn.persist.grunt_gauntlet_trap_triggered = false
     local trap_marker = TriggerableFunction:new {
@@ -183,7 +183,7 @@ KMONS:   12 = patrolling reaper
 KMONS:   34 = patrolling tormentor
 KMONS:   56 = patrolling shadow demon
 KMONS:   7 = skeletal warrior
-KMONS:   8 = patrolling shadow imp
+KMONS:   8 = patrolling shadow imp / patrolling rot devil
 KMONS:   AB = lich
 KMONS:   CD : vampire mage / mummy priest
 KMONS:   EF : shadow dragon w:5 / death drake

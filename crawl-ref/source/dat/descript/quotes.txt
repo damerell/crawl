@@ -2520,6 +2520,14 @@ rotten bat
 
 <bat>
 %%%%
+rot devil
+
+“The slow adagio begins;
+ The winding-sheets are ravelled out
+ That swathe the minds of men, the sins
+ That wrap their rotting souls about.“
+    -John Davidson, ”A Ballad of Heaven". Late 19th cent.
+%%%%
 salamander
 
 “As for example: the Salamander made in fashion of a Lizard, marked with spots
