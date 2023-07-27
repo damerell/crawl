@@ -2537,6 +2537,14 @@ scale mail
 
 <leather armour>
 %%%%
+scarf of warding
+
+[...] says a traveller in Central Borneo: “[...] When a company from the middle
+Mahakam River visited me among the Blu-u Kayans in the year 1897, no woman
+showed herself outside her house without a burning bundle of /plehiding/ bark,
+the stinking smoke of which drives away evil spirits.”
+    -Sir James George Frazer, _The Golden Bough_. 1922.
+%%%%
 scimitar
 
 “The museum-cabinet and huge library arrogated to themselves the entire lower
