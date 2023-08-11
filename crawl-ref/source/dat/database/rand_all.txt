@@ -54,6 +54,8 @@ Temptation
 
 False Pretenses
 
+T'siramen
+
 # FIXME: should appear on amulets only
 Yendor
 %%%%
