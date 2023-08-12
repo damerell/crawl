@@ -107,6 +107,10 @@ function callback.xom_greatest_gift(data, triggerable, triggerer, marker, ev)
   end
 end
 
+-- Note that "Work around a seed stability issue in 
+-- regret_index_temple_of_mockery"
+-- will break this - djsd
+
 function species_mock(e)
   if you.race() == "Barachi" then
     e.kmons("1 = bullfrog")
