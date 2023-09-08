@@ -792,8 +792,10 @@ public:
                                  past_tense ? "were" : "are");
         }
 
-        return make_stringf("You %s grown temporary %s.",
+        return make_stringf("You %s grown %stemporary %s.",
                             past_tense ? "had" : "have",
+                            (you.attribute[ATTR_APPENDAGE] == MUT_BEAK ?
+                             "a " : ""),
                             mutation_name((mutation_type)
                                           you.attribute[ATTR_APPENDAGE]));
     }
