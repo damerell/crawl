@@ -138,7 +138,7 @@ bool prompt_eat_item(int slot)
     item_def* item = nullptr;
     if (slot == -1)
     {
-        item = use_an_item(OBJ_FOOD, OPER_EAT, "Eat which item?");
+        item = use_an_item(OBJ_FOOD, OPER_EAT, "Eat which item? Use 'c' to chop up corpses you want to eat.");
         if (!item)
             return false;
     }
