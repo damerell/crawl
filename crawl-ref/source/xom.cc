@@ -1873,7 +1873,7 @@ static bool _vitrify_area(int radius, bool test_only = false)
 
 static void _xom_vitrify(int sever)
 {
-    if (_vitrify_area(random2avg(sever / 4, 2) + 1))
+    if (_vitrify_area(random2avg(sever / 10, 2) + 1))
     {
         god_speaks(GOD_XOM, _get_xom_speech("vitrification").c_str());
         take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "vitrification"), true);
