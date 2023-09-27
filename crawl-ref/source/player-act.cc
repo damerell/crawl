@@ -305,7 +305,7 @@ random_var player::attack_delay(const item_def *projectile, bool rescale) const
     // cases at least, `you.time_taken` is just `player_speed()`. See
     // `_prep_input`.
     return rv::max(div_rand_round(attk_delay * you.time_taken, BASELINE_DELAY),
-                   random_var(2));
+                   random_var(1));
 }
 
 // Returns the item in the given equipment slot, nullptr if the slot is empty.
