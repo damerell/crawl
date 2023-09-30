@@ -203,7 +203,9 @@ void cast_iood_burst(int pow, coord_def target, bool undoing)
 
     const int n_orbs = undoing ? 8 : random_range(3, 7);
     dprf("Bursting %d orbs.", n_orbs);
-    const double angle0 = random2(2097152) * PI * 2 / 2097152;
+    const double angle0 = undoing ? 
+    ((random2(65536) - 131072) * PI * 2  / 2097152) :
+    (random2(2097152) * PI * 2 / 2097152);
 
     for (int i = 0; i < n_orbs; i++)
     {
