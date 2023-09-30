@@ -42,7 +42,7 @@ enum armour_type
     ARM_FIRST_SHIELD = ARM_BUCKLER,
     ARM_KITE_SHIELD,
     ARM_TOWER_SHIELD,
-    ARM_LAST_SHIELD = ARM_TOWER_SHIELD,
+    ARM_LAST_BEOGH_SHIELD = ARM_TOWER_SHIELD,
     // It is intentional that Beogh won't upgrade to roundshields
 #if TAG_MAJOR_VERSION > 34
     ARM_DWARVISH_ROUNDSHIELD,
