@@ -78,6 +78,63 @@ Gooncrawl:
 * Iskenderun's Undoing - cast 8 orbs of destruction at once.
 * Haste spell returns as level 9.
 
+Stone Soup 0.23 (up to 0.23-a0-459-ge787970)
+--------------------------------------------
+
+Branches, Environment
+---------------------
+* New early vaults featuring thematic item shops and monsters guarding
+  manuals.
+* Layouts:
+  - Concentric octagons is enabled for Lair and Snake.
+  - Cave pools (with adjusted parameters) is enabled for the Dungeon.
+
+Character
+---------
+* Wanderers' starting spell libraries are announced with their equipment.
+* Wanderers that start with exactly one level 1 spell start with it memorized.
+* The player can no longer be put to sleep when paralyzed or petrified.
+
+Gods
+----
+* Monster conversion for Beogh, Gozag's Bribe, and Jiyva is attempted upon
+  sight instead of on the turn after the monster enters LOS.
+* The acid damage from Makhleb's Minor Destruction has been reduced.
+
+Interface
+---------
+* The Hepliakqana ancestor reaching full health interrupts resting. The exact
+  behaviour of this interrupt can be configured by rest_wait_ancestor.
+* WebTiles users can use a "Forgot Password" link to reset their password
+  via a link sent to their registration email address. This feature is not yet
+  enabled on most official servers.
+
+Items
+-----
+* Stash search can now search by handedness.
+* Butchering a corpse always leaves a skeleton.
+* Unrandarts:
+  - The Singing Sword is now vorpal, and its sonic damage effect is stronger
+    and triggers on-hit instead of while wielded.
+  - The Spriggan's Knife loses Dex+4 and MR+ and converts all stabs to
+    sleep-tier stabs.
+  - The robe of Misfortune is now identified, and is +5 {*Contam *Corrode
+    *Drain Harm *Slow and EV+5}.
+  - The sceptre of Torment is now a +7 eveningstar of pain, and its torment
+    does not affect the wielder.
+  - The arc blade's effect now casts static discharge only once, but at very
+    high spellpower. The weapon's enchantment is now +8.
+  - Finisher loses Str+3 and gains a chance to instant-explode the target.
+  - Unrandarts with melee effects that could anger nearby allies give a proper
+    warning.
+
+Monsters
+--------
+* The shambling mangrove Grasping Roots ability now performs smite-targeted
+  constriction instead of applying a 'Roots' status.
+* Jorgrun gains the Grasping Roots spell and can now spawn in Swamp.
+* Orb run spawns are more frequently near the player and more dangerous.
+
 Stoat Soup 0.22 "Spirits of the Dead"
 -------------------------------------
 
