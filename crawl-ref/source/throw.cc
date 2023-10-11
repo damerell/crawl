@@ -99,17 +99,18 @@ class fire_target_behaviour : public targeting_behaviour
 public:
     fire_target_behaviour()
         : chosen_ammo(false),
-          ihpix_armoury(have_passive(passive_t::ihpix_gather)),
+          ihpix_armoury(have_passive(passive_t::ihpix_gather) &&
+                        you.weapon() && is_range_weapon(*you.weapon())),
           selected_from_inventory(false),
           need_redraw(false)
     {
         m_slot = you.m_quiver.get_fire_item(&m_noitem_reason);
-        if (ihpix_armoury) {
+        if (ihpix_armoury && you.weapon()) {
             ihpix_prospective.base_type=OBJ_MISSILES;
             ihpix_prospective.sub_type = ihpix_preferred_ammo(*you.weapon());
             ihpix_prospective.quantity = 1;
             chosen_ammo=(ihpix_prospective.sub_type != MI_NONE);
-        }
+        } 
         set_prompt();
     }
 
@@ -490,6 +491,24 @@ static bool _fire_validate_item(int slot, string &err)
     return true;
 }
 
+static bool _ihpix_weapon_suitable(bool silent = false) {
+    if (you.weapon()) {
+        if (!is_range_weapon(*you.weapon())) {
+            if (!silent) mpr("You are wielding a melee weapon.");
+            return false;
+        } else if (!ihpix_got_ammo(*you.weapon())) {
+            if (!silent)
+                simple_god_message(" has no missiles for your weapon.");
+            return false;
+        } else {
+            return true;
+        }
+    } else {
+        if (!silent) simple_god_message(" prohibits throwing objects at your enemies.");
+        return false;
+    }
+}
+
 // Returns true if warning is given.
 bool fire_warn_if_impossible(bool silent, bool ihpixammo)
 {
@@ -502,11 +521,8 @@ bool fire_warn_if_impossible(bool silent, bool ihpixammo)
     // XXX we rely on the way that silent invocations are when the quiver
     // should be displayed - DJSD
     if (have_passive(passive_t::ihpix_gather) && ihpixammo) {
-        if (you.weapon() && !ihpix_got_ammo(*you.weapon())) { 
-            if (!silent) {
-                simple_god_message(" has no missiles for your weapon.");
-            }
-            return true;
+        if (!_ihpix_weapon_suitable(silent)) {
+        return true;
         }
     }
 
@@ -596,18 +612,9 @@ int get_ammo_to_shoot(int item, dist &target, bool with_ihpix, bool teleport)
         return -1;
     }
 
-    if (!_ihpix_validate(item, true)) {
-        return -1;
-    }
-
-    if (with_ihpix && you.weapon()) {
-        if (!is_range_weapon(*you.weapon())) {
-            mpr("You are wielding a melee weapon.");
-            return -1;
-        } else if (!ihpix_got_ammo(*you.weapon())) {
-            simple_god_message(" has no missiles for your weapon.");
-            return -1;
-        }
+    if (with_ihpix) {
+        if (!_ihpix_validate(item, true)) return -1;
+        if (!_ihpix_weapon_suitable()) return -1;
     }
 
     if (!_fire_choose_item_and_target(item, target, ihpix_shot, with_ihpix, 

@@ -91,7 +91,7 @@ int player_quiver::get_fire_item(string* no_item_reason) const
     }
     if (have_passive(passive_t::ihpix_gather)) {
         if (no_item_reason != nullptr) {
-            *no_item_reason = "Worshippers in good standing receive ammunition from the divine armoury.";
+            *no_item_reason = "Worshippers may not throw objects.";
         } 
         return -1;
     }
