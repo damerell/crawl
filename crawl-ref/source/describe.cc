@@ -2172,7 +2172,10 @@ string get_item_description(const item_def &item, bool verbose,
 
     case OBJ_STAVES:
         {
-            string stats = "\n";
+            string stats = (weapon_str_weight(&item) == FAVOUR_STR) ?
+            " The physical damage it does favours Strength, but this is not"
+            " important compared to that magical potential.\n" :
+            "BUG - why isn't this FAVOUR_STR?\n";
             _append_weapon_stats(stats, item);
             description << stats;
         }
