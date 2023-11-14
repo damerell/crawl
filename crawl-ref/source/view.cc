@@ -391,7 +391,10 @@ static void _handle_comes_into_view(const vector<string> &msgs,
              _desc_mons_type_map(types).c_str());
     }
 
-    _divine_headsup(monsters, types);
+    if ((monsters.size() > 1) || !you_worship(GOD_ASHENZARI)) {
+        // If there was only one, we just printed "A glaive of venom ..."
+        _divine_headsup(monsters, types);
+    }
     _secular_headsup(monsters, types);
 }
 

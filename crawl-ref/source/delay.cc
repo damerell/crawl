@@ -1243,8 +1243,12 @@ static inline bool _monster_warning(activity_interrupt_type ai,
         else
         {
             mprf(MSGCH_MONSTER_WARNING, "%s", text.c_str());
-            if (ash_id || zin_id)
-                mprf(MSGCH_GOD, "%s", god_warning.c_str());
+            if (ash_id || zin_id) {
+                if (mon->type != MONS_DANCING_WEAPON) {
+                    // If it was, we just printed "a glaive of venom" ...
+                    mprf(MSGCH_GOD, "%s", god_warning.c_str());
+                }
+            }
 #ifndef USE_TILE_LOCAL
             if (zin_id)
                 update_monster_pane();
