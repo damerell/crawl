@@ -1183,18 +1183,16 @@ static inline bool _monster_warning(activity_interrupt_type ai,
             text += " comes into view.";
 
         if ((mon->type == MONS_PLAYER_GHOST) &&
-            // it doesn't have an original foe if it's just appearing for the
-            // first time
-            // I doubt that is still true, actually
-            ((!mon->props.exists(ORIGINAL_FOE)) ||
-             (mon->foe == mon->props[ORIGINAL_FOE].get_int())) &&
+            (!mon->props.exists("ghost gaze")) &&
             // This check is needed in case eg just pulled out of limbo
             (mon->get_foe()) &&
+            (mon->get_foe()->is_monster()) &&
             (mon->get_foe()->as_monster()->alive()) &&
             (you.can_see(*(mon->get_foe())))) {
             text += " Its baleful gaze is fixed on ";
             text += mon->get_foe()->as_monster()->full_name(DESC_A);
             text += ".";
+            mon->props["ghost gaze"] = true;
         }
         bool ash_id = mon->props.exists("ash_id") && mon->props["ash_id"];
         bool zin_id = false;
