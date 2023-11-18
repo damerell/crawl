@@ -2452,7 +2452,7 @@ static void _post_monster_move(monster* mons)
         place_ghost(*mons,ghost);
     }
 
-    if (mons->foe != MHITNOT && mons->behaviour == BEH_BATTY)
+    if (mons->behaviour == BEH_BATTY)
     {
         int &bat_turns = mons->props[BATTY_TURNS_KEY].get_int();
         bat_turns++;
