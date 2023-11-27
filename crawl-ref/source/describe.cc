@@ -4244,6 +4244,18 @@ static string _monster_stat_description(const monster_info& mi)
     // Echolocation, wolf noses, jellies, etc
     if (!mons_can_be_blinded(mi.type))
         result << uppercase_first(pronoun) << " is immune to blinding.\n";
+    if (mons_class_flag(mi.type, M_INSUBSTANTIAL))
+    {
+        result << uppercase_first(pronoun) 
+               << " is insubstantial and immune to ensnarement.\n";
+    }
+
+    if (mons_genus(mi.type) == MONS_JELLY)
+    {
+        result << uppercase_first(pronoun) 
+               << " is amorphous and immune to ensnarement.\n";
+    }
+
     // XXX: could mention "immune to dazzling" here, but that's spammy, since
     // it's true of such a huge number of monsters. (undead, statues, plants).
     // Might be better to have some place where players can see holiness &

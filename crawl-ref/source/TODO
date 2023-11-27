@@ -4,12 +4,23 @@ bcrawl "pickup"
 brilliance halo
 diminishing spawn XP sigh, nastier deep spawns outside D
 water nymph
+Water nymph species. Must always be in water. Dungeon near 
+                   you gradually fills up with water. Can only move onto a dry 
+                   space when at full HP/MP - so you can explore OK, but you're 
+                   really bad at kiting and stair dancing, but make life very 
+                   hard for melee enemies.
+
+https://github.com/b-crawl/bcrawl/commit/e77c7b4573d3e9f877ef5b16cdacf034ca103f0c AF_DRAG
 
 Elven gear - higher enchant limits a la nethack?
 Stealth on cloaks?
 elven mithril-coat?
 
 all ammo seen
+
+look at monstercrawl
+
+drowning
 
 polymorph
 
@@ -59,8 +70,6 @@ monsters could read torment, immolation, fog, holy word, vulnerability
 
 the Hive
 
-spit/throw acid for VM / start with weapon
-
 vamp hunger
 
 DungeonQuest
@@ -94,3 +103,7 @@ no warning on faith if just put on
 Maybe Dith should make you quieter?
 
 start with / knowing RC
+
+should antimagic be able to turn off permabuffs
+
+ihpix invocation icons wrong size
