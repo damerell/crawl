@@ -330,13 +330,24 @@ static void _mark_net_trapping(const coord_def& where)
 bool monster_caught_in_net(monster* mon, actor* agent)
 {
     if (mon->body_size(PSIZE_BODY) >= SIZE_GIANT)
-    {
-        if (you.see_cell(mon->pos()))
-        {
             if (!mon->visible_to(&you))
                 mpr("The net bounces off something gigantic!");
             else
                 simple_monster_message(*mon, " is too large for the net to hold!");
+    if (mon->is_insubstantial() || (mons_genus(mon->type) == MONS_JELLY))
+    {
+        if (you.see_cell(mon->pos()))
+        {
+            if (mon->is_insubstantial())
+            {
+                mprf("The net passes right through %s!",
+                     mon->name(DESC_THE).c_str());
+            }
+            else
+            {
+                mprf("%s effortlessly oozes through the net!",
+                     mon->name(DESC_THE).c_str());
+            }
         }
         return false;
     }
@@ -427,10 +438,7 @@ void check_net_will_hold_monster(monster* mons)
             else
                 mpr("All of a sudden the net rips apart!");
         }
-    }
-    else if (mons->is_insubstantial()
-             || mons->type == MONS_OOZE)
-    {
+    } else if (mons->is_insubstantial() || (mons_genus(mons->type) == MONS_JELLY)) {
         const int net = get_trapping_net(mons->pos());
         if (net != NON_ITEM)
             free_stationary_net(net);
@@ -441,10 +449,8 @@ void check_net_will_hold_monster(monster* mons)
                                    " drifts right through the net!");
         }
         else
-        {
             simple_monster_message(*mons,
                                    " oozes right through the net!");
-        }
     }
     else
         mons->add_ench(ENCH_HELD);
