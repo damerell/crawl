@@ -858,7 +858,6 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
     // up to 300 or so with godly assistance or end-level,
     int number_built = 0; int plants = 0;
 
-    mprf("Power %d", pow);
     static const set<dungeon_feature_type> safe_tiles =
     {
         DNGN_SHALLOW_WATER, DNGN_DEEP_WATER, DNGN_FLOOR, DNGN_OPEN_DOOR
@@ -1006,11 +1005,23 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
                 } else {
                     temp_change_terrain(*ai, DNGN_ROCK_WALL, INFINITE_DURATION,
                                         TERRAIN_CHANGE_TOMB);
+
+                    env.grid_colours(*ai) = RED;
+                    env.tile_flv(*ai).feat_idx =
+                    store_tilename_get_index("wall_sandstone");
+                    env.tile_flv(*ai).feat = TILE_WALL_SANDSTONE;
+                    if (env.map_knowledge(*ai).seen())
+                    {
+                    env.map_knowledge(*ai).set_feature(DNGN_ROCK_WALL);
+                    env.map_knowledge(*ai).clear_item();
+#ifdef USE_TILE
+                    env.tile_bk_bg(*ai) = TILE_WALL_SANDSTONE;
+                    env.tile_bk_fg(*ai) = 0;
+#endif
                     number_built++;
+                    }
                 }
             }
-
-
         }
     }
 
