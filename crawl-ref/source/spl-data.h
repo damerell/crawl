@@ -708,7 +708,7 @@ static const struct spell_desc spelldata[] =
     1,
     25,
     5, 5,
-    0,
+    1, 0,
     TILEG_NECROTISE,
     PERMA_NO_PERMA,
 },
