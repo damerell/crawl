@@ -180,6 +180,7 @@ enum enchant_type
     ENCH_VORTEX_COOLDOWN,
     ENCH_VILE_CLUTCH,
     ENCH_WU_TOHIT,
+    ENCH_INSTANT_CLEAVE,
     // Update enchant_names[] in mon-ench.cc when adding or removing
     // enchantments.
     ENCH_CONCENTRATE_VENOM, // does nothing but here so that if/when we get

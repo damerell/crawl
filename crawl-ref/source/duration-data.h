@@ -755,6 +755,9 @@ static const duration_def duration_data[] =
       {{ "Your shots are no longer piercing."}}},
     { DUR_ANTIMAGIC, 0, "", "", "", "",
       D_NO_FLAGS, {{""}}},
+    { DUR_CANINE_FAMILIAR_DEAD, YELLOW, "-Dog", "unable to call your familiar",
+      "You are unable to call your canine familiar.", "", D_EXPIRES, {{ "",
+        [](){mprf(MSGCH_RECOVERY, "Your familiar recovers from its injuries.");}}}},
 
     // The following are visible in wizmode only, or are handled
     // specially in the status lights and/or the % or @ screens.

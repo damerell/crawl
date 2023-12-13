@@ -712,11 +712,15 @@ void get_cleave_targets(const actor &attacker, const coord_def& def,
 
     const item_def* weap = attacker.weapon(which_attack);
 
-    if (weap && item_attack_skill(*weap) == SK_AXES
-            || attacker.is_player()
-               && (you.form == transformation::hydra && you.heads() > 1
-                   || you.duration[DUR_CLEAVE]))
-    {
+    if ((weap && item_attack_skill(*weap) == SK_AXES
+         || attacker.is_player()
+         && (you.form == transformation::hydra && you.heads() > 1
+             || you.duration[DUR_CLEAVE])) ||
+        // be sure to preserve this during
+        // Refactor and consolidate melee attacks
+        // 6b3f3ad2d24fa13b196fb51402546d4ae754a52c
+        (attacker.is_monster() &&
+         attacker.as_monster()->has_ench(ENCH_INSTANT_CLEAVE))) {
         const coord_def atk = attacker.pos();
         coord_def atk_vector = def - atk;
         const int dir = random_choose(-1, 1);

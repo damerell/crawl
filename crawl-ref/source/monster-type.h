@@ -52,6 +52,7 @@ enum monster_type                      // menv[].type
     MONS_WARG,
     MONS_HELL_HOUND,
 #if TAG_MAJOR_VERSION > 34
+    MONS_INUGAMI,
     MONS_RAIJU,
     MONS_DOOM_HOUND,
 #endif
@@ -1046,6 +1047,7 @@ enum monster_type                      // menv[].type
     MONS_FOXFIRE,               // commits apply OK
     MONS_ANIMATED_ARMOUR,
     MONS_CACTUS_GIANT,
+    MONS_INUGAMI,
 #endif
 
     NUM_MONSTERS,               // used for polymorph

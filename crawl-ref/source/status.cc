@@ -1062,6 +1062,16 @@ bool fill_status_info(int status, status_info& inf)
             inf.light_text = "Charms";
             inf.short_text = "charms draining MP";
             inf.long_text = "The benefits from your permanent enchantments are presently consuming all your magic regeneration.";
+	}
+        break;
+
+    case STATUS_CANINE_FAMILIAR_ACTIVE:
+        if (you.props.exists(CANINE_FAMILIAR_MID))
+        {
+            inf.light_colour = WHITE;
+            inf.light_text   = "Dog";
+            inf.short_text   = "inugami summoned";
+            inf.long_text    = "Your inugami has been summoned.";
         }
         break;
         
