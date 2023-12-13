@@ -201,5 +201,6 @@ enum duration_type
     DUR_ALLY_RESET_TIMER,       // 5-turn buffer to cancel 'stop attack' order
     DUR_TEMP_CLOUD_IMMUNITY,
     DUR_BLADE,
+    DUR_CANINE_FAMILIAR_DEAD,
     NUM_DURATIONS
 };

@@ -657,6 +657,12 @@ monster_info::monster_info(const monster* m, int milev)
         i_ghost.damage = ghost.damage;
         props[KNOWN_MAX_HP_KEY] = (int)ghost.max_hp;
     }
+    // Otherwise the description lies wildly about the average hp of melee pan
+    // lords, and an average player will have no idea how durable their canine
+    // familiar really is - which matters when you want to keep it alive.
+    else if (m->type == MONS_PANDEMONIUM_LORD || m->type == MONS_INUGAMI)
+        props[KNOWN_MAX_HP_KEY] = (int)(m->ghost->max_hp);
+
     if (m->has_ghost_brand())
         props[SPECIAL_WEAPON_KEY] = m->ghost_brand();
 

@@ -1467,6 +1467,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_GRASPING_ROOTS:
     case ENCH_WU_TOHIT:
     case ENCH_NECROTISE:
+    case ENCH_INSTANT_CLEAVE:
         decay_enchantment(en);
         break;
 
@@ -2172,7 +2173,8 @@ static const char *enchant_names[] =
     "idealised", "bound_soul", "infestation",
     "stilling the winds", "thunder_ringed", "pinned_by_whirlwind",
     "vortex", "vortex_cooldown", "vile_clutch", "wu_tohit",
-    "buggy concentrate venom", "warning_flash", "necrotising", "buggy",
+    "buggy concentrate venom", "warning_flash", "necrotising",
+    "cleaving_attack", "buggy", // NUM_ENCHANTMENTS
 };
 
 static const char *_mons_enchantment_name(enchant_type ench)
