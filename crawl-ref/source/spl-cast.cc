@@ -1294,6 +1294,8 @@ static unique_ptr<targeter> _spell_targeter(spell_type spell, int pow,
         return make_unique<targeter_passwall>(range);
     case SPELL_DIG:
         return make_unique<targeter_dig>(range);
+// DJSD: when stuff gets added here, see what the current state of it is for
+// eg Call Canine Familiar
     default:
         break;
     }
