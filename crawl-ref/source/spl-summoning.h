@@ -31,16 +31,15 @@
 
 spret cast_summon_butterflies(int pow, god_type god = GOD_NO_GOD,
                                    bool fail = false);
-// Mid of an active canine familiar. Should exist only so long as the player
-// has a living one.
-#define CANINE_FAMILIAR_MID "canine_familiar_mid"
-
 spret cast_summon_small_mammal(int pow, god_type god, bool fail);
 
 spret cast_sticks_to_snakes(int pow, god_type god, bool fail);
 
 bool canine_familiar_is_alive();
+monster *find_canine_familiar();
+void canid_farewell(bool deadish);
 spret cast_call_canine_familiar(int pow, god_type god, bool fail);
+
 spret cast_summon_armour_spirit(int pow, god_type god, bool fail);
 spret cast_summon_ice_beast(int pow, god_type god, bool fail);
 spret cast_summon_cactus(int pow, god_type god, bool fail);
