@@ -203,6 +203,7 @@ void change_monster_type(monster* mons, monster_type targetc)
 {
     ASSERT(mons); // XXX: change to monster &mons
     bool could_see     = you.can_see(*mons);
+    // NOTE(pf): This logic is wrong! FIXME!
     bool slimified = _jiyva_slime_target(targetc);
 
     // Quietly remove the old monster's invisibility before transforming
@@ -387,8 +388,14 @@ void change_monster_type(monster* mons, monster_type targetc)
     if (mons_class_flag(mons->type, M_INVIS))
         mons->add_ench(ENCH_INVIS);
 
-    mons->hit_points = mons->max_hit_points * old_hp / old_hp_max
-                       + random2(mons->max_hit_points);
+    mons->hit_points = mons->max_hit_points * old_hp / old_hp_max;
+
+    // Slimifying monsters gets you a fresh, delicious jiggly buddy.
+    if (slimified)
+        mons->hit_points = mons->max_hit_points;
+    // Shapeshifters heal when they shift. Wow, why can't players do that?
+    else if (shifter.ench != ENCH_NONE)
+        mons->hit_points += random2(mons->max_hit_points);
 
     mons->hit_points = min(mons->max_hit_points, mons->hit_points);
 
