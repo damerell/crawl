@@ -3628,6 +3628,7 @@ bool player::stasis() const
 bool player::cloud_immune(bool calc_unid, bool items) const
 {
     return have_passive(passive_t::cloud_immunity)
+        || you.duration[DUR_TEMP_CLOUD_IMMUNITY]
         || actor::cloud_immune(calc_unid, items);
 }
 
