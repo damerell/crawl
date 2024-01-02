@@ -18,6 +18,7 @@ enum map_marker_type
 #endif
     MAT_TERRAIN_CHANGE,
     MAT_CLOUD_SPREADER,
+    MAT_DEADEND, // for labs
     NUM_MAP_MARKER_TYPES,
     MAT_ANY,
 };

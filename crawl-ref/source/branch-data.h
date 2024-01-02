@@ -239,7 +239,7 @@ const Branch branches[NUM_BRANCHES] =
       //      and that the walls can shift occasionally.
       // Are these too long?
       "As you enter the labyrinth, previously moving walls settle noisily into place.\n"
-      "You hear the metallic echo of a distant snort before it fades into the rock.",
+      "Rough scratches on the floor seem to show where the exit may lie.",
       BLACK, BLACK,
       '0', {}, BRANCH_NOISE_NORMAL },
 

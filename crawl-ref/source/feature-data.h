@@ -329,7 +329,7 @@ STONE_STAIRS_UP(III, iii),
 },
 
 {
-    DNGN_EXIT_LABYRINTH, "escape hatch in the ceiling", "exit_labyrinth",
+    DNGN_EXIT_LABYRINTH, "escape hatch from the labyrinth", "exit_labyrinth",
     DCHAR_STAIRS_UP, NUM_DCHAR_TYPES,
     COLOUR_AND_MAP(BROWN),
     FFT_NONE, MF_STAIR_UP,

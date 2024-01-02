@@ -51,6 +51,7 @@
 #include "libutil.h"
 #include "mapmark.h"
 #include "maps.h"
+#include "map-knowledge.h"
 #include "mon-death.h"
 #include "mon-pick.h"
 #include "mon-place.h"

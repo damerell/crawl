@@ -17,6 +17,7 @@
 #include "database.h"
 #include "dgn-shoals.h"
 #include "dgn-event.h"
+#include "dgn-labyrinth.h"
 #include "dungeon.h"
 #include "env.h"
 #include "exercise.h"
@@ -704,6 +705,10 @@ void change_labyrinth(bool msg)
     case 2: mpr("The floor suddenly vibrates beneath you!"); break;
     case 3: mpr("You feel a sudden draft!"); break;
     }
+    labyrinth_mark_deadends(dgn_region::absolute(LABYRINTH_BORDER,
+                                                 LABYRINTH_BORDER,
+                                                 GXM - LABYRINTH_BORDER - 1,
+                                                 GYM - LABYRINTH_BORDER - 1));
 }
 
 static void _handle_magic_contamination()
@@ -1791,6 +1796,7 @@ void run_environment_effects()
     timeout_malign_gateways(you.time_taken);
     timeout_terrain_changes(you.time_taken);
     run_cloud_spreaders(you.time_taken);
+    if (player_in_branch(BRANCH_LABYRINTH)) shrink_lab(you.time_taken);
 }
 
 // Converts a movement speed to a duration. i.e., answers the

@@ -13,10 +13,13 @@
 #include "items.h"
 #include "mapmark.h"
 #include "maps.h"
+#include "map-knowledge.h"
 #include "mgen-data.h"
 #include "mon-pathfind.h"
 #include "mon-place.h"
 #include "terrain.h"
+
+#define LAB_DEFICIT env.properties["lab deficit"]
 
 typedef list<coord_def> coord_list;
 
@@ -121,6 +124,8 @@ static void _labyrinth_place_exit(const coord_def &end)
     _labyrinth_place_items(end);
     mons_place(mgen_data::sleeper_at(MONS_MINOTAUR, end, MG_PATROLLING));
     grd(end) = DNGN_EXIT_LABYRINTH;
+    env.map_knowledge(end).set_feature(DNGN_EXIT_LABYRINTH);
+    set_terrain_mapped(end);
 }
 
 // Change the borders of the labyrinth to another (undiggable) wall type.
@@ -267,6 +272,44 @@ static void _labyrinth_place_entry_point(const dgn_region &region,
         env.markers.add(new map_feature_marker(p, DNGN_ENTER_LABYRINTH));
 }
 
+static bool _is_smooshable(const coord_def& pos) {
+    if (feat_is_solid(grd(pos))) return false;
+    bool wall; int total = 0; int state = 0; 
+    for (adjacent_iterator ri(pos, true); ri; ++ri) {
+        const coord_def& p = *ri;
+        if (in_bounds(p)) {
+            wall = feat_is_solid(grd(p));
+        } else {
+            wall = true;
+        }
+        if (wall) total++;
+        switch (state) {
+        case 0: // found nothing yet
+            state = wall ? 1 : 2;
+            break;
+        case 1: // started with walls
+            if (!wall) state = 3;
+            break;
+        case 2: // started in a gap
+            if (wall) state = 4;
+            break;
+        case 3: // in a gap with a wall to the left
+            if (wall) state = 5;
+            break;
+        case 4: // gap to the left, in a wall
+            if (!wall) state = 6;
+            break;
+        case 5: // wall-gap-wall
+            if (!wall) return false; // two gaps
+            break;
+        case 6: // gap-wall-gap, only OK if the gap extends to #8
+            if (wall) return false; 
+            break;
+        }
+    }
+    return (total >= 5) ? true : false;
+}
+
 static bool _is_deadend(const coord_def& pos)
 {
     int count_neighbours = 0;
@@ -283,29 +326,27 @@ static bool _is_deadend(const coord_def& pos)
     return count_neighbours <= 1;
 }
 
-static coord_def _find_random_deadend(const dgn_region &region)
+static bool _find_random_deadend(const dgn_region &region, coord_def &pos)
 {
     int tries = 0;
-    coord_def result;
     bool floor_pos = false;
     while (++tries < 50)
     {
-        coord_def pos = region.random_point();
+        pos = region.random_point();
         if (grd(pos) != DNGN_FLOOR)
             continue;
         else if (!floor_pos)
         {
-            result = pos;
             floor_pos = true;
         }
 
         if (!_is_deadend(pos))
             continue;
 
-        return pos;
+        return true;
     }
 
-    return result;
+    return false;
 }
 
 // Adds a bloody trail ending in a dead end with spattered walls.
@@ -319,7 +360,7 @@ static void _labyrinth_add_blood_trail(const dgn_region &region)
     int tries = 0;
     while (++tries < 20)
     {
-        const coord_def start = _find_random_deadend(region);
+        coord_def start; _find_random_deadend(region, start);
         const coord_def dest  = region.random_point();
         monster_pathfind mp;
         if (!mp.init_pathfind(dest, start))
@@ -448,10 +489,71 @@ static void _labyrinth_add_glass_walls(const dgn_region &region)
     }
 }
 
+void labyrinth_mark_deadends(const dgn_region &region) {
+    for (rectangle_iterator ri(region.pos, region.end()); ri; ++ri) {
+        bool marked = false;
+        for (map_marker *marker : env.markers.get_markers_at(*ri)) {
+            if (marker->get_type() == MAT_DEADEND) {
+                marked = true;
+            }
+        }
+        if (marked) continue;
+        if (_is_smooshable (*ri)) {
+            env.markers.add(new map_deadend_marker(*ri, false));
+        }
+    }
+    env.markers.clear_need_activate();
+}
+
+static bool _is_little_room(coord_def pos) {
+    int total = 0; int outertotal = 0; int i = 0;
+    for (distance_iterator di (pos, false, false, 2); di; ++di) {
+        if (map_masked (*di, MMT_VAULT)) return false;
+        if (i == 0) {
+            if (grd(*di) != DNGN_ROCK_WALL) return false;
+        } else if (i < 9) {
+            if (grd(*di) != DNGN_FLOOR) total++;
+            if (total > 1) return false;
+        } else {
+            if (grd(*di) == DNGN_FLOOR) outertotal++;
+        }
+        i++;
+    }
+    return ((total == 1) && (outertotal == 2));
+}
+
+static void _place_little_rooms(const dgn_region &lab) {
+    int quota = roll_dice(2,3); coord_def lastpos = coord_def(0,0);
+    CrawlVector &rooms = env.properties["little rooms"].get_vector();
+    for (random_rectangle_iterator ranri(lab.pos, lab.end()); ; ++ranri) {
+        if ((*ranri) == lastpos) { break; } lastpos = *ranri;
+        if (_is_little_room(*ranri)) {
+            for (radius_iterator ri (*ranri, 1, C_SQUARE); ri; ++ri) {
+                grd(*ri) = DNGN_FLOOR; 
+            }
+            grd(*ranri) = DNGN_GRANITE_STATUE;
+            rooms.push_back(*ranri); if (!(--quota)) { break;}
+        }
+    }
+}
+
+static void _mark_little_rooms(const dgn_region &lab) {
+    CrawlVector  &rooms = env.properties["little rooms"].get_vector();
+    if (rooms.size()) {
+        for (CrawlVector::iterator it = rooms.begin();
+             it != rooms.end(); it++) {
+            for (radius_iterator ri (*it, 2, C_SQUARE); ri; ++ri) {
+                env.level_map_mask(*ri) |= MMT_VAULT;
+            }
+        }
+    }
+}
+
 void dgn_build_labyrinth_level()
 {
     env.level_build_method += " labyrinth";
     env.level_layout_types.insert("labyrinth");
+    LAB_DEFICIT = 0;
 
     dgn_region lab = dgn_region::absolute(LABYRINTH_BORDER,
                                            LABYRINTH_BORDER,
@@ -474,14 +576,15 @@ void dgn_build_labyrinth_level()
     else
     {
         const vault_placement &rplace = *env.level_vaults.back();
-        if (rplace.map.has_tag("generate_loot"))
-        {
-            for (vault_place_iterator vi(rplace); vi; ++vi)
-                if (grd(*vi) == DNGN_EXIT_LABYRINTH || feat_is_stone_stair(grd(*vi)))
-                {
+        for (vault_place_iterator vi(rplace); vi; ++vi) {
+            if (feat_is_stair(grd(*vi))) {
+                coord_def p = *vi;
+                if (rplace.map.has_tag("generate_loot"))
                     _labyrinth_place_items(*vi);
-                    break;
-                }
+                env.map_knowledge(p).set_feature(DNGN_EXIT_LABYRINTH);
+                set_terrain_mapped(p);
+                break;
+            }
         }
         place.pos  = rplace.pos;
         place.size = rplace.size;
@@ -492,15 +595,139 @@ void dgn_build_labyrinth_level()
 
     _place_extra_lab_minivaults();
 
+    _change_labyrinth_border(lab, DNGN_PERMAROCK_WALL);
+
+    _place_little_rooms(lab);
+
     _change_walls_from_centre(lab, end, { { 15 * 15, DNGN_METAL_WALL },
                                           { 34 * 34, DNGN_STONE_WALL } });
 
-    _change_labyrinth_border(lab, DNGN_PERMAROCK_WALL);
-
+    _mark_little_rooms(lab);
     _labyrinth_add_blood_trail(lab);
     _labyrinth_add_glass_walls(lab);
 
     _labyrinth_place_entry_point(lab, end);
 
+    labyrinth_mark_deadends(lab);
+    
     link_items();
+}
+
+static bool _morph(dungeon_feature_type a, dungeon_feature_type b,
+                   coord_def pos) {
+    if (a == b) {
+        if (a == DNGN_CLEAR_ROCK_WALL) a = DNGN_ROCK_WALL;
+        if (a == DNGN_CLEAR_STONE_WALL) a = DNGN_STONE_WALL;
+        grd(pos) = a; set_terrain_changed(pos);
+        return true;
+    }
+    return false;
+}
+
+static bool _attempt_squash(coord_def pos) {
+    if (!(map_masked(pos, MMT_VAULT) || you.see_cell(pos) || monster_at(pos)))
+    {
+        const dungeon_feature_type adjs[] = {grd(coord_def(pos.x-1,pos.y)),
+                                             grd(coord_def(pos.x+1,pos.y)),
+                                             grd(coord_def(pos.x  ,pos.y-1)),
+                                             grd(coord_def(pos.x  ,pos.y+1)) };
+        if (feat_is_wall(adjs[0])) {
+            if (_morph(adjs[0], adjs[2], pos)) return true;
+        }
+        if (feat_is_wall(adjs[1])) {
+            if (_morph(adjs[1], adjs[3], pos)) return true;
+            if (_morph(adjs[1], adjs[2], pos)) return true;
+            if (_morph(adjs[1], adjs[0], pos)) return true;
+        }
+        if (feat_is_wall(adjs[3])) {
+            if (_morph(adjs[0], adjs[3], pos)) return true;
+            if (_morph(adjs[2], adjs[3], pos)) return true;
+        }
+        grd(pos) = DNGN_CLEAR_ROCK_WALL; // partly to let me know this went weird
+        return true;
+    } else {
+        return false;
+    }
+}
+
+static void _attempt_squash_around(coord_def pos) {
+    if (in_bounds(pos)) {
+        for (adjacent_iterator ri(pos, true); ri; ++ri) {
+            if (_is_smooshable(*ri)) {
+                if (_attempt_squash(*ri)) {
+                    LAB_DEFICIT = LAB_DEFICIT.get_int() - 8;
+                    _attempt_squash_around(*ri);
+                }
+            }
+        }
+    }
+}
+
+static bool _squash_room(coord_def pos) {
+    int total = 0; int outertotal = 0; int i = 0; coord_def outer;
+    for (distance_iterator di (pos, false, false, 2); di; ++di) {
+        if (you.see_cell(pos) || monster_at(pos)) return false;
+        if ((i > 0) && (i < 9)) {
+            if (grd(*di) != DNGN_FLOOR) total++;
+        } else {
+            if (grd(*di) == DNGN_FLOOR) {outertotal++; outer = *di;}
+        }
+        i++;
+    }
+    if (outertotal == 1) {
+        for (distance_iterator di (pos, false, true, 2); di; ++di) {
+            env.level_map_mask(*di) &= ~MMT_VAULT;
+        }
+        for (distance_iterator di (pos, false, true, 1); di; ++di) {
+            _attempt_squash(*di);
+        }
+        _attempt_squash_around(outer);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool shrink_lab(int elapsed) {
+    LAB_DEFICIT = LAB_DEFICIT.get_int() + elapsed;
+    if (LAB_DEFICIT.get_int() < 1) return false;
+    if (x_chance_in_y(elapsed, 1000)) {
+        CrawlVector  &rooms = env.properties["little rooms"].get_vector();
+        if (rooms.size()) {
+            int index = 0;
+            for (CrawlVector::iterator it = rooms.begin();
+                 it != rooms.end(); it++) {
+                if (_squash_room(*it)) {
+                    rooms.erase(index);
+                    LAB_DEFICIT = LAB_DEFICIT.get_int() - 56;
+                    break;
+                }
+                index++;
+            }
+        }
+    }
+    vector<map_marker*> markers = env.markers.get_all(MAT_DEADEND);
+    if (markers.size()) {
+        map_deadend_marker *deadend =
+        dynamic_cast<map_deadend_marker*>(markers[random2(markers.size())]);
+        coord_def pos = deadend->pos;
+        if (map_masked(pos, MMT_VAULT)) {
+            env.markers.remove(deadend); // _attempt_squash should catch it too
+            return false;
+        }
+        if (_is_smooshable(pos)) {
+            if (_attempt_squash(pos)) {
+                env.markers.remove(deadend); 
+                LAB_DEFICIT = LAB_DEFICIT.get_int() - 8;
+                _attempt_squash_around(pos);
+                return true;
+            }
+        }
+        if (deadend->failed) {
+            env.markers.remove(deadend);
+        } else {
+            deadend->failed = true;
+        }
+    }
+    return false;
 }

@@ -337,3 +337,20 @@ public:
 map_position_marker *get_position_marker_at(const coord_def &pos,
                                             dungeon_feature_type feat);
 coord_def get_transporter_dest(const coord_def &pos);
+
+class map_deadend_marker : public map_marker
+{
+
+public:
+    map_deadend_marker(const coord_def &p = coord_def(0, 0),
+		       bool failed = false);
+    void write(writer &) const override;
+    void read(reader &) override;
+    string debug_describe() const override;
+    map_marker *clone() const override;
+    static map_marker *read(reader &, map_marker_type);
+
+ public:
+    bool failed;
+    
+};

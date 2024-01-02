@@ -29,6 +29,7 @@
 #include "dgn-overview.h"
 #include "dgn-event.h"
 #include "directn.h"
+#include "dungeon.h"
 #include "english.h"
 #include "env.h"
 #include "errors.h"
@@ -2439,13 +2440,13 @@ void forget_map(bool rot)
     if (!rot)
         clear_travel_trail();
 
+    bool in_lab = player_in_branch(BRANCH_LABYRINTH);
     // Labyrinth and the Abyss use special rotting rules.
-    const bool rot_resist = player_in_branch(BRANCH_LABYRINTH)
-                                && you.species == SP_MINOTAUR
+    const bool rot_resist = in_lab && you.species == SP_MINOTAUR
                             || player_in_branch(BRANCH_ABYSS)
                                 && have_passive(passive_t::map_rot_res_abyss);
-    const double geometric_chance = 0.99;
-    const int radius = (rot_resist ? 200 : 100);
+    const double geometric_chance = in_lab ? 0.995: 0.99;
+    const int radius = (in_lab ? 150 : 100) * (rot_resist ? 2 : 1);
 
     const int scalar = 0xFF;
     for (rectangle_iterator ri(0); ri; ++ri)
@@ -2466,7 +2467,12 @@ void forget_map(bool rot)
         if (you.see_cell(p))
             continue;
 
-        env.map_knowledge(p).clear();
+        if (in_lab &&(grd(p) == DNGN_EXIT_LABYRINTH) ||
+            (map_masked(p, MMT_VAULT) && (grd(p) != DNGN_FLOOR))) {
+            continue;
+        }
+
+            env.map_knowledge(p).clear();
         if (env.map_forgotten)
             (*env.map_forgotten)(p).clear();
         StashTrack.update_stash(p);

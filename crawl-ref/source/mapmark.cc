@@ -41,7 +41,8 @@ map_marker::marker_reader map_marker::readers[NUM_MAP_MARKER_TYPES] =
     &map_door_seal_marker::read,
 #endif
     &map_terrain_change_marker::read,
-    &map_cloud_spreader_marker::read
+    &map_cloud_spreader_marker::read,
+    &map_deadend_marker::read
 };
 
 map_marker::marker_parser map_marker::parsers[NUM_MAP_MARKER_TYPES] =
@@ -946,6 +947,38 @@ map_marker *map_position_marker::read(reader &inf, map_marker_type)
 string map_position_marker::debug_describe() const
 {
     return make_stringf("position (%d,%d)", dest.x, dest.y);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// map_deadend_marker
+
+map_deadend_marker::map_deadend_marker(const coord_def& p, bool _failed)
+    : map_marker(MAT_DEADEND, p), failed(_failed)
+{
+}
+
+void map_deadend_marker::write(writer &outf) const {
+    map_marker::write(outf);
+    marshallBoolean(outf, failed);
+}
+
+void map_deadend_marker::read(reader &inf) {
+    map_marker::read(inf);
+    failed = unmarshallBoolean(inf);
+}
+
+map_marker *map_deadend_marker::read(reader &inf, map_marker_type) {
+    map_deadend_marker *de = new map_deadend_marker();
+    de->read(inf);
+    return de;
+}
+
+map_marker *map_deadend_marker::clone() const {
+    return new map_deadend_marker(pos, failed);
+}
+
+string map_deadend_marker::debug_describe() const {
+    return failed ? "deadend failed once" : "deadend not yet failed";
 }
 
 //////////////////////////////////////////////////////////////////////////

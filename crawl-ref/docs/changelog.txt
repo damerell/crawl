@@ -29,6 +29,7 @@ Stoat Soup 0.23 "The Masque of the Red Death"
   do. Simplified strength weighting returns. Riposte on a block if you would
   have dodged.
 * The faerie dragon scales are not just acid dragon scales in a funny hat.
+* Labyrinths are somewhat easier to escape.
 
 Vanilla changes messed around with
 ----------------------------------
