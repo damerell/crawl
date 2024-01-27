@@ -1,0 +1,124 @@
+Stoat Soup for NetHack players
+==============================
+
+Linley's Dungeon Crawl was inspired by NetHack, and while the two
+games have drifted apart, it won't be completely unfamiliar. One of
+the main differences is that Crawl doesn't want information to be
+hidden in spoilers - if you could know it by reading spoilers (eg "is
+this monster's corpse good to eat?" "what's this weapon's base
+damage?"), you're just told it. If you press ? you can read a huge
+amount of help.
+
+You need to identify items, but there aren't many shortcuts like
+price-IDing, so a lot of the time you will identify items by wearing
+or wielding them, or by reading unIDed scrolls or quaffing unIDed
+potions. Scrolls of identify are pretty common, and it's safe to read
+scrolls with nothing around, so it's normal to wait until you get
+stacks of 2 scrolls and read them hoping to find identify. Potions
+aren't so safe to identify by quaffing, but potions also have a decent
+chance of saving you if things are desperate, so sometimes you'll
+identify them by quaffing them when otherwise you're going to die.
+
+There are cursed weapons, armour, rings, and amulets - but no blessed
+items. Scrolls of remove curse uncurse everything in your inventory.
+Hence, it's safe to wear or wield unknown items if you have some
+scrolls of remove curse - not so much otherwise, but maybe the item is
+so good you're willing to take the chance.
+
+You can examine an item in the inventory by pressing its letter, and
+Crawl tells you a lot more about items than NetHack does.
+
+If an item looks plain - "a broadsword" - it is at _best_ uncursed +0.
+"A broadsword of flaming" might still be cursed -2, but definitely
+does bonus damage with its fiery blade. "A runed broadsword" (with a
+blue name) might well be good - perhaps a +4 broadsword of flaming -
+but if it's not, it could well be cursed with a negative
+enchantment. "A fine broadsword" (with a white name, and if you
+examine it it says "This ancient artefact cannot be changed by magic
+or mundane means") is an artefact.
+
+Artefacts are more like NetHack artefacts (but can also be armour or
+jewellery), with a wide range of powers, but most of them are
+"randarts", randomly generated. They're not all good, either! You'll
+almost never identify weapons, armour, or jewellery which aren't
+artefacts, but you might have enough of a surplus of scrolls to use on
+artefacts. Unlike in NetHack, you won't always end the game wielding
+an artefact - a +9 broadsword of flaming, say, might well do more
+damage than any artefact you find.
+
+You need to eat food to survive, and most of the time you'll eat
+corpses - use 'c' to chop them up into chunks. Normally you can't eat
+raw flesh until you are Hungry - but it's safe to hang onto chunks
+until you are, your character throws them away when they are not safe
+to eat. Some corpses are "mutagenic" - you can eat those any time, but
+the effects may be exciting.
+
+The dungeon branches, like in NetHack, but much more so. Important
+early branches are the Temple, the Lair of Beasts, and the Orcish
+Mines. The Temple contains many altars to the gods, and no monsters;
+the Lair and the Orcish Mines are not _absurdly_ dangerous when you
+encounter them. The help menu can tell you about all the branches (and
+everything else) in the game.
+
+Crawl does not like typo deaths. Your character will not walk into
+lava just because you mistype; you will be warned before taking action
+that angers your god. What makes Crawl hard to win is that the
+monsters are much more dangerous, and particularly that they stay
+dangerous all game. You almost always die by running out of hitpoints.
+
+Items can't be destroyed in your inventory, and consumables are
+important, so carry them around. You're not saving potions and scrolls
+to dilute and blank, but to save your life when things get bad;
+there's no prize for dying with 10 potions of heal wounds.
+
+Most characters don't start with a god, and each of the Crawl gods is
+very different - they grant different powers and impose different
+restrictions. You'll have to work out what is best for your character,
+and whether it's better to take the reasonable god whose altar you
+have found early or to hold out for the one you really wanted.
+
+Some species differ from humans only in stats and skill aptitudes, a
+bit like NetHack's elves and dwarves, but others are much more
+different - eg, ghouls crave flesh and heal when they eat it, felids
+are sentient cats, and demonspawn gain demonic traits as they level
+up. On the character selection screen, the species on the left are
+more straightforward to play.
+
+Background is just what you start with - unlike NetHack where your
+class determines how much you can #enhance your skills, what
+resistances you get when you level up, which Quest you do, and so
+forth. Nothing is stopping you from starting a Fighter and learning
+spells, or a Conjurer and hitting monsters with a stick - except
+getting killed while you're learning the new skills.
+
+Skills train up as you gain experience. You can either use automatic
+skill training (which trains up what you are using) or manual
+(complete control of where your XP goes). Automatic skill training
+can't make too big a mess of things, but as a more experienced player
+you may want complete control - for example if you're desperate to get
+a particular spell working, you might dump all your XP into the
+relevant skill. Your species determines your aptitude for each skill,
+and it's easier to focus on what your species does well.
+
+Items don't have weight; the only inventory pressure comes from the
+inventory being limited to 52 slots. There are no bags to put things
+in. The "encumbrance" listed on body armour affects how easy it is to
+cast spells in it and how much it affects your evasion and ability to
+hit things.
+
+There are three stats. Strength reduces the downsides of heavy armour
+and makes you do more damage with most weapons, especially maces and
+flails. Intelligence makes you better at casting spells. Dexterity
+makes you better at hitting and dodging attacks, and helps damage with
+some light weapons like rapiers.
+
+Crawl's levels are bigger than NetHack's (but not as big as you might
+think); a useful command is 'o', autoexplore. Autoexplore isn't always
+great at the start of a level - it may leave you far from the stairs
+when you see the first monster - but it's very good at making sure
+you've seen all the items and looked into every corner.
+
+Autoexplore showed you all the items - and you can do Ctrl-F to find
+where they are, so you don't have to stash everything just to be able
+to find it later. Furthermore, you can hit Enter on an item in the
+Ctrl-F search results to travel to the item you want.
