@@ -87,7 +87,7 @@ Branches, Environment
 * New early vaults featuring thematic item shops and monsters guarding
   manuals.
 * Layouts:
-  - Concentric octagons is enabled for Lair and Snake.
+  - Concentric octagons is enabled for Lair.
   - Cave pools (with adjusted parameters) is enabled for the Dungeon.
 
 Character
@@ -101,6 +101,12 @@ Gods
 * Monster conversion for Beogh, Gozag's Bribe, and Jiyva is attempted upon
   sight instead of on the turn after the monster enters LOS.
 * The acid damage from Makhleb's Minor Destruction has been reduced.
+* Elyvilon's Heal Other is adjusted:
+  - The formula depends only on monster type, not specific monster max HP.
+  - Player ghosts and Pandemonium Lords are now immune.
+  - The targeter displays pacification chance.
+* Exploration-based piety is no longer granted for the Temple, deep water, or
+  lava.
 
 Interface
 ---------
@@ -114,6 +120,7 @@ Items
 -----
 * Stash search can now search by handedness.
 * Butchering a corpse always leaves a skeleton.
+* The targeter now displays the chance to affect the target with darts.
 * Unrandarts:
   - The Singing Sword is now vorpal, and its sonic damage effect is stronger
     and triggers on-hit instead of while wielded.
@@ -128,6 +135,9 @@ Items
   - Finisher loses Str+3 and gains a chance to instant-explode the target.
   - Unrandarts with melee effects that could anger nearby allies give a proper
     warning.
+  - The robe of Clouds is now +3 {+Thunder rCloud rElec}, providing evocable
+    storm clouds in place of its old mist.
+  - The storm bow no longer occasionally creates rain clouds.
 
 Monsters
 --------
@@ -135,6 +145,7 @@ Monsters
   constriction instead of applying a 'Roots' status.
 * Jorgrun gains the Grasping Roots spell and can now spawn in Swamp.
 * Orb run spawns are more frequently near the player and more dangerous.
+* Confused monsters now get a 1 in 3 chance to move normally, like players do.
 
 Stoat Soup 0.22 "Spirits of the Dead"
 -------------------------------------
