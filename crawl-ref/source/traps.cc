@@ -533,6 +533,9 @@ void trap_def::trigger(actor& triggerer)
     const bool you_trigger = triggerer.is_player();
     const bool in_sight = you.see_cell(pos);
 
+    if ((!in_sight) && (type == TRAP_TELEPORT_PERMANENT)) {
+        return;
+    }
     // If set, the trap will be removed at the end of the
     // triggering process.
     bool trap_destroyed = false, know_trap_destroyed = false;
