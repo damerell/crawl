@@ -786,6 +786,7 @@ static const duration_def duration_data[] =
       "noxious spew", "noxious bog",
       "You are spewing a noxious bog.", D_DISPELLABLE,
       {{ "Your noxious spew wanes." }}},
+    { DUR_ALLY_RESET_TIMER, 0, "", "", "ally reset timer", "", D_NO_FLAGS},
 #if TAG_MAJOR_VERSION == 34
     // And removed ones
     { DUR_ACQUIREMENT, 0, "", "", "old acq timeout", "", D_NO_FLAGS},
