@@ -202,5 +202,6 @@ enum duration_type
     DUR_BLINK_COOLDOWN,
     DUR_IHPIX_FOF,
     DUR_NOXIOUS_BOG,
+    DUR_ALLY_RESET_TIMER,       // 5-turn buffer to cancel 'stop attack' order
     NUM_DURATIONS
 };

@@ -491,6 +491,22 @@ void player_reacts_to_monsters()
         you.stop_being_constricted(true);
     }
 
+    // If you have signalled your allies to stop attacking, cancel this order
+    // once there are no longer any enemies in view for 50 consecutive aut
+    if (you.pet_target == MHITYOU)
+    {
+        // Reset the timer if there are hostiles in sight
+        if (there_are_monsters_nearby(true, true, false))
+            you.duration[DUR_ALLY_RESET_TIMER] = 0;
+        else
+        {
+            if (!you.duration[DUR_ALLY_RESET_TIMER])
+                you.duration[DUR_ALLY_RESET_TIMER] = 50;
+            else if (_decrement_a_duration(DUR_ALLY_RESET_TIMER, you.time_taken))
+                you.pet_target = MHITNOT;
+        }
+    }
+
     _maybe_melt_armour();
     _update_cowardice();
     if (you_worship(GOD_USKAYAW))
