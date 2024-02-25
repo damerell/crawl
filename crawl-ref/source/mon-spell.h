@@ -1200,7 +1200,7 @@ static const mon_spellbook mspell_list[] =
 
     { MST_THORN_LOTUS,
       {
-	  { SPELL_THORN_VOLLEY, 160, MON_SPELL_NATURAL },
+	  { SPELL_THORN_VOLLEY, 60, MON_SPELL_NATURAL },
       }
     },
 

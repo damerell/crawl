@@ -1884,9 +1884,10 @@ void handle_monster_move(monster* mons)
 
         // Confused monsters sometimes stumble about instead of moving with
         // purpose.
-        if ((mons_is_confused(*mons) && !one_chance_in(3)) || mons->type == MONS_THORN_LOTUS)
-        {
+        if (mons_is_confused(*mons) && !one_chance_in(3)) {
             set_random_target(mons);
+            _confused_move_dir(mons);
+        } else if (mons->type == MONS_THORN_LOTUS) {
             _confused_move_dir(mons);
         }
     }
