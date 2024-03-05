@@ -1049,6 +1049,20 @@ bool SkillMenu::do_skill_enabled_check()
         // menu. Training will be fixed up on load.
         ASSERT(you.species != SP_GNOLL);
         set_help("<lightred>You need to enable at least one skill.</lightred>");
+        // It can be confusing if the only trainable skills are hidden. Turn on
+        // SKM_SHOW_ALL if so.
+        if (get_state(SKM_SHOW) == SKM_SHOW_DEFAULT)
+        {
+            bool showing_trainable = false;
+            for (skill_type sk = SK_FIRST_SKILL; sk < NUM_SKILLS; ++sk)
+                if (_show_skill(sk, SKM_SHOW_DEFAULT) && can_enable_skill(sk))
+                {
+                    showing_trainable = true;
+                    break;
+                }
+            if (!showing_trainable)
+                toggle(SKM_SHOW);
+        }
         return false;
     }
     return true;
