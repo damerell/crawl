@@ -1798,7 +1798,7 @@ static const mon_spellbook mspell_list[] =
 
     {  MST_BRAIN_WORM,
       {
-       { SPELL_BRAIN_FEED, 80, MON_SPELL_MAGICAL },
+       { SPELL_BRAIN_FEED, 60, MON_SPELL_MAGICAL },
       }
     },
 
