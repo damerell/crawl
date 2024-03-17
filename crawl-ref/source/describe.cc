@@ -1175,6 +1175,9 @@ static string _stat_weight_string(const item_def &item, bool thrown = false) {
     case ALL_DEX:
         description = "Damage inflicted " + throwstring + " is based purely on Dexterity (you have " + to_string(you.dex()) + ").";
         break;
+    case BEST:
+        description = "Damage inflicted " + throwstring + " is based on the best of Strength and Dexterity (yours is " + effective + ").";
+        break;
     }
     return description;
 }

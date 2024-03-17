@@ -1940,7 +1940,7 @@ bool is_brandable_weapon(const item_def &wpn, bool allow_ranged, bool divine)
 }
 
 weapon_stat_weight weapon_str_weight(const item_def *wpn) {
-    if (wpn == nullptr) return BALANCED;
+    if (wpn == nullptr) return BEST;
     switch (item_attack_skill(*wpn)) {
     case SK_BOWS:
         return BALANCED;
@@ -1979,6 +1979,8 @@ int calc_stat_to_dam_base(const item_def *weapon, bool random) {
         break;
     case ALL_DEX:
         return you.dex();
+    case BEST:
+        return (youdex > youstr) ? you.dex() : you.strength();
     }
     double effective = ((matcher > matchee) ?
                         matchee + (matcher - matchee) / 3.0 :
