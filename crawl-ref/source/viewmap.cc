@@ -439,7 +439,8 @@ class feature_list
     {
         dungeon_feature_type feat = env.map_knowledge(gc).feat();
 
-        if (feat_is_staircase(feat) || feat_is_escape_hatch(feat))
+        if (feat_is_staircase(feat) || feat_is_escape_hatch(feat) ||
+            feat_is_portal_exit(feat))
             return feat_dir(feat);
         if (feat == DNGN_TRAP_SHAFT)
             return G_DOWN;

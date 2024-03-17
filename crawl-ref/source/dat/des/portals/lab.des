@@ -48,6 +48,46 @@ function lab_intruders(e)
           any missile w:3 no_pickup / any wand no_pickup / \
           any scroll no_pickup / any jewellery no_pickup / gold no_pickup w:19")
 end
+
+function make_statue(e)
+  local flavours = {
+    { colour = "white", wallcol = "white", tilecol = "_white", tile = "dngn_statue_mermaid", string = "a statue of Galatea" },
+    { colour = false, wallcol = false, tilecol = "_darkgrey", tile = "dngn_statue_dwarf", string = "a statue of a dwarf" },
+    { colour = "brown", wallcol = "brown", tilecol = "_brown", tile = "dngn_statue_archer", string = "a statue of Arthur Dent Throwing the Nutrimatic Cup" },
+    { colour = "iron", wallcol = "white", tilecol = "_white", tile = "depths_crumbled_column", string = "a kettle full of probably parsnips" },
+    { colour = "silver", wallcol = "white", tilecol = "_white", tile = "dngn_statue_ancient_hero", string = "a statue of Perseus" },
+    { colour = false, wallcol = false, tilecol = "_darkgray", tile = "dngn_statue_angel", string = "a weeping angel" },
+    { colour = "iron", wallcol = "lightgrey", tilecol = "_darkgray", tile = "dngn_statue_iron_golem", string = "a statue of a stout man and a duck" },
+    { colour = "magenta", wallcol = "magenta", tilecol = "_magenta", tile = "depths_column", string = "a statue of a purple square" },
+    { colour = "blue", wallcol = "green", tilecol = "_green", tile = "depths_column", string = "a pile of coats" },
+    { colour = "darkgray", wallcol = false, tilecol = "_darkgray", tile = "depths_column", string = "an ominous obelisk" },
+    { colour = "gold", wallcol = "brown", tilecol = "_yellow", tile = "dngn_statue_wraith", string = "a statue of the King in Yellow" },
+    { colour = false, wallcol = false, tilecol = "_darkgray", tile = "dngn_statue_orb", string = "a statue of Atlas" },
+    { colour = "green", wallcol = "green", tilecol = "_green", tile = "dngn_statue_dragon", string = "a statue of Godzilla" },
+  }
+  -- We never recolour metal walls - confusing otherwise
+  local flavour = flavours[ math.random( #flavours )]
+  if flavour.colour then
+    e.colour("G = " .. flavour.colour)
+  end
+  if flavour.wallcol then
+    e.colour("xc = " .. flavour.wallcol)
+  end
+    
+  e.tile("G = ".. flavour.tile)
+
+  e.tile("x = wall_pebble" .. flavour.tilecol)
+  e.tile("c = dngn_stone_wall" .. flavour.tilecol)
+  if flavour.colour == "silver" then 
+    e.tile("v = dngn_silver_wall")
+  elseif flavour.colour == "iron" then
+    e.tile("v = dngn_metal_iron")
+  else
+    e.tile("v = dngn_metal_wall" .. flavour.tilecol)
+  end
+
+  e.set_feature_name("granite_statue", flavour.string)
+end
 }}
 
 #############################################################################
@@ -754,4 +794,47 @@ MAP
  .
 .G.
  .
+ENDMAP
+
+# The little statue rooms
+NAME: lab_statue_rock
+SUBST: . = .:60 0 1 d
+: lab_intruders(_G)
+TAGS: allow_dup no_exits
+: make_statue (_G)
+WEIGHT: 0
+MAP
+xxxxx
+x...x
+x.G.x
+x...x
+xxxxx
+ENDMAP
+
+NAME: lab_statue_stone
+SUBST: . = .:60 0 1 d
+: lab_intruders(_G)
+TAGS: allow_dup no_exits
+: make_statue (_G)
+WEIGHT: 0
+MAP
+ccccc
+c...c
+c.G.c
+c...c
+ccccc
+ENDMAP
+
+NAME: lab_statue_metal
+SUBST: . = .:60 0 1 d
+: lab_intruders(_G)
+TAGS: allow_dup no_exits
+: make_statue (_G)
+WEIGHT: 0
+MAP
+vvvvv
+v...v
+v.G.v
+v...v
+vvvvv
 ENDMAP

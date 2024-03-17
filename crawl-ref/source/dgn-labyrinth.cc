@@ -18,6 +18,7 @@
 #include "mon-pathfind.h"
 #include "mon-place.h"
 #include "terrain.h"
+#include "tiledef-dngn.h"
 
 #define LAB_DEFICIT env.properties["lab deficit"]
 
@@ -505,17 +506,26 @@ void labyrinth_mark_deadends(const dgn_region &region) {
     env.markers.clear_need_activate();
 }
 
-static bool _is_little_room(coord_def pos) {
+static bool _is_little_room(coord_def pos, coord_def (&doors)[2]) {
     int total = 0; int outertotal = 0; int i = 0;
+    dungeon_feature_type rockorstone;
     for (distance_iterator di (pos, false, false, 2); di; ++di) {
         if (map_masked (*di, MMT_VAULT)) return false;
         if (i == 0) {
-            if (grd(*di) != DNGN_ROCK_WALL) return false;
+            rockorstone = grd(*di);
+            if ((rockorstone != DNGN_ROCK_WALL) &&
+                (rockorstone != DNGN_STONE_WALL) &&
+                (rockorstone != DNGN_METAL_WALL)) {
+                return false;
+            }
         } else if (i < 9) {
             if (grd(*di) != DNGN_FLOOR) total++;
             if (total > 1) return false;
         } else {
-            if (grd(*di) == DNGN_FLOOR) outertotal++;
+            if (grd(*di) == DNGN_FLOOR) {
+                doors[outertotal] = *di; outertotal++;
+            }
+            if (grd(*di) == DNGN_PERMAROCK_WALL) return false;
         }
         i++;
     }
@@ -524,15 +534,28 @@ static bool _is_little_room(coord_def pos) {
 
 static void _place_little_rooms(const dgn_region &lab) {
     int quota = roll_dice(2,3); coord_def lastpos = coord_def(0,0);
-    CrawlVector &rooms = env.properties["little rooms"].get_vector();
+        CrawlVector &rooms = env.properties["little rooms"].get_vector();
     for (random_rectangle_iterator ranri(lab.pos, lab.end()); ; ++ranri) {
         if ((*ranri) == lastpos) { break; } lastpos = *ranri;
-        if (_is_little_room(*ranri)) {
-            for (radius_iterator ri (*ranri, 1, C_SQUARE); ri; ++ri) {
-                grd(*ri) = DNGN_FLOOR; 
+        coord_def doors[2];
+        if (_is_little_room(*ranri, doors)) {
+            string rocktype;
+            switch (grd(*ranri)) {
+            case DNGN_ROCK_WALL:
+                rocktype = "rock";
+                break;
+            case DNGN_STONE_WALL:
+                rocktype = "stone";
+                break;
+            default:
+                rocktype = "metal";
             }
-            grd(*ranri) = DNGN_GRANITE_STATUE;
-            rooms.push_back(*ranri); if (!(--quota)) { break;}
+            const map_def *toplace =
+            find_map_by_name("lab_statue_" + rocktype);
+            if (dgn_place_map(toplace, false, true, *ranri)) {
+                rooms.push_back(*ranri);
+                grd(doors[0]) = grd(doors[1]) = DNGN_FLOOR;
+            } if (!(--quota)) { break;}
         }
     }
 }
@@ -597,12 +620,12 @@ void dgn_build_labyrinth_level()
 
     _change_labyrinth_border(lab, DNGN_PERMAROCK_WALL);
 
-    _place_little_rooms(lab);
-
     _change_walls_from_centre(lab, end, { { 15 * 15, DNGN_METAL_WALL },
                                           { 34 * 34, DNGN_STONE_WALL } });
 
+    _place_little_rooms(lab);
     _mark_little_rooms(lab);
+
     _labyrinth_add_blood_trail(lab);
     _labyrinth_add_glass_walls(lab);
 

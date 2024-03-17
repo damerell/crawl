@@ -774,6 +774,73 @@ A statue with strange and alien features. Is it because the statue is worn and
 tarnished that it has become so unrecognisable? Or is it that the subject was
 something demonic and evil?
 %%%%
+A statue of a dwarf
+
+You see here an adamantine statue of the dwarf Urist
+McZuntîr-Otam. Urist McZuntîr-Otam is wielding a battleaxe. On the
+battleaxe is an image of a dwarf holding up a battleaxe. The image
+relates to the creation of a masterwork battleaxe by Urist
+McZuntîr-Otam. It menaces with spikes of obsidian and cave spider
+silk. All craftsdwarfship is of the highest quality.
+%%%%
+A statue of Galatea
+
+This graceful marble statue, carved with exquisite care, depicts a
+perfectly beautiful woman, whatever that means.
+%%%%
+A statue of Arthur Dent Throwing the Nutrimatic Cup
+
+A scruffy-looking man wearing a dressing gown throws a cup away from
+him in disgust. The cup is suspended in mid-air, held up by Art.
+%%%%
+A kettle full of probably parsnips
+
+This statue represents Bissonomy, one of the 7a Virtues.
+%%%%
+A statue of Perseus
+
+This statue of a noble warrior is extremely lifelike. One could almost
+imagine he was a real person turned to stone. He carries a spear and a
+polished silver shield.
+%%%%
+A weeping angel
+
+A solemn granite angel with blank eyes. For some reason you really
+don't want to turn your back on it.
+%%%%
+A statue of a stout man and a duck
+
+A jolly-looking moustachioed man with the air of an engineer. At his
+feet stands a proud-looking mallard.
+%%%%
+A statue of a purple square
+
+A large purple square that gives you 8 points.
+%%%%
+A pile of coats
+
+After careful investigation this turns out to be a statue being used
+as a coatrack.
+%%%%
+An ominous obelisk
+
+A featureless black obelisk, 9 by 4 by 1. It makes a faint humming noise.
+%%%%
+A statue of the King in Yellow
+
+The King before whom Emperors kneel. A tattered and terrible god, marked
+with a yellow sign.
+%%%%
+A statue of Atlas
+
+A strong man bends beneath the weight of a world. He looks like he
+belongs in a grand square, maybe outside a city hall?
+%%%%
+A statue of Godzilla
+
+Somewhat scaled down, a miniature monster stomps on an even more
+minature city.
+%%%%
 # wizlab: Doroklohe
 A strange rock wall
 
