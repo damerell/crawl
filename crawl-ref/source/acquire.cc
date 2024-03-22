@@ -1459,6 +1459,9 @@ int acquirement_create_item(object_class_type class_wanted,
                 if (artefact_property(acq_item, ARTP_CONTAM)) {
                     artefact_learn_prop(acq_item, ARTP_CONTAM);
                 }
+                if (artefact_property(acq_item, ARTP_DRAIN)) {
+                    artefact_learn_prop(acq_item, ARTP_DRAIN);
+                }
                 if (artefact_property(acq_item, ARTP_FRAGILE)) {
                     artefact_learn_prop(acq_item, ARTP_FRAGILE);
                 }
