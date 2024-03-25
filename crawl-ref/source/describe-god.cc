@@ -1236,12 +1236,9 @@ bool describe_god_with_join(god_type which_god)
     // This is somewhat brittle, but ensures that the UI doesn't resize when
     // switching between prompts.
     const string prompts[] = {
-        make_stringf("%sDo you wish to %sjoin this religion?%s",
+        make_stringf("%sDo you wish to %sjoin this religion?",
                      service_fee.c_str(),
-                     (you.worshipped[which_god]) ? "re" : "",
-                     ((which_god != GOD_XOM) && 
-                      (you.char_class == JOB_CHAOS_KNIGHT) ? 
-                      " Xom will continue to toy with you." : "")),
+                     (you.worshipped[which_god]) ? "re" : ""),
         make_stringf("Are you sure you want to abandon %s?",
                 god_name(you.religion).c_str())
     };
