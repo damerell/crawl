@@ -947,7 +947,14 @@ static const pop_entry pop_zig[] =
 
 static const pop_entry pop_lab[] =
 { // Labyrinth
-  { 0,0,0,FLAT,MONS_0 }
+    { 1, 1, 500, FLAT, MONS_EARTH_ELEMENTAL },
+    { 1, 1, 1000, FLAT, MONS_SKELETON },
+    { 1, 1, 500, FLAT, MONS_BASILISK },
+    { 1, 1, 1000, FLAT, MONS_REDBACK },
+    { 1, 1, 1000, FLAT, MONS_GARGOYLE },
+    { 1, 1, 1000, FLAT, MONS_UNSEEN_HORROR },
+    { 1, 1, 1000, FLAT, MONS_SHADOW },
+    { 0,0,0,FLAT,MONS_0 }
 };
 
 static const pop_entry pop_bazaar[] =
