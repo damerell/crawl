@@ -1,0 +1,123 @@
+<html><head><title>Changes in Stoat Soup</title></head>
+  <body>
+    <h1>Changes in Stoat Soup</h1>
+    <p>If you're only really familiar with newer vanilla versions, <a href="about-new.html">Stoat Soup for 0.30 players</a> is probably more use to you.</p>
+    <p>Stoat Soup differs from vanilla 0.23 in the following ways (this list starts out in approximate order of importance, but post-release changes are then added chronologically):</p>
+    <ul>
+      <li>Monsters still continue to spawn as in Crawl 0.20, our original raison d'etre for the variant.</li>
+      <li>Ghosts don't roam the dungeon murdering you horribly or hide in ghost vaults to be cashed in for XP later. They remember what killed them, and come into being to seek revenge on their slayer. They're neutral monsters, so they're not entirely safe to be around, but if you don't aggravate them they're useful allies. Ghost AC/EV/HP were all reduced to, probably unsuccessfully, encourage players to fight alongside ghosts rather than sitting back as they flatten their targets.</li>
+      <li>High elves and mountain dwarves are back, and joined by faerie dragons, a straightforward spellcasting species with a discount on spell MP costs. MD aptitudes have been adjusted in line with the across-the-board aptitude adjustments since their removal.</li>
+      <li>The monster list in console is enormously improved, able to provide information on more than one monster of the same kind and to report on a vast range of criteria - know at a glance that 2 of these 3 gnolls have polearms. (This change is not made in Webtiles, both because the monster list in Webtiles is generated in an entirely different bit of code in a different language, and because much of this information is already available.)</li>
+      <li>Zin cures mutations on a gifting timeout, so can't be used to lock in a good mut set. Recite was very slightly improved, both in the HD of monsters it can affect and by being usable more frequently at ****** piety.</li>
+      <li>You can still get that good mut set by eating purple chunks. Purple monsters start to "cool down" when first sighted, and if killed sufficiently much later aren't mutagenic. I don't know if Hypothetically Optimal Man was actually stowing them in branches for later, but now they can't.</li> 
+      <li>You are optionally warned before entering, or when forcibly transported to, the last level in a branch.</li>
+      <li>Ozo's Armour doesn't prevent movement, but it can only be cast with monsters in view, so H.O.M. can't cast it before opening every door. It runs out twice as fast if no monsters are in view, but twice as slowly if they are, which since it still gives ponderous might result in some harmless amusement.</li>
+      <li>Ogres get +1 Maces and Flails; we're fine with an easy choice, but it doesn't have to be overpoweringly good. Ogre spell apts are a mix of -1s and -2s based roughly on Ogre and Ogre Mage apts in pre-DCSS days.</li>
+      <li>LRD digs rock, but never stone or metal, since much of the problem with it seemed to be cracking into stone vaults. IOODs and eyes of devastation also dig rock. These spells' utility for digging killholes has been limited.</li>
+      <li>The Swamp gains the Triceratops, a unique who's a melee beast who knocks down trees because that's original, er. But I like triceratopses.</li>
+      <li>Deep dwarf MP loss on healing gets averaged out - it is much harder now to have a run of bad luck that loses you MP every time, or a run of free heals. Additionally, the first MP loss of the game is ignored. This makes DD easier, of course, but is analogous to the 0.18 situation where you got one load of wand charges for free.</li>
+      <li>Food still consists of meat and bread rations, fruit, and honeycombs, because who needs inventory space? Honeycombs are only found in bee vaults, though, to cut down on food spam slightly.</li>
+      <li>The Mace of Variability still varies but does so on hits so H.O.M. can't just wait for it to be +16. The Singing Sword is vorpal; independent invention of a vanilla change.</li>
+      <li>Dream sheep can still spread sticky flame to each other, which Dithmenos hates, because Dithmenos still hates fire. Dith rejects (precognitively if need be) worship from red draconians and Ignite Blood demonspawn.</li>
+      <li>Labyrinth loot was unchanged; minotaurs got some but not all of the vanilla boosts.</li>
+      <li>Engulf still gives a movespeed penalty.</li>
+      <li>Cosmetic changes; if you worship Qazlal, the noise bar goes to 11! Quokkas are now weasels. Double and triple swords are now broadswords and claymores.</li>
+    </ul>
+    <h3>Post-release changes</h3>
+    <ul>
+      <li>You can now wear-ID amulets with relative impunity. The
+	amulet of harm does not drain you. However, when you take one
+	off, you continue to take extra damage until fully healed and
+	some time has passed, so it still can't be usefully swapped
+	mid-fight. The amulet of faith only starts to increase piety
+	gain after a random amount of piety has been gained while
+	wearing it - on average, 3 points. However, it drains at most
+	1/5 of your piety on removal, and cannot drain more piety than
+	was gained by wearing it.</li>
+      <li>Some spells are now "permabuffs", which last forever rather
+      than having to be recast. The first two such spells are Infusion
+      and Shroud of Golubria. More details can be
+	found <a href="permabuffs.txt">here</a>.</li>
+      <li>When you acquire or are (non-Xom) god gifted a weapon of
+	distortion, or item that is *Contam or *Fragile, it is
+	identified as such automatically. (However, *Fragile is now
+	replaced with *Curse, which is not identified.)</li>
+      <li>Troves will not ask for scrolls of ID, nor Ru piety.</li>
+      <li>Formicids cannot cast Swiftness, but can use giant clubs
+	without shields.</li>  
+      <li>All magical staves do some kind of bonus damage in melee
+	based on spell skills.</li> 
+      <li>When incapacitated, you still lose SH from a shield, but keep half of
+	mutation-based SH and all god/jewellery SH.</li>
+      <li>Weapons of chaos cannot turn monsters into
+	shapeshifters. This is a rare effect, but would almost always
+	stiff you if it hit in the early game;	weapons of chaos are
+	bad enough already.</li>
+      <li>Scarves can be artifacts, always based on a normal scarf
+	ego.  Add a new scarf of warding, which gives rN+, MR+, and
+	the old warding effect.</li>
+      <li>Some removed artifacts are unremoved - Cekugob, Doom Knight,
+	Eternal Torment, Hat of the High Council, Talos.</li>
+      <li>When viewing information on a single spell, you will be told the
+        failure chance and spellpower with brilliance.</li>
+      <li>Wands are identified as in 0.19, but stack as in 0.20.</li>
+      <li>Noise breaks mesmerisation, can be read when silenced, and gets
+        rid of magical silence.</li>
+      <li>The stone of tremors and disc of storms are restored.</li>
+      <li>The 0.24 Throwing reform is pulled forward (and tweaked lightly).</li>
+      <li>The 0.25 acquirement reform is pulled forward (and also tweaked lightly).</li>
+      <li>The 0.26 feature that evocable invisibility drains you is pulled forward.</li>
+      <li>Shielding reverts to its old warding, EV+4, AC+4 form, and Robustness and Phasing become not just very good rings of protection and evasion</li>
+      <li>Piety stars go white at max piety (actually 199 so it doesn't flicker off with every piety decay).</li>
+      <li>11 permabuffs; most recent is Beastly Appendage.</li>
+      <li>Gozag sells ammunition.</li>
+      <li>WJC only pins with Serpent's Lash / Heavenly Storm, but when you attack multiple monsters with a martial attack, you get an EV bonus against any you hit.</li>
+      <li>Non-Gozag food shops are now "supply shops", which also sell ammo.</li>
+	<li>Chei gives piety based strictly on movement speed.</li>
+      <li>Sludge elves ooze around the dungeon again.</li>
+      <li>The See Invisible and Insulation spells are restored.</li>
+      <li>Various removed monsters (including Maud) return, tweaked to be nastier if they wren't very lethal beforehand.</li>
+      <li>Vehumet gifts do not expire.</li>
+      <li>Rot is healed gradually by XP.</li>
+      <li>Necromancers are joined by their cavaliers.</li>
+      <li>One or two species have less utterly flat aptitudes.</li>
+      <li>Species gear considers a return in the form of the dwarven roundshield.</li>
+      <li>When "Done exploring", a count of the stairs is returned.</li>
+      <li>Teleportitis is replaced with a less game-changing "short teleport" mutation, and no regeneration with monsters visible reverts to a two-level mutation with "slow regeneration" as the first level.</li>
+      <li>Ihp'ix, a new god for ranged combat.</li>
+      <li>Rings of loudness return, and they make you loud.</li>
+      <li>Velakast's Superior Radiance, which attempts to inflict poison vulnerability before giving you a toxic aura.</li>
+      <li>2h melee weapon damage is increased. Big long blades don't
+      riposte, rapiers do. Simplified strength weighting
+	returns. Riposte on a block if you would have dodged.</li>
+      <li>Labyrinths are a bit easier to escape.</li>
+    </ul>
+    <h4>Changes swiped from other variants</h4>
+    <ul>
+      <li>bcrawl:
+	<ul>
+	  <li>Ash curses items for free, but uncursing costs piety.
+	    Stoat Soup then reduces the "items cursed" element of Ash
+	    piety gain on low D levels in a way that gives similar
+	    piety gain to a vanilla character who found the average
+	    number of RC scrolls.  This prevents you cursing all your
+	    stuff very early and getting lots of bonus piety obviating
+	    the uncursing penalty.  Even on low D levels, higher
+	    bondage levels give some extra piety gain.</li>
+	  <li>Small species cannot use morningstars and eveningstars.</li>
+	  <li>Controlled Blink is level 7, but the range scales with spellpower.</li>
+          <li>Chaos Knights remain Xom's playthings even after abandonment.</li>
+          <li>Gourmand heals you when eating chunks</li>
+	</ul>
+      </li>
+      <li>Gooncrawl:
+	<ul>
+	  <li>Boulder beetles roll around the dungeon again. We also
+	  fix the boulder beetle traps broken in, er, 2012.</li>
+          <li>Malmutate is gone (save Mnoleg's melee), replaced with "Corrupt Body", a weaker version of wretched stars' ability. OOFs get a little extra twist.</li>
+	  <li>Iskenderun's Undoing, a hilariously destructive level 9 Conjuration.</li>
+	  <li>Haste returns as a level 9 Charms spell.</li>
+	</ul>
+      </li>
+    </ul>
+    </body></html>
