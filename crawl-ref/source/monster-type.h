@@ -1040,6 +1040,7 @@ enum monster_type                      // menv[].type
     MONS_GOLIATH_BEETLE,
     MONS_VIPER,
     MONS_CAVALIER,
+    MONS_TAINTED_LEVIATHAN,
 #endif
 
     NUM_MONSTERS,               // used for polymorph
