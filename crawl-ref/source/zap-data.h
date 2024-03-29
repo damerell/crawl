@@ -1375,4 +1375,20 @@ _mon_hex_zap(ZAP_DRAIN_MAGIC, BEAM_DRAIN_MAGIC),
     7
 },
 
+{
+    ZAP_NECROTISE,
+    "",
+    100,
+    new dicedef_calculator<1, 4, 1, 5>,
+    new tohit_calculator<0, 7, 2>,
+    nullptr,
+    nullptr,
+    BLACK,
+    true,
+    BEAM_NECROTISE,
+    NUM_DCHAR_TYPES,
+    false,
+    false,
+},
+
 };

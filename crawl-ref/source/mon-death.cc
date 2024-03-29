@@ -2818,6 +2818,11 @@ item_def* monster_die(monster& mons, killer_type killer,
         // message ordering... :(
         if (corpse->base_type == OBJ_CORPSES) // not gold
             _maybe_drop_monster_hide(*corpse, silent);
+        if (mons.has_ench(ENCH_NECROTISE)) {
+            butcher_corpse(*corpse, true);
+            animate_remains(mons.pos(), CORPSE_SKELETON, BEH_FRIENDLY,
+                            MHITYOU, &you, "", GOD_NO_GOD);
+        }
     }
 
     if (mons.is_divine_companion()

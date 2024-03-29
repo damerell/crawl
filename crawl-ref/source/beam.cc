@@ -205,6 +205,7 @@ static void _ench_animation(int flavour, const monster* mon, bool force)
     case BEAM_PAIN:
     case BEAM_AGONY:
     case BEAM_VILE_CLUTCH:
+    case BEAM_NECROTISE:
         elem = ETC_UNHOLY;
         break;
     case BEAM_DISPEL_UNDEAD:
@@ -5252,6 +5253,7 @@ bool ench_flavour_affects_monster(beam_type flavour, const monster* mon,
         break;
 
     case BEAM_PAIN:
+    case BEAM_NECROTISE:
         rc = mon->res_negative_energy(intrinsic_only) < 3;
         break;
 
@@ -5490,6 +5492,27 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         return MON_UNAFFECTED;
     }
 
+    case BEAM_NECROTISE:
+    {
+        const int dam = resist_adjust_damage(mon, flavour, damage.roll());
+        if (!dam) return MON_UNAFFECTED;
+        if (you.see_cell(mon->pos()))
+        {
+            mprf("%s writhes in agony%s",
+                 mon->name(DESC_THE).c_str(),
+                 attack_strength_punctuation(dam).c_str());
+            obvious_effect = true;
+        }
+        if (mons_can_be_zombified(*mon)
+            && !mons_class_flag(mon->type, M_NO_SKELETON)
+            && !you.get_mutation_level(MUT_NO_LOVE))
+        {
+            mon->add_ench(mon_enchant(ENCH_NECROTISE, 0, agent(), 1));
+        }
+        mon->hurt(agent(), dam, flavour);
+        return MON_AFFECTED;
+    }
+    
     case BEAM_AGONY:
         torment_cell(mon->pos(), agent(), TORMENT_AGONY);
         obvious_effect = true;
@@ -6375,6 +6398,12 @@ bool bolt::nasty_to(const monster* mon) const
         case BEAM_BECKONING:
             // Friendly and good neutral monsters don't mind being teleported.
             return !mon->wont_attack();
+        case BEAM_NECROTISE:
+            // HACK: we want to warn when players accidentally aim necrotise
+            // through their skeletal allies. So mark it harmful to pals.
+            if (mons_aligned(mon, agent()))
+                return true;
+        // else fallthrough to generic enchantments
         case BEAM_INFESTATION:
         case BEAM_VILE_CLUTCH:
         case BEAM_SLOW:
@@ -6664,6 +6693,7 @@ static string _beam_type_name(beam_type type)
     case BEAM_IRRESISTIBLE_CONFUSION:return "confusion";
     case BEAM_INFESTATION:           return "infestation";
     case BEAM_VILE_CLUTCH:           return "vile clutch";
+    case BEAM_NECROTISE:             return "necrotise";
 
     case NUM_BEAMS:                  die("invalid beam type");
     }
