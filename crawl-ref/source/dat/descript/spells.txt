@@ -957,6 +957,12 @@ power, and they gain a draining melee attack. The caster also gains some of the
 more dubious benefits of having an undead body, such as a vulnerability to holy
 damage and Velakast's Disruption, and an inability to consume potions.
 %%%%
+Necrotise spell
+
+Agonisingly rots away the victim's flesh. Those slain by this spell
+(or otherwie dying immediately afterward) may rise as skeletons to
+fight for the caster. Only the living can be affected.
+%%%%
 Noxious Cloud spell
 
 Creates a large cloud of noxious fumes, which may cause confusion.

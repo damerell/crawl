@@ -90,5 +90,6 @@ enum zap_type
     ZAP_DRAIN_LIFE,
     ZAP_SONIC_WAVE,
     ZAP_UNDOING_EXPLOSION,
+    ZAP_NECROTISE,
     NUM_ZAPS
 };
