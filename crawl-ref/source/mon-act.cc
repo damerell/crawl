@@ -284,7 +284,7 @@ static bool _do_mon_spell(monster* mons)
 
 static void _swim_or_move_energy(monster& mon)
 {
-    mon.lose_energy(mons_is_swimming(mon) ? EUT_SWIM : EUT_MOVE);
+    mon.lose_energy(mons_should_swim(mon) ? EUT_SWIM : EUT_MOVE);
 }
 
 static bool _unfriendly_or_impaired(const monster& mon)

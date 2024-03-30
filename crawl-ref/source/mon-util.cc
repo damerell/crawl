@@ -4234,10 +4234,9 @@ bool mons_can_traverse(const monster& mon, const coord_def& p,
     return true;
 }
 
-bool mons_is_swimming(const monster& mon) {
+bool mons_should_swim(const monster& mon) {
     const dungeon_feature_type feat = grd(mon.pos());
-    return (feat_is_lava(feat) || feat_is_water(feat))
-        && mon.ground_level();
+    return (feat_is_lava(feat) || feat_is_water(feat)) && mon.ground_level();
 }
 
 void mons_remove_from_grid(const monster& mon)
