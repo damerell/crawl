@@ -598,7 +598,7 @@ item_def* place_monster_corpse(const monster& mons, bool silent, bool force)
     }
 
     if (in_bounds(mons.pos()))
-        move_item_to_grid(&o, mons.pos(), !mons.swimming());
+        move_item_to_grid(&o, mons.pos(), mons.swimming());
 
     if (o == NON_ITEM)
         return nullptr;

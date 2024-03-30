@@ -248,7 +248,8 @@ mon_attitude_type monster::temp_attitude() const
 bool monster::swimming() const
 {
     const dungeon_feature_type grid = grd(pos());
-    return feat_is_watery(grid) && mons_primary_habitat(*this) == HT_WATER;
+    if (!mons_should_swim(*this)) return false;
+    return (is_habitable_feat(grid));
 }
 
 bool monster::submerged() const
