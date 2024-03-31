@@ -52,7 +52,7 @@ end
 function make_statue(e)
   local flavours = {
     { colour = "white", wallcol = "white", tilecol = "_white", tile = "dngn_statue_mermaid", string = "a statue of Galatea" },
-    { colour = false, wallcol = false, tilecol = "_darkgrey", tile = "dngn_statue_dwarf", string = "a statue of a dwarf" },
+    { colour = false, wallcol = false, tilecol = "_darkgray", tile = "dngn_statue_dwarf", string = "a statue of a dwarf" },
     { colour = "brown", wallcol = "brown", tilecol = "_brown", tile = "dngn_statue_archer", string = "a statue of Arthur Dent Throwing the Nutrimatic Cup" },
     { colour = "iron", wallcol = "white", tilecol = "_white", tile = "depths_crumbled_column", string = "a kettle full of probably parsnips" },
     { colour = "silver", wallcol = "white", tilecol = "_white", tile = "dngn_statue_ancient_hero", string = "a statue of Perseus" },
@@ -64,6 +64,7 @@ function make_statue(e)
     { colour = "gold", wallcol = "brown", tilecol = "_yellow", tile = "dngn_statue_wraith", string = "a statue of the King in Yellow" },
     { colour = false, wallcol = false, tilecol = "_darkgray", tile = "dngn_statue_orb", string = "a statue of Atlas" },
     { colour = "green", wallcol = "green", tilecol = "_green", tile = "dngn_statue_dragon", string = "a statue of Godzilla" },
+    { colour = "green", wallcol = "green", tilecol = "_green", tile = "dngn_statue_elephant_jade", string = "a statue of Nellie the Elephant" },
   }
   -- We never recolour metal walls - confusing otherwise
   local flavour = flavours[ math.random( #flavours )]
