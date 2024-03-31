@@ -62,7 +62,7 @@ amulet of the gourmand
 An amulet that makes fresh raw meat more palatable to its wearer, allowing
 them to eat it at any time and gain some health from eating it. It has no
 effect on a wearer who is completely herbivorous or otherwise unable to eat
-meat.
+meat, and a wearer who cannot regenerate at all will not gain health.
 
 This effect on the wearer's digestion gradually takes effect over some time.
 %%%%
