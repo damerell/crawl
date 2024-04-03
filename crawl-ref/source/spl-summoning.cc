@@ -2647,6 +2647,7 @@ int battlesphere_max_charges() {
     return (4 + (calc_spell_power(SPELL_BATTLESPHERE, true) + 10) / 20);
 }
 
+// If you're editing this, check vehumet_supports_spell in god-abil.cc?
 bool battlesphere_can_mirror(spell_type spell)
 {
     return (spell_typematch(spell, SPTYP_CONJURATION)

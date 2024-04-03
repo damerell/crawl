@@ -1446,6 +1446,7 @@ void elyvilon_remove_divine_vigour()
     calc_mp();
 }
 
+// If you're editing this, check battlesphere_can_mirror in spl-summoning.cc?
 bool vehumet_supports_spell(spell_type spell)
 {
     if (spell_typematch(spell, SPTYP_CONJURATION))
