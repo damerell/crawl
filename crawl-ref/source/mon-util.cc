@@ -3748,8 +3748,19 @@ bool mons_should_fire(bolt &beam, bool ignore_good_idea)
     // friends when considering collateral damage.
 
     // Quick check - did we in fact get any foes?
-    if (beam.foe_info.count == 0)
-        return false;
+    if (beam.foe_info.count == 0) {
+        if (beam.flavour == BEAM_DEVASTATION) {
+            bool dugany = false; 
+            for (auto spot : beam.path_taken) {
+                if (beam.can_affect_wall(spot)) {
+                    dugany = true; break;
+                }
+            }
+            if (!dugany) return false;
+        } else {
+            return false;
+        }
+    }
 
     // If we hit no friends, fire away.
     if (beam.friend_info.count == 0)
