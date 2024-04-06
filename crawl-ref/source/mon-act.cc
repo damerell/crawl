@@ -1922,6 +1922,11 @@ void handle_monster_move(monster* mons)
             || mons->has_spell(SPELL_DIG)
             // Let monsters who have Awaken Earth use it off-screen.
             || mons->has_spell(SPELL_AWAKEN_EARTH)
+            // If we have Energy Bolt and can see our foe, try and clear
+            // grates, transparent rock
+            || (mons->has_spell(SPELL_ENERGY_BOLT) &&
+                mons->get_foe() &&
+                mons->see_cell(mons->get_foe()->pos()))
             )
         {
             // [ds] Special abilities shouldn't overwhelm
