@@ -102,6 +102,7 @@ private:
 
     /* Brand / Attack Effects */
     bool do_knockback(bool trample = true);
+    bool do_drag();
 
     /* Output methods */
     void set_attack_verb(int damage) override;
