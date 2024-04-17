@@ -154,6 +154,11 @@ bool prompt_eat_item(int slot)
     return true;
 }
 
+static bool _chunks_heal_gourmand() {
+    if (you.hp == you.hp_max) return false;
+    return (you.wearing(EQ_AMULET, AMU_THE_GOURMAND) && you.species != SP_DEEP_DWARF);
+}
+
 static bool _eat_check(bool check_hunger = true, bool silent = false)
 {
     if (you_foodless())
@@ -171,6 +176,17 @@ static bool _eat_check(bool check_hunger = true, bool silent = false)
 
     if (you.hunger_state >= HS_ENGORGED)
     {
+        if (_chunks_heal_gourmand()) {
+            if (prompt_eat_chunks(false, true) == 0) {
+                if (!silent) {
+                    mprf("You're too full to eat anything except raw flesh to heal your wounds.");
+                    crawl_state.zero_turns_taken();
+                }
+                return false;
+            } else {
+                return true;
+            }
+        }
         if (!silent)
         {
             mprf("You're too full to %s anything.",
@@ -467,9 +483,10 @@ static bool _auto_eat_chunks()
  *
  *  @param only_auto Don't actually make a prompt: if there are
  *                   things to auto_eat, eat them, and exit otherwise.
+ *  @param justlook  Just see if there are any chunks we could eat.
  *  @returns -1 for cancel, 1 for eaten, 0 for not eaten,
  */
-int prompt_eat_chunks(bool only_auto)
+int prompt_eat_chunks(bool only_auto, bool justlook)
 {
     // Full herbivores cannot eat chunks.
     if (you.get_mutation_level(MUT_HERBIVOROUS) == 3)
@@ -477,7 +494,8 @@ int prompt_eat_chunks(bool only_auto)
     
     // If we *know* the player can eat chunks, doesn't have the gourmand
     // effect and isn't hungry, don't prompt for chunks.
-    if (you.species != SP_VAMPIRE && you.hunger_state > _max_chunk_state())
+    if (you.species != SP_VAMPIRE && you.hunger_state > _max_chunk_state() &&
+        !_chunks_heal_gourmand())
     {
         return 0;
     }
@@ -526,6 +544,10 @@ int prompt_eat_chunks(bool only_auto)
         chunks.push_back(&item);
     }
 
+    if (justlook) {
+        if (found_valid) return 1; else return 0;
+    }
+    
     const bool easy_eat = Options.easy_eat_chunks || only_auto;
 
     if (found_valid)
@@ -725,8 +747,11 @@ static void _eat_chunk(item_def& food)
             suppress_msg = true;
             _heal_from_food(hp_amt);
         }
-
-        mprf("This raw flesh %s", _chunk_flavour_phrase(likes_chunks, gourmand));
+        if (you.hunger_state == HS_ENGORGED && gourmand) {
+            mprf("Already engorged, you choke down more raw flesh to heal your wounds.");
+        } else {
+            mprf("This raw flesh %s", _chunk_flavour_phrase(likes_chunks, gourmand));
+        }
         do_eat = true;
         break;
     }
