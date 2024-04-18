@@ -552,8 +552,7 @@ static special_missile_type _determine_missile_brand(const item_def& item,
                                     nw, SPMSL_NORMAL);
         break;
     case MI_BOOMERANG:
-        rc = random_choose_weighted(30, SPMSL_STEEL,
-                                    30, SPMSL_DISPERSAL,
+        rc = random_choose_weighted(30, SPMSL_DISPERSAL,
                                     nw, SPMSL_NORMAL);
         break;
     }
@@ -641,7 +640,7 @@ bool is_missile_brand_ok(int type, int brand, bool strict)
     case SPMSL_SILVER: // deliberate fall through
 #endif
     case SPMSL_STEEL:
-        return type == MI_JAVELIN || type == MI_BOOMERANG;
+        return type == MI_JAVELIN;
     default: break;
     }
 
