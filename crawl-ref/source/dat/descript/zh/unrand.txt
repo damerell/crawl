@@ -8,7 +8,7 @@ Wrath of Trog
 在这把武器被遗失前，它曾经是古神塔洛格最爱的兵器。
 任何拿着它攻击别人的人都会变成嗜血狂徒。
 %%%%
-Mace of Variability
+maul of Variability
 
 这东西很不可靠。
 %%%%

@@ -6931,11 +6931,11 @@ TAGS:    transparent
 DEPTH:   D:8-
 MONS:    chaos spawn
 KFEAT:   _ = altar_xom
-: if you.unrands("mace of variability") then
+: if you.unrands("maul of variability") then
 # could be a launcher!
 ITEM:    any weapon good_item randart ego:chaos ident:type no_pickup
 : else
-ITEM:    mace_of_variability no_pickup
+ITEM:    maul_of_variability no_pickup
 : end
 # walls are carefully placed and guarantee no islands
 SUBST:   x = xcvbmGwWlTUVYt+ <:4 >:4 A:2 1:160

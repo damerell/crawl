@@ -800,7 +800,7 @@ KITEM:    R = obsidian_axe ident:all, \
               majin-bo ident:all
 KITEM:    T = piercer ident:all, \
               singing_sword ident:all, \
-              mace_of_variability ident:all, \
+              maul_of_variability ident:all, \
               sword_of_power ident:all, \
               scythe_of_curses ident:all, \
               sword_of_zonguldrok ident:all, \
