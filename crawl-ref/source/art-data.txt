@@ -187,7 +187,7 @@ VALUE:   800
 ANGRY:   50
 BRAND:   SPWPN_ANTIMAGIC
 
-NAME:    mace of Variability
+NAME:    maul of Variability
 OBJ:     OBJ_WEAPONS/WPN_GREAT_MACE
 PLUS:    +0   # Set on generation
 INSCRIP: chain chaos

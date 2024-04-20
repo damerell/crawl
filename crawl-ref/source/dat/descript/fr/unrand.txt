@@ -9,7 +9,7 @@ Wrath of Trog
 C'était l'arme préférée de l'antique dieu Trog, avant qu'elle ne soit perdu un
 jour. Elle entraine une rage berserk chez ceux qui s'en servent en combat.
 %%%%
-Mace of Variability
+maul of Variability
 
 C'est plutôt pas très fiable.
 %%%%

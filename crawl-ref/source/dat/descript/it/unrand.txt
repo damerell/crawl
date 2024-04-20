@@ -9,7 +9,7 @@ Wrath of Trog
 Era l'arma preferita dell'antica divinità Trog, prima di essere perduta. Usarla
 per attaccare indurrà chiunque l'adopera in una furia assetata di sangue.
 %%%%
-Mace of Variability
+maul of Variability
 
 È decisamente inaffidabile.
 %%%%

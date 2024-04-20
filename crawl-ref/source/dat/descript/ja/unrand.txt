@@ -8,7 +8,7 @@ Wrath of Trog
 この斧は旧き神トログが失くしたもので、彼のお気に入りの品だった。
 これは振るう者全てに血に飢えた狂戦士の怒りを誘発する。
 %%%%
-Mace of Variability
+maul of Variability
 
 この武器はどうも当てにならない。
 %%%%

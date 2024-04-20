@@ -4,7 +4,7 @@ Singing Sword
 Tämä siunattu ase rakastaa kaikista eniten omistajalleen laulamista, halusi hän
 sitä tai ei.
 %%%%
-Mace of Variability
+maul of Variability
 
 Se on varsin epäluotettava.
 %%%%

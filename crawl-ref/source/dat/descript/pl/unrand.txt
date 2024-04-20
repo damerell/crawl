@@ -9,7 +9,7 @@ Wrath of Trog
 To była niegdyś ulubiona broń Troga, zanim ją utracił pewnego dnia. Wzbudza
 krwawy berserkerski szał gdy ktokolwiek użyje jej aby uderzyć bliźniego.
 %%%%
-Mace of Variability
+maul of Variability
 
 Jest raczej niezbyt niezawodna.
 %%%%
