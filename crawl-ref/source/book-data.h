@@ -1,8 +1,35 @@
 // This needs to be re-ordered when TAG_MAJOR_VERSION changes!
+
+// Some Stoat Soup thoughts:
+// If a book has more than six spells it is probably time to add a new book
+// by looking at vanilla commit
+// c126db5c3d258b00bf7526fc3b1a6620a9f6fd19
+// or perhaps the history of http://crawl.chaosforge.org/Book
+// for ideas for names and stealing spells from books with 5+ spells to fill
+// it out.
+
+// If you add a book don't forget to edit book_rarity in spl-book.cc
+// and item-name.cc... and alphabet shops!
+
+// If you add a spell it should probably turn up in about one non-starting
+// book or two if it's meant to shore up a school that needs help
+// Don't forget to check if Vehumet should support if it's not a Conjuration.
+
+// It seems we are unlikely to divorce backgrounds from books as vanilla has
+// done. To me, getting a "conjurer's kit" is pleasing. Those books could
+// become rarer if book size in general is shrunk as vanilla has done.
+
+// The Necronomicon, Grand Grimoire, and Annihilations are special. Spells
+// in these don't appear in normal randbooks, Sif doesn't gift the books but
+// can put the spells in her randbooks. So don't put a random spell looking
+// for a home in one.
+
+// item-prop.cc lists removed books.
+
 static const vector<spell_type> spellbook_templates[] =
 {
 
-{   // Book of Minor Magic
+{   // Book of Minor Magic (wizard)
     SPELL_MAGIC_DART,
     SPELL_BLINK,
     SPELL_CALL_IMP,
@@ -11,7 +38,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_MEPHITIC_CLOUD,
 },
 
-{   // Book of Conjurations
+{   // Book of Conjurations (conjurer)
     SPELL_MAGIC_DART,
     SPELL_SEARING_RAY,
     SPELL_DAZZLING_SPRAY,
@@ -20,7 +47,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_ISKENDERUNS_MYSTIC_BLAST,
 },
 
-{   // Book of Flames
+{   // Book of Flames (fire elementalist)
     SPELL_FLAME_TONGUE,
     SPELL_THROW_FLAME,
     SPELL_CONJURE_FLAME,
@@ -29,7 +56,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_FIREBALL,
 },
 
-{   // Book of Frost
+{   // Book of Frost (ice elementalist)
     SPELL_FREEZE,
     SPELL_THROW_FROST,
     SPELL_OZOCUBUS_ARMOUR,
@@ -63,7 +90,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_SIMULACRUM,
 },
 
-{   // Book of Spatial Translocations
+{   // Book of Spatial Translocations (warper)
     SPELL_BLINK,
     SPELL_SHROUD_OF_GOLUBRIA,
     SPELL_BECKONING,
@@ -74,7 +101,6 @@ static const vector<spell_type> spellbook_templates[] =
 
 {   // Book of Enchantments
     SPELL_SEE_INVISIBLE,
-    SPELL_CAUSE_FEAR,
     SPELL_VIOLENT_UNRAVELLING,
     SPELL_SILENCE,
     SPELL_DEFLECT_MISSILES,
@@ -82,7 +108,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_HASTE,
 },
 
-{   // Young Poisoner's Handbook
+{   // Young Poisoner's Handbook (venom mage)
     SPELL_STING,
     SPELL_POISONOUS_VAPOURS,
     SPELL_MEPHITIC_CLOUD,
@@ -116,7 +142,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_VIOLENT_UNRAVELLING,
 },
 
-{   // Book of Changes
+{   // Book of Changes (transmuter)
     SPELL_BEASTLY_APPENDAGE,
     SPELL_STICKS_TO_SNAKES,
     SPELL_SPIDER_FORM,
@@ -141,7 +167,7 @@ static const vector<spell_type> spellbook_templates[] =
 },
 
 #if TAG_MAJOR_VERSION > 34
-{   // Book of Battle
+{   // Book of Battle (skald)
     SPELL_INFUSION,
     SPELL_SHROUD_OF_GOLUBRIA,
     SPELL_SONG_OF_SLAYING,
@@ -157,7 +183,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_RING_OF_FLAMES,
 },
 
-{   // Book of Necromancy
+{   // Book of Necromancy (necromancer)
     SPELL_NECROTISE,
     SPELL_VAMPIRIC_DRAINING,
     SPELL_REGENERATION,
@@ -173,14 +199,14 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_SUMMON_ICE_BEAST,
 },
 
-{   // Book of Maledictions
+{   // Book of Maledictions (enchanter)
     SPELL_HIBERNATION,
     SPELL_CONFUSE,
     SPELL_TUKIMAS_DANCE,
     SPELL_DAZZLING_SPRAY,
 },
 
-{   // Book of Air
+{   // Book of Air (air elementalist)
     SPELL_SHOCK,
     SPELL_SWIFTNESS,
     SPELL_DISCHARGE,
@@ -209,6 +235,7 @@ static const vector<spell_type> spellbook_templates[] =
 {   // Book of Envenomations
     SPELL_SPIDER_FORM,
     SPELL_OLGREBS_TOXIC_RADIANCE,
+    SPELL_VENOM_BOLT,
     SPELL_INTOXICATE,
     SPELL_NOXIOUS_BOG,
     SPELL_PERFECTED_RADIANCE,
@@ -223,11 +250,11 @@ static const vector<spell_type> spellbook_templates[] =
 },
 
 #if TAG_MAJOR_VERSION == 34
-{   // Book of Control
+{   // Book of Control (removed)
     SPELL_ENGLACIATION,
 },
 
-{   // Book of Battle
+{   // Book of Battle (skald)
     SPELL_INFUSION,
     SPELL_SHROUD_OF_GOLUBRIA,
     SPELL_SONG_OF_SLAYING,
@@ -236,7 +263,7 @@ static const vector<spell_type> spellbook_templates[] =
 },
 #endif
 
-{   // Book of Geomancy
+{   // Book of Geomancy (earth elementalist)
     SPELL_SANDBLAST,
     SPELL_PASSWALL,
     SPELL_STONE_ARROW,
@@ -253,7 +280,7 @@ static const vector<spell_type> spellbook_templates[] =
 },
 
 #if TAG_MAJOR_VERSION == 34
-{   // Book of Wizardry
+{   // Book of Wizardry (removed)
     SPELL_FORCE_LANCE,
     SPELL_AGONY,
     SPELL_INVISIBILITY,
@@ -288,7 +315,7 @@ static const vector<spell_type> spellbook_templates[] =
 },
 
 #if TAG_MAJOR_VERSION == 34
-{   // Akashic Record
+{   // Akashic Record (removed, theme was high tloc)
     SPELL_DISPERSAL,
     SPELL_MALIGN_GATEWAY,
     SPELL_CONTROLLED_BLINK,
@@ -296,7 +323,7 @@ static const vector<spell_type> spellbook_templates[] =
 },
 #endif
 
-{   // Book of Debilitation
+{   // Book of Debilitation (arcane marksman)
     SPELL_SLOW,
     SPELL_INNER_FLAME,
     SPELL_PORTAL_PROJECTILE,
@@ -346,7 +373,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_SUMMON_HYDRA,
 },
 
-{   // Book of Annihilations
+{   // Book of Annihilations (special)
     SPELL_POISON_ARROW,
     SPELL_CHAIN_LIGHTNING,
     SPELL_LEHUDIBS_CRYSTAL_SPEAR,
@@ -355,14 +382,14 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_ISKENDERUNS_UNDOING,
 },
 
-{   // Grand Grimoire
+{   // Grand Grimoire (special)
     SPELL_MONSTROUS_MENAGERIE,
     SPELL_SUMMON_GREATER_DEMON,
     SPELL_MALIGN_GATEWAY,
     SPELL_SUMMON_HORRIBLE_THINGS,
 },
 
-{   // Necronomicon
+{   // Necronomicon (special)
     SPELL_HAUNT,
     SPELL_BORGNJORS_REVIVIFICATION,
     SPELL_DEATHS_DOOR,
