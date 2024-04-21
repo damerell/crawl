@@ -222,6 +222,7 @@ int book_rarity(book_type which_book)
         return 20;
 
     default:
+        mprf(MSGCH_WARN, "Book %i has default rarity", which_book);
         return 1;
     }
 }
