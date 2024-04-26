@@ -30,6 +30,8 @@ Stoat Soup 0.23 "The Masque of the Red Death"
   have dodged.
 * The faerie dragon scales are not just acid dragon scales in a funny hat.
 * Labyrinths are somewhat easier to escape.
+* Ozo's Armour can be cast at any time, but drains you if you don't get
+  attacked during the duration.
 
 Vanilla changes messed around with
 ----------------------------------
