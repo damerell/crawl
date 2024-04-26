@@ -27,7 +27,6 @@
 #include "level-state-type.h"
 #include "libutil.h"
 #include "message.h"
-#include "nearby-danger.h"
 #include "notes.h"
 #include "options.h"
 #include "orb.h"
@@ -1372,10 +1371,6 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
         && you.get_mutation_level(MUT_NO_LOVE))
     {
         return "you cannot coerce anything to answer your summons.";
-    }
-    if ((get_spell_flags(spell) & SPFLAG_NEEDS_HOSTILE) 
-        && !there_are_monsters_nearby(true,true,false) && temp) {
-        return "no visible enemies are threatening you.";
     }
     if (is_permabuff(spell) && you.duration[DUR_SAP_MAGIC]) {
         return "you cannot concentrate on a new charm while your magic is sapped.";

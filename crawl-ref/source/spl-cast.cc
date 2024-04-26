@@ -49,7 +49,6 @@
 #include "mon-project.h"
 #include "mon-util.h"
 #include "mutation.h"
-#include "nearby-danger.h"
 #include "options.h"
 #include "ouch.h"
 #include "output.h"
@@ -860,13 +859,6 @@ bool cast_a_spell(bool check_range, spell_type spell)
                 crawl_state.zero_turns_taken();
                 return false;
             }
-        }
-
-        if ((get_spell_flags(spell) & SPFLAG_NEEDS_HOSTILE)
-            && !there_are_monsters_nearby(true,true,false)) {
-            mpr("You can't cast that without visible enemies threatening you.");
-            crawl_state.zero_turns_taken();
-            return false;
         }
 
         if (check_range && spell_no_hostile_in_range(spell))

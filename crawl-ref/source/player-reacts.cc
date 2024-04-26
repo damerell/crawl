@@ -605,10 +605,7 @@ static void _decrement_durations()
         dec_napalm_player(delay);
 
     const bool melted = you.props.exists(MELT_ARMOUR_KEY);
-    if (_decrement_a_duration(DUR_ICY_ARMOUR, 
-                              (!there_are_monsters_nearby(true, true, false) ?
-                               delay * 4 :
-                               delay),
+    if (_decrement_a_duration(DUR_ICY_ARMOUR, delay,
                               "Your icy armour evaporates.",
                               melted ? 0 : coinflip(),
                               melted ? nullptr
