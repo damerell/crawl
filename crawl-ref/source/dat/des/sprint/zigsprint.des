@@ -813,19 +813,19 @@ KFEAT:    ^ = granite_statue
 KFEAT:    & = granite_statue
 COLOUR:   & = magenta
 MAP
-^g^h^j&A&k^l^m^
-f.........RT..n
+^g^h^i&A&j^k^l^
+f.........RT..m
 ^.............^
-e..HG.........o
+e..HG.........n
 ^..IF.........^
-d..JE.....S...q
+d..JE.....S...o
 ^...D..M..P...^
-c......L..O...r
+c......L..O...q
 ^...C..K..N...^
-b...B.{.......s
-^...........i.^
-a.............t
-^1^z^y^x^w^v^u^
+b...B.{.......r
+^.............^
+a.............s
+1^z^y^x^w^v^u^t
 ENDMAP
 
 NAME:  room_1
