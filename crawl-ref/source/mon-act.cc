@@ -59,6 +59,7 @@
 #include "spl-book.h"
 #include "spl-clouds.h"
 #include "spl-damage.h"
+#include "spl-selfench.h"
 #include "spl-summoning.h"
 #include "spl-transloc.h"
 #include "spl-util.h"
@@ -1670,6 +1671,10 @@ void handle_monster_move(monster* mons)
     if (!mons->alive())
         return;
 
+    if (_unfriendly_or_impaired(*mons) && mons->see_cell(you.pos())) {
+        mark_ozos_ok();
+    }
+        
     if (!disabled && mons_is_tentacle_head(mons_base_type(*mons)))
         move_child_tentacles(mons);
 

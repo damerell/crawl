@@ -60,11 +60,27 @@ spret cast_deaths_door(int pow, bool fail)
     return spret::success;
 }
 
-void remove_ice_armour()
+void remove_ice_armour(string message)
 {
-    mprf(MSGCH_DURATION, "Your icy armour melts away.");
+    if (message != "") { mprf(MSGCH_DURATION, "%s", message.c_str()); }
+    if (!ice_armour_used()) {
+        mpr("Called on for no reason, the frostling that powered the spell drains you.");
+        drain_player(10, false, true);
+    }
     you.redraw_armour_class = true;
     you.duration[DUR_ICY_ARMOUR] = 0;
+}
+
+void mark_ozos_ok() {
+    if (you.duration[DUR_ICY_ARMOUR]) you.props["ozos_ok"] = true;
+}
+
+bool ice_armour_used() {
+    if (you.props.exists("ozos_ok")) {
+        return you.props["ozos_ok"].get_bool();
+    } else {
+        return true; // loaded a save from before this mechanism?
+    }
 }
 
 spret ice_armour(int pow, bool fail)
@@ -87,6 +103,7 @@ spret ice_armour(int pow, bool fail)
     you.increase_duration(DUR_ICY_ARMOUR, random_range(40, 50), 50);
     you.props[ICY_ARMOUR_KEY] = pow;
     you.redraw_armour_class = true;
+    you.props["ozos_ok"] = false;
 
     return spret::success;
 }

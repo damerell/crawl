@@ -35,6 +35,7 @@
 #include "religion.h"
 #include "spl-book.h"
 #include "spl-damage.h"
+#include "spl-selfench.h"
 #include "spl-summoning.h"
 #include "spl-zap.h"
 #include "stringutil.h"
@@ -1272,12 +1273,13 @@ string spell_uselessness_reason(spell_type spell, bool temp, bool prevent,
         break;
 
     case SPELL_OZOCUBUS_ARMOUR:
-        if (temp && !player_effectively_in_light_armour())
-            return "your body armour is too heavy.";
         if (temp && you.form == transformation::statue)
             return "the film of ice won't work on stone.";
         if (temp && you.permabuff_working(PERMA_ROF))
             return "your ring of flames would instantly melt the ice.";
+        if (temp && !ice_armour_used() && you.duration[DUR_ICY_ARMOUR]) {
+            return "the frostling that powers the spell will not strengthen it when you haven't been in combat.";
+        }
         break;
 
     case SPELL_SUBLIMATION_OF_BLOOD:

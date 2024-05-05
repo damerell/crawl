@@ -1841,8 +1841,7 @@ bool transform(int pow, transformation which_trans, bool involuntary,
     case transformation::statue:
         if (you.duration[DUR_ICY_ARMOUR])
         {
-            mprf(MSGCH_DURATION, "Your new body cracks your icy armour.");
-            you.duration[DUR_ICY_ARMOUR] = 0;
+            remove_ice_armour("Your new body cracks your icy armour.");
         }
         break;
 
@@ -2079,17 +2078,6 @@ void untransform(bool skip_move, bool silent)
 
         if (arm != -1 && you.inv[arm].sub_type == ARM_BOOTS)
             remove_one_equip(EQ_BOOTS);
-    }
-
-    // End Ozocubu's Icy Armour if you unmelded wearing heavy armour
-    if (you.duration[DUR_ICY_ARMOUR]
-        && !player_effectively_in_light_armour())
-    {
-        you.duration[DUR_ICY_ARMOUR] = 0;
-
-        const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false);
-        mprf(MSGCH_DURATION, "%s cracks your icy armour.",
-             armour->name(DESC_YOUR).c_str());
     }
 
     if (you.hp <= 0)

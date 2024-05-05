@@ -612,7 +612,7 @@ static void _decrement_durations()
                               : "Your icy armour starts to melt."))
     {
         if (you.props.exists(ICY_ARMOUR_KEY))
-            you.props.erase(ICY_ARMOUR_KEY);
+            remove_ice_armour("");
         you.redraw_armour_class = true;
     }
 

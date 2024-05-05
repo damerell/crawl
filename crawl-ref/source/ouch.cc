@@ -817,6 +817,10 @@ void ouch(int dam, kill_method_type death_type, mid_t source, const char *aux,
     if (you.pending_revival)
         return;
 
+    if ((dam > 0) && (source != MID_PLAYER)) {
+        mark_ozos_ok();
+    }
+    
     int drain_amount = 0;
 
     const bool is_torment = (aux && (strstr(aux, "torment")
