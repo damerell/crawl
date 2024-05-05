@@ -60,7 +60,8 @@ ceb
 https://old.reddit.com/r/dcss/comments/125xmco/in_praise_of_clear_ability_costs\
 _for_gods/
 
-fungus / ozo / soslaying / FD "monsters in view"
+fungus / soslaying / monsters in view"
+         ^^^^^^^^^ maybe make this quiet at bonus 0?
 
 Yara's rework
 
@@ -115,3 +116,7 @@ corrosive splash
 treemen
 
 darts should mulch if they try and apply their effect
+
+friendly angels were https://github.com/crawl/crawl/commit/2f8e1e877b38c09d97707a372a66cc74d4e18c6e
+
+player iood could not fizzle out of LOS, just not be effective

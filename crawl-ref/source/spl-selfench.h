@@ -17,7 +17,9 @@
 
 int allowed_deaths_door_hp();
 spret cast_deaths_door(int pow, bool fail);
-void remove_ice_armour();
+void remove_ice_armour(string message = "Your icy armour melts away.");
+void mark_ozos_ok();
+bool ice_armour_used();
 spret ice_armour(int pow, bool fail);
 
 int harvest_corpses(const actor &harvester,
