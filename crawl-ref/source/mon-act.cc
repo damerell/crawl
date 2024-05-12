@@ -1142,10 +1142,11 @@ static void _mons_fire_wand(monster& mons, item_def &wand, bolt &beem,
     if (was_visible)
     {
         const int wand_type = wand.sub_type;
-        bool didntknow = !get_ident_type(OBJ_WANDS,wand_type);
+        bool didntknow = (!get_ident_type(OBJ_WANDS,wand_type) &&
+                          !item_ident(wand, ISFLAG_KNOW_TYPE));
 
         set_ident_type(OBJ_WANDS, wand_type, true);
-        if (!mons.props["wand_known"].get_bool() && didntknow) {
+        if (didntknow) {
             mprf("It is %s.", wand.name(DESC_A).c_str());
         }
     }
