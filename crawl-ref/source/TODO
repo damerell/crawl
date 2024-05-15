@@ -10,8 +10,6 @@ Water nymph species. Must always be in water. Dungeon near
                    really bad at kiting and stair dancing, but make life very 
                    hard for melee enemies.
 
-https://github.com/b-crawl/bcrawl/commit/e77c7b4573d3e9f877ef5b16cdacf034ca103f0c AF_DRAG
-
 Elven gear - higher enchant limits a la nethack?
 Stealth on cloaks?
 elven mithril-coat?
@@ -60,8 +58,7 @@ ceb
 https://old.reddit.com/r/dcss/comments/125xmco/in_praise_of_clear_ability_costs\
 _for_gods/
 
-fungus / soslaying / monsters in view"
-         ^^^^^^^^^ maybe make this quiet at bonus 0?
+fungus / monsters in view"
 
 Yara's rework
 

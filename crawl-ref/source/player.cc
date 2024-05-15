@@ -3684,7 +3684,7 @@ unsigned int exp_needed(int lev, int exp_apt)
 }
 
 // returns bonuses from rings of slaying, etc.
-int slaying_bonus(bool ranged, bool ignore_sos)
+int slaying_bonus(bool ranged)
 {
     int ret = 0;
 
@@ -3696,7 +3696,7 @@ int slaying_bonus(bool ranged, bool ignore_sos)
     ret += 3 * augmentation_amount();
     ret += you.get_mutation_level(MUT_SHARP_SCALES);
 
-    if ((!ignore_sos) && (you.permabuff_working(PERMA_SONG))) {
+    if (you.permabuff_working(PERMA_SONG)) {
         ret += you.props[SONG_OF_SLAYING_KEY].get_int();
     }
     
