@@ -3748,7 +3748,7 @@ int melee_attack::calc_your_to_hit_unarmed(int uattack)
     if (you.confused())
         your_to_hit -= 5;
 
-    your_to_hit += slaying_bonus(false, !defender_visible);
+    your_to_hit += slaying_bonus();
 
     return your_to_hit;
 }

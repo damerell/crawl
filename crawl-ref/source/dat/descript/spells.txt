@@ -1276,12 +1276,9 @@ Song of Slaying spell
 
 Recites ancient verses of battle. Each non-summoned enemy the caster slays in
 combat during this recitation temporarily enhances their melee and ranged
-skills, with the bonus decaying at a rate dependent on power.
-
-The caster need only murmur the words until an enemy is actually in
-sight, but then it becomes increasingly loud as the caster focuses
-their aggression. Unfortunately, it provides no benefit against an
-enemy the caster cannot see.
+skills, with the bonus decaying at a rate dependent on power. The caster need
+only murmur the words until they slay an enemy, but then it becomes noisy in
+proportion to the bonus.
 %%%%
 Spawn Tentacles spell
 

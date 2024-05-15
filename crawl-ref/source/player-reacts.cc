@@ -1411,10 +1411,12 @@ void player_reacts()
         }
     }
 
-    // Singing makes a noise when you can see anyone
-    if (you.permabuff_working(PERMA_SONG) && 
-        there_are_monsters_nearby(true, true, false)) {
-        noisy(3 + you.props[SONG_OF_SLAYING_KEY].get_int(), you.pos());
+    // Singing makes a noise when you have a bonus
+    if (you.permabuff_working(PERMA_SONG)) {
+        int bonus = you.props[SONG_OF_SLAYING_KEY].get_int();
+        if (bonus) {
+            noisy(3 + bonus, you.pos());
+        }
     }
     if (x_chance_in_y(you.time_taken, 10 * BASELINE_DELAY))
     {
