@@ -90,6 +90,17 @@ struct card_with_weights
 
 typedef vector<card_with_weights> deck_archetype;
 
+#if TAG_MAJOR_VERSION == 34
+deck_archetype deck_of_transport =
+{
+    { CARD_WARPWRIGHT, {5, 5, 5} },
+    { CARD_SWAP,       {5, 5, 5} },
+    { CARD_VELOCITY,   {5, 5, 5} },
+    { CARD_SOLITUDE,   {5, 5, 5} },
+    { CARD_SHAFT,      {5, 5, 5} },
+};
+#endif
+
 deck_archetype deck_of_escape =
 {
     { CARD_TOMB,       {5, 5, 5} },
@@ -110,6 +121,18 @@ deck_archetype deck_of_destruction =
     { CARD_WILD_MAGIC, {5, 5, 3} },
 };
 
+#if TAG_MAJOR_VERSION == 34
+deck_archetype deck_of_battle =
+{
+    { CARD_ELIXIR,        {5, 5, 5} },
+    { CARD_POTION,        {5, 5, 5} },
+    { CARD_HELM,          {5, 5, 5} },
+    { CARD_BLADE,         {5, 5, 5} },
+    { CARD_SHADOW,        {5, 5, 5} },
+    { CARD_FORTITUDE,     {5, 5, 5} },
+};
+#endif
+
 deck_archetype deck_of_summoning =
 {
     { CARD_ELEMENTS,        {5, 5, 5} },
@@ -120,6 +143,33 @@ deck_archetype deck_of_summoning =
     { CARD_ILLUSION,        {5, 5, 5} },
 };
 
+#if TAG_MAJOR_VERSION == 34
+deck_archetype deck_of_wonders =
+{
+    { CARD_WILD_MAGIC,        {5, 5, 5} },
+    { CARD_DOWSING,           {5, 5, 5} },
+    { CARD_ALCHEMIST,         {5, 5, 5} },
+};
+
+deck_archetype deck_of_dungeons =
+{
+    { CARD_WATER,     {5, 5, 5} },
+    { CARD_GLASS,     {5, 5, 5} },
+    { CARD_DOWSING,   {5, 5, 5} },
+    { CARD_TROWEL,    {0, 0, 3} },
+    { CARD_MINEFIELD, {5, 5, 5} },
+};
+
+deck_archetype deck_of_oddities =
+{
+    { CARD_WRATH,   {5, 5, 5} },
+    { CARD_XOM,     {5, 5, 5} },
+    { CARD_FEAST,   {5, 5, 5} },
+    { CARD_FAMINE,  {5, 5, 5} },
+    { CARD_CURSE,   {5, 5, 5} },
+};
+#endif
+
 deck_archetype deck_of_punishment =
 {
     { CARD_WRAITH,     {5, 5, 5} },
@@ -129,57 +179,62 @@ deck_archetype deck_of_punishment =
     { CARD_TORMENT,    {5, 5, 5} },
 };
 
-#if TAG_MAJOR_VERSION == 34
-deck_archetype removed_deck =
-{
-    { CARD_XOM, {5, 5, 5} },
-};
-#endif
-
 struct deck_type_data
 {
     /// The name of the deck. (Doesn't include "deck of ".)
     string name;
-    /// The list of cards this deck contains.
-    const deck_archetype* cards;
+    /// The weight of this deck in non-Nemelex item generation
+    int weight;
+    /// The list of decks this deck contains
+    vector<const deck_archetype *> subdecks;
 };
 
 static map<misc_item_type, deck_type_data> all_decks =
 {
     { MISC_DECK_OF_ESCAPE, {
-        "escape", &deck_of_escape,
+        "escape",
+        2, { &deck_of_escape }
     } },
     { MISC_DECK_OF_DESTRUCTION, {
-        "destruction", &deck_of_destruction,
+        "destruction",
+        1, { &deck_of_destruction }
     } },
 #if TAG_MAJOR_VERSION == 34
     { MISC_DECK_OF_DUNGEONS, {
-        "dungeons", &removed_deck,
+        "dungeons",
+        0, { &deck_of_dungeons }
     } },
 #endif
     { MISC_DECK_OF_SUMMONING, {
-        "summoning", &deck_of_summoning,
+        "summoning",
+        0, { &deck_of_summoning }
     } },
 #if TAG_MAJOR_VERSION == 34
     { MISC_DECK_OF_WONDERS, {
-        "wonders", &removed_deck,
+        "wonders",
+        0, { &deck_of_wonders }
     } },
     { MISC_DECK_OF_ODDITIES, {
-        "oddities", &removed_deck,
+        "oddities",
+        0, { &deck_of_oddities }
     } },
 #endif
     { MISC_DECK_OF_PUNISHMENT, {
-        "punishment", &deck_of_punishment,
+        "punishment",
+        0, { &deck_of_punishment }
     } },
 #if TAG_MAJOR_VERSION == 34
     { MISC_DECK_OF_WAR, {
-        "war", &removed_deck,
+        "war",
+        2, { &deck_of_battle, &deck_of_summoning }
     } },
     { MISC_DECK_OF_CHANGES, {
-        "changes", &removed_deck,
+        "changes",
+        0, { &deck_of_battle, &deck_of_transport }
     } },
     { MISC_DECK_OF_DEFENCE, {
-        "defence", &removed_deck,
+        "defence",
+        0, { &deck_of_battle, &deck_of_escape }
     } },
 #endif
 };
@@ -192,6 +247,35 @@ int cards_in_deck(const item_def &deck)
     ASSERT(props.exists(CARD_KEY));
 
     return props[CARD_KEY].get_vector().size();
+}
+
+static void _shuffle_deck(item_def &deck)
+{
+    if (!is_deck(deck))
+        return;
+
+    CrawlHashTable &props = deck.props;
+    ASSERT(props.exists(CARD_KEY));
+
+    CrawlVector &cards = props[CARD_KEY].get_vector();
+
+    CrawlVector &flags = props[CARD_FLAG_KEY].get_vector();
+    ASSERT(flags.size() == cards.size());
+
+    // Don't use shuffle(), since we want to apply exactly the
+    // same shuffling to both the cards vector and the flags vector.
+    vector<vec_size> pos;
+    for (const auto& _ : cards)
+    {
+        UNUSED(_);
+        pos.push_back(random2(cards.size()));
+    }
+
+    for (vec_size i = 0; i < pos.size(); ++i)
+    {
+        swap(cards[i], cards[pos[i]]);
+        swap(flags[i], flags[pos[i]]);
+    }
 }
 
 card_type get_card_and_flags(const item_def& deck, int idx,
@@ -309,15 +393,15 @@ card_type name_to_card(string name)
     return NUM_CARDS;
 }
 
-static const deck_archetype* _cards_in_deck(uint8_t deck_type)
+static const vector<const deck_archetype *> _subdecks(uint8_t deck_type)
 {
     deck_type_data *deck_data = map_find(all_decks, (misc_item_type)deck_type);
 
     if (deck_data)
-        return deck_data->cards;
+        return deck_data->subdecks;
 
 #ifdef ASSERTS
-    die("No cards found for %u", unsigned(deck_type));
+    die("No subdecks found for %u", unsigned(deck_type));
 #endif
     return {};
 }
@@ -330,9 +414,9 @@ const string deck_contents(uint8_t deck_type)
     // that appears in multiple subdecks from showing up twice in the
     // output.
     set<card_type> cards;
-    const deck_archetype* pdeck =_cards_in_deck(deck_type);
-    for (const card_with_weights& cww : *pdeck)
-        cards.insert(cww.card);
+    for (const deck_archetype* pdeck : _subdecks(deck_type))
+        for (const card_with_weights& cww : *pdeck)
+            cards.insert(cww.card);
 
     output += comma_separated_fn(cards.begin(), cards.end(), card_name);
     output += ".";
@@ -340,8 +424,18 @@ const string deck_contents(uint8_t deck_type)
     return output;
 }
 
-static card_type _choose_from_deck(const deck_archetype* pdeck,
-                                   deck_rarity_type rarity)
+static const deck_archetype* _random_sub_deck(uint8_t deck_type)
+{
+    const vector<const deck_archetype *> subdecks = _subdecks(deck_type);
+    const deck_archetype *pdeck = subdecks[random2(subdecks.size())];
+
+    ASSERT(pdeck);
+
+    return pdeck;
+}
+
+static card_type _choose_from_archetype(const deck_archetype* pdeck,
+                                        deck_rarity_type rarity)
 {
     // Random rarity should have been replaced by one of the others by now.
     ASSERT_RANGE(rarity, DECK_RARITY_COMMON, DECK_RARITY_LEGENDARY + 1);
@@ -363,9 +457,9 @@ static card_type _choose_from_deck(const deck_archetype* pdeck,
 
 static card_type _random_card(uint8_t deck_type, deck_rarity_type rarity)
 {
-    const deck_archetype *pdeck = _cards_in_deck(deck_type);
+    const deck_archetype *pdeck = _random_sub_deck(deck_type);
 
-    return _choose_from_deck(pdeck, rarity);
+    return _choose_from_archetype(pdeck, rarity);
 }
 
 static card_type _random_card(const item_def& item)
@@ -752,13 +846,18 @@ string which_decks(card_type card)
     for (auto &deck_data : all_decks)
     {
         misc_item_type deck = (misc_item_type)deck_data.first;
-        if (!_card_in_deck(card, deck_data.second.cards))
-            continue;
+        for (auto &subdeck : deck_data.second.subdecks)
+        {
+            if (!_card_in_deck(card, subdeck))
+                continue;
 
-        if (deck == MISC_DECK_OF_PUNISHMENT)
-            punishment = true;
-        else
-            decks.push_back(deck_data.second.name);
+            if (deck == MISC_DECK_OF_PUNISHMENT)
+                punishment = true;
+            else
+                decks.push_back(deck_data.second.name);
+
+            break;
+        }
     }
 
     if (!decks.empty())
@@ -1133,6 +1232,42 @@ void draw_from_deck_of_punishment(bool deal)
     card_effect(card, DECK_RARITY_COMMON, flags);
 }
 
+static int _xom_check_card(item_def &deck, card_type card,
+                           uint8_t flags)
+{
+    int amusement = 64;
+
+    if (flags & CFLAG_PUNISHMENT)
+        amusement = 200;
+    else if (!item_type_known(deck))
+        amusement *= 2;
+
+    if (player_in_a_dangerous_place())
+        amusement *= 2;
+
+    if (flags & CFLAG_SEEN)
+        amusement /= 2;
+
+    switch (card)
+    {
+    case CARD_EXILE:
+        // Nothing happened, boring.
+        if (player_in_branch(BRANCH_ABYSS))
+            amusement = 0;
+        break;
+
+    case CARD_FAMINE:
+    case CARD_SWINE:
+        // Always hilarious.
+        amusement = 255;
+
+    default:
+        break;
+    }
+
+    return amusement;
+}
+
 void evoke_deck(item_def& deck)
 {
     if (_check_buggy_deck(deck))
@@ -1144,6 +1279,38 @@ void evoke_deck(item_def& deck)
 
     uint8_t flags = 0;
     card_type card = _draw_top_card(deck, true, flags);
+
+    // Passive Nemelex retribution: sometimes a card gets swapped out.
+    // More likely to happen with identified cards.
+    if (player_under_penance(GOD_NEMELEX_XOBEH))
+    {
+        int c = 1;
+        if (flags & CFLAG_SEEN)
+            c = 3;
+
+        if (x_chance_in_y(c * you.penance[GOD_NEMELEX_XOBEH], 3000))
+        {
+            card_type old_card = card;
+            card = _choose_from_archetype(&deck_of_punishment, rarity);
+            if (card != old_card)
+            {
+                flags |= CFLAG_PUNISHMENT;
+                simple_god_message(" seems to have exchanged this card "
+                                   "behind your back!", GOD_NEMELEX_XOBEH);
+                mprf("It's actually %s.", card_name(card));
+                // You never completely appease Nemelex, but the effects
+                // get less frequent.
+                you.penance[GOD_NEMELEX_XOBEH] -=
+                    random2((you.penance[GOD_NEMELEX_XOBEH]+18) / 10);
+            }
+        }
+    }
+
+    const int amusement = _xom_check_card(deck, card, flags);
+
+    // Punishment cards don't give any information about the deck.
+    if (flags & (CFLAG_PUNISHMENT))
+        allow_id = false;
 
     deck.used_count++;
     _remember_drawn_card(deck, card, allow_id);
@@ -1161,6 +1328,8 @@ void evoke_deck(item_def& deck)
 
     card_effect(card, rarity, flags, false);
 
+    xom_is_stimulated(amusement);
+
     // Always wield change, since the number of cards used/left has
     // changed, and it might be wielded.
     you.wield_change = true;
@@ -1172,9 +1341,9 @@ static int _get_power_level(int power, deck_rarity_type rarity)
     switch (rarity)
     {
     case DECK_RARITY_COMMON:
-        // small chance for an upgrade - approx 1/2 ORNATE chance
-        // (plain decks don't get the +150 power boost)
-        if (x_chance_in_y(power, 1000))
+//give nemelex worshipers a small chance for an upgrade
+//approx 1/2 ORNATE chance (plain decks don't get the +150 power boost)
+        if (have_passive(passive_t::cards_power) && (x_chance_in_y(power, 1000)))
             ++power_level;
         break;
     case DECK_RARITY_LEGENDARY:
@@ -1831,10 +2000,12 @@ static void _cloud_card(int power, deck_rarity_type rarity)
             case 0: cloudy = !one_chance_in(5) ? CLOUD_MEPHITIC : CLOUD_POISON;
                     break;
 
-            case 1: cloudy = coinflip() ? CLOUD_COLD : CLOUD_FIRE;
+            case 1: cloudy = (you_worship(GOD_DITHMENOS) || coinflip())
+                              ? CLOUD_COLD : CLOUD_FIRE;
                     break;
 
-            case 2: cloudy = coinflip() ? CLOUD_ACID: CLOUD_MIASMA;
+            case 2: cloudy = (is_good_god(you.religion) || coinflip())
+                              ? CLOUD_ACID: CLOUD_MIASMA;
                     break;
 
             default: cloudy = CLOUD_DEBUGGING;
@@ -1917,6 +2088,12 @@ static void _illusion_card(int power, deck_rarity_type rarity)
 static void _degeneration_card(int power, deck_rarity_type rarity)
 {
     const int power_level = _get_power_level(power, rarity);
+
+    if (you_worship(GOD_ZIN))
+    {
+        _suppressed_card_message(you.religion, DID_CHAOS);
+        return;
+    }
 
     if (!apply_visible_monsters([power_level](monster& mons)
            {
@@ -2005,22 +2182,37 @@ static void _torment_card()
         torment_player(&you, TORMENT_CARDS);
 }
 
-// Punishment cards don't have their power adjusted depending on Nemelex piety,
-// and are based on experience level instead of invocations skill.
+// Punishment cards don't have their power adjusted depending on Nemelex piety
+// or penance, and are based on experience level instead of evocations skill
+// for more appropriate scaling.
 static int _card_power(deck_rarity_type rarity, bool punishment)
 {
-    if (punishment)
-        return you.experience_level * 18;
+    int result = 0;
 
-    int result = you.piety;
-    result *= you.skill(SK_INVOCATIONS, 100) + 2500;
-    result /= 2700;
-    result += you.skill(SK_INVOCATIONS, 9);
+    if (!punishment)
+    {
+        if (player_under_penance(GOD_NEMELEX_XOBEH))
+            result -= you.penance[GOD_NEMELEX_XOBEH];
+        else if (have_passive(passive_t::cards_power))
+        {
+            result = you.piety;
+            result *= you.skill(SK_INVOCATIONS, 100) + 2500;
+            result /= 2700;
+        }
+    }
+
+    result += have_passive(passive_t::cards_power) ?
+                  you.skill(SK_INVOCATIONS, 9) :
+              punishment ? you.experience_level * 18 :
+                           you.experience_level * 9;
 
     if (rarity == DECK_RARITY_RARE)
         result += 150;
     else if (rarity == DECK_RARITY_LEGENDARY)
         result += 300;
+
+    if (result < 0)
+        result = 0;
 
     return result;
 }
@@ -2160,11 +2352,24 @@ card_type top_card(const item_def &deck)
     return card;
 }
 
+/// Cache deck weights.
+static vector<pair<misc_item_type, int>> _deck_weights()
+{
+    vector<pair<misc_item_type, int>> deck_weights;
+    for (auto &deck_data : all_decks)
+        if (deck_data.second.weight)
+            deck_weights.push_back({deck_data.first, deck_data.second.weight});
+    return deck_weights;
+}
+
+static const vector<pair<misc_item_type, int>> deck_weights = _deck_weights();
+
+
 /**
  * Return the appropriate name for a known deck of the given type.
  *
  * @param sub_type  The type of deck in question.
- * @return          A name, e.g. "deck of destruction".
+ * @return          A name, e.g. "deck of war".
  *                  Does not include rarity.
  *                  If the given type isn't a deck, return "deck of bugginess".
  */
@@ -2179,7 +2384,7 @@ string deck_name(uint8_t sub_type)
 /**
  * Returns the appropriate type for a deck name.
  *
- * @param name      The name in question; e.g. "destruction", "summonings", etc.
+ * @param name      The name in question; e.g. "war", "summonings", etc.
  * @return          The type of the deck, if one is found;
  *                  else, MISC_DECK_UNKNOWN.
  */
@@ -2197,10 +2402,9 @@ uint8_t deck_type_by_name(string name)
  */
 uint8_t random_deck_type()
 {
-    const misc_item_type deck_type = random_choose(MISC_DECK_OF_ESCAPE,
-                                                   MISC_DECK_OF_DESTRUCTION,
-                                                   MISC_DECK_OF_SUMMONING);
-    return deck_type;
+    const misc_item_type *deck_type = random_choose_weighted(deck_weights);
+    ASSERT(deck_type);
+    return *deck_type;
 }
 
 bool is_deck_type(uint8_t sub_type, bool allow_unided)
@@ -2277,22 +2481,50 @@ void init_deck(item_def &item)
     item.used_count  = 0;
 }
 
-void reclaim_decks_on_level()
+void shuffle_all_decks_on_level()
 {
     for (auto &item : mitm)
+    {
         if (item.defined() && is_deck(item))
-            destroy_item(item.index());
+        {
+#ifdef DEBUG_DIAGNOSTICS
+            mprf(MSGCH_DIAGNOSTICS, "Shuffling: %s on %s",
+                 item.name(DESC_PLAIN).c_str(),
+                 level_id::current().describe().c_str());
+#endif
+            _shuffle_deck(item);
+        }
+    }
 }
 
-static void _reclaim_inventory_decks()
+static bool _shuffle_inventory_decks()
 {
+    bool success = false;
+
     for (auto &item : you.inv)
+    {
         if (item.defined() && is_deck(item))
-            dec_inv_item_quantity(item.link, 1);
+        {
+#ifdef DEBUG_DIAGNOSTICS
+            mprf(MSGCH_DIAGNOSTICS, "Shuffling in inventory: %s",
+                 item.name(DESC_PLAIN).c_str());
+#endif
+            _shuffle_deck(item);
+
+            success = true;
+        }
+    }
+
+    return success;
 }
 
-void nemelex_reclaim_decks()
+void nemelex_shuffle_decks()
 {
-    add_daction(DACT_RECLAIM_DECKS);
-    _reclaim_inventory_decks();
+    add_daction(DACT_SHUFFLE_DECKS);
+    _shuffle_inventory_decks();
+
+    // Wildly inaccurate, but of similar quality as the old code which
+    // was triggered by the presence of any deck anywhere.
+    if (you.num_total_gifts[GOD_NEMELEX_XOBEH])
+        god_speaks(GOD_NEMELEX_XOBEH, "You hear Nemelex Xobeh chuckle.");
 }
