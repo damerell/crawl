@@ -68,6 +68,9 @@ Vanilla changes messed around with
 * The armour of Talos returns.
 * Rings of loudness return, but now they make you loud. Malign Gateway's
   "horrible noise" is also loud.
+* Decks for everyone. Nemelex uses Evocations. Decks will never become
+  abilities, but Nemelex will not carry out so brutal an attack on inventory
+  space.
 
 Changes swiped from other variants
 ----------------------------------
