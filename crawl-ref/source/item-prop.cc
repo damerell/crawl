@@ -2088,7 +2088,6 @@ bool item_skills(const item_def &item, set<skill_type> &skills)
     // Jewellery with evokable abilities, wands and similar unwielded
     // evokers allow training.
     if (item_is_evokable(item, false, false, false, true)
-        && !is_deck(item)
         || item.base_type == OBJ_JEWELLERY && gives_ability(item))
     {
         skills.insert(SK_EVOCATIONS);
@@ -2110,7 +2109,6 @@ bool item_skills(const item_def &item, set<skill_type> &skills)
         return !skills.empty();
 
     if (item_is_evokable(item, false, false, false, false)
-        && !is_deck(item)
         || staff_uses_evocations(item)
         || item.base_type == OBJ_WEAPONS && gives_ability(item))
     {
