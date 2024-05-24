@@ -535,7 +535,8 @@ god_iterator god_iterator::operator++(int)
 
 bool active_penance(god_type god)
 {
-    // Good gods only have active wrath when they hate your current god.
+    // Nemelex's penance is only active when the penance counter is above 100;
+    // good gods only have active wrath when they hate your current god.
     return player_under_penance(god)
            && !is_unavailable_god(god)
            && god != GOD_ASHENZARI
@@ -545,6 +546,7 @@ bool active_penance(god_type god)
            && god != GOD_HEPLIAKLQANA
            && god != GOD_PAKELLAS
            && god != GOD_ELYVILON
+           && (god != GOD_NEMELEX_XOBEH || you.penance[god] > 100)
            && (god == you.religion && !is_good_god(god)
                || god_hates_your_god(god, you.religion));
 }
@@ -655,6 +657,15 @@ void dec_penance(god_type god, int val)
                 mprf(MSGCH_GOD, god, "Your full life essence returns.");
             }
         }
+    }
+    else if (god == GOD_NEMELEX_XOBEH && you.penance[god] > 100)
+    { // Nemelex's penance works actively only until 100
+        if ((you.penance[god] -= val) > 100)
+            return;
+        mark_milestone("god.mollify",
+                       "partially mollified " + god_name(god) + ".");
+        simple_god_message(" seems mollified... mostly.", god);
+        take_note(Note(NOTE_MOLLIFY_GOD, god));
     }
     else
     {
@@ -2928,6 +2939,8 @@ int initial_wrath_penance_for(god_type god)
     // TODO: transform to data (tables)
     switch (god)
     {
+        case GOD_NEMELEX_XOBEH:
+            return 150;
         case GOD_ASHENZARI:
         case GOD_BEOGH:
         case GOD_ELYVILON:
@@ -2935,7 +2948,6 @@ int initial_wrath_penance_for(god_type god)
         case GOD_HEPLIAKLQANA:
         case GOD_IHPIX:
         case GOD_LUGONU:
-        case GOD_NEMELEX_XOBEH:
         case GOD_TROG:
         case GOD_XOM:
             return 50;
@@ -3126,9 +3138,9 @@ void excommunication(bool voluntary, god_type new_god)
         break;
 
     case GOD_NEMELEX_XOBEH:
-        nemelex_reclaim_decks();
-        mprf(MSGCH_GOD, old_god, "Your access to %s's decks is revoked.",
-             god_name(old_god).c_str());
+        nemelex_shuffle_decks();
+        break;
+
         break;
 
     case GOD_SHINING_ONE:
@@ -4149,6 +4161,12 @@ void god_pitch(god_type which_god)
                                    which_god);
                 return;
             }
+        }
+        else if (you.get_mutation_level(MUT_NO_ARTIFICE)
+                 && which_god == GOD_NEMELEX_XOBEH)
+        {
+            simple_god_message(" does not accept worship from those who cannot "
+                              "deal a hand of cards!", which_god);
         }
         else if (you.get_mutation_level(MUT_NO_ARTIFICE)
                  && which_god == GOD_PAKELLAS)

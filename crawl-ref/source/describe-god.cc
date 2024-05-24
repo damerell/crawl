@@ -667,6 +667,9 @@ static string _raw_penance_message(god_type which_god)
         }
     }
 
+    if (which_god == GOD_NEMELEX_XOBEH && penance > 0 && penance <= 100) {
+	return "%s won't play fair with you.";
+    }
     const int initial_penance = initial_wrath_penance_for(which_god);
     // could do some math tricks to turn this into a table, but it seems fiddly
     if (penance > initial_penance * 3 / 4)
