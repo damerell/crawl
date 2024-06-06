@@ -31,6 +31,7 @@
 #include "english.h"
 #include "exercise.h"
 #include "fight.h"
+#include "fineff.h"
 #include "god-abil.h"
 #include "god-conduct.h"
 #include "god-item.h"
@@ -3006,12 +3007,7 @@ void bolt::internal_ouch(int dam)
              aux_source.empty() ? nullptr : aux_source.c_str(), true,
              source_name.empty() ? nullptr : source_name.c_str());
     }
-    else if (monst && (monst->type == MONS_BALLISTOMYCETE_SPORE
-                       || monst->type == MONS_BALL_LIGHTNING
-                       || monst->type == MONS_HYPERACTIVE_BALLISTOMYCETE
-                       || monst->type == MONS_FULMINANT_PRISM
-                       || monst->type == MONS_BENNU // death flames
-                       ))
+    else if (is_death_effect)
     {
         ouch(dam, KILLED_BY_SPORE, source_id,
              aux_source.c_str(), true,
@@ -3036,7 +3032,7 @@ void bolt::internal_ouch(int dam)
                 ouch(dam, KILLED_BY_TARGETING, MID_PLAYER, name.c_str());
         }
     }
-    else if (MON_KILL(thrower) || aux_source == "exploding inner flame")
+    else if (MON_KILL(thrower))
         ouch(dam, KILLED_BY_BEAM, source_id,
              aux_source.c_str(), true,
              source_name.empty() ? nullptr : source_name.c_str());
