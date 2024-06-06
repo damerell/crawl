@@ -1558,6 +1558,9 @@ static int _fit_armour_size(armour_type sub_type, size_type size)
 int fit_armour_size(const item_def &item, size_type size)
 {
     ASSERT(item.base_type == OBJ_ARMOUR);
+    if (is_unrandom_artefact(item, UNRAND_TALOS)) {
+        return SIZE_LARGE - size;
+    }
     return _fit_armour_size(static_cast<armour_type>(item.sub_type), size);
 }
 
