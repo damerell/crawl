@@ -9,7 +9,9 @@
 #include "fineff.h"
 
 #include "act-iter.h"
+#include "beam.h"
 #include "bloodspatter.h"
+#include "cloud.h"
 #include "coordit.h"
 #include "dactions.h"
 #include "directn.h"
@@ -111,6 +113,26 @@ bool shock_serpent_discharge_fineff::mergeable(const final_effect &fe) const
 {
     const shock_serpent_discharge_fineff *o = dynamic_cast<const shock_serpent_discharge_fineff *>(&fe);
     return o && def == o->def;
+}
+
+void explosion_fineff::fire()
+{
+    if (is_sanctuary(beam.target))
+    {
+        if (you.see_cell(beam.target))
+            mprf(MSGCH_GOD, "%s", sanctuary_message.c_str());
+        return;
+    }
+
+    if (you.see_cell(beam.target))
+        mprf(MSGCH_MONSTER_DAMAGE, MDAM_DEAD, "%s", boom_message.c_str());
+
+    if (inner_flame)
+        for (adjacent_iterator ai(beam.target, false); ai; ++ai)
+            if (!cell_is_solid(*ai) && !cloud_at(*ai) && !one_chance_in(5))
+                place_cloud(CLOUD_FIRE, *ai, 10 + random2(10), flame_agent);
+
+    beam.explode();
 }
 
 bool delayed_action_fineff::mergeable(const final_effect &fe) const

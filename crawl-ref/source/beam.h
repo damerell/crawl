@@ -89,6 +89,7 @@ struct bolt
                                   // hit another target behind the first?
     bool   ihpierce = false;      // Fired with ihpix Piercing Fire
     bool   is_explosion = false;
+    bool   is_death_effect = false; // effect of e.g. ballistomycete spore
     bool   aimed_at_spot = false; // aimed at (x, y), should not cross
     string aux_source = "";       // source of KILL_MISC beams
 

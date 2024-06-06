@@ -1244,6 +1244,7 @@ static void _setup_base_explosion(bolt & beam, const monster& origin)
 {
     beam.is_tracer    = false;
     beam.is_explosion = true;
+    beam.is_death_effect = true;
     beam.source_id    = origin.mid;
     beam.glyph        = dchar_glyph(DCHAR_FIRED_BURST);
     beam.source       = origin.pos();
@@ -1322,7 +1323,7 @@ static void _setup_inner_flame_explosion(bolt & beam, const monster& origin,
     beam.name        = "fiery explosion";
     beam.colour      = RED;
     beam.ex_size     = (size > SIZE_BIG) ? 2 : 1;
-    beam.source_name = origin.name(DESC_A, true);
+    beam.source_name = origin.name(DESC_PLAIN, true);
     beam.origin_spell = SPELL_INNER_FLAME;
     beam.thrower     = (agent && agent->is_player()) ? KILL_YOU_MISSILE
                                                      : KILL_MON_MISSILE;
@@ -1342,7 +1343,9 @@ static bool _explode_monster(monster* mons, killer_type killer,
     bolt beam;
     const int type = mons->type;
     const char* sanct_msg = nullptr;
-    actor* agent = mons;
+    string boom_msg = make_stringf("%s explodes!", mons->full_name(DESC_THE).c_str());
+    actor* agent = nullptr;
+    bool inner_flame = false;
 
     if (type == MONS_BALLISTOMYCETE_SPORE)
     {
@@ -1367,6 +1370,7 @@ static bool _explode_monster(monster* mons, killer_type killer,
     {
         _setup_bennu_explosion(beam, *mons);
         sanct_msg = "By Zin's power, the bennu's fires are quelled.";
+        boom_msg = make_stringf("%s blazes out!", mons->full_name(DESC_THE).c_str());
     }
     else if (mons->has_ench(ENCH_INNER_FLAME))
     {
@@ -1383,7 +1387,8 @@ static bool _explode_monster(monster* mons, killer_type killer,
         mons->flags    |= MF_EXPLODE_KILL;
         sanct_msg       = "By Zin's power, the fiery explosion "
                           "is contained.";
-        beam.aux_source = "exploding inner flame";
+        beam.aux_source = "ignited by their inner flame";
+        inner_flame = true;
     }
     else
     {
@@ -1411,33 +1416,14 @@ static bool _explode_monster(monster* mons, killer_type killer,
         }
     }
 
-    bool saw = false;
-    if (you.can_see(*mons))
-    {
-        saw = true;
-        viewwindow();
-        if (is_sanctuary(mons->pos()))
+    if (is_sanctuary(mons->pos())) {
+        if (you.can_see(*mons))
             mprf(MSGCH_GOD, "%s", sanct_msg);
-        else if (type == MONS_BENNU)
-            mprf(MSGCH_MONSTER_DAMAGE, MDAM_DEAD, "%s blazes out!",
-                 mons->full_name(DESC_THE).c_str());
-        else
-            mprf(MSGCH_MONSTER_DAMAGE, MDAM_DEAD, "%s explodes!",
-                 mons->full_name(DESC_THE).c_str());
-    }
-
-    if (is_sanctuary(mons->pos()))
         return false;
-
-    // Explosion side-effects.
+    }
+    
     if (type == MONS_LURKING_HORROR)
         torment(mons, TORMENT_LURKING_HORROR, mons->pos());
-    else if (mons->has_ench(ENCH_INNER_FLAME))
-    {
-        for (adjacent_iterator ai(mons->pos(), false); ai; ++ai)
-            if (!cell_is_solid(*ai) && !cloud_at(*ai) && !one_chance_in(5))
-                place_cloud(CLOUD_FIRE, *ai, 10 + random2(10), agent);
-    }
 
     // Detach monster from the grid first, so it doesn't get hit by
     // its own explosion. (GDL)
@@ -1453,8 +1439,6 @@ static bool _explode_monster(monster* mons, killer_type killer,
 
     // Exploding kills the monster a bit earlier than normal.
     mons->hit_points = -16;
-    if (saw)
-        viewwindow();
 
     // FIXME: show_more == you.see_cell(mons->pos())
     if (type == MONS_LURKING_HORROR)
@@ -1463,7 +1447,7 @@ static bool _explode_monster(monster* mons, killer_type killer,
         flash_view_delay(UA_MONSTER, DARKGRAY, 300, &hitfunc);
     }
     else
-        beam.explode();
+        explosion_fineff::schedule(beam, boom_msg, sanct_msg, inner_flame, agent);
 
     _activate_ballistomycetes(mons, beam.target, YOU_KILL(beam.killer()));
     // Monster died in explosion, so don't re-attach it to the grid.
