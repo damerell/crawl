@@ -2705,6 +2705,7 @@ static spret _do_ability(const ability_def& abil, bool fail)
     case ABIL_SIF_MUNA_CHANNEL_ENERGY:
     {
         fail_check();
+        mpr("You channel some magical energy.");
         you.increase_duration(DUR_CHANNEL_ENERGY,
             4 + random2avg(you.skill_rdiv(SK_INVOCATIONS, 2, 3), 2), 100);
         break;
