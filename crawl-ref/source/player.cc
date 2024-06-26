@@ -6185,8 +6185,10 @@ int player::shield_tohit_penalty(bool random_factor, int scale) const
  * @param real whether to return the real value, or modified value.
  * @param drained whether to include modification by draining.
  * @param temp whether to include modification by other temporary factors (e.g. heroism)
+ * @param noash ignore ash's boost (to give correct training costs)
  */
-int player::skill(skill_type sk, int scale, bool real, bool drained, bool temp) const
+int player::skill(skill_type sk, int scale, bool real, bool drained,
+                  bool temp, bool noash) const
 {
     // If you add another enhancement/reduction, be sure to change
     // SkillMenuSwitch::get_help() to reflect that
@@ -6222,7 +6224,7 @@ int player::skill(skill_type sk, int scale, bool real, bool drained, bool temp) 
         if (temp)
             level = max(level - 4 * scale, level / 2);
     }
-    else if (ash_has_skill_boost(sk))
+    else if (!noash && ash_has_skill_boost(sk))
             level = ash_skill_boost(sk, scale);
 
     if (temp && duration[DUR_HEROISM] && sk <= SK_LAST_MUNDANE)

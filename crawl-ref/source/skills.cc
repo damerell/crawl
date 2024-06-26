@@ -191,7 +191,8 @@ int one_level_cost(skill_type sk, bool crosstrain)
         return 0;
     int defactoskill =
     min(MAX_SKILL_LEVEL -1 ,
-        (crosstrain ? you.skill(sk, 1, false, false, false) : you.skills[sk]));
+        (crosstrain ? you.skill(sk, 1, false, false, false, true) :
+         you.skills[sk]));
     return skill_exp_needed(defactoskill + 1, sk)
            - skill_exp_needed(defactoskill, sk);
 }
