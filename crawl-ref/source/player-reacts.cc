@@ -616,13 +616,6 @@ static void _decrement_durations()
         you.redraw_armour_class = true;
     }
 
-    if (_decrement_a_duration
-        (DUR_ACQUIREMENT, delay, 
-         "The magic of the acquirement scroll fades.", 0, 
-         "Beware! The magic of the acquirement scroll is fading.")) {
-        waste_acquirement();
-    }
-
     // Possible reduction of silence radius.
     if (you.duration[DUR_SILENCE])
         invalidate_agrid();

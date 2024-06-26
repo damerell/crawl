@@ -711,11 +711,6 @@ static const duration_def duration_data[] =
       {{ "", []() {
           you.redraw_evasion = true;
       }}}},
-    { DUR_ACQUIREMENT,
-      YELLOW, "Acquire",
-      "acquiring", "",
-      "You should select an object to acquire before the magic fades.",
-      D_NO_FLAGS, {}, 100},
     { DUR_SEE_INVISIBLE, 
       BLUE, "SInv",
       "see invisible", "", "Your magic reveals invisible creatures.",
@@ -793,6 +788,7 @@ static const duration_def duration_data[] =
       {{ "Your noxious spew wanes." }}},
 #if TAG_MAJOR_VERSION == 34
     // And removed ones
+    { DUR_ACQUIREMENT, 0, "", "", "old acq timeout", "", D_NO_FLAGS},
     { DUR_MAGIC_SAPPED, 0, "", "", "old magic sapped", "", D_NO_FLAGS},
     { DUR_REPEL_MISSILES, 0, "", "", "old repel missiles", "", D_NO_FLAGS},
     { DUR_JELLY_PRAYER, 0, "", "", "old jelly prayer", "", D_NO_FLAGS},

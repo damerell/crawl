@@ -1685,7 +1685,6 @@ static void _create_acquirement_item(item_def &item)
             canned_msg(MSG_SOMETHING_APPEARS);
         else
             canned_msg(MSG_NOTHING_HAPPENS);
-        you.duration[DUR_ACQUIREMENT] = 0;
     }
 
     acq_items.clear();
@@ -1883,7 +1882,6 @@ bool acquirement_menu(bool with_ihpix, bool superior)
         _make_acquirement_items(superior);
     } else if (!you.props.exists(acq_key)) {
         _make_acquirement_items();
-        you.set_duration(DUR_ACQUIREMENT, 500);
     }
     auto &acq_items = you.props[acq_key].get_vector();
 
@@ -1910,17 +1908,4 @@ bool acquirement_menu(bool with_ihpix, bool superior)
         you.props.erase(acq_key);
     }
     return success;
-}
-void waste_acquirement() {
-    int thing_created = items(false, OBJ_SCROLLS, SCR_RANDOM_USELESSNESS, 
-                              0, 0, -1);
-    CrawlVector &acq_items = you.props[ACQUIRE_ITEMS_KEY].get_vector();
-    acq_items.clear();
-    item_set_appearance(mitm[thing_created]);
-    item_def item = mitm[thing_created];
-    set_ident_flags(item,
-            // Act as if we've recieved this item already to prevent notes.
-                    ISFLAG_IDENT_MASK | ISFLAG_NOTED_ID | ISFLAG_NOTED_GET);
-    acq_items.push_back(item);
-    destroy_item(thing_created);
 }
