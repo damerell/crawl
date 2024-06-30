@@ -960,7 +960,7 @@ damage and Velakast's Disruption, and an inability to consume potions.
 Necrotise spell
 
 Agonisingly rots away the victim's flesh. Those slain by this spell
-(or otherwie dying immediately afterward) may rise as skeletons to
+(or otherwise dying immediately afterward) may rise as skeletons to
 fight for the caster. Only the living can be affected.
 %%%%
 Noxious Cloud spell
