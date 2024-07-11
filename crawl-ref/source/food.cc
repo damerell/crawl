@@ -1105,6 +1105,9 @@ int you_max_hunger()
     if (you.species == SP_GHOUL)
         return hunger_threshold[HS_SATIATED];
 
+    // Gourmands who need HP will not engorge
+    if (_chunks_heal_gourmand()) return hunger_threshold[HS_VERY_FULL];
+    
     return hunger_threshold[HS_ENGORGED];
 }
 
