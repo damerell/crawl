@@ -720,7 +720,7 @@ static void _eat_chunk(item_def& food)
     if (you.species == SP_GHOUL)
         gourmand = GOURMAND_MAX;
     else
-        gourmand = min(you.duration[DUR_GOURMAND], GOURMAND_MAX);
+        gourmand = min(you.duration[DUR_GOURMAND], ((3 * GOURMAND_MAX) / 4));
 
     switch (chunk_effect)
     {
