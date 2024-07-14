@@ -3,12 +3,6 @@ nemelex
 bcrawl "pickup"
 brilliance halo
 diminishing spawn XP sigh, nastier deep spawns outside D
-water nymph
-Water nymph species. Must always be in water. Dungeon near 
-                   you gradually fills up with water. Can only move onto a dry 
-                   space when at full HP/MP - so you can explore OK, but you're 
-                   really bad at kiting and stair dancing, but make life very 
-                   hard for melee enemies.
 
 Elven gear - higher enchant limits a la nethack?
 Stealth on cloaks?
@@ -117,3 +111,5 @@ darts should mulch if they try and apply their effect
 friendly angels were https://github.com/crawl/crawl/commit/2f8e1e877b38c09d97707a372a66cc74d4e18c6e
 
 player iood could not fizzle out of LOS, just not be effective
+
+archer ghosts
