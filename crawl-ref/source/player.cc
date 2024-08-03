@@ -1383,9 +1383,10 @@ int player_spell_levels()
     return sl;
 }
 
+// enough to eat them any time
 bool player_likes_chunks(bool permanently) {
     return you.gourmand(true, !permanently)
-        || you.get_mutation_level(MUT_CARNIVOROUS) > 0;
+        || you.get_mutation_level(MUT_CARNIVOROUS) == 3;
 }
 
 int player_chunk_affinity(bool permanently)
