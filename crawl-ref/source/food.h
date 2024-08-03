@@ -51,6 +51,8 @@ bool can_eat(const item_def &food, bool suppress_msg, bool check_hunger = true);
 
 bool eat_item(item_def &food);
 
+hunger_state_t max_chunk_state();
+
 int prompt_eat_chunks(bool only_auto = false, bool justlook = false);
 
 bool food_change(bool initial = false);
