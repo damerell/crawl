@@ -421,14 +421,13 @@ A magical weapon with two razor-sharp blades.
 dwarven roundshield
 
 A shield crafted in the dwarven forges. Slightly larger than a kite
-shield, it is of an ideal size and shape for a wielder who happens to
+shield, it is an ideal size and shape for a wearer who happens to
 be the size and shape of a dwarf.  It is cumbersome to wear, and
 impedes the evasion, spellcasting ability, and attack speed of an
 unskilled wearer.
 
 {{
-    if you.race() == "Mountain Dwarf"
-        or you.race() == "Deep Dwarf"
+    if string.match(you.race(),"Dwarf")
     then
         return "It is less cumbersome for you than for non-dwarves."
     else
@@ -584,6 +583,7 @@ A lightweight spear, designed for throwing.
     if you.race() == "Halfling"
         or you.race() == "Kobold"
         or you.race() == "Spriggan"
+	or you.race() == "Faerie Dragon"
     then
         return "Unfortunately, it is too long and awkward for you to use."
     else
