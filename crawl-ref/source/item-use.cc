@@ -536,16 +536,11 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
 
     item_def& new_wpn(you.inv[item_slot]);
 
-    // Switching to a launcher while berserk is likely a mistake.
+    // Switching to a launcher while berserk is a mistake.
     if (you.berserk() && is_range_weapon(new_wpn))
     {
-        string prompt = "You can't shoot while berserk! Really wield " +
-                        new_wpn.name(DESC_INVENTORY) + "?";
-        if (!yesno(prompt.c_str(), false, 'n'))
-        {
-            canned_msg(MSG_OK);
-            return false;
-        }
+        mpr ("You can't shoot while berserk.");
+        return true;
     }
 
     // Ensure wieldable
