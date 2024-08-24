@@ -435,8 +435,8 @@ static attack_flavour _very_ugly_thing_flavour_upgrade(attack_flavour u_att_flav
         u_att_flav = AF_POISON_STRONG;
         break;
 
-    case AF_DISEASE:
-        u_att_flav = AF_ROT;
+    case AF_ROT:
+        u_att_flav = AF_DISEASE;
         break;
 
 
@@ -470,7 +470,7 @@ static attack_flavour _ugly_thing_colour_to_flavour(colour_t u_colour)
         break;
 
     case MAGENTA:
-        u_att_flav = AF_DISEASE;
+        u_att_flav = AF_ROT;
         break;
 
     case LIGHTGREY:
