@@ -1806,6 +1806,11 @@ jelly
  A splotch, a blotch...”
     -Burt Bacharach and Mack David, “Beware of the Blob”. 1958.
 %%%%
+kite shield
+
+“...for the shield may be as important for victory, as the sword or spear.”
+    -Charles Darwin, “The Origin of Species”. 1859.
+%%%%
 kobold
 
 “Kobolds are harmless.”
