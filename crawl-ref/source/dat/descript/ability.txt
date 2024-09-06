@@ -234,7 +234,7 @@ Animate Remains ability
 Reanimates a single corpse or skeleton as a follower. Zombies and skeletons
 cannot leave the level they were created on.
 %%%%
-Recall Undead Slaves ability
+Recall Undead Minions ability
 
 Recalls your undead followers from anywhere in the dungeon to your immediate
 surroundings.
@@ -255,7 +255,7 @@ Drains the life force of any nearby creatures, healing the user depending on
 the damage dealt. The amount of life force drained is increased by Invocations
 skill.
 %%%%
-Enslave Soul ability
+Bind Soul ability
 
 Marks a monster's soul as ripe for the taking. Intelligent living, holy and
 demonic monsters can be targeted (excepting most lords of Pandemonium), as
@@ -263,8 +263,8 @@ long as they are relatively uninjured. The duration of the mark is dependent on
 Invocations skill. If the monster dies while still marked, its soul will become
 yours.
 
-The enslaved soul will retain the monster's faculties, equipment and abilities,
-as well as some of its innate healing. However, only one soul can be enslaved
+The bound soul will retain the monster's faculties, equipment and abilities,
+as well as some of its innate healing. However, only one soul can be bound
 at a time.
 %%%%
 # Okawaru

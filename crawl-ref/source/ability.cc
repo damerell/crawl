@@ -405,13 +405,13 @@ static const ability_def Ability_List[] =
       0, 0, 0, 0, {fail_basis::invo, 40, 4, 20}, abflag::piety },
     { ABIL_YRED_ANIMATE_REMAINS, "Animate Remains",
       2, 0, 200, 0, {fail_basis::invo, 40, 4, 20}, abflag::none },
-    { ABIL_YRED_RECALL_UNDEAD_SLAVES, "Recall Undead Slaves",
+    { ABIL_YRED_RECALL_UNDEAD_SLAVES, "Recall Undead Minions",
       2, 0, 0, 0, {fail_basis::invo, 50, 4, 20}, abflag::none },
     { ABIL_YRED_ANIMATE_DEAD, "Animate Dead",
       2, 0, 200, 0, {fail_basis::invo, 40, 4, 20}, abflag::none },
     { ABIL_YRED_DRAIN_LIFE, "Drain Life",
       6, 0, 200, 2, {fail_basis::invo, 60, 4, 25}, abflag::none },
-    { ABIL_YRED_ENSLAVE_SOUL, "Enslave Soul",
+    { ABIL_YRED_ENSLAVE_SOUL, "Bind Soul",
       8, 0, 500, 4, {fail_basis::invo, 80, 4, 25}, abflag::none },
 
     // Okawaru
@@ -2519,7 +2519,7 @@ static spret _do_ability(const ability_def& abil, bool fail)
 
         if (mons && you.can_see(*mons) && mons->is_illusion())
         {
-            simple_monster_message(*mons, "'s clone doesn't have a soul to enslave!");
+            simple_monster_message(*mons, "'s clone doesn't have a soul to bind!");
             // Still costs a turn to gain the information.
             return spret::success;
         }
@@ -2527,7 +2527,7 @@ static spret _do_ability(const ability_def& abil, bool fail)
         if (mons == nullptr || !you.can_see(*mons)
             || !yred_can_enslave_soul(mons))
         {
-            mpr("You see nothing there you can enslave the soul of!");
+            mpr("You see nothing there you can bind the soul of!");
             return spret::abort;
         }
 
