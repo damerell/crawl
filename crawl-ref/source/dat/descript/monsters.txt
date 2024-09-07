@@ -2567,11 +2567,13 @@ vine stalker
 
 A bizarre symbiotic creature, made up of a carnivorous vine magically combined
 with a humanoid.
-%%%
+%%%%
 viper
 
-A snake with a painful venom. It's not as fast as some other snakes, but
-still fairly quick.
+Vipers may be distinguished from other snakes by their relatively long
+hinged fangs that permit deep penetration and injection of their
+venom. While there are many species of viper, you lack the time or
+inclination to consider precise taxonomy.
 %%%%
 wandering mushroom
 
