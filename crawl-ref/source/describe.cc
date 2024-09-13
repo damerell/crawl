@@ -4199,7 +4199,8 @@ static string _monster_stat_description(const monster_info& mi)
     if (mi.threat != MTHRT_UNDEF)
     {
         result << uppercase_first(pronoun) << " looks "
-               << _get_threat_desc(mi.threat) << ".\n";
+               << (mons_is_hepliaklqana_ancestor(mi.type) ? "a bit like you" :
+                   _get_threat_desc(mi.threat)) << ".\n";
     }
 
     if (!resist_descriptions.empty())
