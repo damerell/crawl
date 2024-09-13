@@ -1948,7 +1948,13 @@ weapon_stat_weight weapon_str_weight(const item_def *wpn) {
     case SK_BOWS:
         return BALANCED;
     case SK_MACES_FLAILS:
-        return ALL_STR;
+        if ((wpn->sub_type == WPN_WHIP) ||
+            (wpn->sub_type == WPN_DEMON_WHIP) ||
+            (wpn->sub_type == WPN_SACRED_SCOURGE)) {
+            return BALANCED;
+        } else {
+            return ALL_STR;
+        }
     case SK_SHORT_BLADES:
         return FAVOUR_DEX;
     case SK_LONG_BLADES:
