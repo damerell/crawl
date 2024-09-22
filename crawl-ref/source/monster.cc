@@ -4556,14 +4556,24 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
         blame_damage(agent, amount, ihpix_likes);
     }
 
-    if (mons_is_firewood(*this) && (hit_points > 0) &&
-        agent && agent->is_player() && you.visible_igrd(pos()) &&
-        x_chance_in_y(amount, 10) && adjacent(pos(), agent->pos())) {
-        bool items_moved = false;
-        vector <coord_def> theplant = { pos() };
-        items_moved |= push_items_from(pos(), &theplant);
-        if (items_moved) mprf ("You free the items stuck in %s.",
-                               name(DESC_THE).c_str());
+    if (mons_is_firewood(*this) && (hit_points > 0) && agent &&
+        agent->is_player() && you.visible_igrd(pos()) &&
+        adjacent(pos(), agent->pos()) &&
+        !feat_destroys_items(grd(agent->pos()))) {
+//        x_chance_in_y(amount, 10) &&
+        int items_moved = 0;
+        if (x_chance_in_y(amount, 10)) {
+            while (igrd(pos()) != NON_ITEM) {
+                items_moved += mitm[igrd(pos())].quantity;
+                move_top_item(pos(), agent->pos());
+            }
+        }
+        if (items_moved > 0) {
+            mprf ("The item%s stuck in %s come%s free.",
+                  (items_moved > 1 ? "s" : "") , name(DESC_THE).c_str(),
+                  (items_moved > 1 ? "" : "s"));
+            
+        }
     }
     
 
