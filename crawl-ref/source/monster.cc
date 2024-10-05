@@ -3578,10 +3578,13 @@ mon_holy_type monster::holiness(bool /*temp*/) const
     if (is_priest() && (is_evil_god(god) || is_unknown_god(god)))
         holi |= MH_EVIL;
 
-    if (has_attack_flavour(AF_DRAIN_XP)
-        || has_attack_flavour(AF_VAMPIRIC))
-    {
-        holi |= MH_EVIL;
+    // Summon undead won't have a base monster
+    if (base_monster != MONS_NO_MONSTER) {
+        if (has_attack_flavour(AF_DRAIN_XP)
+            || has_attack_flavour(AF_VAMPIRIC))
+        {
+            holi |= MH_EVIL;
+        }
     }
 
     if (testbits(flags, MF_SPECTRALISED))
