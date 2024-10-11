@@ -2704,7 +2704,7 @@ void monster::set_hit_dice(int new_hit_dice)
     }
 }
 
-void monster::moveto(const coord_def& c, bool clear_net)
+void monster::moveto(const coord_def& c, bool clear_net, bool clear_constrict)
 {
     if (clear_net && c != pos() && in_bounds(pos()))
         mons_clear_trapping_net(this);
@@ -2720,7 +2720,11 @@ void monster::moveto(const coord_def& c, bool clear_net)
 
     // Do constriction invalidation after to the move, so that all LOS checking
     // is available.
-    clear_invalid_constrictions(true);
+    if (clear_constrict)
+    {
+        clear_invalid_constrictions(true);
+        clear_far_engulf();
+    }
 }
 
 bool monster::fumbles_attack()
@@ -5625,7 +5629,8 @@ void monster::self_destruct()
  *  @param force     whether to move it even if you're standing there
  *  @returns whether the move took place.
  */
-bool monster::move_to_pos(const coord_def &newpos, bool clear_net, bool force)
+bool monster::move_to_pos(const coord_def &newpos, bool clear_net, bool force,
+                          bool clear_constrict)
 {
     const actor* a = actor_at(newpos);
     if (a && !(a->is_player() && (fedhas_passthrough(this) || force)))
@@ -5638,7 +5643,7 @@ bool monster::move_to_pos(const coord_def &newpos, bool clear_net, bool force)
         mgrd(pos()) = NON_MONSTER;
 
     // Set monster x,y to new value.
-    moveto(newpos, clear_net);
+    moveto(newpos, clear_net, clear_constrict);
 
     // Set new monster grid pointer to this monster.
     mgrd(newpos) = index;
