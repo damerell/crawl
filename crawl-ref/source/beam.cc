@@ -4098,8 +4098,12 @@ void bolt::affect_player()
         }
         else
         {
-            mprf(MSGCH_WARN, "You are encased in ice.");
-            you.duration[DUR_FROZEN] = (2 + random2(3)) * BASELINE_DELAY;
+            if (you.permabuff_working(PERMA_ROF)) {
+                mprf("Ring of Flames thaws you out immediately.");
+            } else {
+                mprf(MSGCH_WARN, "You are encased in ice.");
+                you.duration[DUR_FROZEN] = (2 + random2(3)) * BASELINE_DELAY;
+            }
         }
     }
     else if (origin_spell == SPELL_DAZZLING_SPRAY

@@ -8026,9 +8026,9 @@ static bool _ms_waste_of_time(monster* mon, mon_spell_slot slot)
 
     case SPELL_FLASH_FREEZE:
         return !foe
-               || foe->is_player() && you.duration[DUR_FROZEN]
-               || foe->is_monster()
-                  && foe->as_monster()->has_ench(ENCH_FROZEN);
+        || (foe->is_player() &&
+            (you.duration[DUR_FROZEN] || you.permabuff_working(PERMA_ROF)))
+        || foe->is_monster() && foe->as_monster()->has_ench(ENCH_FROZEN);
 
     case SPELL_LEGENDARY_DESTRUCTION:
         return !foe;

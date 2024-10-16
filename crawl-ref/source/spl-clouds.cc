@@ -275,6 +275,11 @@ void manage_fire_shield(int delay)
     // Melt ice armour entirely.
     maybe_melt_player_enchantments(BEAM_FIRE, 100);
 
+    if (you.duration[DUR_FROZEN]) {
+        mpr("You are thawed out by Ring of Flames.");
+        you.duration[DUR_FROZEN] = 0;
+    }
+
     // Remove fire clouds on top of you
     if (cloud_at(you.pos()) && cloud_at(you.pos())->type == CLOUD_FIRE)
         delete_cloud(you.pos());
