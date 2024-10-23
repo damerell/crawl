@@ -1615,7 +1615,7 @@ static void _do_rest()
     {
         if ((you.hp == you.hp_max || !player_regenerates_hp())
             && (you.magic_points == you.max_magic_points
-                || !player_regenerates_mp())
+                || !player_regenerates_mp() || Options.rest_wait_ignore_mp)
             && ancestor_full_hp())
         {
             mpr("You start waiting.");

@@ -3901,7 +3901,8 @@ void inc_mp(int mp_gain, bool silent)
 
     if (!silent)
     {
-        if (_should_stop_resting(you.magic_points, you.max_magic_points))
+        if (_should_stop_resting(you.magic_points, you.max_magic_points)
+            && !Options.rest_wait_ignore_mp)
             interrupt_activity(AI_FULL_MP);
         you.redraw_magic_points = true;
     }
@@ -5816,7 +5817,7 @@ bool player::is_sufficiently_rested() const
     // Only return false if resting will actually help.
     return (!player_regenerates_hp() || hp >= _rest_trigger_level(hp_max))
             && (magic_points >= _rest_trigger_level(max_magic_points)
-                || !player_regenerates_mp());
+                || !player_regenerates_mp() || Options.rest_wait_ignore_mp);
 }
 
 bool player::in_water() const
