@@ -1880,6 +1880,9 @@ ITEM:  any scroll / any food / any book
 SUBST: - = 2....GTd$%
 MARKER: H = lua:props_marker { stop_explore = "statue" }
 SUBST: HI = G
+{{
+  set_feature_name("granite_statue", "statue with elven inscriptions")
+}}
 MAP
 .............
 .xxxxxxxxxxx.
