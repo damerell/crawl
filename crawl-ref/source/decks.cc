@@ -2191,20 +2191,25 @@ static int _card_power(deck_rarity_type rarity, bool punishment)
 
     if (!punishment)
     {
+        surge_power(you.spec_evoke());
         if (player_under_penance(GOD_NEMELEX_XOBEH))
             result -= you.penance[GOD_NEMELEX_XOBEH];
         else if (have_passive(passive_t::cards_power))
         {
             result = you.piety;
-            result *= you.skill(SK_INVOCATIONS, 100) + 2500;
+            result *=
+            // no stepdown
+            player_adjust_evoc_power(you.skill(SK_EVOCATIONS, 100), 0 , true)
+            + 2500;
             result /= 2700;
         }
     }
 
-    result += have_passive(passive_t::cards_power) ?
-                  you.skill(SK_INVOCATIONS, 9) :
-              punishment ? you.experience_level * 18 :
-                           you.experience_level * 9;
+    result += (punishment) ? you.experience_level * 18
+                           : player_adjust_evoc_power(
+                               you.skill(SK_EVOCATIONS, 9), 0,
+                               // no stepdown with nemelex
+                               have_passive(passive_t::cards_power));
 
     if (rarity == DECK_RARITY_RARE)
         result += 150;
