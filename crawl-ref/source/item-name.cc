@@ -3823,7 +3823,7 @@ bool is_useless_item(const item_def &item, bool temp)
                    || you.get_mutation_level(MUT_NO_ARTIFICE);
 
         default:
-            return you.get_mutation_level(MUT_NO_ARTIFICE) && !is_deck(item);
+            return you.get_mutation_level(MUT_NO_ARTIFICE);
         }
 
     case OBJ_BOOKS:
