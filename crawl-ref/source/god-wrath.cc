@@ -1158,7 +1158,8 @@ static bool _nemelex_retribution()
     // card theme
     const god_type god = GOD_NEMELEX_XOBEH;
 
-    simple_god_message(" makes you draw from the deck of Punishment.", god);
+    // like Xom, this might actually help the player -- bwr
+    simple_god_message(" makes you draw from the Deck of Punishment.", god);
     draw_from_deck_of_punishment();
     return true;
 }
