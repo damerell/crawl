@@ -7377,10 +7377,10 @@ bool wu_jian_do_wall_jump(coord_def targ, bool ability)
     }
 
     auto initial_position = you.pos();
-    move_player_to_grid(wall_jump_landing_spot, false);
+    you.moveto(wall_jump_landing_spot);
     if (!ability)
         count_action(CACT_INVOKE, ABIL_WU_JIAN_WALLJUMP);
-    wu_jian_wall_jump_effects(initial_position);
+    you.apply_location_effects(initial_position);
 
     if (ability)
     {
