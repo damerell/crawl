@@ -616,11 +616,6 @@ static string _get_god_specific_table(god_type which_god)
                 return _describe_ash_skill_boost();
             return "";
 
-        case GOD_NEMELEX_XOBEH:
-            return "The power of Nemelex Xobeh's abilities and of the "
-                   "cards' effects is governed by Evocations skill "
-                   "instead of Invocations.";
-
         case GOD_GOZAG:
             return _describe_branch_bribability();
 
@@ -700,6 +695,7 @@ static string _god_penance_message(god_type which_god)
 {
     const string message = _raw_penance_message(which_god);
     return make_stringf(message.c_str(),
+                        uppercase_first(god_name(which_god)).c_str());
 }
 
 /**

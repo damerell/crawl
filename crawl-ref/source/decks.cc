@@ -2197,15 +2197,19 @@ static int _card_power(deck_rarity_type rarity, bool punishment)
         else if (have_passive(passive_t::cards_power))
         {
             result = you.piety;
-            result *= player_adjust_evoc_power(you.skill(SK_EVOCATIONS, 100))
-                      + 2500;
+            result *=
+            // no stepdown
+            player_adjust_evoc_power(you.skill(SK_EVOCATIONS, 100), 0 , true)
+            + 2500;
             result /= 2700;
         }
     }
 
     result += (punishment) ? you.experience_level * 18
                            : player_adjust_evoc_power(
-                                 you.skill(SK_EVOCATIONS, 9));
+                               you.skill(SK_EVOCATIONS, 9), 0,
+                               // no stepdown with nemelex
+                               have_passive(passive_t::cards_power));
 
     if (rarity == DECK_RARITY_RARE)
         result += 150;

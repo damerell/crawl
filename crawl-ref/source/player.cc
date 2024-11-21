@@ -2089,10 +2089,16 @@ int player_movement_speed()
  * @param enhancers     Bonus enhancers to evocations (pak device surge).
  * @return              A modified power value.
  */
-const int player_adjust_evoc_power(const int power, int enhancers)
+const int player_adjust_evoc_power(const int power, int enhancers,
+                                   bool nostepdown)
 {
     const int total_enhancers = you.spec_evoke() + enhancers;
-    return stepdown_spellpower(100 *apply_enhancement(power, total_enhancers));
+    int enhpower = apply_enhancement(power, total_enhancers);
+    if (nostepdown) {
+        return enhpower;
+    } else {
+        return stepdown_spellpower(100 * enhpower);
+    }
 }
 
 // This function differs from the above in that it's used to set the
