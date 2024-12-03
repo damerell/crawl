@@ -626,6 +626,9 @@ enum weapon_type
     WPN_CLAYMORE,
 
     WPN_DEMON_TRIDENT,
+#if TAG_MAJOR_VERSION > 34
+    WPN_PARTISAN,
+#endif
     WPN_SCYTHE,
 
     WPN_STAFF,          // Just used for the weapon stats for magical staves.
@@ -656,6 +659,7 @@ enum weapon_type
     WPN_TRIPLE_CROSSBOW,
 
     WPN_CUTLASS,
+    WPN_PARTISAN,
 #endif
 
     NUM_WEAPONS,

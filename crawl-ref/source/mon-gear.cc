@@ -353,7 +353,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         { WPN_RAPIER,           1 },
         { WPN_DAGGER,           1 },
         { WPN_WHIP,             1 }, };
-    static const weapon_list NAGA_WEAPONS = // total 120
+    static const weapon_list NAGA_WEAPONS = // total 124
     {   { WPN_LONG_SWORD,       10 },
         { WPN_SHORT_SWORD,      10 },
         { WPN_SCIMITAR,         10 },
@@ -366,19 +366,21 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         { WPN_TRIDENT,          10 },
         { WPN_WAR_AXE,          9 },
         { WPN_FLAIL,            9 },
+        { WPN_PARTISAN,         2 },
         { WPN_BROAD_AXE,        1 },
         { WPN_MORNINGSTAR,      1 }, };
     static const weapon_list ORC_KNIGHT_WEAPONS =
-    {   { WPN_GREAT_SWORD,      4 },
-        { WPN_LONG_SWORD,       4 },
-        { WPN_BATTLEAXE,        4 },
-        { WPN_WAR_AXE,          4 },
-        { WPN_GREAT_MACE,       3 },
-        { WPN_DIRE_FLAIL,       2 },
-        { WPN_BARDICHE,         1 },
-        { WPN_GLAIVE,           1 },
-        { WPN_BROAD_AXE,        1 },
-        { WPN_HALBERD,          1 }, };
+    {   { WPN_GREAT_SWORD,      8 },
+        { WPN_LONG_SWORD,       8 },
+        { WPN_BATTLEAXE,        8 },
+        { WPN_WAR_AXE,          8 },
+        { WPN_GREAT_MACE,       6 },
+        { WPN_DIRE_FLAIL,       4 },
+        { WPN_BARDICHE,         2 },
+        { WPN_GLAIVE,           2 },
+        { WPN_BROAD_AXE,        2 },
+        { WPN_HALBERD,          2 },
+        { WPN_PARTISAN,         1 }, };
     static const mon_weapon_spec ORC_KNIGHT_WSPEC =
         { ORC_KNIGHT_WEAPONS, {4, 1, 3} };
     static const mon_weapon_spec ORC_WARLORD_WSPEC =
@@ -431,7 +433,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         { WPN_BROAD_AXE,        9 },
         { WPN_BROADSWORD,     10 },
         { WPN_EVENINGSTAR,      13 },
-        { WPN_DEMON_TRIDENT,    14 }, };
+        { WPN_PARTISAN,         15 }, };
     static const weapon_list SP_DEFENDER_WEAPONS =
     {   { WPN_LAJATANG,         1 },
         { WPN_QUICK_BLADE,      1 },
@@ -651,6 +653,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
             { { { WPN_MORNINGSTAR, 1 },
                 { WPN_EVENINGSTAR, 1 },
                 { WPN_TRIDENT, 1 },
+                { WPN_PARTISAN, 1 },
                 { WPN_DEMON_TRIDENT, 1 },
         }, {}, {}, 1 } },
         { MONS_JORY,
@@ -752,9 +755,9 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
             { { { WPN_SCIMITAR,         12 },
                 { WPN_LONG_SWORD,       10 },
                 { WPN_BROAD_AXE,        9 },
+                { WPN_PARTISAN,         9 },
                 { WPN_EVENINGSTAR,      7 },
                 { WPN_BROADSWORD,     7 },
-                { WPN_DEMON_TRIDENT,    7 },
                 { WPN_WAR_AXE,          3 },
         } } },
         { MONS_HELL_KNIGHT,
@@ -769,6 +772,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
                 { WPN_LONG_SWORD,       1 },
                 { WPN_SCIMITAR,         1 },
                 { WPN_GREAT_SWORD,      1 },
+                { WPN_PARTISAN,         1 },
                 { WPN_BROAD_AXE,        1 }, },
               { 1, 0, 5 },
               HELL_KNIGHT_BRANDS
@@ -785,6 +789,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
                 { WPN_LONG_SWORD,       1 },
                 { WPN_SCIMITAR,         1 },
                 { WPN_GREAT_SWORD,      1 },
+                { WPN_PARTISAN,         1 },
                 { WPN_BROAD_AXE,        1 }, },
               { 1, 0, 5 },
               HELL_KNIGHT_BRANDS
@@ -905,6 +910,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
               { WPN_DIRE_FLAIL,         5 },
               { WPN_GREAT_MACE,         2 },
               { WPN_GLAIVE,             5 },
+              { WPN_PARTISAN,           4 },
               { WPN_BARDICHE,           2 },
               { WPN_LAJATANG,           1 }, },
            {}, {}, 1,
@@ -986,7 +992,7 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
             { { WPN_HALBERD,                    5 },
               { WPN_TRIDENT,                    5 },
               { WPN_SPEAR,                      3 },
-              { WPN_GLAIVE,                     2 },
+              { WPN_PARTISAN,                   2 },
               { WPN_SHORTBOW,                   5 }, },
             { 4, 0, 4 },
         } },
