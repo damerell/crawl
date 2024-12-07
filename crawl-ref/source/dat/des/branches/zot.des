@@ -203,7 +203,7 @@ FTILE:  .+cm^01234$ = floor_hall
 SUBST:  D = +, "' = .
 NSUBST: 3 = 1:9 / *:3
 : zot_entry_setup(_G)
-MONS:   base draconian ; glaive | halberd
+MONS:   base draconian ; glaive | partisan
 MAP
 '''''''''''''''''''''''''''''''''''''''''
 'wwwwwwwww'''''''''''''''''''''wwwwwwwww'
@@ -2447,6 +2447,7 @@ ITEM:   quick blade ego:electrocution good_item ident:type w:5 / \
         eveningstar ego:electrocution good_item ident:type w:5 / \
         bardiche ego:electrocution good_item ident:type w:5 / \
         lajatang ego:electrocution good_item ident:type w:5 / \
+        partisan ego:electrocution good_item ident:type w:5 / \
         rapier ego:electrocution good_item ident:type / \
         scimitar ego:electrocution good_item ident:type / \
         dire flail ego:electrocution good_item ident:type / \

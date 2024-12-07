@@ -1454,8 +1454,8 @@ PLACE:   Orc:$
 ORIENT:  float
 MONS:    orc warrior w:1 ; arbalest . bolt . halberd | war axe | morningstar /\
          orc w:10 ; arbalest . bolt . trident | hand axe | mace
-MONS:    orc warrior ; arbalest . bolt . glaive | broad axe | battleaxe | great mace
-MONS:    orc knight ; arbalest . bolt . glaive | broad axe | great mace
+MONS:    orc warrior ; arbalest . bolt . glaive w:7 | partisan w:3 | broad axe | battleaxe | great mace
+MONS:    orc knight ; arbalest . bolt . glaive w:7 | partisan w:3 | broad axe | great mace
 MONS:    orc warrior
 MONS:    centaur w:20 / centaur warrior w:1 / nothing w:21
 SUBST:   3 = 23

@@ -138,7 +138,7 @@
        "wand of polymorph", "ring of positive energy", "ring of protection",
        "manual of poison magic", "staff of power", "wand of paralysis",
        "ring of protection from fire", "ring of protection from magic",
-       "staff of poison", "ring of protection from cold" }
+       "staff of poison", "ring of protection from cold", "partisan" }
 
       elseif s == "Q" then i = { "quarterstaff", "quicksilver dragon scales",
        "quick blade" }

@@ -74,7 +74,7 @@ function crypt_loot_plus(e)
   e.kitem("d = broadsword w:5 " .. drain .." / claymore w:5 " .. drain ..
           " / quick blade " .. drain .. " / executioner's axe " .. drain ..
           " / eveningstar " .. drain .. " / bardiche " .. drain ..
-          " / lajatang " .. drain)
+          " / lajatang " .. drain .." / partisan w:5 " .. drain)
   e.kitem("e = great sword " .. pain .." / battleaxe " .. pain ..
           " / great mace " .. pain .. " / glaive " .. pain ..
           " / quarterstaff " .. pain)
@@ -2189,7 +2189,7 @@ ORIENT:  north
 MONS:    ancient champion, lich / revenant, jiangshi / ghoul w:2
 MONS:    profane servitor / bone dragon / curse toe / \
          greater mummy w:2 / ancient lich w:2
-MONS:    skeletal warrior ; halberd | glaive | bardiche w:5
+MONS:    skeletal warrior ; halberd | partisan | glaive | bardiche w:5
 MONS:    freezing wraith w:20 / shadow wraith w:20 / flayed ghost
 MONS:    zombie w:20 / skeleton w:20 / simulacrum / nothing w:25
 KMONS:   8 = vampire knight

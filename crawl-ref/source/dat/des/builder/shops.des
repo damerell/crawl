@@ -683,6 +683,7 @@ KFEAT:   S = general shop type:Lightly-Used suffix:Armoury ; \
              damaged ego:none broadsword | \
              damaged ego:none claymore | \
              damaged ego:none executioner's axe | \
+             damaged ego:none partisan | \
              damaged ego:none demon trident | \
              damaged ego:none bardiche | \
              damaged ego:none lajatang | \

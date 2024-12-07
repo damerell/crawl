@@ -2312,7 +2312,7 @@ MONS:   place:D:1
 MONS:   orc ; club ego:chaos | dagger ego:chaos | spear ego:chaos
 MONS:   gnoll ; club ego:chaos | dagger ego:chaos | spear ego:chaos
 MONS:   boggart ; flail ego:chaos | long sword ego:chaos | trident ego:chaos
-MONS:   rakshasa ; flail ego:chaos | long sword ego:chaos | trident ego:chaos
+MONS:   rakshasa ; flail ego:chaos | long sword ego:chaos | partisan ego:chaos
 :  if you.depth() == dgn.br_depth(you.branch()) then
 KFEAT:  ~ = teleport trap w:20 / alarm trap w:3
 :  else
