@@ -176,8 +176,8 @@ function make_fiery_weapon (e, weapon)
 end
 
 function setup_loot (e)
-    e.item(make_fiery_armour(e, {"leather armour w:65", "ring mail w:25",
-                                 "scale mail w:25", "chain mail w:40",
+    e.item(make_fiery_armour(e, {"leather armour w:65", "mail hauberk w:25",
+                                 "scale armour w:25", "brigandine w:40",
                                  "plate armour w:25", "cloak w:11",
                                  "tower shield w:1", "kite shield w:2", "buckler w:1"}) .. " / " ..
                                  "pair of gloves good_item w:6 / helmet good_item w:4 / " ..
@@ -247,7 +247,7 @@ function fiery_guardians (e, intelligent, village)
            e.mons("salamander")
            e.mons("salamander mystic")
         end
-        e.mons("hell knight ; " .. goodgear .. " . chain mail " .. res ..
+        e.mons("hell knight ; " .. goodgear .. " . brigandine " .. res ..
                " / red draconian ; " .. goodgear .. " . cloak")
     else
     -- Unintelligent map! Even more mixed.
@@ -263,7 +263,7 @@ function fiery_guardians (e, intelligent, village)
                    "red devil ; trident ego:flaming ident:type")
             e.mons("sun demon / smoke demon")
             e.mons("orc sorcerer ; " .. magestuff .. " / " ..
-                   "hell knight ; " .. goodgear .. " . chain mail " .. res)
+                   "hell knight ; " .. goodgear .. " . brigandine " .. res)
         else
             -- "Elemental" monster pack.
             e.mons("fire elemental w:12 / earth elemental / gargoyle w:8")

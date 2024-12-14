@@ -236,7 +236,7 @@ centaur barding
 
 Eine Rüstung für Zentauren zum Tragen über ihrem Pferdekörper.
 %%%%
-chain mail
+brigandine
 
 Eine Anzug gemacht aus winzigen Metallringen. Starken Schutz gegen Waffen,
 Klauen und Reisszahn anbietend, hindert Kettenpanzer schnelle und verstohlene
@@ -609,7 +609,7 @@ sausage
 Ein länglicher Klumpen aus minderwertigem Knorpel, Innereien und
 Getreideerzeugnissen eingehüllt in einem Darm. Lecker!
 %%%%
-scale mail
+scale armour
 
 Eine mit Metalltellern bedeckte Lederkleidung hat einander in überlappenden
 Reihen angehaftet, um vollen Schutz, aber auf Kosten der reduzierten

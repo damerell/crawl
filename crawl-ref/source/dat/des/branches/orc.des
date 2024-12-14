@@ -682,7 +682,7 @@ MONS:    patrolling orc high priest
 MONS:    deep elf knight / deep elf archer
 MONS:    deep elf mage / nothing
 MONS:    deep elf mage / nothing w:20
-ITEM:    good_item scimitar / good_item chain mail
+ITEM:    good_item scimitar / good_item brigandine
 SUBST:   = : +x
 MAP
  xxxxx=xxx
@@ -1355,8 +1355,8 @@ TAGS: no_item_gen no_monster_gen
 DEPTH: Orc
 ORIENT: float
 MONS: orc / w:5 orc warrior
-MONS: orc knight ; great mace . morningstar | chain mail . plate armour \
-      / w:3 orc warlord ; great mace . morningstar | chain mail . plate armour
+MONS: orc knight ; great mace . morningstar | brigandine . plate armour \
+      / w:3 orc warlord ; great mace . morningstar | brigandine . plate armour
 KFEAT: - = iron_grate
 KFEAT: A = floor
 KPROP: A = bloody

@@ -222,8 +222,8 @@ function general_item_setup(e)
     triple crossbow plus:7 good_item not_cursed ident:all w:15")
   e.kitem("] = plate armour plus:12 not_cursed ident:all /\
     plate armour plus:8 good_item not_cursed ident:all /\
-    chain mail plus:8 not_cursed ident:all /\
-    chain mail plus:6 good_item not_cursed ident:all /\
+    brigandine plus:8 not_cursed ident:all /\
+    brigandine plus:6 good_item not_cursed ident:all /\
     robe plus:4 ego:resistance not_cursed ident:all /\
     fire dragon scales plus:10 not_cursed ident:all /\
     ice dragon scales plus:10 not_cursed ident:all /\
@@ -286,8 +286,8 @@ function general_item_setup(e)
     triple crossbow plus:0 good_item not_cursed ident:all w:15")
   e.kitem("[ = plate armour plus:7 not_cursed ident:all /\
     plate armour plus:4 good_item not_cursed ident:all /\
-    chain mail plus:7 not_cursed ident:all w:20 /\
-    chain mail plus:4 good_item not_cursed ident:all w:20 /\
+    brigandine plus:7 not_cursed ident:all w:20 /\
+    brigandine plus:4 good_item not_cursed ident:all w:20 /\
     robe plus:4 not_cursed ident:all /\
     robe plus:1 good_item not_cursed ident:all /\
     fire dragon scales plus:7 not_cursed ident:all /\
@@ -437,9 +437,9 @@ function armoury_setup(e)
           pair of boots plus:1 ident:all not_cursed /\
           helmet plus:1 ident:all not_cursed /\
           cloak plus:1 ident:all not_cursed /\
-          chain mail plus:6 ident:all not_cursed w:20 /\
-          ring mail plus:4 ident:all not_cursed /\
-          scale mail plus:7 ident:all not_cursed /\
+          brigandine plus:6 ident:all not_cursed w:20 /\
+          mail hauberk plus:4 ident:all not_cursed /\
+          scale armour plus:7 ident:all not_cursed /\
           plate armour plus:5 ident:all not_cursed /\
           fire dragon scales plus:4 not_cursed ident:all /\
           ice dragon scales plus:4 not_cursed ident:all /\
@@ -672,9 +672,9 @@ KITEM: k = pair of gloves mundane ident:all not_cursed /\
        pair of boots mundane ident:all not_cursed /\
        helmet mundane ident:all not_cursed /\
        cloak mundane ident:all not_cursed /\
-       chain mail plus:4 ident:all not_cursed w:20 /\
-       ring mail plus:5 ident:all not_cursed /\
-       scale mail plus:4 ident:all not_cursed /\
+       brigandine plus:4 ident:all not_cursed w:20 /\
+       mail hauberk plus:5 ident:all not_cursed /\
+       scale armour plus:4 ident:all not_cursed /\
        plate armour plus:3 ident:all not_cursed
 KITEM: l = ring of protection plus:3 ident:all not_cursed /\
        ring of evasion plus:3 ident:all not_cursed /\
@@ -752,9 +752,9 @@ KITEM: f = long sword ego:holy_wrath ident:all not_cursed /\
        long sword ego:flaming ident:all not_cursed
 KITEM: g = potion of heal wounds q:5 ident:all
 KITEM: h = potion of curing q:5 ident:all
-KITEM: i = chain mail plus:3 ident:all not_cursed w:20 /\
-       ring mail plus:3 ident:all not_cursed /\
-       scale mail plus:3 ident:all not_cursed /\
+KITEM: i = brigandine plus:3 ident:all not_cursed w:20 /\
+       mail hauberk plus:3 ident:all not_cursed /\
+       scale armour plus:3 ident:all not_cursed /\
        plate armour plus:2 ident:all not_cursed
 SHUFFLE: abcdef
 : general_item_setup(_G)

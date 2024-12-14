@@ -118,7 +118,7 @@ centaur barding
 
 Uma armadura feita para centauros vestirem sobre a sua metade equina.
 %%%%
-chain mail
+brigandine
 
 Um traje feito de anéis de metal entrelaçados.
 %%%%
@@ -279,7 +279,7 @@ sausage
 
 Uma deliciosa e suculenta fruta.
 %%%%
-scale mail
+scale armour
 
 Uma armadura de couro coberta de pequenas placas de metal.
 %%%%

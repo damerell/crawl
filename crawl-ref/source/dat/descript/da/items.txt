@@ -234,7 +234,7 @@ centaur barding
 
 Rustning til kentaurer, som de kan bære på deres hestehalvdel.
 %%%%
-chain mail
+brigandine
 
 En rustning, som udelukkende består af små metalringe. Ringbrynje yder stærk
 beskyttelse mod våben, kløer og savtænder, men forhindrer hurtig og snigende
@@ -652,7 +652,7 @@ sausage
 En aflang klump brusk, indvolde og kornprodukter af lav kvalitet, som er
 indkapslet i en tarm. Mums!
 %%%%
-scale mail
+scale armour
 
 Denne læderdragt er dækket af metalplader, som er sammenføjet i overlappende
 rækker for at yde fuld beskyttelse, men på bekostning af reduceret

@@ -385,7 +385,7 @@ static void _gift_armour_to_orc(monster* orc, bool shield = false)
     if (shield)
         armour.sub_type = highlevel ? ARM_KITE_SHIELD : ARM_BUCKLER;
     else
-        armour.sub_type = highlevel ? ARM_SCALE_MAIL : ARM_RING_MAIL;
+        armour.sub_type = highlevel ? ARM_SCALE_ARMOUR : ARM_MAIL_HAUBERK;
     armour.quantity = 1;
     set_ident_flags(armour, ISFLAG_IDENT_MASK);
     give_specific_item(orc, armour);

@@ -108,7 +108,7 @@ ITEM:    randbook numspells:1 spells:animate_skeleton title:Necromancy_for_Newbi
 ITEM:    never_decay bat skeleton / never_decay goblin; nothing skeleton
 ITEM:    never_decay ball python skeleton / never_decay jackal skeleton
 ITEM:    kite shield not_cursed
-ITEM:    ring mail not_cursed
+ITEM:    mail hauberk not_cursed
 MONS:    hobgoblin
 MONS:    rat
 MONS:    goblin

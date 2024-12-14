@@ -734,7 +734,7 @@ WEIGHT:  5
 MONS:    rakshasa, guardian serpent / great orb of eyes
 ITEM:    potion of might / potion of haste / potion of heal wounds w:12 / \
          wand of iceblast / wand of acid / wand of paralysis / \
-         ring mail good_item / chain mail good_item w:12 / kite shield / \
+         mail hauberk good_item / brigandine good_item w:12 / kite shield / \
          spear good_item / trident good_item / any weapon w:12 / any w:2
 SUBST:   x = ccccvbb
 MAP
@@ -959,7 +959,7 @@ MONS:    bone dragon / tentacled starspawn / starcursed mass / \
 ITEM:    superb_item, meat ration / bread ration
 ITEM:    bolt good_item q:40 / arrow good_item q:40, any magical staff
 ITEM:    scroll of magic mapping q:4 / scroll of random uselessness q:4
-ITEM:    ring mail randart / scale mail randart / chain mail randart w:20
+ITEM:    mail hauberk randart / scale armour randart / brigandine randart w:20
 ITEM:    demon blade ego:chaos good_item ident:type / \
          demon trident ego:chaos good_item ident:type / \
          demon whip ego:chaos good_item ident:type
@@ -1462,7 +1462,7 @@ KMONS:   6 = lurking horror
 # fraction of characters finding the abyssal rune, remove or replace them.
 KITEM:   4d = scroll of random uselessness w:15 q:1 / fruit q:1 w:4 / \
          club w:6 / stone q:1 / dart q:1 ego:blind / \
-         mundane animal skin / mundane ring mail / gold q:1
+         mundane animal skin / mundane mail hauberk / gold q:1
 KITEM:   5 = wand of random effects / wand of flame / whip not_cursed w:2 / \
          hat not_cursed mundane w:5
 KITEM:   6e = abyssal rune of zot mimic

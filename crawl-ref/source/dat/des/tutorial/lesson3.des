@@ -185,15 +185,15 @@ FTILE:   c = wall_vines
 KFEAT:   S = general shop use_all ; \
              ring of flight mundane not_cursed | potion of curing | \
              potion of heal wounds | potion of heal wounds q:2 | \
-             potion of might | wand of paralysis | ring mail | \
+             potion of might | wand of paralysis | mail hauberk | \
              buckler ego:none | ring of slaying | scroll of enchant weapon
 ITEM:    gold q:40
 ITEM:    gold q:220
 MONS:    gnoll ; flail ego:none | morningstar ego:none | spear ego:none . \
-         leather armour | ring mail
+         leather armour | mail hauberk
 MONS:    crimson imp
 MONS:    orc ; scimitar ego:none | battleaxe ego:none | trident ego:none . \
-         ring mail | chain mail
+         mail hauberk | brigandine
 MARKER:  d = lua:tutorial3.msg("gold");
 MARKER:  A = lua:tutorial3.msg("shop");
 MARKER:  S = lua:tutorial3.msg("enter_shop");

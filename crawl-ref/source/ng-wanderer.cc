@@ -503,7 +503,7 @@ static void _wanderer_good_equipment(skill_type & skill)
         break;
 
     case SK_ARMOUR:
-        newgame_make_item(OBJ_ARMOUR, ARM_SCALE_MAIL, 1, 2);
+        newgame_make_item(OBJ_ARMOUR, ARM_SCALE_ARMOUR, 1, 2);
         break;
 
     case SK_DODGING:
@@ -610,7 +610,7 @@ static void _wanderer_decent_equipment(skill_type & skill,
         break;
 
     case SK_ARMOUR:
-        newgame_make_item(OBJ_ARMOUR, ARM_RING_MAIL);
+        newgame_make_item(OBJ_ARMOUR, ARM_MAIL_HAUBERK);
         break;
 
     case SK_SHIELDS:
