@@ -211,7 +211,7 @@ centaur barding
 
 Kentaureille tehty panssari, puettavaksi hevososansa ylle.
 %%%%
-chain mail
+brigandine
 
 Täysin pienistä metallirinkuloista tehty haarniska. Se tarjoaa hyvää suojaa
 aseita, kynsiä ja torahampaita vastaan, mutta haittaa nopeaa ja hiljaista

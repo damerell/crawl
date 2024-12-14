@@ -135,7 +135,7 @@ function species_mock(e)
   elseif you.race() == "High Elf" then
     e.kmons("1 = glowing orange brain")
   elseif you.race() == "Hill Orc" then
-    e.kmons("1 = goblin ; mundane hand axe . mundane ring mail")
+    e.kmons("1 = goblin ; mundane hand axe . mundane mail hauberk")
   elseif you.race() == "Human" then
     e.kmons("1 = killer klown")
   elseif you.race() == "Felid" then
@@ -1578,7 +1578,7 @@ TAGS:    uniq_altar_okawaru temple_overflow_1 temple_overflow_okawaru
 TAGS:    no_monster_gen no_wall_fixup transparent
 DEPTH:   D:7-12
 COLOUR:  1 = yellow, ' = yellow, x = white
-MONS:    human ; long sword . ring mail
+MONS:    human ; long sword . mail hauberk
 FTILE:   1'xO = floor_sandstone
 RTILE:   x = wall_tomb
 KFEAT:   _ = altar_okawaru
@@ -3129,7 +3129,7 @@ MONS:   gnoll ; club | spear | nothing . potion of berserk rage / \
               leather armour | nothing . potion of berserk rage
 : else
 MONS:   orc warrior ; club | hand axe | short sword . \
-                      leather armour | ring mail . \
+                      leather armour | mail hauberk . \
                       potion of berserk rage
 : end
 MAP

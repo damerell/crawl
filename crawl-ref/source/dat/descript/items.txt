@@ -309,7 +309,15 @@ broadsword
 
 A large and sturdy sword with a thick forte, a ricasso, a heavy pommel,
 fullers, quillions, and - more pertinent to your interests - a sharp bit
-and a bit for holding onto. 
+and a bit for holding onto.
+%%%%
+brigandine
+
+Armour made of heavy cloth, canvas, or leather, lined with small
+oblong metal plates riveted to the fabric, with a second layer of
+fabric on the inside for the wearer's comfort. Not as rigid and
+encumbering as armour made from larger plates, it also affords
+somewhat less protection.
 %%%%
 buckler
 
@@ -320,10 +328,6 @@ speed of an unskilled wearer.
 centaur barding
 
 An armour made for centaurs, to wear over their equine half.
-%%%%
-chain mail
-
-A suit of armour made entirely out of tiny metal rings.
 %%%%
 chunk of flesh
 
@@ -621,8 +625,9 @@ speed of an unskilled wearer.
 %%%%
 leather armour
 
-A suit made from layers of tanned animal hide. It provides basic protection
-with almost no hindrance to spellcasting or stealthy movement.
+A suit made from buff leather, specially tanned animal hide. It
+provides basic protection with almost no hindrance to spellcasting or
+stealthy movement.
 %%%%
 lightning rod
 
@@ -647,6 +652,12 @@ manual
 
 A valuable book which allows one to practise a certain skill more efficiently
 when carried.
+%%%%
+mail hauberk
+
+A suit of armour made out of interlocking metal rings. Better protection than
+leather, but less than metal plates. Slightly uncomfortable due to the added
+weight.
 %%%%
 meat ration
 
@@ -709,8 +720,8 @@ that dwell within it.
 %%%%
 plate armour
 
-A full suit of solid metal plate: cuirass, pauldrons, vambraces, waist plate
-and greaves. It provides excellent protection.
+A full suit of solid metal plate: cuirass, pauldrons, vambraces, a
+fauld, tassets, cuisses, and greaves. It provides excellent protection.
 %%%%
 potion of agility
 
@@ -825,11 +836,6 @@ much easier for even inexperienced handlers to attack with it quickly.
 rapier
 
 A slender, sharply pointed sword, with an uncommonly elegant design.
-%%%%
-ring mail
-
-A light leather suit reinforced with a covering of metal rings. It is
-protective in combat, but slightly uncomfortable due to the added weight.
 %%%%
 ring of dexterity
 
@@ -955,11 +961,11 @@ sacred scourge
 A blessed weapon, woven by the saints in Heaven and hated by the unholy. It is
 a favoured weapon of the Shining One's servants.
 %%%%
-scale mail
+scale armour
 
-A leather suit covered with metal plates attached to each other in overlapping
-rows to provide full protection, but at the cost of reduced freedom of
-movement.
+A leather or cloth suit covered with relatively small metal plates
+attached to each other in overlapping rows to provide full protection,
+but at the cost of reduced freedom of movement.
 %%%%
 scarf
 

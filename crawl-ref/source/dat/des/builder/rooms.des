@@ -136,7 +136,7 @@ function sroom_morgue(e)
               .. "flayed ghost w:4 / death knight w:1"
     mons[3] = "skeletal warrior w:15 ; great mace" .. weap
               .. " | glaive" .. weap .. " | battleaxe" .. weap
-    mons[4] = "vampire knight ; chain mail . great mace" .. weap
+    mons[4] = "vampire knight ; brigandine . great mace" .. weap
               .. " | glaive" .. weap .. " | battleaxe" .. weap
     if you.in_branch("Geh") then
         mons[5] = "fire giant zombie w:3 / fire giant skeleton w:3 / "

@@ -969,7 +969,7 @@ DEPTH:   Crypt:2-
 ORIENT:  float
 MONS:    wight band, phantasmal warrior
 MONS:    skeletal warrior ; long sword | war axe | trident | flail . \
-                            chain mail | ring mail | scale mail
+                            brigandine | mail hauberk | scale armour
 MONS:    patrolling vampire knight, patrolling ancient champion
 ITEM:    any weapon no_pickup / any armour no_pickup w:8 / \
          gold no_pickup w:3 / any weapon good_item no_pickup w:3
@@ -2004,7 +2004,7 @@ MONS:   patrolling guardian mummy w:7 / patrolling ushabti w:3
 MONS:   greater mummy
 MONS:   mummy priest / ushabti w:6
 MONS:   guardian mummy ; long sword | great sword | \
-        battleaxe | war axe | broad axe . chain mail w:15 | plate armour w:1
+        battleaxe | war axe | broad axe . brigandine w:15 | plate armour w:1
 MONS:   bog body / mummy / guardian mummy
 MONS:   generate_awake sphinx
 : end

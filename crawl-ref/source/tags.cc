@@ -4691,7 +4691,7 @@ void unmarshallItem(reader &th, item_def &item)
     }
 
     if (th.getMinorVersion() < TAG_MINOR_NO_SPLINT
-        && item.base_type == OBJ_ARMOUR && item.sub_type > ARM_CHAIN_MAIL)
+        && item.base_type == OBJ_ARMOUR && item.sub_type > ARM_BRIGANDINE)
     {
         --item.sub_type;
     }

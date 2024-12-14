@@ -611,7 +611,7 @@ WEIGHT:  5
 MONS:    zombie / skeleton / spectral thing w:4
 MONS:    jiangshi / phantasmal warrior w:4 / shadow wraith w:4, vampire mage
 MONS:    vampire knight ; demon whip | demon trident | demon blade . \
-                          plate armour | chain mail
+                          plate armour | brigandine
 MONS:    soul eater, tormentor w:3 / shadow demon w:1, silent spectre
 KMONS:   9 = reaper / lorocyproca w:6
 KMONS:   J = Jory w:9 / tzitzimitl w:1, tzitzimitl

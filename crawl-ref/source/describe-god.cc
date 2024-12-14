@@ -345,7 +345,7 @@ static const map<monster_type, vector<ancestor_upgrade> > ancestor_data =
     { MONS_ANCESTOR_KNIGHT,
       { { 1,  "Flail" },
         { 1,  "Shield" },
-        { 1,  "Chain mail (+AC)" },
+        { 1,  "Brigandine (+AC)" },
         { 15, "Broad axe (flame)" },
         { 19, "Tower shield (reflect)" },
         { 19, "Haste" },

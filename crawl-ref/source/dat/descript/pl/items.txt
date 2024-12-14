@@ -171,7 +171,7 @@ centaur barding
 
 Końska zbroja, pasująca także na dolną część centaura.
 %%%%
-chain mail
+brigandine
 
 Zbroja wykonana z gęstej plecionki stalowych kółek.
 %%%%
@@ -559,7 +559,7 @@ sausage
 Flak wypruty z jelita zwierzęcia, wypełniony podrobami, wnętrznościami i
 chrząstką. Jesteś głodny?
 %%%%
-scale mail
+scale armour
 
 Skórzany ubiór pokryty metalowymi płytkami.
 %%%%

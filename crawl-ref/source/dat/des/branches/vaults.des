@@ -265,9 +265,9 @@ NAME: grunt_vaults_entry_fortified
 TAGS: vaults_entry no_pool_fixup no_monster_gen patrolling
 ORIENT: north
 MONS: human ; arbalest . bolt q:10 . short sword | dagger . \
-              leather armour w:5 | ring mail | scale mail / \
+              leather armour w:5 | mail hauberk | scale armour / \
       orc warrior ; arbalest . bolt q:10 . short sword | dagger . \
-                    leather armour w:5 | ring mail | scale mail / \
+                    leather armour w:5 | mail hauberk | scale armour / \
       deep elf knight w:5 / deep elf archer w:5 / gargoyle / yaktaur
 MONS: vault guard / orc knight w:2
 MONS: wizard / tengu conjurer / orc sorcerer / ogre mage

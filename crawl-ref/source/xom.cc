@@ -2146,7 +2146,7 @@ static void _xom_pseudo_miscast(int /*sever*/)
             str += pluralise(name);
             str += ".";
         }
-        else if (item->sub_type >= ARM_RING_MAIL
+        else if (item->sub_type >= ARM_MAIL_HAUBERK
                  && item->sub_type <= ARM_PLATE_ARMOUR)
         {
             str  = "Your ";
