@@ -171,7 +171,7 @@ centaur barding
 
 Una armadura para que los centauros la lleven sobre su parte equina.
 %%%%
-chain mail
+brigandine
 
 Una malla de anillos metálicos entrelazados.
 %%%%
@@ -515,7 +515,7 @@ sacred scourge
 Una arma bendita, tejida por los santos en el cielo y odiado por lo impío. Es
 el arma favorita de los sirvientes de El Resplandeciente.
 %%%%
-scale mail
+scale armour
 
 Un traje de cuero cubierto con placas de metal unidas y superpuestas entre sí
 para proveer protección total, pero a costa de una reducida libertad de

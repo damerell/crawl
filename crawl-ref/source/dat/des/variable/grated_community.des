@@ -67,7 +67,7 @@ KFEAT:  C = distillery shop type:Miraculous suffix:Elixirs count:10 \
 : local smithy = string.gsub(crawl.make_name(), " ", "_")
 : kfeat("D = armour shop name:The_Legendary_" .. smithy .. " \
 :        type:Legendary suffix:Smithy count:10 greed:40 ;\
-:        damaged plate armour ego:none | damaged chain mail ego:none |\
+:        damaged plate armour ego:none | damaged brigandine ego:none |\
 :        damaged long sword ego:none | damaged kite shield ego:none |\
 :        damaged tower shield ego:none | damaged battleaxe ego:none")
 SHUFFLE:  QRSTUVX

@@ -256,9 +256,9 @@ KITEM:    f = pair of gloves mundane ident:all not_cursed /\
            pair of boots mundane ident:all not_cursed /\
            helmet mundane ident:all not_cursed /\
            cloak mundane ident:all not_cursed
-KITEM:    g = chain mail plus:1 ident:all not_cursed w:20 /\
-           ring mail plus:2 ident:all not_cursed /\
-           scale mail plus:1 ident:all not_cursed /\
+KITEM:    g = brigandine plus:1 ident:all not_cursed w:20 /\
+           mail hauberk plus:2 ident:all not_cursed /\
+           scale armour plus:1 ident:all not_cursed /\
            plate armour plus:0 ident:all not_cursed
 KITEM:    h = ring of protection plus:2 ident:all not_cursed /\
            ring of evasion plus:2 ident:all not_cursed /\
@@ -440,9 +440,9 @@ KITEM:    d = any armour level:27 ident:all /\
           pair of boots plus:1 ident:all not_cursed /\
           helmet plus:1 ident:all not_cursed /\
           cloak plus:1 ident:all not_cursed /\
-          chain mail plus:3 ident:all not_cursed w:20 /\
-          ring mail plus:2 ident:all not_cursed /\
-          scale mail plus:3 ident:all not_cursed /\
+          brigandine plus:3 ident:all not_cursed w:20 /\
+          mail hauberk plus:2 ident:all not_cursed /\
+          scale armour plus:3 ident:all not_cursed /\
           plate armour plus:2 ident:all not_cursed /\
           fire dragon scales plus:1 not_cursed ident:all /\
           ice dragon scales plus:1 not_cursed ident:all /\
@@ -626,8 +626,8 @@ KITEM:    b = battleaxe plus:4 ego:none not_cursed ident:all /\
     triple crossbow plus:0 good_item not_cursed ident:all w:15
 KITEM:    d = plate armour plus:5 not_cursed ident:all /\
     plate armour plus:3 good_item not_cursed ident:all /\
-    chain mail plus:5 not_cursed ident:all w:20 /\
-    chain mail plus:2 good_item not_cursed ident:all w:20 /\
+    brigandine plus:5 not_cursed ident:all w:20 /\
+    brigandine plus:2 good_item not_cursed ident:all w:20 /\
     robe plus:4 not_cursed ident:all /\
     robe plus:1 good_item not_cursed ident:all /\
     fire dragon scales plus:3 not_cursed ident:all /\
@@ -843,8 +843,8 @@ KITEM:    b = battleaxe plus:5 good_item not_cursed ident:all /\
     triple crossbow plus:5 good_item not_cursed ident:all w:15
 KITEM:    d = plate armour plus:6 not_cursed ident:all /\
     plate armour plus:4 good_item not_cursed ident:all /\
-    chain mail plus:6 not_cursed ident:all /\
-    chain mail plus:4 good_item not_cursed ident:all /\
+    brigandine plus:6 not_cursed ident:all /\
+    brigandine plus:4 good_item not_cursed ident:all /\
     robe plus:4 ego:resistance not_cursed ident:all /\
     fire dragon scales plus:6 not_cursed ident:all /\
     ice dragon scales plus:6 not_cursed ident:all /\

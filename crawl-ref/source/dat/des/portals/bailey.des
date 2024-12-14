@@ -79,7 +79,7 @@ function kobold_axe_returning(e)
 end
 
 function easy_axe_fighter(e)
-  e.mons("w:3 orc warrior ; hand axe w:60 | war axe . ring mail / \
+  e.mons("w:3 orc warrior ; hand axe w:60 | war axe . mail hauberk / \
           w:7 gnoll ; hand axe w:60 | war axe . leather armour / \
           w:10 hobgoblin ; hand axe w:60 | war axe . leather armour / \
           w:10 orc ; hand axe w:60 | war axe . leather armour / \
@@ -88,30 +88,30 @@ end
 
 function hard_axe_fighter(e)
   e.mons("w:8 orc warrior ; war axe | broad axe w:2 | battleaxe w:1 . \
-                            ring mail | scale mail | chain mail | plate armour / \
+                            mail hauberk | scale armour | brigandine | plate armour / \
           w:2 orc knight ; war axe | broad axe w:2 | battleaxe w:1 . \
-                           ring mail | scale mail | chain mail | plate armour")
+                           mail hauberk | scale armour | brigandine | plate armour")
 end
 
 -- Polearms.
 function orc_with_polearm(e)
   e.mons("orc ; \
           spear | trident | halberd . \
-          ring mail | scale mail | chain mail")
+          mail hauberk | scale armour | brigandine")
 end
 
 function orc_warrior_with_polearm(e)
   e.mons("orc warrior ; \
           spear w:5 | trident w:5 | partisan w:1 | \
 	  halberd | glaive | bardiche w:1 . \
-          ring mail | scale mail | chain mail | plate armour |\
+          mail hauberk | scale armour | brigandine | plate armour |\
           crystal plate armour w:1")
 end
 
 function orc_knight_with_polearm(e)
   e.mons("orc knight ; \
           trident w:5 | partisan w:2 | halberd | glaive | bardiche w:1 . \
-          ring mail | scale mail | chain mail | plate armour | \
+          mail hauberk | scale armour | brigandine | plate armour | \
           crystal plate armour w:1")
 end
 
@@ -119,7 +119,7 @@ end
 function orc_warlord_with_polearm(e)
   e.mons("orc warlord ; \
           partisan | glaive | bardiche w:1 . \
-          chain mail w:20 | plate armour | crystal plate armour w:1")
+          brigandine w:20 | plate armour | crystal plate armour w:1")
 end
 
 }}
@@ -753,8 +753,8 @@ ENDMAP
 NAME:   bailey_polearm_2
 ORIENT: encompass
 TAGS:   bailey_polearm no_rotate no_pool_fixup no_monster_gen
-MONS:   orc warrior w:5 ; arbalest . bolt . ring mail | scale mail / \
-        orc ; arbalest . bolt . ring mail | scale mail
+MONS:   orc warrior w:5 ; arbalest . bolt . mail hauberk | scale armour / \
+        orc ; arbalest . bolt . mail hauberk | scale armour
 : orc_with_polearm(_G)
 : orc_warrior_with_polearm(_G)
 : orc_knight_with_polearm(_G)
@@ -869,8 +869,8 @@ NAME:   bailey_polearm_4
 ORIENT: encompass
 TAGS:   bailey_polearm no_rotate no_item_gen no_monster_gen no_pool_fixup
 ITEM:   any good_item
-MONS:   orc warrior ; arbalest . bolt . ring mail | scale mail | chain mail / \
-        orc warrior ; halberd . ring mail | scale mail | chain mail
+MONS:   orc warrior ; arbalest . bolt . mail hauberk | scale armour | brigandine / \
+        orc warrior ; halberd . mail hauberk | scale armour | brigandine
 : orc_with_polearm(_G)
 : orc_warrior_with_polearm(_G)
 : orc_knight_with_polearm(_G)
@@ -946,7 +946,7 @@ TAGS:   bailey_polearm no_item_gen no_monster_gen no_pool_fixup patrolling
 : orc_warrior_with_polearm(_G)
 MONS:   centaur ; javelin ident:type q:2 | \
             javelin ident:type q:3 . spear | trident | halberd . \
-            ring mail | scale mail | chain mail
+            mail hauberk | scale armour | brigandine
 NSUBST: _ = 4:2 / 5:1 / *:.
 NSUBST: ; = 6:2 / 6:1 / *:.
 NSUBST: ! = 8:1 / *:.
@@ -992,12 +992,12 @@ NAME:   bailey_polearm_gnolls_kennysheep
 ORIENT: encompass
 TAGS:   bailey_polearm no_item_gen no_monster_gen no_pool_fixup
 MONS:   gnoll ; spear | trident | halberd . \
-            ring mail | scale mail | chain mail . \
+            mail hauberk | scale armour | brigandine . \
             throwing net | nothing
 MONS:   gnoll sergeant ; halberd | glaive | partisan w:1 | bardiche w:1 . \
-            chain mail w:20 | plate armour | crystal plate armour w:1
+            brigandine w:20 | plate armour | crystal plate armour w:1
 MONS:   gnoll shaman ; spear | trident | halberd . \
-            ring mail | scale mail
+            mail hauberk | scale armour
 MONS:   hound
 ITEM:   any good_item
 FTILE:  4't = floor_grass
@@ -1050,11 +1050,11 @@ TAGS:   bailey_axe no_item_gen no_monster_gen no_pool_fixup
 : easy_axe_fighter(_G)
 : hard_axe_fighter(_G)
 KMONS:  3 = orc sorcerer ; war axe | broad axe w:2 | battleaxe w:1 . \
-            ring mail | scale mail  / \
+            mail hauberk | scale armour  / \
         orc high priest ; war axe | broad axe w:2 | battleaxe w:1 . \
-            ring mail | scale mail / \
+            mail hauberk | scale armour / \
         kobold demonologist w:20 ; war axe | broad axe w:2 | battleaxe w:1 . \
-            ring mail | scale mail
+            mail hauberk | scale armour
 KMONS:  4 = electric eel
 KITEM:  d = any weapon
 KITEM:  D = any weapon good_item
@@ -1147,7 +1147,7 @@ ITEM:   potion of experience q:1 / scroll of acquirement q:1
 : kobold_axe_returning(_G)
 : hard_axe_fighter(_G)
 MONS:   orc warlord ; war axe | broad axe w:2 | battleaxe w:1 . \
-            ring mail | scale mail | chain mail | plate armour
+            mail hauberk | scale armour | brigandine | plate armour
 : bailey_setup(_G)
 MAP
       ccccc         ccccc

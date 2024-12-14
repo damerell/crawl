@@ -1053,6 +1053,10 @@ small matters as well as in those of greater importance, that he put his baker
 in irons for serving him with one kind of bread and his guests with another...”
     -Suetonius, _De Vita Caesarum, Divus Iulius_. 110 CE.
 %%%%
+brigandine
+
+<leather armour>
+%%%%
 broad axe
 
 “Weapon, shapely, naked, wan!
@@ -1133,7 +1137,7 @@ cavalier
 “I don't disagree,” said her teacher, “but a House cavalier - with all her proper training - is a handsomely dangerous thing. I saw the primary cavalier of the House of the Second fight in his youth, and my God! I never forgot it.”
     -Tamsyn Muir, _Gideon the Ninth_. 2019.
 %%%%
-chain mail
+mail hauberk
 
 <leather armour>
 %%%%
@@ -2236,6 +2240,10 @@ the inhabitants of the cities, and that which grew upon the ground. But [Lot's]
 wife looked back from behind him, and she became a pillar of salt.”
     -KJV Bible, Genesis 19:24-6.
 %%%%
+plate armour
+
+<leather armour>
+%%%%
 player ghost
 
 “Know thyself.”
@@ -2409,10 +2417,6 @@ ring of the Octopus King
     return descript
 }}
 %%%%
-ring mail
-
-<leather armour>
-%%%%
 ring of dexterity
 
 <ring>
@@ -2546,7 +2550,7 @@ skin to the white morphew.”
     -Gaius Plinius Secundus, _Naturalis Historia_, Book X, ch. LXVII. 79 A.D.
      trans. Philemon Holland, 1601.
 %%%%
-scale mail
+scale armour
 
 <leather armour>
 %%%%

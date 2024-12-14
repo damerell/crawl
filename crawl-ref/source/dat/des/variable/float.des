@@ -3456,7 +3456,7 @@ MONS: rust devil, orc warrior
 ITEM: scimitar / w:1 scimitar good_item, halberd / w:1 halberd good_item
 ITEM: war axe / w:1 war axe good_item, morningstar / w:1 morningstar good_item
 ITEM: plate armour / w:1 plate armour good_item
-ITEM: chain mail / w:1 chain mail good_item
+ITEM: brigandine / w:1 brigandine good_item
 NSUBST: " = 1:h / 1:i
 NSUBST: - = 1:d / 1:e / 1:f / 1:g
 MAP
@@ -9105,7 +9105,7 @@ ITEM:    executioner's axe good_item no_pickup w:5 / \
          demon trident good_item no_pickup
 ITEM:    plate armour good_item randart w:20 no_pickup / \
          crystal plate armour good_item no_pickup / \
-         chain mail good_item randart no_pickup
+         brigandine good_item randart no_pickup
 ITEM:    potion of berserk rage ident:type
 SHUFFLE: def
 KPROP:   .$*def123456 = bloody w:5 / nothing

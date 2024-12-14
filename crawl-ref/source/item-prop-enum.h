@@ -14,9 +14,9 @@ enum armour_type
     ARM_ROBE, // order of mundane armour matters to _upgrade_body_armour
     ARM_FIRST_MUNDANE_BODY = ARM_ROBE,
     ARM_LEATHER_ARMOUR,
-    ARM_RING_MAIL,
-    ARM_SCALE_MAIL,
-    ARM_CHAIN_MAIL,
+    ARM_MAIL_HAUBERK,
+    ARM_SCALE_ARMOUR,
+    ARM_BRIGANDINE,
     ARM_PLATE_ARMOUR,
     ARM_LAST_MUNDANE_BODY = ARM_PLATE_ARMOUR,
 #if TAG_MAJOR_VERSION > 34

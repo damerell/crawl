@@ -2231,14 +2231,14 @@ static tileidx_t _tileidx_armour_base(const item_def &item)
     case ARM_LEATHER_ARMOUR:
         return TILE_ARM_LEATHER_ARMOUR;
 
-    case ARM_RING_MAIL:
-        return TILE_ARM_RING_MAIL;
+    case ARM_MAIL_HAUBERK:
+        return TILE_ARM_MAIL_HAUBERK;
 
-    case ARM_SCALE_MAIL:
-        return TILE_ARM_SCALE_MAIL;
+    case ARM_SCALE_ARMOUR:
+        return TILE_ARM_SCALE_ARMOUR;
 
-    case ARM_CHAIN_MAIL:
-        return TILE_ARM_CHAIN_MAIL;
+    case ARM_BRIGANDINE:
+        return TILE_ARM_BRIGANDINE;
 
     case ARM_PLATE_ARMOUR:
         return TILE_ARM_PLATE_ARMOUR;

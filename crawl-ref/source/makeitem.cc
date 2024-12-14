@@ -1087,9 +1087,9 @@ static armour_type _get_random_armour_type(int item_level)
         // one copy of these by the Lair.
         armtype = random_choose(ARM_ROBE,
                                 ARM_LEATHER_ARMOUR,
-                                ARM_RING_MAIL,
-                                ARM_SCALE_MAIL,
-                                ARM_CHAIN_MAIL,
+                                ARM_MAIL_HAUBERK,
+                                ARM_SCALE_ARMOUR,
+                                ARM_BRIGANDINE,
                                 ARM_PLATE_ARMOUR);
     }
     else if (x_chance_in_y(11 + item_level, 35))
@@ -1097,16 +1097,16 @@ static armour_type _get_random_armour_type(int item_level)
         // All the "mundane" amours except plate.
         armtype = random_choose(ARM_ROBE,
                                 ARM_LEATHER_ARMOUR,
-                                ARM_RING_MAIL,
-                                ARM_SCALE_MAIL,
-                                ARM_CHAIN_MAIL);
+                                ARM_MAIL_HAUBERK,
+                                ARM_SCALE_ARMOUR,
+                                ARM_BRIGANDINE);
     }
     else
     {
         // Default (lowest-level) armours.
         armtype = random_choose(ARM_ROBE,
                                 ARM_LEATHER_ARMOUR,
-                                ARM_RING_MAIL);
+                                ARM_MAIL_HAUBERK);
     }
 
     ASSERT(armtype != NUM_ARMOURS);
