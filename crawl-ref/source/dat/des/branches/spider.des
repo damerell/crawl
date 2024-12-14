@@ -1424,12 +1424,12 @@ KMONS: - = dancing weapon ; short sword / dancing weapon ; mace \
 KMONS: " = dancing weapon ; rapier / dancing weapon ; scimitar \
            / dancing weapon ; broad axe / dancing weapon ; partisan \
            / dancing weapon ; morningstar
-KITEM: - = plate armour / plate armour good_item w:1 / chain mail \
-           / chain mail good_item w:1 / scale mail / scale mail good_item w:1 \
-           / ring mail / ring mail good_item w:1
-KITEM: " = plate armour / plate armour good_item w:1 / chain mail \
-           / chain mail good_item w:1 / scale mail / scale mail good_item w:1 \
-           / ring mail / ring mail good_item w:1
+KITEM: - = plate armour / plate armour good_item w:1 / brigandine \
+           / brigandine good_item w:1 / scale armour / scale armour good_item w:1 \
+           / mail hauberk / mail hauberk good_item w:1
+KITEM: " = plate armour / plate armour good_item w:1 / brigandine \
+           / brigandine good_item w:1 / scale armour / scale armour good_item w:1 \
+           / mail hauberk / mail hauberk good_item w:1
 KFEAT: ^ = known web trap
 NSUBST: ` = 4:2 / 4=2., ' = 2=*% / 5=%., . = 2:^ / 4=^.
 MAP

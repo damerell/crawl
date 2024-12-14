@@ -421,8 +421,8 @@ MONS: deep elf annihilator ; robe ego:poison_resistance | robe ego:resistance | 
       w:5 deep elf mage ; robe ego:poison_resistance | robe ego:cold_resistance | robe
 MONS: deep elf death mage ; robe ego:poison_resistance | robe ego:cold_resistance | robe /\
       deep elf high priest ; robe ego:poison_resistance | robe ego:cold_resistance | robe
-MONS: deep elf blademaster ; chain mail ego:cold_resistance /\
-      deep elf master archer ; chain mail ego:poison_resistance . longbow . q:30 arrow
+MONS: deep elf blademaster ; brigandine ego:cold_resistance /\
+      deep elf master archer ; brigandine ego:poison_resistance . longbow . q:30 arrow
 NSUBST: $ = 1:b / 1:s / *:|
 : acq_on_sight(_G, 'b', {"book","book","wand"})
 : acq_on_sight(_G, 's', {"magical staff","jewellery","jewellery"})
@@ -833,7 +833,7 @@ KMONS: a = patrolling Harold hd:15 hp:100 \
 KMONS: b = patrolling Joseph hd:5 hp:150 ; quarterstaff ego:freezing \
  . dart ego:curare q:7
 : else
-KMONS: a = patrolling Donald ; war axe ego:holy_wrath . scale mail \
+KMONS: a = patrolling Donald ; war axe ego:holy_wrath . scale armour \
  . kite shield ego:reflection
 KMONS: b = patrolling Frances ; war axe ego:holy_wrath \
  . dart ego:curare q:7
@@ -917,8 +917,8 @@ MONS: centaur warrior, lich, shadow dragon, ogre mage
 MONS: vault guard ; short sword ego:electrocution | long sword ego:flaming |\
       dire flail ego:vampirism | war axe ego:freezing | spear ego:vorpal |\
       great mace ego:pain | great sword ego:venom .\
-      chain mail ego:poison_resistance | chain mail ego:cold_resistance |\
-      scale mail ego:poison_resistance | scale mail ego:cold_resistance |\
+      brigandine ego:poison_resistance | brigandine ego:cold_resistance |\
+      scale armour ego:poison_resistance | scale armour ego:cold_resistance |\
       plate armour ego:fire_resistance . tower shield ego:reflection |\
       kite shield ego:protection | tower shield ego:positive_energy
 MONS: stone giant / shadow dragon / quicksilver dragon / golden dragon /\
