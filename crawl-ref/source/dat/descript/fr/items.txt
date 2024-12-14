@@ -366,7 +366,7 @@ centaur barding
 
 Une armure pour les centaures, à porter sur la partie équine.
 %%%%
-chain mail
+brigandine
 
 Une armure entièrement composée de petits anneaux de métal. Offrant une bonne
 protection contre les armes, les griffes et les crocs, la cote de maille gêne
@@ -832,7 +832,7 @@ sausage
 De bas morceaux de viande, cartilages, tripes, et céréales enfermée dans un
 long intestin. Miam !
 %%%%
-scale mail
+scale armour
 
 Une combinaison de cuir couverte de petites plaques de métal alignées et
 superposées pour une protection complète, mais au coût d'une réduction de la

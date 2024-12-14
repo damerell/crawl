@@ -72,7 +72,7 @@
 
       elseif s == "C" then i = { "book of callings", "book of cantrips",
        "club", "book of changes", "book of conjurations", "centaur barding",
-       "chain mail", "crystal ball of energy", "cloak", "crystal plate armour",
+       "brigandine", "crystal ball of energy", "cloak", "crystal plate armour",
        "potion of cancellation", "book of clouds", "staff of cold",
        "staff of conjuration", "manual of crossbows", "manual of conjurations",
        "manual of charms", "potion of curing", "wand of clouds", "claymore",
@@ -145,12 +145,12 @@
 
       elseif s == "R" then i = { "amulet of rage", "amulet of reflection",
        "amulet of regeneration", "rapier", "ring of resist corrosion",
-       "potion of resistance", "robe", "ring mail", "dwarven roundshield",
+       "potion of resistance", "robe", "mail hauberk", "dwarven roundshield",
        "scroll of random uselessness", "scroll of remove curse",
        "wand of random effects" }
 
       elseif s == "S" then i = { "scarf", "scimitar", "short sword",
-       "sling bullet", "scale mail", "book of summonings", "book of the sky",
+       "sling bullet", "scale armour", "book of summonings", "book of the sky",
        "ring of see invisible", "ring of slaying", "spear", "ring of stealth",
        "ring of strength", "manual of stealth", "sack of spiders",
        "scroll of summoning", "scythe", "book of spatial translocations",

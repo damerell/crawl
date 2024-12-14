@@ -95,11 +95,11 @@ static const armour_def Armour_prop[] =
     { ARM_LEATHER_ARMOUR,       "leather armour",         3,  -40,   20,
         EQ_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM, true },
 
-    { ARM_RING_MAIL,            "ring mail",              5,  -70,   40,
+    { ARM_MAIL_HAUBERK,        "mail hauberk",          5,  -70,   40,
         EQ_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM, true, ARMF_NO_FLAGS, 1000 },
-    { ARM_SCALE_MAIL,           "scale mail",             6, -100,   40,
+    { ARM_SCALE_ARMOUR,         "scale armour",           6, -100,   40,
         EQ_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM, true, ARMF_NO_FLAGS, 1000 },
-    { ARM_CHAIN_MAIL,           "chain mail",             8, -150,   45,
+    { ARM_BRIGANDINE,           "brigandine",             8, -140,   45,
         EQ_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM, true, ARMF_NO_FLAGS, 1000 },
     { ARM_PLATE_ARMOUR,         "plate armour",          10, -180,   230,
         EQ_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM, true, ARMF_NO_FLAGS, 1000 },
@@ -3319,7 +3319,7 @@ int missile_base_price(missile_type type)
  * For store pricing purposes, how much is the given type of armour worth,
  * before curses, egos, etc are taken into account?
  *
- * @param type      The type of weapon in question; e.g. ARM_RING_MAIL, or
+ * @param type      The type of weapon in question; e.g. ARM_MAIL_HAUBERK, or
  *                  ARM_BUCKLER.
  * @return          A value in gold; e.g. 45.
  */

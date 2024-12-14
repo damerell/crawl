@@ -1379,7 +1379,7 @@ MONS:   human; club | mace w:3 . animal skin | leather armour
 MONS:   human; hunting sling . stone | sling bullet w:3 . animal skin | \
         leather armour
 SUBST:  1 = 112.
-KMONS:  3 = human; flail . ring mail | scale mail
+KMONS:  3 = human; flail . mail hauberk | scale armour
 KITEM:  3 = %
 MAP
 .........
@@ -2302,7 +2302,7 @@ ENDMAP
 NAME:    einodemon_armed_red_devil_minivault
 TAGS:    patrolling transparent
 DEPTH:   D:12-, Elf, !Elf:$
-MONS:    red devil ; spear | trident . ring mail | scale mail
+MONS:    red devil ; spear | trident . mail hauberk | scale armour
 MONS:    red devil ; spear | trident . buckler
 MONS:    red devil ; spear good_item | trident good_item
 MONS:    red devil ; spear | trident . boomerang
@@ -6725,14 +6725,14 @@ ENDMAP
 NAME:    sword_in_stone
 TAGS:    no_monster_gen patrolling vaults_hard transparent
 DEPTH:   D:5-, Depths, !Depths:$, Vaults, Orc, Elf
-KMONS:   A = gnoll sergeant ; trident . scale mail | chain mail . kite shield
-KMONS:   B = wight ; falchion | long sword . ring mail | scale mail . kite shield | nothing
-KMONS:   C = Blork the orc / orc warrior ; great sword . chain mail | plate armour, \
-                             orc warrior ; great sword . chain mail | plate armour / nothing
-KMONS:   D = Eustachio / orc warrior ; long sword | falchion . chain mail . kite shield, \
-                         orc warrior ; long sword | falchion . chain mail . kite shield / nothing
-KMONS:   E = Joseph / orc knight ; long sword | scimitar . chain mail . kite shield, \
-                      orc knight ; long sword | scimitar . chain mail . kite shield / nothing
+KMONS:   A = gnoll sergeant ; trident . scale armour | brigandine . kite shield
+KMONS:   B = wight ; falchion | long sword . mail hauberk | scale armour . kite shield | nothing
+KMONS:   C = Blork the orc / orc warrior ; great sword . brigandine | plate armour, \
+                             orc warrior ; great sword . brigandine | plate armour / nothing
+KMONS:   D = Eustachio / orc warrior ; long sword | falchion . brigandine . kite shield, \
+                         orc warrior ; long sword | falchion . brigandine . kite shield / nothing
+KMONS:   E = Joseph / orc knight ; long sword | scimitar . brigandine . kite shield, \
+                      orc knight ; long sword | scimitar . brigandine . kite shield / nothing
 KMONS:   F = Urug / orc knight ; rapier | long sword . leather armour . buckler | nothing, \
                     orc knight ; rapier | long sword . leather armour . buckler | nothing / nothing
 KMONS:   G = Erica / wizard ; long sword . robe | leather armour . kite shield, \
@@ -6829,7 +6829,7 @@ DEPTH:  Depths, Crypt
 WEIGHT: 3
 MONS:   death knight ; \
         sword_of_the_doom_knight . \
-        chain mail w:7 | \
+        brigandine w:7 | \
         plate armour w:1
 MONS:   profane servitor, bone dragon, ghoul, death cob, skeletal warrior
 MONS:   rotting hulk / freezing wraith / phantasmal warrior / \
@@ -7383,7 +7383,7 @@ TAGS:   transparent
 WEIGHT: 7
 DEPTH:  D:4-8
 # crawl can mirror the vault, so no need to randomize these
-ITEM:   any manual, ring mail
+ITEM:   any manual, mail hauberk
 NSUBST: 0 = 2=0 / ...0
 SUBST:  0 = 0009
 MAP
