@@ -414,9 +414,15 @@ armour_blue_gold
 ringmail RINGMAIL
 ringmail2
 ringmail3
+hauberk HAUBERK
+hauberk2
+hauberk3
 chainmail CHAINMAIL
 chainmail2
 chainmail3
+brigandine BRIGANDINE
+brigandine2
+brigandine3
 plate_and_cloth PLATE_AND_CLOTH
 plate_and_cloth2 PLATE_AND_CLOTH2
 scalemail SCALEMAIL
