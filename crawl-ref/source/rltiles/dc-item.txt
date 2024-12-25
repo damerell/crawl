@@ -353,17 +353,17 @@ leather_armour1 ARM_LEATHER_ARMOUR
 leather_armour2
 leather_armour3
 
-ring_mail1 ARM_MAIL_HAUBERK
-ring_mail2
-ring_mail3
+hauberk1 ARM_MAIL_HAUBERK
+hauberk2
+hauberk3
 
 scale_mail1 ARM_SCALE_ARMOUR
 scale_mail2
 scale_mail3
 
-chain_mail1 ARM_BRIGANDINE
-chain_mail2
-chain_mail3
+brigandine1 ARM_BRIGANDINE
+brigandine2
+brigandine3
 
 plate1 ARM_PLATE_ARMOUR
 plate2

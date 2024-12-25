@@ -333,8 +333,8 @@ tileidx_t tilep_equ_armour(const item_def &item)
     switch (item.sub_type)
     {
     case ARM_LEATHER_ARMOUR:        tile = TILEP_BODY_LEATHER_ARMOUR; break;
-    case ARM_MAIL_HAUBERK:          tile = TILEP_BODY_RINGMAIL; break;
-    case ARM_BRIGANDINE:            tile = TILEP_BODY_CHAINMAIL; break;
+    case ARM_MAIL_HAUBERK:          tile = TILEP_BODY_HAUBERK; break;
+    case ARM_BRIGANDINE:            tile = TILEP_BODY_BRIGANDINE; break;
     case ARM_SCALE_ARMOUR:          tile = TILEP_BODY_SCALEMAIL; break;
     case ARM_PLATE_ARMOUR:          tile = TILEP_BODY_PLATE; break;
     case ARM_CRYSTAL_PLATE_ARMOUR:  tile = TILEP_BODY_CRYSTAL_PLATE; break;
