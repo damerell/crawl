@@ -2,6 +2,7 @@
 
 #include "enum.h"
 #include "mpr.h"
+#include "random.h"
 #include "spl-cast.h"
 
 struct bolt;
@@ -26,6 +27,7 @@ spret vampiric_drain(int pow, monster* mons, bool fail);
 spret cast_freeze(int pow, monster* mons, bool fail);
 spret cast_airstrike(int pow, const dist &beam, bool fail);
 spret cast_shatter(int pow, bool fail);
+dice_def shatter_damage(int pow, monster *mons = nullptr);
 spret cast_irradiate(int powc, actor* who, bool fail);
 bool ignite_poison_affects(const actor* act);
 spret cast_ignite_poison(actor *agent, int pow, bool fail,

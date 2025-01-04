@@ -4,6 +4,9 @@
 
 /* ******************************************************************
 
+ - Adding a monster? Does it want to be in bands? Get initial equipment?
+   Special treatment for Shatter?
+
    (see "mon-util.h" for the gory details)
 
  - ordering does not matter, because seekmonster() searches the entire
