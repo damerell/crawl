@@ -169,7 +169,9 @@ spret cast_poisonous_vapours(int pow, const dist &beam, bool fail)
     }
 
     behaviour_event(mons, ME_WHACK, &you);
-
+    if (mons->alive())
+        you.pet_target = mons->mindex();
+    
     return spret::success;
 }
 
