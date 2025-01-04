@@ -810,8 +810,10 @@ spret cast_freeze(int pow, monster* mons, bool fail)
     int hurted = mons_adjust_flavoured(mons, beam, orig_hurted);
     _player_hurt_monster(*mons, hurted, beam.flavour, false);
 
-    if (mons->alive())
+    if (mons->alive()) {
         mons->expose_to_element(BEAM_COLD, orig_hurted);
+        you.pet_target = mons->mindex();
+    }
 
     return spret::success;
 }
@@ -855,6 +857,8 @@ spret cast_airstrike(int pow, const dist &beam, bool fail)
     hurted = mons->apply_ac(mons->beam_resists(pbeam, hurted, false, &you));
     dprf("preac: %d, postac: %d", preac, hurted);
     _player_hurt_monster(*mons, hurted, pbeam.flavour);
+
+    if (mons->alive()) you.pet_target = mons->mindex();
 
     return spret::success;
 }
@@ -918,6 +922,9 @@ static int _shatter_monsters(coord_def where, int pow, actor *agent)
     else if (damage)
         mon->hurt(agent, damage);
 
+    if (mon->alive())
+        you.pet_target = mon->mindex();
+    
     return damage;
 }
 
