@@ -7952,7 +7952,10 @@ bool player::can_smell() const
 
 bool player::can_sleep(bool holi_only) const
 {
-    return !you.duration[DUR_SLEEP_IMMUNITY] && actor::can_sleep(holi_only);
+    return !you.duration[DUR_SLEEP_IMMUNITY]
+           && actor::can_sleep(holi_only)
+           && !(you.form == transformation::fungus)
+           && !(you.form == transformation::tree);
 }
 
 /**
