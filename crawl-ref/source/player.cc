@@ -4918,6 +4918,9 @@ bool invis_allowed(bool quiet, string *fail_reason, bool temp)
         if (temp && you.unrand_equipped(UNRAND_EOS))
             sources.push_back("weapon");
 
+        if (temp && you.unrand_equipped(UNRAND_VAINGLORY))
+            sources.push_back("crown");
+
         if (temp && you.wearing_ego(OBJ_ARMOUR, SPARM_LIGHT))
             sources.push_back("orb");
 
