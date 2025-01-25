@@ -439,7 +439,7 @@ NORETURN static void _launch_game()
     if (!crawl_state.game_is_tutorial()) {
         mpr("Press <w>?</w> for a list of commands and other information.");
         if (game_start) {
-            mpr("See http://crawl.montres.org.uk/about.html for Stoat Soup changes.\nRecent change: Whips/scourges want balanced STR/DEX (good? bad?).");
+            mpr("See http://crawl.montres.org.uk/about.html for Stoat Soup changes.\nRecent changes: fix bugs found by 'honk'.");
         }
     }
 

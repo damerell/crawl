@@ -506,7 +506,7 @@ void labyrinth_mark_deadends(const dgn_region &region) {
     env.markers.clear_need_activate();
 }
 
-static bool _is_little_room(coord_def pos, coord_def (&doors)[2]) {
+static bool _is_little_room(coord_def pos, coord_def *doors) {
     int total = 0; int outertotal = 0; int i = 0;
     dungeon_feature_type rockorstone;
     for (distance_iterator di (pos, false, false, 2); di; ++di) {
@@ -523,7 +523,11 @@ static bool _is_little_room(coord_def pos, coord_def (&doors)[2]) {
             if (total > 1) return false;
         } else {
             if (grd(*di) == DNGN_FLOOR) {
-                doors[outertotal] = *di; outertotal++;
+                if (outertotal < 2) {
+                    doors[outertotal++] = *di;
+                } else {
+                    return false;
+                }
             }
             if (grd(*di) == DNGN_PERMAROCK_WALL) return false;
         }
