@@ -976,6 +976,9 @@ static bool _actor_apply_cloud_side_effects(actor *act,
     ASSERT(act); // XXX: change to actor &act
     const bool player = act->is_player();
     monster *mons = !player? act->as_monster() : nullptr;
+    if (!player && mons && !mons->alive()) {
+        return false;
+    }
     switch (cloud.type)
     {
     case CLOUD_FOREST_FIRE:
