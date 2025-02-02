@@ -1317,7 +1317,8 @@ int actor_apply_cloud(actor *act)
         act->hurt(oppressor, final_damage, BEAM_MISSILE,
                   KILLED_BY_CLOUD, "", cloud.cloud_name(true));
         
-        if (you.permabuff_working(PERMA_ROF) && oppressor->is_player() &&
+        if (you.permabuff_working(PERMA_ROF) && oppressor &&
+            oppressor->is_player() &&
             // adjacency isn't quite right here
             adjacent(mons->pos(), you.pos()) && (cloud_flavour == BEAM_FIRE)) {
             permabuff_fail_check(
