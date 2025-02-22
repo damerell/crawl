@@ -192,13 +192,13 @@ void choose_item_for_quiver()
         return;
     }
 
-    int slot = prompt_invent_item("Quiver which item? (- for none, * to show all)",
+    int slot = prompt_invent_item("Quiver which item? (- for none)",
                                   MT_INVLIST, OSEL_THROWABLE, OPER_QUIVER,
                                   invprompt_flag::hide_known, '-');
 
     if (prompt_failed(slot))
         return;
-
+    
     if (slot == PROMPT_GOT_SPECIAL)  // '-' or empty quiver
     {
         ammo_t t = _get_weapon_ammo_type(you.weapon());
@@ -211,8 +211,12 @@ void choose_item_for_quiver()
                                   "crossbow");
         return;
     }
-    else
-    {
+    else {
+        const item_def item = you.inv[slot];
+        if (!item_is_selected(item, OSEL_THROWABLE)) {
+            mpr("You can't quiver that (use 'F' to toss it away).");
+            return;
+        }
         for (int i = EQ_MIN_ARMOUR; i <= EQ_MAX_WORN; i++)
         {
             if (you.equip[i] == slot)
