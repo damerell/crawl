@@ -1824,7 +1824,7 @@ int prompt_invent_item(const char *prompt,
 
     if (!any_items_of_type(type_expect)
         && type_expect == OSEL_THROWABLE
-        && (oper == OPER_FIRE || oper == OPER_QUIVER)
+        && (oper == OPER_FIRE)
         && mtype == MT_INVLIST)
     {
         type_expect = OSEL_ANY;
