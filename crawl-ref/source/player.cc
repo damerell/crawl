@@ -7614,7 +7614,7 @@ bool player::malmutate(const actor* /*source*/, const string &reason)
     return false;
 }
 
-bool player::polymorph(int pow, bool allow_immobile)
+bool player::polymorph(int dur, bool allow_immobile)
 {
     ASSERT(!crawl_state.game_is_arena());
 
@@ -7645,7 +7645,7 @@ bool player::polymorph(int pow, bool allow_immobile)
         f = transformation::none;
     }
 
-    if (f != transformation::none && transform(pow, f, true))
+    if (f != transformation::none && transform(dur, f, true))
     {
         transform_uncancellable = true;
         return true;
