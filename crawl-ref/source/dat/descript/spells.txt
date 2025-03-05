@@ -326,6 +326,9 @@ Controlled Blink spell
 Translocates the caster with precise control; the distance increases
 with power. Be wary that controlled translocations will cause the
 subject to become contaminated with magical energy.
+
+When holding the Orb of Zot, the blink is uncontrolled. Under these
+circumstances the caster is advised to use the ordinary "Blink" spell.
 %%%%
 Corona spell
 
@@ -1033,6 +1036,8 @@ Opens two gateways (one always near the caster), which allow instantaneous
 transport to random other open gateways to any creature entering them. There is
 no limit to the number of gateways that can be open at one time, but a gateway
 will close when entered, or after a moderate amount of time.
+
+This spell cannot be cast when holding the Orb of Zot.
 %%%%
 Passwall spell
 
