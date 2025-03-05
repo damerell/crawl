@@ -2785,7 +2785,7 @@ void read(item_def* scroll)
 
     // need to handle this before we waste time (with e.g. blurryvis)
     if (scroll->sub_type == SCR_BLINKING && item_type_known(*scroll)
-        && orb_limits_translocation()
+        && orb_limits_translocation(false)
         && !yesno("Your blink will be uncontrolled - continue anyway?",
                   false, 'n'))
     {
@@ -2879,7 +2879,7 @@ void read_scroll(item_def& scroll)
         const bool safely_cancellable
             = alreadyknown && !you.get_mutation_level(MUT_BLURRY_VISION);
 
-        if (orb_limits_translocation())
+        if (orb_limits_translocation(false))
         {
             mprf(MSGCH_ORB, "The Orb prevents control of your translocation!");
             uncontrolled_blink();

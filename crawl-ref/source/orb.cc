@@ -76,11 +76,14 @@ void orb_pickup_noise(const coord_def& where, int loudness, const char* msg, con
 
 /**
  * Is the Orb interfering with translocations?
+ * "minor" applies lesser restrictions under more circumstances. The sense of
+ * the argument is this way to make unexamined code that uses the old 
+ * "temp" argument work. Bleh
  * @return True if the player is in Zot or is carrying the Orb.
  */
-bool orb_limits_translocation(bool temp)
+bool orb_limits_translocation(bool minor)
 {
-    return temp && player_in_branch(BRANCH_ZOT) || player_has_orb();
+    return minor && player_in_branch(BRANCH_ZOT) || player_has_orb();
 }
 
 void start_orb_run(game_chapter chapter, const char* message)

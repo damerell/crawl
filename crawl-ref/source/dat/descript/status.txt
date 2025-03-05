@@ -714,9 +714,12 @@ Any equipped weapons and armour are melded.
 %%%%
 Orb status
 
-You are near (or perhaps holding) the Orb of Zot, whose energies disrupt
-translocation magic. Teleportation will take longer, all blinks will become
-uncontrolled, and Passage of Golubria will completely fail to work.
+The energies of the Orb disrupt translocation magic in the Realm of
+Zot.  Teleportation will take longer, and Passage of Golubria portals
+will be less accurately positioned and expire more quickly.
+
+If you are holding the Orb of Zot, all blinks are uncontrolled and Passage
+of Golubria cannot be cast.
 %%%%
 -Hop status
 

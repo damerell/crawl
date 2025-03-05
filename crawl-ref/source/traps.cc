@@ -37,6 +37,7 @@
 #include "mon-place.h"
 #include "mon-transit.h"
 #include "nearby-danger.h"
+#include "orb.h"
 #include "output.h"
 #include "prompt.h"
 #include "random.h"
@@ -112,7 +113,8 @@ void trap_def::prepare_ammo(int charges)
         break;
     case TRAP_GOLUBRIA:
         // really, turns until it vanishes
-        ammo_qty = 30 + random2(20);
+        ammo_qty = (orb_limits_translocation() ? 10 + random2(10)
+                    : 30 + random2(20));
         break;
     case TRAP_TELEPORT:
         ammo_qty = 1;
