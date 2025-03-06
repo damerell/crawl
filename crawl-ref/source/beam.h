@@ -87,6 +87,8 @@ struct bolt
                                     // isn't in view.
     bool   pierce = false;        // Can the beam pass through a target and
                                   // hit another target behind the first?
+    bool   willpierce = false;    // Will pierce later in channel (ie, is
+                                  // Searing Ray right now)
     bool   ihpierce = false;      // Fired with ihpix Piercing Fire
     bool   is_explosion = false;
     bool   is_death_effect = false; // effect of e.g. ballistomycete spore
