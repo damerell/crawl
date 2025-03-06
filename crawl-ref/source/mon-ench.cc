@@ -767,6 +767,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             interrupt_activity(AI_FORCE_INTERRUPT);
         }
         this->add_ench(mon_enchant(ENCH_MIGHT, 1, this, 10+roll_dice(4,10)));
+        this->add_ench(mon_enchant(ENCH_SWIFT, 1, this, 10+roll_dice(6,10)));
         break;
 
     case ENCH_SOUL_RIPE:
