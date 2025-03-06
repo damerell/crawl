@@ -2836,7 +2836,8 @@ void handle_searing_ray()
     beam.range   = calc_spell_range(SPELL_SEARING_RAY, pow);
     beam.source  = you.pos();
     beam.target  = you.props["searing_ray_target"].get_coord();
-
+    beam.willpierce = true;
+    
     // If friendlies have moved into the beam path, give a chance to abort
     if (!player_tracer(zap, pow, beam))
     {

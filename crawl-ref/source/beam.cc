@@ -1306,11 +1306,12 @@ void bolt::do_fire()
                 && flavour != BEAM_DIGGING && flavour <= BEAM_LAST_REAL
                 && !cell_is_solid(target)
             // or visible firewood with a non-penetrating beam...
-                || !pierce
-                   && monster_at(pos())
-                   && you.can_see(*monster_at(pos()))
-                   && !ignores_monster(monster_at(pos()))
-                   && mons_is_firewood(*monster_at(pos())))
+                || (!pierce && !willpierce &&
+                    (origin_spell != SPELL_SEARING_RAY))
+                && monster_at(pos())
+                && you.can_see(*monster_at(pos()))
+                && !ignores_monster(monster_at(pos()))
+                && mons_is_firewood(*monster_at(pos())))
             // and it's a player tracer...
             // (!is_targeting so you don't get prompted while adjusting the aim)
             && is_tracer && !is_targeting && YOU_KILL(thrower)
