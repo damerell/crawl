@@ -1644,6 +1644,27 @@ static void _pre_monster_move(monster& mons)
     }
 }
 
+static void _maybe_submerge(monster* mons) {
+    if (mons->type != MONS_THORN_LOTUS || mons->asleep() || mons->submerged()){
+        return;
+    }
+
+    if (grid_distance(mons->target, mons->pos()) <=
+        spell_range(SPELL_THORN_VOLLEY, 50)) return;
+    
+    if (monster_can_submerge(mons, grd(mons->pos()))
+        && !mons->caught()         // No submerging while caught.
+        && !mons->asleep()         // No submerging when asleep.
+        && !you.beheld_by(*mons))    // No submerging if player entranced.
+    {
+        const monsterentry* entry = get_monster_data(mons->type);
+
+        mons->add_ench(ENCH_SUBMERGED);
+        mons->speed_increment -= ENERGY_SUBMERGE(entry);
+        return;
+    }
+}
+
 void handle_monster_move(monster* mons)
 {
     ASSERT(mons); // XXX: change to monster &mons
@@ -1857,8 +1878,10 @@ void handle_monster_move(monster* mons)
     // next to them, otherwise they just sit there.
     if (mons->has_ench(ENCH_SUBMERGED))
     {
+        int range = (mons->type == MONS_THORN_LOTUS ?
+                     spell_range(SPELL_THORN_VOLLEY, 50) : 1);
         if (mons->foe != MHITNOT
-            && grid_distance(mons->target, mons->pos()) <= 1)
+            && grid_distance(mons->target, mons->pos()) <= range)
         {
             if (mons->submerged())
             {
@@ -1897,6 +1920,7 @@ void handle_monster_move(monster* mons)
             _confused_move_dir(mons);
         }
     }
+    _maybe_submerge(mons);
     if (!mons->asleep() && !mons->submerged())
         maybe_mons_speaks(mons);
 

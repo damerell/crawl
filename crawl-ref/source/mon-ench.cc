@@ -752,6 +752,13 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             }
         }
 
+        if (this->type == MONS_THORN_LOTUS) {
+            if (you.can_see(*this) && (!quiet && feat_is_watery(grd(pos())))) {
+                mprf("%s bobs to the surface.", name(DESC_A, true).c_str());
+                seen_monster(this);
+            }
+            break;
+        }
         if (you.can_see(*this))
         {
             if (!quiet && feat_is_watery(grd(pos())))

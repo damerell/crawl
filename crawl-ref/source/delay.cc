@@ -1149,7 +1149,10 @@ static inline bool _monster_warning(activity_interrupt_type ai,
             text += " leaps into view!";
         else if (at.context == SC_FISH_SURFACES)
         {
-            text += " bursts forth from the ";
+            // this doesn't seem to be used for ambush predation...
+            // ... just shouting by mons that don't shout right now?
+            text += (mon->type == MONS_THORN_LOTUS ?
+                     " bobs up from the " : " bursts forth from the ");
             if (mons_primary_habitat(*mon) == HT_LAVA)
                 text += "lava";
             else if (mons_primary_habitat(*mon) == HT_WATER)
