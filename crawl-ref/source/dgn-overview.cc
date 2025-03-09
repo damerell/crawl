@@ -314,7 +314,9 @@ static string _get_unseen_branches()
                 continue;
             level_id lid(parent, 0);
             lid = find_deepest_explored(lid);
-            if (lid.depth >= it->mindepth)
+            int liddepth = lid.depth;
+            if (liddepth >= 1) liddepth++;
+            if ((liddepth >= it->mindepth) || (branch == BRANCH_TEMPLE))
             {
                 if (it->mindepth != it->maxdepth)
                 {
