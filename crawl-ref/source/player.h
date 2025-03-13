@@ -1191,6 +1191,8 @@ bool napalm_player(int amount, string source, actor* flamer,
 		   string source_aux = "");
 void dec_napalm_player(int delay);
 
+void silence_player(int turns);
+
 bool spell_slow_player(int pow);
 bool slow_player(int turns);
 void dec_slow_player(int delay);

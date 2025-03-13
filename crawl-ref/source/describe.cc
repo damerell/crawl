@@ -302,6 +302,7 @@ static vector<string> _randart_propnames(const item_def& item,
         { ARTP_DRAIN,                 prop_note::plain },
         { ARTP_SLOW,                  prop_note::plain },
         { ARTP_FRAGILE,               prop_note::plain },
+        { ARTP_SILENCE,              prop_note::plain },
 
         // Evokable abilities come second
         { ARTP_BLINK,                 prop_note::plain },
@@ -580,6 +581,7 @@ static string _randart_descrip(const item_def &item)
           "It can protect you from hostile summoned creatures.", false},
         { ARTP_HARM, "It increases damage dealt and taken.", false},
         { ARTP_WIZARDRY, "It improves your spell success rate.", false},
+        { ARTP_SILENCE, "It may silence you when you take damage.", false},
     };
 
     // Give a short description of the base type, for base types with no

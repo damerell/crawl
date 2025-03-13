@@ -705,6 +705,20 @@ static void _maybe_corrode()
         you.corrode_equipment("Your corrosive artefact", degree);
 }
 
+int silence_chance(int sources) {
+    return 3 * sources;
+}
+
+/**
+ * Maybe silence the player after taking damage if they're wearing *Silence.
+ **/
+static void _maybe_silence()
+{
+    int silence_sources = you.scan_artefacts(ARTP_SILENCE);
+    if (x_chance_in_y(silence_chance(silence_sources), 100))
+        silence_player(4 + random2(7));
+}
+
 /**
  * Maybe slow the player after taking damage if they're wearing *Slow.
  **/
@@ -995,6 +1009,7 @@ void ouch(int dam, kill_method_type death_type, mid_t source, const char *aux,
             if (death_type != KILLED_BY_POISON)
             {
                 _maybe_corrode();
+                _maybe_silence();
                 _maybe_slow();
             }
             if (drain_amount > 0)

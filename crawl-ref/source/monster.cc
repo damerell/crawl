@@ -6148,6 +6148,8 @@ void monster::react_to_damage(const actor *oppressor, int damage,
     if (!alive())
         return;
 
+    if (x_chance_in_y(silence_chance(scan_artefacts(ARTP_SILENCE)), 100))
+        silence_monster(*this, oppressor, (4 + random2(7) * BASELINE_DELAY));
 
     if (mons_species() == MONS_BUSH
         && res_fire() < 0 && flavour == BEAM_FIRE

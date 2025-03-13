@@ -4729,6 +4729,24 @@ void dec_napalm_player(int delay)
     }
 }
 
+void silence_player(int turns)
+{
+    ASSERT(!crawl_state.game_is_arena());
+
+    if (you.duration[DUR_SILENCE])
+        mpr("You feel your silence will last longer.");
+    else
+        mpr("An unnatural silence engulfs you.");
+
+    you.increase_duration(DUR_SILENCE, turns, 30);
+
+    invalidate_agrid(true);
+
+    if (you.beheld())
+        you.update_beholders();
+}
+
+
 bool slow_player(int turns)
 {
     ASSERT(!crawl_state.game_is_arena());

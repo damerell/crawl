@@ -130,7 +130,8 @@ static bool _god_fits_artefact(const god_type which_god, const item_def &item,
     case GOD_SIF_MUNA:
     case GOD_VEHUMET:
         // The magic gods: no preventing spellcasting.
-        if (artefact_property(item, ARTP_PREVENT_SPELLCASTING))
+        if (artefact_property(item, ARTP_PREVENT_SPELLCASTING) ||
+            artefact_property(item, ARTP_SILENCE))
             return false;
         break;
 
@@ -564,6 +565,7 @@ static bool _artp_can_go_on_item(artefact_prop_type prop, const item_def &item,
             return item_class == OBJ_ARMOUR && !extant_props[ARTP_CORRODE];
         case ARTP_REGENERATION:
         case ARTP_PREVENT_SPELLCASTING:
+        case ARTP_SILENCE:
             return item_class == OBJ_ARMOUR; // limit availability to armour
         case ARTP_BERSERK:
         case ARTP_ANGRY:
@@ -681,7 +683,7 @@ static const artefact_prop_data artp_data[] =
         []() { return 1; }, nullptr, 0, 0 },
     { "*Noise", ARTP_VAL_POS, 25,    // ARTP_NOISE,
         nullptr, []() { return 2; }, 0, 0 },
-    { "-Cast", ARTP_VAL_BOOL, 25,   // ARTP_PREVENT_SPELLCASTING,
+    { "-Cast", ARTP_VAL_BOOL, 0,   // ARTP_PREVENT_SPELLCASTING,
         nullptr, []() { return 1; }, 0, 0 },
     { "*Tele", ARTP_VAL_BOOL,  0,   // ARTP_CAUSE_TELEPORTATION,
         nullptr, []() { return 1; }, 0, 0 },
@@ -742,6 +744,8 @@ static const artefact_prop_data artp_data[] =
     { "Harm", ARTP_VAL_BOOL, 0, // ARTP_HARM,
         []() {return 1;}, nullptr, 0, 0},
     { "Wiz", ARTP_VAL_BOOL, 0, nullptr, nullptr, 0, 0}, // ARTP_WIZARDRY
+    { "*Silence",  ARTP_VAL_BOOL, 25, // ARTP_SILENCE,
+      nullptr, []() { return 1; }, 0, 0 },
 };
 COMPILE_CHECK(ARRAYSZ(artp_data) == ARTP_NUM_PROPERTIES);
 // weights sum to 1000
