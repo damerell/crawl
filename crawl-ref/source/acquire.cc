@@ -19,6 +19,7 @@
 #include "artefact.h"
 #include "art-enum.h"
 #include "colour.h"
+#include "decks.h"
 #include "describe.h"
 #include "describe-god.h"
 #include "dungeon.h"
@@ -692,6 +693,12 @@ static int _acquirement_misc_subtype(bool /*divine*/, int & /*quantity*/)
         // ones like the lamp of fire (the items in the stack recharged 
         // independently) had double weight if you had not seen any.
 	// We now restore even weighting in Stoat Soup - DJSD
+        // except decks, which always had a lower weight. I'm not going
+        // to fret over the exact weight because a lot is going to change
+        {MISC_DECK_OF_ESCAPE,                              5 },
+        {MISC_DECK_OF_DESTRUCTION,                         5 },
+        {MISC_DECK_OF_WAR,                                 5 },
+
         {MISC_BOX_OF_BEASTS,
                                        (NO_LOVE ?     0 : 10)},
         {MISC_SACK_OF_SPIDERS,
@@ -1246,14 +1253,16 @@ static string _why_reject(const item_def &item, int agent)
     }
 
 #if TAG_MAJOR_VERSION == 34
+    // Pakellas doesn't gift decks (that's Nemelex's turf).
     // The crystal ball case should be handled elsewhere, but just in
     // case, it's also handled here.
     if (agent == GOD_PAKELLAS)
     {
         if (item.base_type == OBJ_MISCELLANY
-            && item.sub_type == MISC_CRYSTAL_BALL_OF_ENERGY)
+            && (is_deck(item)
+                || item.sub_type == MISC_CRYSTAL_BALL_OF_ENERGY))
         {
-            return "Destroying CBoE that Pakellas hates!";
+            return "Destroying deck or CBoE that Pakellas hates!";
         }
     }
 #endif
@@ -1449,6 +1458,10 @@ int acquirement_create_item(object_class_type class_wanted,
                 // On a weapon, an enchantment of less than 0 is never viable.
                 acq_item.plus = max(static_cast<int>(acq_item.plus), random2(2));
             }
+        } else if (is_deck(acq_item)) {
+            // Non-legendary decks aren't very useful for non-nemelexites
+            // and nemelexites get plenty of lower-quality decks anyway.
+            acq_item.deck_rarity = DECK_RARITY_LEGENDARY;
         }
         // Eliminate the "distortion from acquirement" hilarity
         if (agent != GOD_XOM) {
