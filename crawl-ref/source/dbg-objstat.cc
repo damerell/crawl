@@ -19,6 +19,7 @@
 #include "coordit.h"
 #include "dbg-maps.h"
 #include "dbg-util.h"
+#include "decks.h"
 #include "dungeon.h"
 #include "end.h"
 #include "env.h"
@@ -62,6 +63,7 @@ enum item_base_type
     ITEM_ARMOUR,
     ITEM_JEWELLERY,
     ITEM_MISCELLANY,
+    ITEM_DECKS,
     ITEM_BOOKS,
     ITEM_ARTEBOOKS,
     ITEM_MANUALS,
@@ -153,6 +155,10 @@ static const vector<string> item_fields[NUM_ITEM_BASE_TYPES] = {
     { // ITEM_MISCELLANY
         "Num", "NumMin", "NumMax", "NumSD", "MiscPlus"
     },
+    { // ITEM_DECKS
+        "PlainNum", "OrnateNum", "LegendaryNum", "AllNum",
+        "AllNumMin", "AllNumMax", "AllNumSD", "AllDeckCards"
+    },
     { // ITEM_BOOKS
         "Num", "NumMin", "NumMax", "NumSD"
     },
@@ -204,7 +210,7 @@ static item_base_type _item_base_type(const item_def &item)
     switch (item.base_type)
     {
     case OBJ_MISCELLANY:
-        type = ITEM_MISCELLANY;
+        type = is_deck(item) ? ITEM_DECKS : ITEM_MISCELLANY;
         break;
     case OBJ_BOOKS:
         if (item.sub_type == BOOK_MANUAL)
@@ -215,7 +221,7 @@ static item_base_type _item_base_type(const item_def &item)
             type = ITEM_BOOKS;
         break;
     case OBJ_FOOD:
-        type = ITEM_FOOD;
+            type = ITEM_FOOD;
         break;
     case OBJ_GOLD:
         type = ITEM_GOLD;
@@ -286,6 +292,7 @@ static object_class_type _item_orig_base_type(item_base_type base_type)
     case ITEM_JEWELLERY:
         type = OBJ_JEWELLERY;
         break;
+    case ITEM_DECKS:
     case ITEM_MISCELLANY:
         type = OBJ_MISCELLANY;
         break;
@@ -306,6 +313,9 @@ static string _item_class_name(item_base_type base_type)
     string name;
     switch (base_type)
     {
+    case ITEM_DECKS:
+        name = "Decks";
+        break;
     case ITEM_ARTEBOOKS:
         name = "Artefact Spellbooks";
         break;
@@ -323,6 +333,9 @@ static int _item_orig_sub_type(const item_type &item)
     int type;
     switch (item.base_type)
     {
+    case ITEM_DECKS:
+        type = deck_types[item.sub_type];
+        break;
     case ITEM_MISCELLANY:
         type = misc_types[item.sub_type];
         break;
@@ -347,6 +360,9 @@ static int _item_max_sub_type(item_base_type base_type)
     case ITEM_MISCELLANY:
         num = misc_types.size();
         break;
+    case ITEM_DECKS:
+        num = deck_types.size();
+        break;
     case ITEM_BOOKS:
         num = MAX_FIXED_BOOK + 1;
         break;
@@ -369,6 +385,13 @@ static item_def _dummy_item(const item_type &item)
     dummy_item.base_type = _item_orig_base_type(item.base_type);
     dummy_item.sub_type = _item_orig_sub_type(item);
     dummy_item.quantity = 1;
+    // Deck name is reported as buggy if this is not done.
+    if (item.base_type == ITEM_DECKS)
+    {
+        dummy_item.plus = 1;
+        dummy_item.deck_rarity = DECK_RARITY_COMMON;
+        init_deck(dummy_item);
+    }
     return dummy_item;
 }
 
@@ -393,7 +416,13 @@ static bool _item_has_antiquity(item_base_type base_type)
 item_type::item_type(const item_def &item)
 {
     base_type = _item_base_type(item);
-    if (base_type == ITEM_MISCELLANY)
+    if (base_type == ITEM_DECKS)
+    {
+        sub_type = find(deck_types.begin(), deck_types.end(), item.sub_type)
+                   - deck_types.begin();
+        ASSERT(sub_type < (int) deck_types.size());
+    }
+    else if (base_type == ITEM_MISCELLANY)
     {
         sub_type = find(misc_types.begin(), misc_types.end(), item.sub_type)
                         - misc_types.begin();
@@ -603,6 +632,7 @@ static bool _item_track_plus(item_base_type base_type)
     case ITEM_JEWELLERY:
     case ITEM_WANDS:
     case ITEM_MISCELLANY:
+    case ITEM_DECKS:
         return true;
     default:
         return false;
@@ -692,6 +722,23 @@ void objstat_record_item(const item_def &item)
         break;
     case ITEM_MISCELLANY:
         all_plus_f = "MiscPlus";
+        break;
+    case ITEM_DECKS:
+        switch (item.deck_rarity)
+        {
+        case DECK_RARITY_COMMON:
+            _record_item_stat(cur_lev, itype, "PlainNum", 1);
+            break;
+        case DECK_RARITY_RARE:
+            _record_item_stat(cur_lev, itype, "OrnateNum", 1);
+            break;
+        case DECK_RARITY_LEGENDARY:
+            _record_item_stat(cur_lev, itype, "LegendaryNum", 1);
+            break;
+        default:
+            break;
+        }
+        all_plus_f = "AllDeckCards";
         break;
     default:
         break;
@@ -888,7 +935,8 @@ void objstat_iteration_stats()
 
                 for (int  j = 0; j < num_entries ; j++)
                 {
-                    bool use_all = _item_has_antiquity(base_type);
+                    bool use_all = _item_has_antiquity(base_type)
+                        || base_type == ITEM_DECKS;
                     string min_f = use_all ? "AllNumMin" : "NumMin";
                     string max_f = use_all ? "AllNumMax" : "NumMax";
                     string sd_f = use_all ? "AllNumSD" : "NumSD";
@@ -954,7 +1002,7 @@ static void _write_stat(map<string, double> &stats, string field)
     {
         value = stats[field] / stats["Num"];
     }
-    else if (field == "AllEnch")
+    else if (field == "AllEnch" || field == "AllDeckCards")
         value = stats[field] / stats["AllNum"];
     else if (field == "ArteEnch")
         value = stats[field] / stats["ArteNum"];
