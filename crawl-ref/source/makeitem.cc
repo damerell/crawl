@@ -1753,6 +1753,9 @@ static void _generate_misc_item(item_def& item, int force_type, int force_ego)
 {
     if (force_type != OBJ_RANDOM)
         item.sub_type = force_type;
+    // s/3/4/ - Stoat Soup has many misc evokers
+    else if (one_chance_in(4))
+        item.sub_type = random_deck_type();
     else
     {
         item.sub_type = random_choose(MISC_FAN_OF_GALES,
