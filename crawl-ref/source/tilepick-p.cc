@@ -73,14 +73,12 @@ tileidx_t tilep_equ_weapon(const item_def &item)
         case MISC_DECK_OF_DESTRUCTION:
 #if TAG_MAJOR_VERSION == 34
         case MISC_DECK_OF_DUNGEONS:
-#endif
         case MISC_DECK_OF_SUMMONING:
-#if TAG_MAJOR_VERSION == 34
         case MISC_DECK_OF_WONDERS:
 #endif
         case MISC_DECK_OF_PUNISHMENT:
-#if TAG_MAJOR_VERSION == 34
         case MISC_DECK_OF_WAR:
+#if TAG_MAJOR_VERSION == 34
         case MISC_DECK_OF_CHANGES:
         case MISC_DECK_OF_DEFENCE:
 #endif

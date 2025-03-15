@@ -253,6 +253,11 @@ static const duration_def duration_data[] =
       "vulnerable", "lowered mr",
       "", D_DISPELLABLE,
       {{ "You feel less vulnerable to hostile enchantments." }}},
+    { DUR_MAGIC_SHIELD,
+      0, "",
+      "shielded", "magic shield",
+      "", D_DISPELLABLE,
+      {{ "Your magical shield disappears.", _redraw_armour }}},
     { DUR_MIGHT,
       LIGHTBLUE, "Might",
       "mighty", "might",
@@ -289,6 +294,14 @@ static const duration_def duration_data[] =
       0, "",
       "sleeping", "sleep",
       "You are sleeping.", D_DISPELLABLE},
+    { DUR_MAGIC_ARMOUR,
+      0, "",
+      "magic armour", "magic armour",
+      "You are magically armoured.", D_DISPELLABLE,
+      {{ "Your magical armour fades away.", [](){
+          you.props.erase(MAGIC_ARMOUR_KEY);
+          you.redraw_armour_class = true;
+      }}}},
     { DUR_SWIFTNESS,
       BLUE, "Swift",
       "swift", "swiftness",
@@ -655,6 +668,13 @@ static const duration_def duration_data[] =
       "corroded", "corrosion",
       "You are corroded.", D_DISPELLABLE,
       {{ "You are no longer corroded.", _end_corrosion }}},
+    { DUR_FORTITUDE,
+      LIGHTBLUE, "Fort",
+      "immense fortitude", "",
+      "You have immense fortitude and shrug off injury.", D_DISPELLABLE,
+      {{ "Your fortitude fades away.", []() {
+          notify_stat_change(STAT_STR, -10, true);
+      }}}},
     { DUR_HORROR,
       RED, "Horr",
       "horrified", "",
@@ -816,9 +836,6 @@ static const duration_def duration_data[] =
         "You have trouble accessing your magic.", D_DISPELLABLE | D_EXPIRES,
         {{ "You regain control over your magic." }}, 27},
     { DUR_TELEPATHY, 0, "", "", "old telepathy", "", D_NO_FLAGS},
-    { DUR_MAGIC_ARMOUR, 0, "", "", "old magic armour", "", D_NO_FLAGS},
-    { DUR_MAGIC_SHIELD, 0, "", "", "old magic shield", "", D_NO_FLAGS},
-    { DUR_FORTITUDE, 0, "", "", "old fortitude", "", D_NO_FLAGS},
     { DUR_RESIDUAL_HARM, 0, "", "", "", "", D_NO_FLAGS, {{""}}},
 
 #endif

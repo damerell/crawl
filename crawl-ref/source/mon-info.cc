@@ -80,6 +80,7 @@ static map<enchant_type, monster_info_flags> trivial_ench_mb_mappings = {
     { ENCH_INNER_FLAME,     MB_INNER_FLAME },
     { ENCH_BREATH_WEAPON,   MB_BREATH_WEAPON },
     { ENCH_ROLLING,         MB_ROLLING },
+    { ENCH_MAGIC_ARMOUR,    MB_MAGIC_ARMOUR },
     { ENCH_OZOCUBUS_ARMOUR, MB_OZOCUBUS_ARMOUR },
     { ENCH_WRETCHED,        MB_WRETCHED },
     { ENCH_SCREAMED,        MB_SCREAMED },
@@ -1437,6 +1438,8 @@ vector<string> monster_info::attributes() const
         v.emplace_back("resistant to hostile enchantments");
     if (is(MB_ROLLING))
         v.emplace_back("rolling");
+    if (is(MB_MAGIC_ARMOUR))
+        v.emplace_back("magically armoured");
     if (is(MB_OZOCUBUS_ARMOUR))
         v.emplace_back("covered in an icy film");
     if (is(MB_WRETCHED))

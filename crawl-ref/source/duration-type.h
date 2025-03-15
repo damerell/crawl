@@ -61,8 +61,8 @@ enum duration_type
     DUR_SILENCE,
 #if TAG_MAJOR_VERSION == 34
     DUR_CONDENSATION_SHIELD,
-    DUR_MAGIC_ARMOUR,
 #endif
+    DUR_MAGIC_ARMOUR,
     DUR_GOURMAND,
 #if TAG_MAJOR_VERSION == 34
     DUR_BARGAIN,
@@ -73,9 +73,7 @@ enum duration_type
     DUR_SLAYING,
 #endif
     DUR_STEALTH,
-#if TAG_MAJOR_VERSION == 34
     DUR_MAGIC_SHIELD,
-#endif
     DUR_SLEEP,
 #if TAG_MAJOR_VERSION == 34
     DUR_TELEPATHY,
@@ -166,9 +164,7 @@ enum duration_type
     DUR_QAZLAL_ELEC_RES,
     DUR_QAZLAL_AC,
     DUR_CORROSION,
-#if TAG_MAJOR_VERSION == 34
     DUR_FORTITUDE,
-#endif
     DUR_HORROR,
     DUR_NO_SCROLLS,
 #if TAG_MAJOR_VERSION == 34

@@ -518,6 +518,14 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
         calc_speed();
         break;
 
+    case ENCH_MAGIC_ARMOUR:
+        if (!quiet && you.can_see(*this))
+        {
+            mprf("%s magical armour fades away.",
+                 apostrophise(name(DESC_THE)).c_str());
+        }
+        break;
+
     case ENCH_OZOCUBUS_ARMOUR:
         if (!quiet && you.can_see(*this))
         {
@@ -1417,6 +1425,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_TIDE:
     case ENCH_REGENERATION:
     case ENCH_TROGS_HAND:
+    case ENCH_MAGIC_ARMOUR:
     case ENCH_IDEALISED:
     case ENCH_FEAR_INSPIRING:
     case ENCH_LIFE_TIMER:
@@ -2109,11 +2118,7 @@ static const char *enchant_names[] =
     "fading_away", "preparing_resurrect",
 #endif
     "regen",
-    "magic_res", "mirror_dam",
-#if TAG_MAJOR_VERSION == 34
-    "stoneskin",
-#endif
-    "fear inspiring", "temporarily pacified",
+    "magic_res", "mirror_dam", "stoneskin", "fear inspiring", "temporarily pacified",
     "withdrawn",
 #if TAG_MAJOR_VERSION == 34
     "attached",
@@ -2309,6 +2314,7 @@ int mon_enchant::calc_duration(const monster* mons,
     case ENCH_MIGHT:
     case ENCH_INVIS:
     case ENCH_FEAR_INSPIRING:
+    case ENCH_MAGIC_ARMOUR:
     case ENCH_AGILE:
     case ENCH_BLACK_MARK:
     case ENCH_RESISTANCE:
