@@ -437,8 +437,8 @@ bool InventoryRegion::update_tip_text(string& tip)
                 cmd.push_back(CMD_EVOKE);
                 break;
             case OBJ_MISCELLANY + EQUIP_OFFSET:
-                if (item.sub_type >= MISC_FIRST_DECK
-                    && item.sub_type <= MISC_LAST_DECK)
+                if (item.sub_type >= MISC_DECK_OF_ESCAPE
+                    && item.sub_type <= MISC_DECK_OF_DEFENCE)
                 {
                     tmp += "Draw a card (%)";
                     cmd.push_back(CMD_EVOKE_WIELDED);

@@ -511,7 +511,8 @@ static bool _boosted_ev()
 
 static bool _boosted_sh()
 {
-    return you.duration[DUR_DIVINE_SHIELD]
+    return you.duration[DUR_MAGIC_SHIELD]
+           || you.duration[DUR_DIVINE_SHIELD]
            || qazlal_sh_boost() > 0
            || you.attribute[ATTR_BONE_ARMOUR] > 0
            || (you.get_mutation_level(MUT_CONDENSATION_SHIELD)
@@ -829,6 +830,7 @@ static short _get_stat_colour(stat_type stat)
     if (you.duration[DUR_DIVINE_STAMINA]
         || stat == STAT_STR && you.duration[DUR_MIGHT]
         || stat == STAT_STR && you.duration[DUR_BERSERK]
+        || stat == STAT_STR && you.duration[DUR_FORTITUDE]
         || stat == STAT_INT && you.duration[DUR_BRILLIANCE]
         || stat == STAT_DEX && you.duration[DUR_AGILITY])
     {

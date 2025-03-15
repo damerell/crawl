@@ -3370,6 +3370,8 @@ int monster::armour_class(bool calc_unid) const
     ac += scan_artefacts(ARTP_AC);
 
     // various enchantments
+    if (has_ench(ENCH_MAGIC_ARMOUR))
+        ac += get_hit_dice() / 2;
     if (has_ench(ENCH_OZOCUBUS_ARMOUR))
         ac += 4 + get_hit_dice() / 3;
     if (has_ench(ENCH_ICEMAIL))

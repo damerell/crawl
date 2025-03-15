@@ -698,7 +698,8 @@ static int _acquirement_misc_subtype(bool /*divine*/, int & /*quantity*/)
         {MISC_DECK_OF_ESCAPE,                              5 },
         {MISC_DECK_OF_DESTRUCTION,                         5 },
         {MISC_DECK_OF_WAR,                                 5 },
-
+        // FIXME also wizmode creation
+        
         {MISC_BOX_OF_BEASTS,
                                        (NO_LOVE ?     0 : 10)},
         {MISC_SACK_OF_SPIDERS,
