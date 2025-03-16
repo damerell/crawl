@@ -1016,7 +1016,8 @@ bool item_is_selected(const item_def &i, int selector)
         return itype == OBJ_ARMOUR && item_is_equipped(i);
 
     case OSEL_UNIDENT:
-        return !fully_identified(i) && itype != OBJ_BOOKS;
+        return (!fully_identified(i) && itype != OBJ_BOOKS) ||
+        (is_deck(i) && !top_card_is_known(i));
 
     case OBJ_MISSILES:
         return itype == OBJ_MISSILES || itype == OBJ_WEAPONS;
