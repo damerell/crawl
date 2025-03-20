@@ -2394,7 +2394,12 @@ static bool _identify(bool alreadyknown, const string &pre_msg, int &link)
     // But we also walk the chain if it's an entirely unIDed stack
     // so as to identify an unzapped wand.
     // We are relying heavily here on the IDed-before-unIDed property of chains
-    if (fully_identified(item, false) || walkchain) {
+    if (is_deck(item)) {
+        if (fully_identified(item) && !top_card_is_known(item)) {
+            deck_identify_first(item);
+        } 
+        set_ident_flags(item, ISFLAG_IDENT_MASK);
+    } else if (fully_identified(item, false) || walkchain) {
         CrawlVector &chain = item.props[CHAIN_VECTOR].get_vector();
         CrawlVector::iterator it;
         for (it = chain.begin(); it != chain.end(); it++) {

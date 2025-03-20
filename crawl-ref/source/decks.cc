@@ -768,8 +768,21 @@ static void _deck_ident(item_def& deck)
     {
         set_ident_flags(deck, ISFLAG_KNOW_TYPE);
         mprf("This is %s.", deck.name(DESC_A).c_str());
-        you.wield_change = true;
     }
+}
+
+bool deck_identify_first(item_def& deck)
+{
+    if (top_card_is_known(deck))
+        return false;
+
+    uint8_t flags;
+    card_type card = get_card_and_flags(deck, -1, flags);
+
+    _set_card_and_flags(deck, -1, card, flags | CFLAG_SEEN);
+
+    mprf("You get a glimpse of the first card. It is %s.", card_name(card));
+    return true;
 }
 
 // Draw the top four cards of an unstacked deck and play them all.
