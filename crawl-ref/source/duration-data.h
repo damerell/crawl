@@ -306,6 +306,11 @@ static const duration_def duration_data[] =
       BLUE, "Swift",
       "swift", "swiftness",
       "You can move swiftly.", D_DISPELLABLE | D_EXPIRES, {}, 6},
+    { DUR_TELEPATHY,
+      LIGHTBLUE, "Emp",
+      "empathic", "telepathy",
+      "", D_NO_FLAGS,
+      {{ "You feel less empathic." }}},
     { DUR_TELEPORT,
       LIGHTBLUE, "Tele",
       "about to teleport", "teleport",
@@ -835,7 +840,6 @@ static const duration_def duration_data[] =
         "antimagic", "",
         "You have trouble accessing your magic.", D_DISPELLABLE | D_EXPIRES,
         {{ "You regain control over your magic." }}, 27},
-    { DUR_TELEPATHY, 0, "", "", "old telepathy", "", D_NO_FLAGS},
     { DUR_RESIDUAL_HARM, 0, "", "", "", "", D_NO_FLAGS, {{""}}},
 
 #endif
