@@ -66,6 +66,7 @@ void debuff_player(bool end_permas, bool end_perma_durs,
 bool monster_is_debuffable(const monster &mon);
 void debuff_monster(monster &mon);
 
+int detect_traps(int pow);
 int detect_items(int pow);
 int detect_creatures(int pow, bool telepathic = false);
 bool remove_curse(bool alreadyknown = true, const string &pre_msg = "");
