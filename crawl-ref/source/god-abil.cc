@@ -7379,6 +7379,7 @@ bool wu_jian_do_wall_jump(coord_def targ, bool ability)
 
     auto initial_position = you.pos();
     you.moveto(wall_jump_landing_spot);
+    viewwindow();
     if (!ability)
         count_action(CACT_INVOKE, ABIL_WU_JIAN_WALLJUMP);
     wu_jian_wall_jump_effects(initial_position);
