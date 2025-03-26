@@ -462,7 +462,7 @@ static bool _auto_eat_chunks()
     }
     else if (you.undead_state())
         return false;
-    else if (you.wearing(EQ_AMULET, AMU_THE_GOURMAND) && you.species != SP_DEEP_DWARF)
+    else if (_chunks_heal_gourmand())
         eating_heals = true;
 
     if (you.hunger_state <= HS_NEAR_STARVING)
@@ -721,7 +721,7 @@ static void _eat_chunk(item_def& food)
     int gourmand = 0;
     if (you.species == SP_GHOUL)
         gourmand = GOURMAND_MAX;
-    else
+    else if (_chunks_heal_gourmand())
         gourmand = min(you.duration[DUR_GOURMAND], ((3 * GOURMAND_MAX) / 4));
 
     switch (chunk_effect)
@@ -1088,8 +1088,7 @@ static void _heal_from_food(int hp_amt)
     if (hp_amt > 0)
         inc_hp(hp_amt);
 
-    if (player_rotted())
-    {
+    if (player_rotted() && you.species == SP_GHOUL) {
         mpr("You feel more resilient.");
         unrot_hp(1);
     }

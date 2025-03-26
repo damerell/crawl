@@ -590,13 +590,11 @@ static void _decrement_durations()
 {
     const int delay = you.time_taken;
 
-    if (you.gourmand())
-    {
-        // Innate gourmand is always fully active.
-        if (you.has_mutation(MUT_GOURMAND))
-            you.duration[DUR_GOURMAND] = GOURMAND_MAX;
-        else if (you.duration[DUR_GOURMAND] < GOURMAND_MAX && coinflip())
-            you.duration[DUR_GOURMAND] += delay;
+    // Note that there is no check for inherent gourmand. Nutrition for
+    // ghouls and trolls is handled by likes_chunks; healing for ghouls
+    // by an explicit you.species check in _eat_chunk
+    if (you.wearing(EQ_AMULET, AMU_THE_GOURMAND)) {
+        you.duration[DUR_GOURMAND] += delay;
     }
     else
         you.duration[DUR_GOURMAND] = 0;
