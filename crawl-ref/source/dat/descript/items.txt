@@ -667,6 +667,10 @@ morningstar
 
 A mace with a head covered in short spikes.
 %%%%
+mutagenic chunk
+
+<chunk of flesh>
+%%%%
 mutagenic chunk of flesh
 
 <chunk of flesh>

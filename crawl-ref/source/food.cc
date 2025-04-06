@@ -411,6 +411,12 @@ static void _finished_eating_message(food_type type)
             mpr(taste);
             return;
         }
+        case FOOD_PURPLE_CHUNK:
+        case FOOD_EXPIRED_CHUNK:
+        {
+            mprf(MSGCH_WARN, "BUG: placeholder chunk item found in game.");
+            return;
+        }
         default:
             break;
         }
@@ -730,9 +736,11 @@ static void _eat_chunk(item_def& food)
         //take_note(Note(NOTE_MESSAGE, 0, 0, make_stringf("Ate age %d.", age)), true);
         if (random2(age) < 5000) {
             mpr("This meat tastes really weird.");
+            count_action(CACT_EAT, FOOD_PURPLE_CHUNK);
             mutate(RANDOM_MUTATION, "mutagenic meat");
             xom_is_stimulated(100);
         } else {
+            count_action(CACT_EAT, FOOD_EXPIRED_CHUNK);
             mpr("This meat tastes unpleasant.");
         }
         // Zin minds you trying, whether or not you succeed, but Xom

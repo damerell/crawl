@@ -4805,10 +4805,6 @@ void unmarshallItem(reader &th, item_def &item)
     {
         if (item.base_type == OBJ_FOOD)
         {
-            if (item.sub_type == FOOD_SAUSAGE)
-                item.sub_type = FOOD_BEEF_JERKY;
-            if (item.sub_type == FOOD_CHEESE)
-                item.sub_type = FOOD_PIZZA;
             if (item.sub_type == FOOD_PEAR
                 || item.sub_type == FOOD_APPLE
                 || item.sub_type == FOOD_CHOKO

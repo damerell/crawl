@@ -723,8 +723,8 @@ static const food_def Food_prop[] =
     { FOOD_STRAWBERRY,   "buggy fruit",   200,   -50,    50 },
     { FOOD_GRAPE,        "buggy fruit",   100,   -20,    20 },
     { FOOD_SULTANA,      "buggy fruit",    70,   -20,    20 },
-    { FOOD_CHEESE,       "buggy cheese", 1200,     0,     0 },
-    { FOOD_SAUSAGE,      "buggy soss",   1200,   150,  -400 },
+    { FOOD_PURPLE_CHUNK, "mutagenic chunk", 0,     0,     0 },
+    { FOOD_EXPIRED_CHUNK,"expired mutagen", 0,     0,     0 },
     { FOOD_BEEF_JERKY,   "buggy jerky",  1500,   200,  -200 },
     { FOOD_PIZZA,        "buggy pizza",  1500,     0,     0 },
 #endif
