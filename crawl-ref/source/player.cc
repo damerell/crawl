@@ -6721,6 +6721,7 @@ bool player::res_constrict() const
 {
     return is_insubstantial()
            || is_amorphous()
+           || you.form == transformation::quill
            || get_mutation_level(MUT_SPINY)
            || you.unrand_equipped(UNRAND_SLICK_SLIPPERS)
            || you.duration[DUR_CONSTRICTION_IMMUNITY];
