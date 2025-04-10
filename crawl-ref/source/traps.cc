@@ -541,7 +541,8 @@ void trap_def::trigger(actor& triggerer)
     const bool you_trigger = triggerer.is_player();
     const bool in_sight = you.see_cell(pos);
 
-    if ((!in_sight) && (type == TRAP_TELEPORT_PERMANENT)) {
+    if ((!in_sight) && (type == TRAP_TELEPORT_PERMANENT) &&
+        !crawl_state.game_is_sprint()) {
         return;
     }
     // If set, the trap will be removed at the end of the
