@@ -188,6 +188,8 @@ spret cast_insulation(int power, bool fail)
 {
     fail_check();
     you.increase_duration(DUR_INSULATION, 10 + random2(power), 100,
+                          player_res_electricity(false, true, true) ?
+                          "You feel even more insulated." :
                           "You feel insulated.");
     return spret::success;
 }
