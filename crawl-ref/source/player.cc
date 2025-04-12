@@ -1242,12 +1242,15 @@ void update_amulet_attunement_by_health()
     else
         you.props[ACROBAT_AMULET_ACTIVE] = 0;
 
-    if (you.props.exists(RESIDUAL_HARM) && 
-        (!you.wearing(EQ_AMULET, AMU_HARM)) &&
-        ((you.elapsed_time - you.props[RESIDUAL_HARM].get_int()) >= 500) &&
-        (player_last_damaged() >= 500)) {
-        you.props.erase(RESIDUAL_HARM);
-        mpr("The lingering effects of the amulet of harm leave you.");
+    if (you.props.exists(RESIDUAL_HARM)) {
+        if (you.wearing(EQ_AMULET, AMU_HARM)) {
+            you.props.erase(RESIDUAL_HARM);
+        } else if (((you.elapsed_time - you.props[RESIDUAL_HARM].get_int()) >=
+                    500) &&
+                   (player_last_damaged() >= 500)) {
+            you.props.erase(RESIDUAL_HARM);
+            mpr("The lingering effects of the amulet of harm leave you.");
+        }
     }
 }
 
