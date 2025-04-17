@@ -272,7 +272,13 @@ spret cast_summon_cactus(int pow, god_type god, bool fail)
 
     mgen_data mg = _pal_data(MONS_CACTUS_GIANT, 3, god, SPELL_SUMMON_CACTUS);
     mg.hp = hit_points(pow + 27, 1);
-    if (!create_monster(mg))
+    if (monster* mons = create_monster(mg))
+    {
+        if (you.can_see(*mons))
+            mpr("A prickly colossus appears in a rush of desert wind.");
+    }
+
+    else
         canned_msg(MSG_NOTHING_HAPPENS);
 
     return spret::success;
@@ -1369,6 +1375,8 @@ spret cast_summon_horrible_things(int pow, god_type god, bool fail)
 
     if (!count)
         canned_msg(MSG_NOTHING_HAPPENS);
+    else
+        mpr("You open a gateway and unleash terrible monstrosities upon the world.");
 
     return spret::success;
 }
