@@ -1739,8 +1739,8 @@ static void _make_faerie_armour(item_def &item)
             continue;
         }
 
-        // -Cast makes no sense on someone called "the Enchantress".
-        if (artefact_property(doodad, ARTP_PREVENT_SPELLCASTING))
+        // *Silence makes little sense on someone called "the Enchantress".
+        if (artefact_property(doodad, ARTP_SILENCE))
             continue;
 
         artefact_set_property(doodad, ARTP_WIZARDRY, 1);
