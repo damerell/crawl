@@ -2931,6 +2931,18 @@ Spellforged Servitor spell
 
 <spellforged servitor>
 %%%%
+sphinx
+
+“The artist looked down at the paper. ‘ “She has the face”,’ he read, ‘ “of
+a Spink.” ’
+‘Right,’ said Dibbler. ‘Right!’
+‘I thought maybe Sphinx-’
+‘Will you listen to the man?’ said Dibbler, talking to the sky again. He 
+glared at the artist. ‘She doesn't look like _two_ of them, does she? One
+Spink, two Spinks. Now get on with it. I want these posters all round the 
+city first thing tomorrow.’ ”
+    -Terry Pratchett, "Moving Pictures", 1990.
+%%%%
 staff
 
 “Bashō Osho said to his disciples, ‘If you have a staff, I will give you a
