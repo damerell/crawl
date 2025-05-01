@@ -7725,6 +7725,8 @@ bool player::polymorph(int dur, bool allow_immobile)
 
     if (f != transformation::none && transform(dur, f, true))
     {
+        stop_delay(true, true);
+
         transform_uncancellable = true;
         return true;
     }
