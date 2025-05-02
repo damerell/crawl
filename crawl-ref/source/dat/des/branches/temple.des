@@ -703,28 +703,24 @@ NAME:   minmay_temple_entry_from_below_a
 WEIGHT: 5
 : temple_entry(_G)
 MAP
-      @.
-ccccccncc
+ccccccccc
 c.......c
 c.O.c.}.c
 c.......c
-ccncccccc
-  @
+ccccccccc
 ENDMAP
 
 NAME:   minmay_temple_entry_from_below_b
 WEIGHT: 2
 : temple_entry(_G)
 MAP
-         @.
-cccccccccnccc
+ccccccccccccc
 cG.........Gc
 c....T.T....c
 c..O.....}..c
 c....T.T....c
 cG.........Gc
-cccnccccccccc
-   @
+ccccccccccccc
 ENDMAP
 
 NAME:   minmay_temple_entry_enclosed_plants
