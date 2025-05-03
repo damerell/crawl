@@ -1237,6 +1237,21 @@ int attack::calc_damage()
                 damage -= random2(1 - wpn_damage_plus);
         }
 
+        if (you.where_are_you == BRANCH_DUNGEON) {
+            switch (you.depth) {
+            case 1:
+                damage -= 1 + random2(3);
+                break;
+            case 2:
+                damage -= 1 + random2(2);
+                break;
+            case 3:
+                damage--;
+            default:
+                break;
+            }
+        }
+        
         damage_max += attk_damage;
         damage     += 1 + random2(attk_damage);
 
