@@ -746,7 +746,8 @@ static string _describe_stair_status() {
         } 
     }
     string stairdesc = "";
-    if (branchexit + upstairs + downstairs_out + downstairs_in > 0) {
+    if (branchexit + upstairs + downstairs_out + downstairs_in + uphatch +
+        downhatch > 0) {
         stairdesc = "; "; bool following = false;
         if (dungeonexit > 0) {
             stairdesc += make_stringf("%d exit%s from the Dungeon",
@@ -765,9 +766,17 @@ static string _describe_stair_status() {
             stairdesc += make_stringf("%d up staircase%s", upstairs,
                                       upstairs > 1 ? "s" : "");
             following = true;
-            if (unknown_upstairs > 0) {
-                stairdesc += make_stringf(" (%d unexplored)",
-                                          unknown_upstairs);
+            if ((unknown_upstairs > 0) || (upstairs < 3)) {
+                stairdesc += " (";
+                if (unknown_upstairs > 0) {
+                    stairdesc += make_stringf("%d unexplored",
+                                              unknown_upstairs);
+                    if (upstairs < 3) stairdesc += ", ";
+                }
+                if (upstairs < 3) {
+                    stairdesc += make_stringf("%d not found", 3-upstairs);
+                }
+                stairdesc += ")";
             }
         }
         if (uphatch > 0) {
@@ -782,6 +791,9 @@ static string _describe_stair_status() {
                                       downstairs_in,
                                       downstairs_in > 1 ? "s" : "");
             following = true;
+            if (downstairs_in < 3) {
+                stairdesc += make_stringf(" (%d not found)", 3-downstairs_in);
+            }
         }
         if (downhatch > 0) {
             if (following) stairdesc += ", ";
