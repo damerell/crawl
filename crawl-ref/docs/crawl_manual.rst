@@ -1827,11 +1827,11 @@ varies among the different sub-species.
 
 High Elves
   This is a tall and powerful Elven species who advance in levels quite 
-  slowly. They have good intelligence
-  and dexterity, but suffer in strength. Compared with Humans, they have fewer
-  HP but more magic. Among all races, they are best with blades and bows. They
-  are not very good with necromancy or with earth or poison magic, but are
-  highly skilled with most other forms of magic, especially Air and Charms.
+  slowly. They have good intelligence and dexterity, but suffer in strength. 
+  Compared with Humans, they have fewer HP but more magic. Among all races,
+  they are best with blades and bows. They are not very good with necromancy 
+  or with earth or poison magic, but are highly skilled with most other forms 
+  of magic, especially Air and Charms.
 
 Deep Elves
   This is an Elven species who long ago fled the overworld to live in darkness
@@ -1843,14 +1843,15 @@ Deep Elves
   speed as High Elves.
 
 Sludge Elves
-  Sludge elves are a somewhat degenerate race of elves (or, at any rate, that
-  is how the High Elves describe them). They are mirror images
-  of normal elves in some respects: they have no special proficiency with bows
-  or swords (long or short), nor do they have any aptitude in the traditional
-  areas of high elven magic (enchantments, conjurations and divinations). On
-  the other hand, they are superlative transmuters, and are comfortable
-  dabbling in necromantic, poison and elemental magic. As fighters they are
-  often more dangerous unarmed than armed. They advance in levels slightly
+  Sludge elves are a somewhat degenerate race of elves (or, at any
+  rate, that is how the High Elves describe them). They are mirror
+  images of normal elves in some respects: they have no special
+  proficiency with bows or swords (long or short), nor do they have
+  any aptitude in the traditional areas of high elven magic
+  (enchantments, conjurations and divinations). On the other hand,
+  they are superlative transmuters, and are comfortable dabbling in
+  necromantic, poison and elemental magic. As fighters they are often
+  more dangerous unarmed than armed. They advance in levels slightly
   faster than their common brethren.
 
 
