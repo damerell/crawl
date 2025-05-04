@@ -921,12 +921,14 @@ bool ghost_retarget(monster& mons) {
     for (monster_iterator mi; mi; ++mi) {
         if (mi->type == mons.ghost->slayer) {
             if (mons.can_see(**mi) || (mons.ghost->slayer == MONS_NATASHA)) {
-                if (mons.foe == mons.props[ORIGINAL_FOE].get_int()) {
-                    mons.foe = mi->mindex();
+                if (mi->summoner != mons.mid) {
+                    if (mons.foe == mons.props[ORIGINAL_FOE].get_int()) {
+                        mons.foe = mi->mindex();
+                    }
+                    mons.props[ORIGINAL_FOE] = mi->mindex();
+                    mi->props["ghost_target"] = true;
+                    return true;
                 }
-                mons.props[ORIGINAL_FOE] = mi->mindex();
-                mi->props["ghost_target"] = true;
-                return true;
             }
         }
     }
