@@ -1335,7 +1335,7 @@ void bolt::do_fire()
             else
             {
                 blockee = "the targeted "
-                        + feature_description_at(target, false, DESC_PLAIN);
+                + feature_description_at(target, false, DESC_PLAIN, false);
             }
 
             const string blocker = feat_is_solid(feat) ?
