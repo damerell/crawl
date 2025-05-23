@@ -7130,7 +7130,8 @@ bool player::rot(actor *who, int amount, bool quiet, bool /*no_cleanup*/)
     rot_hp(amount);
 
     if (!quiet)
-        mprf(MSGCH_WARN, "You feel your flesh rotting away!");
+        mprf(MSGCH_WARN, "You feel your %s rotting away!",
+             you.form == transformation::tree ? "wood" : "flesh");
 
     learned_something_new(HINT_YOU_ROTTING);
 
