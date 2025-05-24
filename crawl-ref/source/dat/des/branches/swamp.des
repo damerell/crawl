@@ -246,75 +246,66 @@ default-depth: Swamp
 
 ###############################################################################
 # A series of pools by Jude.
-NAME:   swamp_pool1
+# Note there is an out of order fix here when later vanilla commits don't apply
+NAME:   swamp_pool_1_2
 TAGS:   no_pool_fixup allow_dup extra luniq_pool
 WEIGHT: 1000
+: if crawl.x_chance_in_y (2, 3) then
 {{ smear_map({iterations=5, smear='w', onto='wwt"', boxy=false}) }}
-SUBST:  "=ttw
+: end
+NSUBST: " = 1:@ / * = ttttw
 MAP
-     ""
-   "www"
-  "wwwww"
-  wwwwwww"
-  "wwwww"
-   "www"
-    "w"
+   ""
+ "www"
+"wwwww"
+wwwwwww"
+"wwwww"
+ "www"
+  "w"
 ENDMAP
 
-NAME:   swamp_pool2
-TAGS:   no_pool_fixup allow_dup extra luniq_pool
-WEIGHT: 500
-SUBST:  "=ttttw
-MAP
-     ""
-   "www"
-  "wwwww"
-  wwwwwww"
-  "wwwww"
-   "www"
-    "w"
-ENDMAP
-
-NAME:   swamp_pool3
+NAME:   swamp_pool_3
 TAGS:   no_pool_fixup allow_dup extra luniq_pool no_exits
-WEIGHT: 500
-SUBST:  '=Wt, "=wwt
+NSUBST: ' = 1:@ / * = Wt
+SUBST:  " = wwt
 MAP
-"'ttt'
-'""w"tt
+"tttt'
+t""wwtt
 twwww"t
 '""wwtt
- ttw"t'
+ ttwwtt
   'tt'
 ENDMAP
 
-NAME:   swamp_pool4
+NAME:   swamp_pool_4
 TAGS:   no_pool_fixup allow_dup extra luniq_pool
 WEIGHT: 500
+NSUBST: ' = 1:@ / *:"
 SUBST:  "=ttttw
 MAP
-  t""tt
- ""www"t
-"twwwwwtt
+  t''tt
+ ''www"t
+'twwwwwtt
  wwwww"tt
-"twww"tt"
+'twww"tt"
  ttwww"tt
-  ttw"tt
+  ttw'tt
 ENDMAP
 
-NAME:   swamp_pool5
+NAME:   swamp_pool_5
 TAGS:   no_pool_fixup allow_dup extra luniq_pool no_exits
 KMONS:  1 = patrolling swamp drake
 KFEAT:  1 = deep_water
 WEIGHT: 500
+NSUBST: ' = 1:@ / * = ttW
 SUBST:  "=ttttw, '=ttW
 MAP
   't't'
- tt"""t'
- t"w1w"tt
- ww1ww"t'
+ ttw"wt'
+ t"w1wwtt
+ ww1ww"tt
  t"w1t"t
- tt"w"ttt
+ tt"wwttt
   tt"t'
 ENDMAP
 
