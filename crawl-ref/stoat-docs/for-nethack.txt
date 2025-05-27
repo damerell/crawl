@@ -20,10 +20,10 @@ chance of saving you if things are desperate, so sometimes you'll
 identify them by quaffing them when otherwise you're going to die.
 
 There are cursed weapons, armour, rings, and amulets - but no blessed
-items. Scrolls of remove curse uncurse everything in your inventory.
-Hence, it's safe to wear or wield unknown items if you have some
-scrolls of remove curse - not so much otherwise, but maybe the item is
-so good you're willing to take the chance.
+items. Scrolls of remove curse uncurse everything you are
+wearing/wielding.  Hence, it's safe to wear or wield unknown items if
+you have some scrolls of remove curse - not so much otherwise, but
+maybe the item is so good you're willing to take the chance.
 
 You can examine an item in the inventory by pressing its letter, and
 Crawl tells you a lot more about items than NetHack does.
