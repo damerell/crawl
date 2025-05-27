@@ -1245,6 +1245,8 @@ static void _print_status_lights(int y)
         clear_to_end_of_line();
     }
 #endif
+    // Reset cursor position so it doesn't complain if we completely fill our space.
+    CGOTOXY(1, 1, GOTO_STAT);
 }
 
 #ifdef USE_TILE_LOCAL
