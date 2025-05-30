@@ -1155,30 +1155,59 @@ static string _handedness_string(const item_def &item)
     return description;
 }
 
-static string _stat_weight_string(const item_def &item, bool thrown = false) {
-    string description;
-    weapon_stat_weight weight = weapon_str_weight(&item);
-    string effective = to_string(calc_stat_to_dam_base(&item, false));
-    string throwstring = thrown ? "by throwing this item" : "with this weapon";
+static string _stat_weight_string(weapon_stat_weight weight) {
+    string effective = make_stringf("%.1f", weight_to_dam_stat(weight));
     switch (weight) {
     case ALL_STR:
-        description = "Damage inflicted " + throwstring + " is based purely on Strength (you have " + to_string(you.strength()) + ").";
-        break;
+        return "is based purely on Strength (you have " + to_string(you.strength()) + ").";
     case FAVOUR_STR:
-    default: // can't happen but suppresses compiler warning
-        description = "Damage inflicted " + throwstring + " favours Strength, but some Dexterity is needed; ideally, at least half your Strength. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
-        break;
+        return "favours Strength, but some Dexterity is needed; ideally, at least half your Strength. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
     case FAVOUR_DEX:
-        description = "Damage inflicted " + throwstring + " favours Dexterity, but some Strength is needed; ideally, at least half your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
-        break;
+        return "favours Dexterity, but some Strength is needed; ideally, at least half your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
     case BALANCED:
-        description = "Damage inflicted " + throwstring + " is based on Strength and Dexterity; ideally, you would have Strength equal to your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
-        break;
+        return "is based on Strength and Dexterity; ideally, you would have Strength equal to your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
     case ALL_DEX:
-        description = "Damage inflicted " + throwstring + " is based purely on Dexterity (you have " + to_string(you.dex()) + ").";
-        break;
+        return "is based purely on Dexterity (you have " + to_string(you.dex()) + ").";
+    case STR_OR_FAVDEX:
+        return "involves buggily calling _stat_weight_string with STR_OR_FAVDEX.";
+    case CHECK_ITEM:
+        return "involves buggily calling _stat_weight_string with CHECK_ITEM.";
     case BEST:
-        description = "Damage inflicted " + throwstring + " is based on the best of Strength and Dexterity (yours is " + effective + ").";
+        return "is based on the best of Strength and Dexterity (yours is " + effective + ").";
+    default:
+        return "is buggy!";
+    }
+}
+static string _item_stat_weight_string(const item_def &item,
+                                       bool thrown = false) {
+    string description = "Damage inflicted ";
+    weapon_stat_weight weight = weapon_str_weight(&item);
+    string throwstring = thrown ? "by throwing this item " :
+    "with this weapon ";
+    return description + throwstring + _stat_weight_string(weight);
+}
+
+static string _skill_stat_weight_string(const skill_type &skill) {
+    string description = "Damage inflicted with weapons which use this skill ";
+    string effective = make_stringf("%.1f", skill_to_dam_stat(skill));
+    switch (skill) {
+    case SK_MACES_FLAILS:
+        description = "Damage inflicted with most maces and flails is based purely on Strength (you have " + to_string(you.strength()) + ").\n\nWith whips and sacred scourges, some Dexterity is needed; ideally, at least half your Strength. Your Dexterity of " + to_string(you.dex());
+        description += (you.dex() * 2 >= you.strength() ? " is sufficient to use your full strength" : " gives an effective strength of " + make_stringf("%.1f", weight_to_dam_stat(FAVOUR_STR))) + ".";
+        break;
+    case SK_UNARMED_COMBAT:
+        description = "Unarmed combat can employ techniques where damage is based purely on Strength or techniques which favour Dexterity; your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + effective + ".";
+        break;
+    case SK_LONG_BLADES:
+        description = "Damage inflicted with lighter long blades (those which can riposte) is based on Strength and Dexterity; ideally, you would have Strength equal to your Dexterity. Your Strength of " + to_string(you.strength()) + " and Dexterity of " + to_string(you.dex()) + " give an effective value of " + make_stringf("%.1f", weight_to_dam_stat(BALANCED)) + ". With heavier blades, some Dexterity is needed; ideally, at least half your Strength. Your Dexterity of " + to_string(you.dex());
+        description += (you.dex() * 2 >= you.strength() ? " is sufficient to use your full strength" : " gives an effective strength of " + make_stringf("%.1f", weight_to_dam_stat(FAVOUR_STR))) + ".";
+        break;
+    case SK_THROWING:
+        return "Damage inflicted with thrown weapons " +
+        _stat_weight_string(skill_str_weight(SK_THROWING));
+        break;
+    default:
+        description += _stat_weight_string(skill_str_weight(skill));
         break;
     }
     return description;
@@ -1445,7 +1474,7 @@ static string _describe_weapon(const item_def &item, bool verbose)
                          skill == SK_FIGHTING ? "buggy" : skill_name(skill));
 
         description += _handedness_string(item);
-        description += " " + _stat_weight_string(item);
+        description += " " + _item_stat_weight_string(item);
 
         if (!you.could_wield(item, true) && crawl_state.need_save)
             description += "\nIt is too large for you to wield.";
@@ -1583,7 +1612,7 @@ static string _describe_ammo(const item_def &item)
         }
         if (could_set_target)
             _append_skill_target_desc(description, SK_THROWING, target_skill);
-        throwstring += "\n\n" + _stat_weight_string(item, true);
+        throwstring += "\n\n" + _item_stat_weight_string(item, true);
     }
 
     if (ammo_always_destroyed(item))
@@ -3138,6 +3167,9 @@ string get_skill_description(skill_type skill, bool need_title)
                 spell_title(spell);
             }
         }
+    }
+    if (is_stat_weight_damage_skill(skill)) {
+        result += "\n" + _skill_stat_weight_string(skill);
     }
     return result;
 }

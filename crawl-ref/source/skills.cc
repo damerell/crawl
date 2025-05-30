@@ -902,6 +902,11 @@ bool is_magic_skill(skill_type sk)
 {
     return sk > SK_LAST_MUNDANE && sk <= SK_LAST_MAGIC;
 }
+bool is_stat_weight_damage_skill(skill_type sk) {
+    if (sk >= SK_FIRST_WEAPON && sk <= SK_LAST_WEAPON) return true;
+    if (sk == SK_THROWING || sk == SK_UNARMED_COMBAT) return true;
+    return false;
+}
 
 int _gnoll_total_skill_cost();
 

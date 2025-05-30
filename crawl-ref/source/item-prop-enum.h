@@ -788,5 +788,8 @@ enum weapon_stat_weight {
     BALANCED = 2,
     FAVOUR_DEX = 3,
     ALL_DEX = 4,
-    BEST = 5
+    BEST = 5,
+    STR_OR_FAVDEX = 6,
+    CHECK_ITEM = 7,
+    BUGGY = 8
 };

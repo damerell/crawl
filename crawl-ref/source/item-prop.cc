@@ -1945,36 +1945,56 @@ bool is_brandable_weapon(const item_def &wpn, bool allow_ranged, bool divine)
     return true;
 }
 
-weapon_stat_weight weapon_str_weight(const item_def *wpn) {
-    if (wpn == nullptr) return BEST;
-    switch (item_attack_skill(*wpn)) {
+// Exactly one of these two functions is the source of truth for any
+// given weapon. I think?
+weapon_stat_weight skill_str_weight(skill_type skill) {
+    switch (skill) {
     case SK_BOWS:
         return BALANCED;
-    case SK_MACES_FLAILS:
-        if ((wpn->sub_type == WPN_WHIP) ||
-            (wpn->sub_type == WPN_DEMON_WHIP) ||
-            (wpn->sub_type == WPN_SACRED_SCOURGE)) {
-            return BALANCED;
-        } else {
-            return ALL_STR;
-        }
+    case SK_UNARMED_COMBAT:
+        return STR_OR_FAVDEX;
     case SK_SHORT_BLADES:
         return FAVOUR_DEX;
+    case SK_MACES_FLAILS:
     case SK_LONG_BLADES:
-        if (is_riposteful(*wpn)) return BALANCED;
+        return CHECK_ITEM;
     default:
         return FAVOUR_STR;
     }
-    return FAVOUR_STR;
+}
+    
+weapon_stat_weight weapon_str_weight(const item_def *wpn) {
+    if (wpn == nullptr) return skill_str_weight(SK_UNARMED_COMBAT);
+    skill_type skill = item_attack_skill(*wpn);
+    weapon_stat_weight weight = skill_str_weight(skill);
+    if (weight != CHECK_ITEM) {
+        return weight;
+    } else {
+        switch (skill) {
+        case SK_MACES_FLAILS:
+            if ((wpn->sub_type == WPN_WHIP) ||
+                (wpn->sub_type == WPN_DEMON_WHIP) ||
+                (wpn->sub_type == WPN_SACRED_SCOURGE)) {
+                return FAVOUR_STR;
+            } else {
+                return ALL_STR;
+            }
+        case SK_LONG_BLADES:
+            if (is_riposteful(*wpn)) return BALANCED;
+            return FAVOUR_STR;
+        default:
+            return BUGGY;
+        }
+    }
+    return BUGGY;
 }
 
-int calc_stat_to_dam_base(const item_def *weapon, bool random) {
-    weapon_stat_weight weight = weapon_str_weight(weapon);
+double weight_to_dam_stat(weapon_stat_weight weight) {
     double youstr = you.strength(); double youdex = you.dex();
     double matcher; double matchee;  bool balbonus = false;
     switch (weight) {
     case ALL_STR:
-        return you.strength();
+        return youstr;
     case FAVOUR_STR:
     default: // can't happen but suppresses compiler warning
         matcher = youstr; matchee = youdex * 2.0;
@@ -1990,9 +2010,14 @@ int calc_stat_to_dam_base(const item_def *weapon, bool random) {
         matcher = youdex; matchee = youstr * 2.0;
         break;
     case ALL_DEX:
-        return you.dex();
+        return youdex;
     case BEST:
-        return (youdex > youstr) ? you.dex() : you.strength();
+        return (youdex > youstr) ? youdex : youstr;
+    case STR_OR_FAVDEX:
+        return max(weight_to_dam_stat(ALL_STR),
+                   weight_to_dam_stat(FAVOUR_DEX));
+    case BUGGY:
+        return 0;
     }
     double effective = ((matcher > matchee) ?
                         matchee + (matcher - matchee) / 3.0 :
@@ -2000,11 +2025,15 @@ int calc_stat_to_dam_base(const item_def *weapon, bool random) {
     if (balbonus && (matcher < matchee)) {
         effective += (matchee - matcher) / 3.0;
     }
-    if (random) {
-        return rand_round(effective);
-    } else {
-        return int(0.5 + effective);
-    }
+    return (effective);
+}
+
+double item_to_dam_stat(const item_def *weapon) {
+    return weight_to_dam_stat(weapon_str_weight(weapon));
+}
+
+double skill_to_dam_stat(const skill_type skill) {
+    return weight_to_dam_stat(skill_str_weight(skill));
 }
 
 /**

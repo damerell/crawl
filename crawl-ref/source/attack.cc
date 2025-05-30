@@ -1089,7 +1089,13 @@ string attack::defender_name(bool allow_reflexive)
 
 int attack::player_stat_modify_damage(int damage)
 {
-    const int dam_stat_val = calc_stat_to_dam_base(weapon, true);
+    weapon_stat_weight weight = skill_str_weight(wpn_skill);
+    int dam_stat_val;
+    if (weight == CHECK_ITEM) {
+        dam_stat_val = rand_round(item_to_dam_stat(weapon));
+    } else {
+        dam_stat_val = rand_round(skill_to_dam_stat(wpn_skill));
+    }
     // At 10 strength, damage is multiplied by 1.0
     // Each point of strength over 10 increases this by 0.025 (2.5%),
     // strength below 10 reduces the multiplied by the same amount.

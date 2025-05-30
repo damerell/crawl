@@ -72,6 +72,7 @@ void change_skill_level(skill_type exsk, int num_level);
 void change_skill_points(skill_type sk, int points, bool do_level_up);
 
 bool is_magic_skill(skill_type sk);
+bool is_stat_weight_damage_skill(skill_type sk); // bleh what a horrible name
 
 void exercise(skill_type exsk, int deg);
 void train_skills(bool simu = false);
