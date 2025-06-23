@@ -6062,6 +6062,9 @@ int player::skill(skill_type sk, int scale, bool real, bool temp) const
             level = level * 3 / 4;
     }
 
+    if (sk == SK_SHAPESHIFTING)
+        level += you.wearing_jewellery(AMU_WILDSHAPE) * 5 * scale;
+
     if (level > MAX_SKILL_LEVEL * scale)
         level = MAX_SKILL_LEVEL * scale;
 
