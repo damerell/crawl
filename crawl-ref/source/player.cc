@@ -7379,7 +7379,7 @@ int player::has_claws(bool allow_tran) const
 bool player::has_usable_claws(bool allow_tran) const
 {
     return has_claws(allow_tran)
-           && !you.equipment.slot_is_fully_covered(SLOT_GLOVES);
+           && !you.equipment.innate_slot_is_covered(SLOT_GLOVES);
 }
 
 int player::has_talons(bool allow_tran) const
@@ -7394,7 +7394,7 @@ int player::has_talons(bool allow_tran) const
 bool player::has_usable_talons(bool allow_tran) const
 {
     return has_talons(allow_tran)
-           && !you.equipment.slot_is_fully_covered(SLOT_BOOTS);
+           && !you.equipment.innate_slot_is_covered(SLOT_BOOTS);
 }
 
 int player::has_hooves(bool allow_tran) const
@@ -7409,7 +7409,7 @@ int player::has_hooves(bool allow_tran) const
 bool player::has_usable_hooves(bool allow_tran) const
 {
     return has_hooves(allow_tran)
-           && !you.equipment.slot_is_fully_covered(SLOT_BOOTS);
+           && !you.equipment.innate_slot_is_covered(SLOT_BOOTS);
 }
 
 int player::has_fangs(bool allow_tran) const
@@ -7460,8 +7460,8 @@ bool player::has_tail(bool allow_tran) const
 // purpose of punching.
 bool player::has_usable_offhand() const
 {
-    return !you.equipment.slot_is_fully_covered(SLOT_OFFHAND)
-            && !you.equipment.slot_is_fully_covered(SLOT_WEAPON_OR_OFFHAND);
+    return !you.equipment.innate_slot_is_covered(SLOT_OFFHAND)
+            && !you.equipment.innate_slot_is_covered(SLOT_WEAPON_OR_OFFHAND);
 }
 
 bool player::has_usable_tentacle() const
