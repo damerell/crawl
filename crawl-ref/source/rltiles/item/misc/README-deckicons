@@ -1,0 +1,6 @@
+I prepared the top left deck icons with 
+
+ls i* |perl -nwe 'chomp; `gm convert -affine 1,0,0,1,16,16 -transform $_ topleft-$_`'
+
+In theory the Makefile should do this but I'd be adding new tools to the build system. Sorry.
+
