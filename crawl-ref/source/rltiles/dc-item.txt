@@ -1004,86 +1004,123 @@ misc_disc MISC_DISC_OF_STORMS
 misc_zigfig MISC_ZIGGURAT
 misc_deck MISC_DECK
 %start
+#escape
 %compose misc_deck
-%compose i-deck_escape
+%compose i-deck_emergency
+%compose topleft-i-deck_transport
 %finish
 %start
+#destruction
 %compose misc_deck
 %compose i-deck_destruction
 %finish
 # Remove dungeons, summoning and wonders when TAG_MAJOR_VERSION > 34
 %start
+#dungeons
 %compose misc_deck
 %compose i-deck_dungeons
 %finish
 %start
+#summoning
 %compose misc_deck
 %compose i-deck_summoning
 %finish
 %start
+#wonders
 %compose misc_deck
 %compose i-deck_wonders
 %finish
 %start
+#punishment
 %compose misc_deck
 %compose i-deck_punishment
 %finish
 %start
 %compose misc_deck
-%compose i-deck_war
+#war
+%compose topleft-i-deck_battle
+%compose i-deck_summoning
 %finish
 # Remove changes and defense when TAG_MAJOR_VERSION > 34
 %start
 %compose misc_deck
-%compose i-deck_changes
+#changes
+%compose topleft-i-deck_battle
+%compose i-deck_transport
+%finish
+%start
+#defence
+%compose misc_deck
+%compose topleft-i-deck_battle
+%compose i-deck_emergency
 %finish
 %start
 %compose misc_deck
-%compose i-deck_defense
+#battle
+%compose i-deck_battle
 %finish
 misc_deck_rare MISC_DECK_RARE
 %start
+#escape
 %compose misc_deck_rare
-%compose i-deck_escape
+%compose i-deck_emergency
+%compose topleft-i-deck_transport
 %finish
 %start
+#destruction
 %compose misc_deck_rare
 %compose i-deck_destruction
 %finish
 # Remove dungeons, summoning and wonders when TAG_MAJOR_VERSION > 34
 %start
+#dungeons
 %compose misc_deck_rare
 %compose i-deck_dungeons
 %finish
 %start
+#summoning
 %compose misc_deck_rare
 %compose i-deck_summoning
 %finish
 %start
+#wondering
 %compose misc_deck_rare
 %compose i-deck_wonders
 %finish
 %start
+#punishment
 %compose misc_deck_rare
 %compose i-deck_punishment
 %finish
 %start
+#war
 %compose misc_deck_rare
-%compose i-deck_war
+%compose topleft-i-deck_battle
+%compose i-deck_summoning
 %finish
 # Remove changes and defense when TAG_MAJOR_VERSION > 34
 %start
+#changes
 %compose misc_deck_rare
-%compose i-deck_changes
+%compose topleft-i-deck_battle
+%compose i-deck_transport
 %finish
 %start
+#defences
 %compose misc_deck_rare
-%compose i-deck_defense
+%compose topleft-i-deck_battle
+%compose i-deck_emergency
+%finish
+%start
+#battle
+%compose misc_deck_rare
+%compose i-deck_battle
 %finish
 misc_deck_legendary MISC_DECK_LEGENDARY
 %start
 %compose misc_deck_legendary
-%compose i-deck_escape
+%compose i-deck_emergency
+%compose topleft-i-deck_transport
 %finish
 %start
 %compose misc_deck_legendary
@@ -1108,16 +1145,23 @@ misc_deck_legendary MISC_DECK_LEGENDARY
 %finish
 %start
 %compose misc_deck_legendary
-%compose i-deck_war
+%compose topleft-i-deck_battle
+%compose i-deck_summoning
 %finish
 # Remove changes and defense when TAG_MAJOR_VERSION > 34
 %start
 %compose misc_deck_legendary
-%compose i-deck_changes
+%compose topleft-i-deck_battle
+%compose i-deck_transport
 %finish
 %start
 %compose misc_deck_legendary
-%compose i-deck_defense
+%compose topleft-i-deck_battle
+%compose i-deck_emergency
+%finish
+%start
+%compose misc_deck_legendary
+%compose i-deck_battle
 %finish
 misc_quad MISC_QUAD_DAMAGE
 %sdir item/misc/runes

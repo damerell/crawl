@@ -4254,7 +4254,7 @@ static void _deck_from_specs(const char* _specs, item_def &item,
 
     while (item.sub_type == MISC_DECK_UNKNOWN)
     {
-        mprf(MSGCH_PROMPT, "[a] escape [b] destruction [c] war? (ESC to exit)");
+        mprf(MSGCH_PROMPT, "[a] esc. [b] dest. [c] war [d] chng. [e] sum. [f] batt. [g] def. (ESC exits)");
 
         const int keyin = toalower(get_ch());
 
@@ -4271,6 +4271,10 @@ static void _deck_from_specs(const char* _specs, item_def &item,
             { 'a', MISC_DECK_OF_ESCAPE },
             { 'b', MISC_DECK_OF_DESTRUCTION },
             { 'c', MISC_DECK_OF_WAR },
+            { 'd', MISC_DECK_OF_CHANGES },
+            { 'e', MISC_DECK_OF_SUMMONING },
+            { 'f', MISC_DECK_OF_BATTLE },
+            { 'g', MISC_DECK_OF_DEFENCE },
         };
 
         const misc_item_type *deck_type = map_find(deckmap, keyin);

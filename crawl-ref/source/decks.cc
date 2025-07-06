@@ -202,7 +202,6 @@ static map<misc_item_type, deck_type_data> all_decks =
         "destruction",
         1, { &deck_of_destruction }
     } },
-#if TAG_MAJOR_VERSION == 34
     { MISC_DECK_OF_DUNGEONS, {
         "dungeons",
         0, { &deck_of_dungeons }
@@ -219,25 +218,26 @@ static map<misc_item_type, deck_type_data> all_decks =
         "oddities",
         0, { &deck_of_oddities }
     } },
-#endif
     { MISC_DECK_OF_PUNISHMENT, {
         "punishment",
         0, { &deck_of_punishment }
     } },
     { MISC_DECK_OF_WAR, {
         "war",
-        2, { &deck_of_battle, &deck_of_summoning }
+        4, { &deck_of_battle, &deck_of_summoning }
     } },
-#if TAG_MAJOR_VERSION == 34
+    { MISC_DECK_OF_BATTLE, {
+        "battle",
+        0, { &deck_of_battle }
+    } },
     { MISC_DECK_OF_CHANGES, {
         "changes",
-        0, { &deck_of_battle, &deck_of_transport }
+        2, { &deck_of_battle, &deck_of_transport }
     } },
     { MISC_DECK_OF_DEFENCE, {
         "defence",
-        0, { &deck_of_battle, &deck_of_emergency }
+        2, { &deck_of_battle, &deck_of_emergency }
     } },
-#endif
 };
 
 int cards_in_deck(const item_def &deck)

@@ -693,12 +693,15 @@ static int _acquirement_misc_subtype(bool /*divine*/, int & /*quantity*/)
         // ones like the lamp of fire (the items in the stack recharged 
         // independently) had double weight if you had not seen any.
 	// We now restore even weighting in Stoat Soup - DJSD
-        // except decks, which always had a lower weight. I'm not going
-        // to fret over the exact weight because a lot is going to change
-        {MISC_DECK_OF_ESCAPE,                              5 },
-        {MISC_DECK_OF_DESTRUCTION,                         5 },
-        {MISC_DECK_OF_WAR,                                 5 },
-        // FIXME also wizmode creation
+        // except decks, which always had a lower weight.
+        // Decks have a low weight, and non-floorgod ones a very low one
+        {MISC_DECK_OF_CHANGES,                             3 },
+        {MISC_DECK_OF_BATTLE,                              1 },
+        {MISC_DECK_OF_SUMMONING,        (NO_LOVE ?     0 : 1)},
+        {MISC_DECK_OF_DEFENCE,                             3 },
+        {MISC_DECK_OF_ESCAPE,                              3 },
+        {MISC_DECK_OF_DESTRUCTION,                         3 },
+        {MISC_DECK_OF_WAR,              (NO_LOVE ?     0 : 3)},
         
         {MISC_BOX_OF_BEASTS,
                                        (NO_LOVE ?     0 : 10)},

@@ -1012,8 +1012,9 @@ static bool _give_nemelex_gift(bool forced = false)
     {
 
         misc_item_type gift_type = random_choose_weighted(
-                                        5, MISC_DECK_OF_DESTRUCTION,
-                                        4, MISC_DECK_OF_SUMMONING,
+                                        3, MISC_DECK_OF_DESTRUCTION,
+                                        3, MISC_DECK_OF_SUMMONING,
+                                        3, MISC_DECK_OF_BATTLE,
                                         2, MISC_DECK_OF_ESCAPE);
 
         int thing_created = items(true, OBJ_MISCELLANY, gift_type, 1, 0,
