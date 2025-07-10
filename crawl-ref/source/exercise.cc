@@ -254,5 +254,5 @@ void practise_evoking(int amount)
 /// Skill training while using one of Nemelex's decks.
 void practise_using_deck()
 {
-    exercise(SK_INVOCATIONS, 1);
+    exercise(SK_EVOCATIONS, 1);
 }
