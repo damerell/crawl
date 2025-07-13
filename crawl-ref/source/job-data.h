@@ -260,7 +260,7 @@ static const map<job_type, job_def> job_data =
     "Wn", "Wanderer",
     0, 0, 0, // Randomised
     { SP_HILL_ORC, SP_SPRIGGAN, SP_CENTAUR, SP_MERFOLK, SP_BASE_DRACONIAN,
-      SP_HUMAN, SP_DEMONSPAWN, },
+      SP_HUMAN, SP_DEMONSPAWN, SP_GNOLL },
     { }, // Randomised
     WCHOICE_NONE,
     { }, // Randomised
