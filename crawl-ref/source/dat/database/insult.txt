@@ -314,6 +314,8 @@ bawdy
 
 beslubbering
 
+blubbering
+
 bootless
 
 bumbling
@@ -384,6 +386,8 @@ jarring
 
 loggerheaded
 
+legless
+
 lumpish
 
 mammering
@@ -391,6 +395,8 @@ mammering
 mangled
 
 mewling
+
+murksome
 
 obnoxious
 
@@ -459,6 +465,8 @@ wayward
 weedy
 
 worthless
+
+wriggling
 
 yeasty
 %%%%
@@ -603,6 +611,8 @@ w:5
 %%%%
 insult general adj2
 
+ash-ear
+
 base-court
 
 bat-fowling
@@ -635,7 +645,11 @@ earth-vexing
 
 elf-skinned
 
+empty-headed
+
 fat-kidneyed
+
+faint-hearted
 
 fen-sucked
 
@@ -654,6 +668,8 @@ fool-born
 fool-headed
 
 full-gorged
+
+glass-eyed
 
 guts-griping
 
@@ -695,6 +711,8 @@ nut-hook
 
 onion-eyed
 
+ox-witted
+
 pigeon-egg
 
 roguish
@@ -711,7 +729,11 @@ shard-borne
 
 sheep-biting
 
+slap-eared
+
 sow-suckled
+
+sop-back
 
 spleeny
 
@@ -730,6 +752,8 @@ toad-spotted
 toenail-biting
 
 toot-wallowing
+
+trashmongering
 
 two-tin-hat
 
@@ -925,6 +949,8 @@ w:5
 %%%%
 insult general noun
 
+acorn
+
 apple-john
 
 baggage
@@ -933,6 +959,8 @@ bandersnitch
 
 barnacle
 
+beetle
+
 beggar
 
 blabberskite
@@ -940,6 +968,8 @@ blabberskite
 bladder
 
 bloater
+
+blowfly
 
 boar-pig
 
@@ -971,6 +1001,8 @@ codpiece
 
 crab-lanthorn
 
+creep-mouse
+
 cross-patch
 
 dandiprat
@@ -979,9 +1011,13 @@ deadneck
 
 death-token
 
+demigorgon
+
 dewberry
 
 dingleberry
+
+driblet
 
 efter
 
@@ -1001,13 +1037,21 @@ foot-licker
 
 frater
 
+frogspawn
+
 fustilarian
+
+gallfly
 
 giglet
 
 gnoll-tail
 
 gonus
+
+grizzle-gut
+
+grot
 
 gudgeon
 
@@ -1019,7 +1063,11 @@ harpy
 
 hedge-pig
 
+hog-face
+
 hugger-mugger
+
+jackdaw
 
 jarkman
 
@@ -1027,9 +1075,17 @@ joithead
 
 lewdster
 
+littleface
+
+lizard
+
+loon
+
 lout
 
 maggot-pie
+
+magpie
 
 malt-worm
 
@@ -1042,6 +1098,8 @@ mendicant
 minnow reeky
 
 mish-mash
+
+mugwump
 
 mule
 
@@ -1061,6 +1119,8 @@ pimple
 
 pissant
 
+plague-ferret
+
 pot-faker
 
 prigger-of-prances
@@ -1076,6 +1136,8 @@ ratsbane
 reprobate
 
 scavenger
+
+scullion
 
 scut
 
@@ -1095,6 +1157,10 @@ snake-molt
 
 socdollager
 
+spider-spittle
+
+stinkweed
+
 strumpet
 
 surfacer
@@ -1108,6 +1174,8 @@ tiddler
 tiler
 
 toady
+
+turnip
 
 urchin
 
@@ -1123,7 +1191,11 @@ wagtail
 
 whey-face
 
+whiffler
+
 whip-jack
+
+woodlouse
 
 wormtrail
 
