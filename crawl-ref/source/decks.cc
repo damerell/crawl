@@ -432,6 +432,21 @@ const string deck_contents(uint8_t deck_type)
     return output;
 }
 
+const string deck_contents_verbose(uint8_t deck_type) {
+    set<card_type> cards;
+    string output;
+    for (const deck_archetype* pdeck : _subdecks(deck_type))
+        for (const card_with_weights& cww : *pdeck)
+            cards.insert(cww.card);
+    for (const card_type card : cards) {
+        output += "\n";
+        string name = card_name(card);
+        output += "- " + uppercase_first(name) + " -" + "\n";
+        name += " card"; output += getLongDescription(name.c_str());
+    }
+    return output;
+}
+
 static const deck_archetype* _random_sub_deck(uint8_t deck_type)
 {
     const vector<const deck_archetype *> subdecks = _subdecks(deck_type);

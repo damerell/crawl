@@ -150,6 +150,7 @@ enum card_type
 const char* card_name(card_type card);
 card_type name_to_card(string name);
 const string deck_contents(uint8_t deck_type);
+const string deck_contents_verbose(uint8_t deck_type);
 void evoke_deck(item_def& deck);
 bool deck_triple_draw();
 bool deck_deal();

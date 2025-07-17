@@ -1954,8 +1954,6 @@ static string _describe_deck(const item_def &item)
 {
     string description;
 
-    description.reserve(100);
-
     description += "\n";
 
     if (_check_buggy_deck(item, description))
@@ -2020,6 +2018,9 @@ static string _describe_deck(const item_def &item)
                                           other_seen_cards.end(),
                                           card_name);
     }
+
+    description += "\n\nIndividual card descriptions:\n";
+    description += deck_contents_verbose(item.sub_type);
 
     return description;
 }
