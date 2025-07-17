@@ -149,11 +149,14 @@ string comma_separated_fn(Z start, Z end, F stringify,
 {
     string text;
     bool first = true;
+    int matching = 0;
     for (Z i = start; i != end; ++i)
     {
         if (!filter(*i))
             continue;
 
+	matching++;
+	
         if (first)
             first = false;
         else
@@ -185,10 +188,15 @@ string comma_separated_fn(Z start, Z end, F stringify,
             }
             while (tmp != end && !filter(*tmp));
 
-            if (tmp != end)
+            if (tmp != end) {
                 text += comma;
-            else
-                text += andc;
+	    } else {
+		if ((matching > 2) && (andc == " and ") && comma == ", ") {
+		    text  += ", and ";
+		} else {
+		    text += andc;
+		}
+	    }
         }
 
         text += stringify(*i);
