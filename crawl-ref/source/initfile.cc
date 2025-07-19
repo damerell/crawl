@@ -3419,6 +3419,7 @@ void game_options::set_menu_sort(const string &field)
         sort_menus.clear();
         set_menu_sort("pickup: true");
         set_menu_sort("inv: true : equipped, charged, identified, usefulness, slot");
+        set_menu_sort("drop: true : equipped, charged, identified, usefulness, slot");
         return;
     }
 
