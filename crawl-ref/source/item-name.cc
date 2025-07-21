@@ -1427,9 +1427,8 @@ static void _name_deck(const item_def &deck, description_level_type desc,
     else
         buff << misc_type_name(deck.sub_type, know_type);
 
-    // name overriden, not a stacked deck, not a deck that's been drawn from
-    if (dbname || !top_card_is_known(deck) && deck.used_count == 0)
-        return;
+    // name overridden
+    if (dbname) return;
 
     buff << " {";
     // A marked deck!
@@ -1437,19 +1436,24 @@ static void _name_deck(const item_def &deck, description_level_type desc,
         buff << card_name(top_card(deck));
 
     // How many cards have been drawn, or how many are left.
-    if (deck.used_count != 0)
-    {
-        if (top_card_is_known(deck))
-            buff << ", ";
-
-        if (deck.used_count > 0)
-            buff << "drawn: ";
-        else
-            buff << "left: ";
-
-        buff << abs(deck.used_count);
+    if (top_card_is_known(deck))
+        buff << ", ";
+    
+    if (deck.used_count >= 0) {
+        if (deck.props.exists(DECK_MAX_CARDS)) {
+            int max = deck.props[DECK_MAX_CARDS].get_int();
+            int min = deck.props[DECK_MIN_CARDS].get_int();
+            if (min == max) {
+                buff << min << " card" << ((max > 1) ? "s": "");
+            } else {
+                buff << min << "-" << max << " cards";
+            }
+        } else {
+            buff << "drawn: " << abs(deck.used_count);
+        }
+    } else {
+        buff << abs(deck.used_count) << " cards";
     }
-
     buff << "}";
 }
 

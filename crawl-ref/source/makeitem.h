@@ -9,6 +9,9 @@
 
 static const int NO_AGENT = -1;
 
+#define DECK_MIN_CARDS "deck min cards"
+#define DECK_MAX_CARDS "deck max cards"
+
 int create_item_named(string name, coord_def pos, string *error);
 
 int items(bool allow_uniques, object_class_type force_class, int force_type,

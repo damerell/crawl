@@ -644,7 +644,7 @@ static bool _check_buggy_deck(item_def& deck)
         strm << num_buggy << " buggy cards found in the deck, discarding them."
              << endl;
 
-        deck.used_count += num_buggy;
+        count_out_cards(deck, num_buggy);
 
         num_cards = cards.size();
         num_flags = cards.size();
@@ -1106,6 +1106,7 @@ bool stack_five(int slot)
 
     CrawlHashTable &props = deck.props;
     deck.used_count = -num_to_stack;
+    deck.props[DECK_MIN_CARDS] = deck.props[DECK_MAX_CARDS] = num_to_stack;
     props[STACKED_KEY] = true;
     you.wield_change = true;
 
@@ -1232,7 +1233,7 @@ bool draw_three(int slot)
     }
 
     // Note how many cards were removed from the deck.
-    deck.used_count += num_to_draw;
+    count_out_cards(deck, num_to_draw);
 
     you.wield_change = true;
 
@@ -1348,7 +1349,7 @@ void evoke_deck(item_def& deck)
     if (flags & (CFLAG_PUNISHMENT))
         allow_id = false;
 
-    deck.used_count++;
+    count_out_cards(deck, 1);
     _remember_drawn_card(deck, card, allow_id);
 
     // Get rid of the deck *before* the card effect because a card
@@ -2992,4 +2993,15 @@ void nemelex_shuffle_decks()
     // was triggered by the presence of any deck anywhere.
     if (you.num_total_gifts[GOD_NEMELEX_XOBEH])
         god_speaks(GOD_NEMELEX_XOBEH, "You hear Nemelex Xobeh chuckle.");
+}
+
+// Adjust used_count and min/max counts in sync
+void count_out_cards(item_def& deck, int count) {
+    mprf("Debug: counting out %d lovely card(s), ah ah ah ah.", count);
+    deck.used_count += count;
+    if (deck.props.exists(DECK_MAX_CARDS)) {
+        deck.props[DECK_MIN_CARDS] =
+        max(1, deck.props[DECK_MIN_CARDS].get_int() - count);
+        deck.props[DECK_MAX_CARDS].get_int() -= count;
+    }
 }

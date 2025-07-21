@@ -186,3 +186,5 @@ card_type get_card_and_flags(const item_def& deck, int idx,
 const vector<card_type> get_drawn_cards(const item_def& deck);
 
 bool deck_identify_first(item_def& deck);
+
+void count_out_cards(item_def& deck, int count); // ah ah ah ah

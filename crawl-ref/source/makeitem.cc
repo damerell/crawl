@@ -1775,6 +1775,9 @@ static void _generate_misc_item(item_def& item, int force_type, int force_ego)
         item.initial_cards = random_range(MIN_STARTING_CARDS,
                                           MAX_STARTING_CARDS);
 
+        item.props[DECK_MIN_CARDS] = MIN_STARTING_CARDS;
+        item.props[DECK_MAX_CARDS] = MAX_STARTING_CARDS;
+        
         if (force_ego >= DECK_RARITY_COMMON
             && force_ego <= DECK_RARITY_LEGENDARY)
         {

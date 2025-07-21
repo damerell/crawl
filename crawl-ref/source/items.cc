@@ -4349,7 +4349,8 @@ static void _deck_from_specs(const char* _specs, item_def &item,
     }
 
     item.initial_cards = num_cards;
-
+    item.props[DECK_MIN_CARDS] = item.props[DECK_MAX_CARDS] = num_cards;
+    
     init_deck(item);
 }
 
