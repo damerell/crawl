@@ -2390,7 +2390,7 @@ static void _cloud_card(int power, deck_rarity_type rarity)
         cloudy = CLOUD_MEPHITIC;
         break;
     case 1:
-        cloudy = CLOUD_MIASMA;
+        cloudy = (is_good_god(you.religion) ? CLOUD_ACID: CLOUD_MIASMA);
         break;
     default:
         cloudy = CLOUD_PETRIFY;
