@@ -97,7 +97,6 @@ deck_archetype deck_of_transport =
     { CARD_SWAP,       {5, 5, 5} },
     { CARD_VELOCITY,   {5, 5, 5} },
     { CARD_SOLITUDE,   {5, 5, 5} },
-    { CARD_SHAFT,      {5, 5, 5} },
 };
 
 deck_archetype deck_of_emergency =
