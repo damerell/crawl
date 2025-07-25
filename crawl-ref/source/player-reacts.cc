@@ -477,12 +477,6 @@ void player_reacts_to_monsters()
         detect_items(-1);
     }
 
-    if (you.duration[DUR_TELEPATHY])
-    {
-        detect_creatures(1 + you.duration[DUR_TELEPATHY] /
-                         (2 * BASELINE_DELAY), true);
-    }
-
     _decrement_paralysis(you.time_taken);
     _decrement_petrification(you.time_taken);
     if (_decrement_a_duration(DUR_SLEEP, you.time_taken))

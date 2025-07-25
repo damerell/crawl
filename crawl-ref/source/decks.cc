@@ -129,7 +129,6 @@ deck_archetype deck_of_battle =
     { CARD_BLADE,         {5, 5, 5} },
     { CARD_SHADOW,        {5, 5, 5} },
     { CARD_FORTITUDE,     {5, 5, 5} },
-    { CARD_DOWSING,       {3, 3, 3} },
 };
 
 deck_archetype deck_of_summoning =
@@ -341,8 +340,8 @@ const char* card_name(card_type card)
 #if TAG_MAJOR_VERSION == 34
     case CARD_FOCUS:           return "Focus";
     case CARD_HELIX:           return "the Helix";
-#endif
     case CARD_DOWSING:         return "Dowsing";
+#endif
     case CARD_STAIRS:          return "the Stairs";
     case CARD_TOMB:            return "the Tomb";
     case CARD_BANSHEE:         return "the Banshee";
@@ -1971,39 +1970,6 @@ static void _potion_card(int power, deck_rarity_type rarity)
 
 }
 
-static void _dowsing_card(int power, deck_rarity_type rarity)
-{
-    const int power_level = _get_power_level(power, rarity);
-    bool things_to_do[3] = { false, false, false };
-    things_to_do[random2(3)] = true;
-
-    if (power_level == 1)
-        things_to_do[random2(3)] = true;
-
-    if (power_level >= 2)
-    {
-        for (int i = 0; i < 3; ++i)
-            things_to_do[i] = true;
-    }
-
-    if (things_to_do[0])
-        magic_mapping(random2(power/2) + 18, random2(power*2), false);
-    if (things_to_do[1])
-    {
-        if (detect_traps(random2(power)))
-            mpr("You sense traps nearby.");
-        if (detect_items(random2(power)))
-            mpr("You sense items nearby.");
-    }
-    if (things_to_do[2])
-    {
-        you.set_duration(DUR_TELEPATHY, random2(power), 0,
-                         "You feel telepathic!");
-        detect_creatures(1 + you.duration[DUR_TELEPATHY] * 2 / BASELINE_DELAY,
-                         true);
-    }
-}
-
 // Special case for *your* god, maybe?
 static void _godly_wrath()
 {
@@ -2704,7 +2670,6 @@ void card_effect(card_type which_card, deck_rarity_type rarity,
     case CARD_BLADE:            _blade_card(power, rarity); break;
     case CARD_SHADOW:           _shadow_card(power, rarity); break;
     case CARD_POTION:           _potion_card(power, rarity); break;
-    case CARD_DOWSING:          _dowsing_card(power, rarity); break;
     case CARD_STAIRS:           _stairs_card(power, rarity); break;
     case CARD_WARPWRIGHT:       _warpwright_card(power, rarity); break;
     case CARD_SHAFT:            _shaft_card(power, rarity); break;
@@ -2773,6 +2738,7 @@ void card_effect(card_type which_card, deck_rarity_type rarity,
     case CARD_XOM:
     case CARD_FEAST:
     case CARD_CURSE:
+    case CARD_DOWSING:
         mpr("This type of card no longer exists!");
         break;
 #endif
