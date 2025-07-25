@@ -808,7 +808,9 @@ static const duration_def duration_data[] =
       {{ "Your noxious spew wanes." }}},
     { DUR_ALLY_RESET_TIMER, 0, "", "", "ally reset timer", "", D_NO_FLAGS},
     { DUR_TEMP_CLOUD_IMMUNITY, 0, "", "", "temp cloud immunity", "", D_EXPIRES},
-
+    { DUR_BLADE,
+      LIGHTBLUE, "Blade", "Blade card", "", "", D_NO_FLAGS,
+      {{ "The effect of the Blade card fades." }}},
 #if TAG_MAJOR_VERSION == 34
     // And removed ones
     { DUR_ACQUIREMENT, 0, "", "", "old acq timeout", "", D_NO_FLAGS},

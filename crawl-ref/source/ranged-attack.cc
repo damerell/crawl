@@ -472,8 +472,11 @@ bool ranged_attack::apply_damage_brand(const char *what)
     if (!weapon || !is_range_weapon(*weapon))
         return false;
 
-    const brand_type brand = get_weapon_brand(*weapon);
+    brand_type brand = get_weapon_brand(*weapon);
 
+    if (attacker->is_player() && (brand == SPWPN_NORMAL) &&
+        you.duration[DUR_BLADE]) brand = SPWPN_VORPAL;
+    
     // No stacking elemental brands.
     if (projectile->base_type == OBJ_MISSILES
         && get_ammo_brand(*projectile) != SPMSL_NORMAL

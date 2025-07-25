@@ -86,6 +86,8 @@ melee_attack::melee_attack(actor *attk, actor *defn,
         wpn_skill = SK_FIGHTING;
 
     attack_position = attacker->pos();
+    if (attacker->is_player() && (damage_brand == SPWPN_NORMAL) &&
+        you.duration[DUR_BLADE]) damage_brand = SPWPN_VORPAL;
 }
 
 bool melee_attack::can_reach()

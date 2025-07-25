@@ -200,5 +200,6 @@ enum duration_type
     DUR_NOXIOUS_BOG,
     DUR_ALLY_RESET_TIMER,       // 5-turn buffer to cancel 'stop attack' order
     DUR_TEMP_CLOUD_IMMUNITY,
+    DUR_BLADE,
     NUM_DURATIONS
 };

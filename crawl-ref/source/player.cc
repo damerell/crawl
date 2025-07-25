@@ -25,6 +25,7 @@
 #include "chardump.h"
 #include "cloud.h"
 #include "coordit.h"
+#include "decks.h"
 #include "delay.h"
 #include "dgn-overview.h"
 #include "dgn-event.h"
@@ -3733,6 +3734,8 @@ int slaying_bonus(bool ranged)
 
     ret += you.attribute[ATTR_HEAVENLY_STORM];
 
+    if (you.duration[DUR_BLADE]) ret += BLADE_SLAYING_BONUS;
+    
     return ret;
 }
 

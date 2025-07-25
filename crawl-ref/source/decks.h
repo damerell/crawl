@@ -10,6 +10,7 @@
 #define CARD_KEY "cards"
 #define CARD_FLAG_KEY "card_flags"
 #define DRAWN_CARD_KEY "drawn_cards"
+const int BLADE_SLAYING_BONUS = 6;
 
 // DECK STRUCTURE: deck.initial_cards is the number of cards the deck *started*
 // with, deck.used_count is* the number of cards drawn, deck.rarity is the

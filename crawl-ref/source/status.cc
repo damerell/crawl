@@ -857,6 +857,15 @@ bool fill_status_info(int status, status_info& inf)
 
         break;
     }
+    case DUR_BLADE:
+    {
+        const item_def* weapon = you.weapon();
+        
+        inf.long_text =
+        make_stringf("Your %s is enhanced by the Blade card.",
+                     (weapon ? "weapon" : "combat"));
+        break;
+    }
 
     case STATUS_PPROJ:
     {

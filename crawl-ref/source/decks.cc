@@ -1894,28 +1894,23 @@ static void _helm_card(int power, deck_rarity_type rarity)
 static void _blade_card(int power, deck_rarity_type rarity)
 {
     const int power_level = _get_power_level(power, rarity);
-    const bool cleaving = you.duration[DUR_CLEAVE] > 0;
+    const bool blade = you.duration[DUR_BLADE] > 0;
 
-    you.increase_duration(DUR_CLEAVE, 10 + random2((power_level + 1) * 10));
+    you.increase_duration(DUR_BLADE, 10 + random2((power_level + 1) * 10));
 
-    if (!cleaving)
+    if (!blade)
     {
         if (const item_def* const weapon = you.weapon())
         {
-            const bool axe = item_attack_skill(*weapon) == SK_AXES;
-            mprf(MSGCH_DURATION,
-                 "%s %s sharp%s", weapon->name(DESC_YOUR).c_str(),
-                 conjugate_verb("look", weapon->quantity > 1).c_str(),
-                 (axe) ? " (like it always does)." : ".");
-        }
-        else
-        {
+            mprf(MSGCH_DURATION, "%s looks unusually lethal.",
+                 weapon->name(DESC_YOUR).c_str());
+        } else {
             mprf(MSGCH_DURATION, "%s",
-                 you.hands_act("look", "sharp.").c_str());
+                 you.hands_act("look", "lethal.").c_str());
         }
     }
     else
-        mprf(MSGCH_DURATION, "Your cleaving ability is renewed.");
+        mprf(MSGCH_DURATION, "The Blade card's effect is renewed.");
 }
 
 static void _shadow_card(int power, deck_rarity_type rarity)
@@ -2953,7 +2948,6 @@ void nemelex_shuffle_decks()
 
 // Adjust used_count and min/max counts in sync
 void count_out_cards(item_def& deck, int count) {
-    mprf("Debug: counting out %d lovely card(s), ah ah ah ah.", count);
     deck.used_count += count;
     if (deck.props.exists(DECK_MAX_CARDS)) {
         deck.props[DECK_MIN_CARDS] =

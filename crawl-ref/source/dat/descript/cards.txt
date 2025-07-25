@@ -166,8 +166,8 @@ the Blade card
 The card depicts a great sword, protruding from the back of a corpse in the
 middle of a battlefield.
 
-Drawing this card temporarily allows the user to cleave regardless of their
-method of melee, hitting all adjacent foes with each attack.
+Drawing this card makes the user's weapon (or bare fists) unusually lethal
+for a time.
 %%%%
 the Shadow card
 

@@ -13,9 +13,11 @@
 
 #include "ability.h"
 #include "art-enum.h"
+#include "artefact.h"
 #include "areas.h"
 #include "branch.h"
 #include "colour.h"
+#include "decks.h"
 #include "describe.h"
 #ifndef USE_TILE_LOCAL
 #include "directn.h"
@@ -909,9 +911,16 @@ static void _print_stats_ev(int x, int y)
  */
 static int _wpn_name_colour()
 {
-    if (you.duration[DUR_CORROSION])
-        return RED;
-
+    int net = 0;
+    if (you.duration[DUR_CORROSION]) {
+        net -= 4 * you.props["corrosion_amount"].get_int();
+    }
+    if (you.duration[DUR_BLADE]) {
+        net += BLADE_SLAYING_BONUS;
+        return (net >= 0 ? LIGHTBLUE : RED);
+    }
+    if (net < 0) return RED;
+    
     if (you.weapon())
     {
         const item_def& wpn = *you.weapon();
@@ -941,6 +950,16 @@ static void _print_stats_wp(int y)
         if (you.duration[DUR_CORROSION] && wpn.base_type == OBJ_WEAPONS)
             wpn.plus -= 4 * you.props["corrosion_amount"].get_int();
 
+        if (you.duration[DUR_BLADE]) {
+            wpn.plus += BLADE_SLAYING_BONUS;
+            if (get_weapon_brand(wpn) == SPWPN_NORMAL) {
+                if (is_artefact(wpn)) {
+                    artefact_set_property(wpn, ARTP_BRAND, SPWPN_VORPAL);
+                } else {
+                    wpn.brand = SPWPN_VORPAL;
+                }
+            }
+        }
         text = wpn.name(DESC_PLAIN, true, false, true);
     }
     else
