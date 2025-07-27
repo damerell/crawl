@@ -4194,6 +4194,9 @@ void contaminate_player(int change, bool controlled, bool msg)
         change *= mul;
     }
 
+    if (change < 0)
+        change *= 1 + you.wearing_jewellery(AMU_DISSIPATION);
+
     you.magic_contamination = max(0, min(3000,
                                          you.magic_contamination + change));
 
