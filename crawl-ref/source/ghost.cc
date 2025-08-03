@@ -920,7 +920,8 @@ void merge_ghost_check(monster* mons, monster* merge_to) {
 bool ghost_retarget(monster& mons) {
     for (monster_iterator mi; mi; ++mi) {
         if (mi->type == mons.ghost->slayer) {
-            if (mons.can_see(**mi) || (mons.ghost->slayer == MONS_NATASHA)) {
+            if (mons.can_see(**mi) || you.can_see(**mi) ||
+                (mons.ghost->slayer == MONS_NATASHA)) {
                 if (mi->summoner != mons.mid) {
                     if (mons.foe == mons.props[ORIGINAL_FOE].get_int()) {
                         mons.foe = mi->mindex();
