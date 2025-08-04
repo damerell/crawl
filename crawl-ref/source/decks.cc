@@ -1708,7 +1708,7 @@ static void _damaging_card(card_type card, int power, deck_rarity_type rarity,
         break;
 
     case CARD_VENOM:
-        if (power_level < 2)
+        if ((power_level < 2) && !(in_good_standing(GOD_NEMELEX_XOBEH)))
             venom_vuln = true;
 
         if (power_level == 2 || (power_level == 1 && coinflip()))
