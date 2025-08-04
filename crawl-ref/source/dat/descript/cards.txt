@@ -8,6 +8,11 @@ appears upside down.
 Drawing this card creates a teleportation trap in an adjacent square, with a
 chance of its position being revealed at high power.
 %%%%
+the Portal card
+
+This card translocates you a short distance, either randomly or with increasing
+levels of control at higher power levels.
+%%%%
 Swap card
 
 The card depicts a hooded executioner with his head on the block, while the

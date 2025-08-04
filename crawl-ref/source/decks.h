@@ -56,9 +56,9 @@ enum card_flags_type
 enum card_type
 {
 #if TAG_MAJOR_VERSION == 34
-    CARD_PORTAL,              // teleport, maybe controlled
     CARD_WARP,                // blink, maybe controlled
 #endif
+    CARD_PORTAL,              // blink, maybe controlled (tele pre 0.15)
     CARD_SWAP,                // player and monster position
     CARD_VELOCITY,            // remove slow, alter others' speeds
 

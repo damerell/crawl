@@ -146,6 +146,117 @@ void uncontrolled_blink(bool override_stasis)
 }
 
 /**
+ * Attempt to blink in the given direction.
+ *
+ * @param dir   A direction to blink in.
+ * @param pow   Determines number of iterations.
+ *              (pow^2 / 500 + 1, where pow is 0-100; so 1-21 iterations)
+ */
+static void _quadrant_blink(coord_def dir, int pow)
+{
+    pow = min(100, max(0, pow));
+
+    const int dist = random2(6) + 2;  // 2-7
+
+    // This is where you would *like* to go.
+    const coord_def base = you.pos() + dir * dist;
+
+    // This can take a while if pow is high and there's lots of translucent
+    // walls nearby.
+    coord_def target;
+    bool found = false;
+    for (int i = 0; i < pow*pow / 500 + 1; ++i)
+    {
+        // Find a space near our base point...
+        // First try to find a random square not adjacent to the basepoint,
+        // then one adjacent if that fails.
+        if (!random_near_space(&you, base, target)
+            && !random_near_space(&you, base, target, true))
+        {
+
+            continue; // could probably 'break;' random_near_space uses quite
+                      // a lot of iterations...
+        }
+
+        // ... which is close enough, but also far enough from us.
+        if (grid_distance(base, target) > 3 || grid_distance(you.pos(), target)< 3)
+            continue;
+
+        if (!you.see_cell_no_trans(target))
+            continue;
+
+        found = true;
+        break;
+    }
+
+    if (!found)
+        return uncontrolled_blink();
+
+    coord_def origin = you.pos();
+    move_player_to_grid(target, false);
+    _place_tloc_cloud(origin);
+}
+
+/**
+ * Attempt to blink the player to a random nearby tile, in a direction of
+ * the player's choosing.
+ *
+ * @param pow           Determines the number of iterations to run for (1-21),
+ *                      which increases the odds of actually getting a blink in
+ *                      the right direction.
+ * @param fail          Whether this came from a miscast spell (& should
+ *                      therefore fail after selecting a direction)
+ * @param safe_cancel   Whether it's OK to let the player cancel the control
+ *                      of the blink (or whether there should be a prompt -
+ *                      for e.g. cblink under the ORB, in which a recast could
+ *                      turn into random blink instead)
+ * @return              Whether the blink succeed, aborted, or was miscast.
+ */
+spret semicontrolled_blink(int pow, bool fail, bool safe_cancel) {
+    dist bmove;
+    direction_chooser_args args;
+    args.restricts = DIR_DIR;
+    args.mode = TARG_ANY;
+
+    while (true)
+    {
+        mprf(MSGCH_PROMPT, "Which direction? [ESC to cancel]");
+        direction(bmove, args);
+
+        if (crawl_state.seen_hups)
+        {
+            mpr("Cancelling blink due to HUP.");
+            return spret::abort;
+        }
+
+        if (bmove.isValid && !bmove.delta.origin())
+            break;
+
+        if (safe_cancel
+            || yesno("Are you sure you want to cancel this blink?", false ,'n')) {
+            canned_msg(MSG_OK);
+            return spret::abort;
+        }
+    }
+
+    fail_check();
+
+    if (you.no_tele(true, true, true))
+    {
+        canned_msg(MSG_STRANGE_STASIS);
+        return spret::success; // of a sort
+    }
+
+    if (!you.attempt_escape(2)) // prints its own messages
+        return spret::success; // of a sort
+
+    _quadrant_blink(bmove.delta, pow);
+    // Controlled blink causes glowing.
+    contaminate_player(750 + random2(500), true);
+    return spret::success;
+}
+
+/**
  * Let the player choose a destination for their controlled blink or similar
  * effect.
  *

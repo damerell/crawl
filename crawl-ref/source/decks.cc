@@ -45,6 +45,7 @@
 #include "mon-tentacle.h"
 #include "mon-util.h"
 #include "mutation.h"
+#include "orb.h"
 #include "nearby-danger.h"
 #include "notes.h"
 #include "output.h"
@@ -97,6 +98,7 @@ deck_archetype deck_of_transport =
     { CARD_SWAP,       {5, 5, 5} },
     { CARD_VELOCITY,   {5, 5, 5} },
     { CARD_SOLITUDE,   {5, 5, 5} },
+    { CARD_PORTAL,     {5, 5, 5} },
 };
 
 deck_archetype deck_of_emergency =
@@ -311,8 +313,8 @@ const char* card_name(card_type card)
 {
     switch (card)
     {
-#if TAG_MAJOR_VERSION == 34
     case CARD_PORTAL:          return "the Portal";
+#if TAG_MAJOR_VERSION == 34
     case CARD_WARP:            return "the Warp";
     case CARD_BATTLELUST:      return "Battlelust";
     case CARD_METAMORPHOSIS:   return "Metamorphosis";
@@ -1418,6 +1420,23 @@ static void _suppressed_card_message(god_type god, conduct_type done)
 }
 
 // Actual card implementations follow.
+
+static void _portal_card(int power, deck_rarity_type rarity) {
+    if (you.no_tele(true, true, true))
+    {
+        canned_msg(MSG_STRANGE_STASIS);
+        return;
+    }
+
+    const int control_level = _get_power_level(power, rarity);
+    if (!you.confused() && control_level >= 2 &&
+        !orb_limits_translocation(false))
+        cast_controlled_blink();
+    else if (!you.confused() && control_level >= 1)
+        semicontrolled_blink(power / 4);
+    else
+        uncontrolled_blink();
+}
 
 static bool _is_swappable(const monster& mon)
 {
@@ -2656,6 +2675,7 @@ void card_effect(card_type which_card, deck_rarity_type rarity,
 
     switch (which_card)
     {
+    case CARD_PORTAL:           _portal_card(power, rarity); break;
     case CARD_SWAP:             _swap_monster_card(power, rarity); break;
     case CARD_VELOCITY:         _velocity_card(power, rarity); break;
     case CARD_EXILE:            _exile_card(power, rarity); break;
@@ -2718,7 +2738,6 @@ void card_effect(card_type which_card, deck_rarity_type rarity,
     case CARD_GLASS:
     case CARD_TROWEL:
     case CARD_MINEFIELD:
-    case CARD_PORTAL:
     case CARD_WARP:
     case CARD_GENIE:
     case CARD_BATTLELUST:

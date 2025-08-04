@@ -6,6 +6,8 @@ spret cast_disjunction(int pow, bool fail);
 void disjunction_spell();
 
 spret cast_blink(int pow, bool fail = false);
+spret semicontrolled_blink(int pow, bool fail = false,
+			   bool safe_cancel = true);
 spret cast_controlled_blink(bool fail = false, bool safe = true, int power = 200);
 void uncontrolled_blink(bool override_stasis = false);
 spret controlled_blink(bool fail, bool safe_cancel = true, int power = 200);
