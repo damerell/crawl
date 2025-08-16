@@ -32,6 +32,9 @@ Stoat Soup 0.23 "The Masque of the Red Death"
 * Labyrinths are somewhat easier to escape.
 * Ozo's Armour can be cast at any time, but drains you if you don't fight
   during the duration.
+* Ring mail, scale mail, and chain mail are renamed to the more distinct
+  mail hauberk, scale armour, and brigandine, also avoiding using "ring mail"
+  because it is a Victorian invention.
 
 Vanilla changes messed around with
 ----------------------------------
@@ -70,7 +73,7 @@ Vanilla changes messed around with
   "horrible noise" is also loud.
 * Decks for everyone. Nemelex uses Evocations. Decks will never become
   abilities, but Nemelex will not carry out so brutal an attack on inventory
-  space.
+  space. Some cards are reworked.
 
 Changes swiped from other variants
 ----------------------------------
