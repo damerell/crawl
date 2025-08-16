@@ -1444,15 +1444,48 @@ static bool _is_swappable(const monster& mon)
            && !mons_is_tentacle_or_tentacle_segment(mon.type);
 }
 
+static int _score_pos(const monster& centre) {
+    int score = 0; int dist = grid_distance(you.pos(), centre.pos());
+    for (radius_iterator ri(centre.pos(), LOS_NO_TRANS); ri; ++ri) {
+        monster *mon = monster_at(*ri);
+        if (mon && mon->alive() && centre.can_see(*mon)) {
+            const mon_attitude_type att = mons_attitude(*mon);
+            if (att != ATT_GOOD_NEUTRAL || att != ATT_NEUTRAL) {
+                if (mons_can_hurt_player(mon)) {
+                    int exper = exper_value(*mon);
+                    score += exper;
+                }
+            }
+        }
+    }
+    // *= 8 avoids rounding down to 0
+    score *= 8; score /= dist;
+    dprf("Monster %s had score %d", centre.name(DESC_PLAIN).c_str(), score);
+    return score;
+}
+
 static void _swap_monster_card(int power, deck_rarity_type rarity)
 {
+    monster* mon_to_swap;
     // Swap between you and another monster.
     // Don't choose yourself unless there are no monsters nearby.
-    monster* mon_to_swap = choose_random_nearby_monster(0, _is_swappable);
-    if (!mon_to_swap)
-        mpr("You spin around.");
-    else
+    const int power_level = _get_power_level(power, rarity);
+    mon_to_swap = choose_random_nearby_monster(0, _is_swappable);
+    dprf("Considering monster %s", mon_to_swap->name(DESC_PLAIN).c_str());
+    if (mon_to_swap) {
+        if (power_level >= 0) {
+            int score = _score_pos(*mon_to_swap);
+            for (int i = 0; i < power_level * 2; i++) { // not <= !
+                monster* mon =
+                choose_random_nearby_monster(0, _is_swappable);
+                dprf("Considering monster %s", mon->name(DESC_PLAIN).c_str());
+                if (_score_pos(*mon) < score) mon_to_swap = mon;
+            }
+        }
         swap_with_monster(mon_to_swap);
+    } else {
+        mpr("You spin around.");
+    }
 }
 
 static void _velocity_card(int power, deck_rarity_type rarity)

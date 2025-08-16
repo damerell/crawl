@@ -19,7 +19,8 @@ The card depicts a hooded executioner with his head on the block, while the
 condemned gleefully raises the axe.
 
 Drawing this card swaps the user's position with that of a nearby creature, if
-possible.
+possible. At higher power, the user is more likely to be taken further away,
+and to a safer location.
 %%%%
 Velocity card
 
