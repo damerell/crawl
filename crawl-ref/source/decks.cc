@@ -2034,8 +2034,8 @@ static void _godly_wrath()
 
 static void _crusade_card(int power, deck_rarity_type rarity)
 {
+    bool didany = false;
     const int power_level = _get_power_level(power, rarity);
-    if (power_level >= 1)
     {
         // A chance to convert opponents.
         for (monster_near_iterator mi(you.pos(), LOS_NO_TRANS); mi; ++mi)
@@ -2058,10 +2058,13 @@ static void _crusade_card(int power, deck_rarity_type rarity)
                 simple_monster_message(**mi, " is converted.");
                 mi->add_ench(ENCH_CHARM);
                 mons_att_changed(*mi);
+                didany = true;
             }
         }
     }
-    cast_aura_of_abjuration(power/4, false);
+    if ((power_level >= 1) || !didany) {
+        cast_aura_of_abjuration(power/4, false);
+    }
 }
 
 static void _summon_demon_card(int power, deck_rarity_type rarity)
