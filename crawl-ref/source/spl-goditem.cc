@@ -29,6 +29,7 @@
 #include "mon-behv.h"
 #include "mon-cast.h"
 #include "mon-death.h"
+#include "mon-place.h"
 #include "mon-tentacle.h"
 #include "mutation.h"
 #include "religion.h"
@@ -853,11 +854,11 @@ bool curse_item(bool armour, const string &pre_msg)
 static bool _do_imprison(int pow, const coord_def& where, bool zin)
 {
     // power guidelines:
-    // powc is roughly 50 at Evoc 10 with no godly assistance, ranging
-    // up to 300 or so with godly assistance or end-level, and 1200
-    // as more or less the theoretical maximum.
-    int number_built = 0;
+    // power is roughly 20-30 at Evoc 10 with no godly assistance, ranging
+    // up to 300 or so with godly assistance or end-level,
+    int number_built = 0; int plants = 0;
 
+    mprf("Power %d", pow);
     static const set<dungeon_feature_type> safe_tiles =
     {
         DNGN_SHALLOW_WATER, DNGN_DEEP_WATER, DNGN_FLOOR, DNGN_OPEN_DOOR
@@ -872,48 +873,36 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
         veto_spots.push_back(*ai);
     const vector<coord_def> adj_spots = veto_spots;
 
-    if (zin)
+    // We need to get this now because we won't be able to see
+    // the monster once the walls go up!
+    mon = monster_at(where);
+    if (mon) targname = mon->name(DESC_THE);
+    bool success = true;
+    bool none_vis = true;
+    
+    // Check that any adjacent creatures can be pushed out of the way.
+    for (adjacent_iterator ai(where); ai; ++ai)
     {
-        // We need to get this now because we won't be able to see
-        // the monster once the walls go up!
-        mon = monster_at(where);
-        targname = mon->name(DESC_THE);
-        bool success = true;
-        bool none_vis = true;
-
-        // Check that any adjacent creatures can be pushed out of the way.
-        for (adjacent_iterator ai(where); ai; ++ai)
+        // The tile is occupied.
+        if (actor *act = actor_at(*ai))
         {
-            // The tile is occupied.
-            if (actor *act = actor_at(*ai))
+            // Can't push ourselves.
+            vector<coord_def> push_targets = get_push_spaces(*ai, true, &veto_spots);
+            if (act->is_player() || push_targets.empty())
             {
-                // Can't push ourselves.
-                vector<coord_def> push_targets = get_push_spaces(*ai, true, &veto_spots);
-                if (act->is_player() || push_targets.empty())
-                {
-                    success = false;
-                    if (you.can_see(*act))
-                        none_vis = false;
-                    break;
-                }
-                else // the new position of the monster is now an additional veto spot for monsters
-                    veto_spots.push_back(push_targets.front());
-            }
-
-            // don't try to shove the orb of zot into lava and/or crash
-            if (igrd(*ai) != NON_ITEM)
-            {
-                if (!has_push_spaces(*ai, false, &adj_spots))
-                {
-                    success = false;
+                success = false;
+                if (you.can_see(*act))
                     none_vis = false;
-                    break;
-                }
+                break;
             }
-
-            // Make sure we have a legitimate tile.
-            proceed = false;
-            if (cell_is_solid(*ai) && !feat_is_opaque(grd(*ai)))
+            else // the new position of the monster is now an additional veto spot for monsters
+                veto_spots.push_back(push_targets.front());
+        }
+        
+        // don't try to shove the orb of zot into lava and/or crash
+        if (igrd(*ai) != NON_ITEM)
+        {
+            if (!has_push_spaces(*ai, false, &adj_spots))
             {
                 success = false;
                 none_vis = false;
@@ -921,6 +910,17 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
             }
         }
 
+        // Make sure we have a legitimate tile.
+        proceed = false;
+        if (cell_is_solid(*ai) && !feat_is_opaque(grd(*ai)))
+        {
+            success = false;
+            none_vis = false;
+            break;
+        }
+    }
+
+    if (zin) {
         if (!success)
         {
             mprf(none_vis ? "You briefly glimpse something next to %s."
@@ -933,15 +933,17 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
     veto_spots = adj_spots;
     for (adjacent_iterator ai(where); ai; ++ai)
     {
+        bool had_monster = false;
         // This is where power comes in.
         if (!zin && one_chance_in(pow / 3))
             continue;
 
         // The tile is occupied.
-        if (zin && actor_at(*ai))
+        if (actor_at(*ai))
         {
+            had_monster = true;
             coord_def newpos = push_actor_from(*ai, &veto_spots, false);
-            ASSERT(!newpos.origin());
+            if (zin) ASSERT(!newpos.origin());
             veto_spots.push_back(newpos);
         }
 
@@ -992,23 +994,43 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
             // Tomb card
             else
             {
-                temp_change_terrain(*ai, DNGN_ROCK_WALL, INFINITE_DURATION,
-                                    TERRAIN_CHANGE_TOMB);
+                if (had_monster) {
+                    if (monster_habitable_grid(MONS_WITHERED_PLANT,
+                                               grd(*ai))) {
+                        mgen_data plant(MONS_WITHERED_PLANT, BEH_HOSTILE, *ai,
+                                        MHITNOT, MG_FORCE_PLACE);
+                        plant.hd = get_monster_data(MONS_WITHERED_PLANT)->HD;
+                        plant.hd *= pow; plant.hd /= 25;
+                        if (create_monster(plant)) plants++;
+                    }
+                } else {
+                    temp_change_terrain(*ai, DNGN_ROCK_WALL, INFINITE_DURATION,
+                                        TERRAIN_CHANGE_TOMB);
+                    number_built++;
+                }
             }
 
-            number_built++;
+
         }
     }
 
-    if (number_built > 0)
+    if ((number_built > 0) || (plants > 0))
     {
         if (zin)
         {
             mprf("Zin imprisons %s with walls of pure silver!",
                  targname.c_str());
         }
-        else
-            mpr("Walls emerge from the floor!");
+        else {
+            if (number_built) {
+                mprf("Walls%s emerge from the floor!",
+                     plants ? " and dead vegetation" : "");
+            } else {
+                if (plants) {
+                    mprf("Withered vegetation grows up from the floor!");
+                }
+            }
+        }
 
         you.update_beholders();
         you.update_fearmongers();
