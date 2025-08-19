@@ -1751,7 +1751,9 @@ static void _damaging_card(card_type card, int power, deck_rarity_type rarity,
         break;
 
     case CARD_HAMMER:  ztype = hammerzaps[power_level];  break;
-    case CARD_ORB:     ztype = orbzaps[power_level];     break;
+    case CARD_ORB: // XXX this is here to stop 45c4a97 applying cleanly
+        // it breaks the Orb - see f4014ab7dd66aeb7e08f8ac1f
+        ztype = orbzaps[power_level];     break;
 
     case CARD_PAIN:
         if (power_level == 2)
