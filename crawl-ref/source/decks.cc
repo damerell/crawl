@@ -2234,7 +2234,8 @@ static void _summon_flying(int power, deck_rarity_type rarity)
     const monster_type flytypes[] =
     {
         MONS_INSUBSTANTIAL_WISP, MONS_KILLER_BEE, MONS_RAVEN,
-        MONS_BUMBLEBEE, MONS_FIREFLY, MONS_VAMPIRE_MOSQUITO, MONS_HORNET
+        MONS_BUMBLEBEE, MONS_FIREFLY, MONS_VAMPIRE_MOSQUITO, MONS_HORNET,
+        MONS_QUEEN_BEE, MONS_MELIAI
     };
     const int num_flytypes = ARRAYSZ(flytypes);
 
@@ -2243,14 +2244,14 @@ static void _summon_flying(int power, deck_rarity_type rarity)
     const int how_many = 2 + random2(3) + power_level * 3;
     bool hostile_invis = false;
 
-    do
-    {
-        result = flytypes[random2(num_flytypes - 2) + power_level];
-    }
-    while (is_good_god(you.religion) && result == MONS_VAMPIRE_MOSQUITO);
-
     for (int i = 0; i < how_many; ++i)
     {
+        do
+        {
+            result = flytypes[random2(num_flytypes - 2) + power_level];
+        }
+        while (is_good_god(you.religion) && result == MONS_VAMPIRE_MOSQUITO);
+
         const bool hostile = one_chance_in(power_level + 4);
 
         create_monster(
