@@ -1,0 +1,266 @@
+Tomb card
+
+7060c5926a461574f7faff4c582abbdf3f2e765d Adjust Triple Draw and Deal Four
+ review once expected numbers exist
+
+
+
+# 1a011fea95c6f55bc9f9541fe9385505dd7b49c4 elements card
+# 8735e2aeb51eb73d09cfb5ee046eb8205c2421f2 deck descriptions??
+# 395417ec1905e114c68ca1b594830963cf726a30 (Rework the Exile card)
+# ccd700ba56aa75b83b40453e98d8d (Remove shaft)
+# d0b4d5de9998df622908415763a5d21a7e (Remove summons from Pain)
+#31946683ed5e7c890adf0bb2e14208c707 (Improve the Cloud card and subsequent
+#1471edab23a3a4c3d23b3441f029cc)
+#5278e7341f079d8684e23ad50e343b324405c9f5 (clouds card)
+
+d358eaa3192bffcead2b4bd4c58b08529c471d3d
+ 65e1ffefe4a389a52f16840f10acb1bfa03f80ed
+d3051d076b6884c7f105493b42900d61
+ 35c6a73c01f726395b53601592eb (stack five fixes?)
+
+0551b70d95256547df28e5954b80b648291e131a poly bugfix?
+
+eb4e2cb51d0bd39d5187142247a6 Adjust Deal Four
+
+079dcdc05b3c7dba9fe3569f5a4c deck size and card dealing
+
+710303dcffce3c4ad7314298ff954c8418e12f0e (add a god Extra pane for Nem)
+
+be15bf46499166527efb13b04ca Streamline the Stack Five UI
+
+2fa7c9c2c93ba3d3fa6688d8e6dbf5fc9b9  Prompt before canceling damaging cards
+ wants careful look at logic
+
+prob irrelevant 5f4ef5656c3db80fadf20274687f70d7688a6dd0 stack five 
+
+# 399e8c341965d9d9435fd9f8c5a1eb865 Make the Velocity card less harmful at low power (probably with in_good_standing)
+# deck identification!
+# 60b3cfd402b04cfe918326f63b6ffcffc19 Deduplicate card types in card description?
+#2b2469d174ed4e36d057f88781859fe04c4356e9 (when did Wild Magic move?)
+#8644a10012f616e1786ffc76e2229e8b (changed emergency to escape?, huge set of removals)
+#d1faf0580eef4186c3e8bef5780ef3ea0699bf95 Tweak card descriptions
+# 7be440f59e774a59ea0a174d27ad03c4d1109cd4 Make Nemelex use Invocations
+# 65534a889959084b0cbb5c87cced849d9185f4 Don't identify the top card of a deck
+# 8eb93c7980195049c4405527592168096c093a deck of oddities - no
+# 7b4a13f6e435ac668e5a7488556e25e62 deck of punishment - stet
+# 4db263552158fb634bc7760c5c90c95 Use the same deck types for Nemelex gifting and random generation - moot
+# 5def9ffaaa72d57a816f5b797ee9c3ed0 deck of wonders- no
+# 7879e01766e08f2d050d39970ed1a216 Replace the Helm card's Stoneskin effect
+# 7b7966442ff28d3cbdedbf11f2031351a0481ff2 stet
+# 08e9ab1cd0e5d9f6f64bc4e0fcc9594bcad3f36d Sometimes upgrade plain decks for Nem worshipers
+
+1edb3d8ce98a146bd03253c3c3e7d4b92180328f Make using decks practice Invocations when autoskilling
+
+Archetype decks:
+Battle
+Destruction
+Dungeons (removed 0.15)
+Emergency
+Enchantments (removed 0.15, near-empty, never existed as item)
+Oddities (never dropped, many weird effects, any draw had a 1% chance
+          to be an Oddity).
+Punishment
+Summoning
+Transport
+Wonders
+
+Removed cards where removal makes sense:
+out Shaft (similar to Exile but doesn't work on bottom of branch, removed
+       later in vanilla)
+out Bones (replaced with The Rangers on the basis that skeleton summoning
+       is not a new trick)
+out Bargain (discount on shop prices for a duration, effectively some gold
+         that's hard to use.)
+out Map (did magic mapping, merged into dowsing)
+out Sage (diverts incoming XP towards a skill, meaningless today)
+
+Removed cards that seem fine:
+in  Alchemist (exchanged some gold for HP and sometimes MP)
+in  Banshee (Drain and Cause Fear on all monsters in view)
+out Curse (curses items, intentionally bad)
+out Feast (maximum nutrition)
+out Focus (remove point from worst stat and add to best)
+in  Fortitude (damage shaving and strength)
+in  Hammer (cast a single target Earth attack spell)
+out Helix (shuffles your mutations, probably helpfully at high power)
+in  Potion (grants various beneficial potion effects)
+in  Repulsiveness (summons ugly things)
+in  Shadow (grants invisibility and bonus stealth)
+out Placid Magic (drains MP, saps magic, an intentionally bad card)
+in  Solitude (casts Dispersal, blinking nearby monsters away)
+in  Warpwright (places a teleport trap near the player)
+out Shuffle (shuffles your stats - Changes/Oddities only, rare)
+in  Portal was Warp (blink, with control at high power)
+
+Removed cards that want work:
+#Blade (grants cleaving, which is a bit sad if you're using an axe;
+##       used to temporarily apply a brand or animate the weapon, so if
+#        restored wants improvement)
+#Helm (granted Phase Shift or Stoneskin, two themselves removed
+#      defensive buffs, removed 0.18)
+# seems fine as is
+out Herd (summoned Lair monsters, removed 0.16... find out why)
+ replaced with Elements fair enough
+#Mercenary (grants a durable summoned ally who can level up - but the
+#           list of allies needs a look)
+# won't return, treads on Hep's toes
+out Metamorphosis (assorted Transmutations forms, nearly always bad if you
+               don't use Unarmed Combat - move to
+	       Wonders/Changes/Oddities not the combat decks)
+in Venom (casts a poison spell which probably doesn't do much and gives
+       you rPois-)
+   now doesn't if Nemelexie
+out Xom (makes Xom act - fine in Oddities but a bit weird in Punishment
+     given Xom's actions rarely _do_ much...)
+# Battlelust (grants might, slaying, or "building rage" - what's that?)
+# made you go berserk at high power, otherwise might/agil which
+# you get from other cards
+#Experience (grants XP up to a whole level at high power, too good?)
+# won't return
+Flight (can grant Hippo Form (which made sense when player hippos
+        could cling), Bat Form; or Flight and Swiftness and maybe
+	place a shaft; and maybe make you invisible for a little)
+Genie (gives acquirement or degeneration or rotting)	
+Minefield (places traps in a radius around the player, probably good
+           given you know it's happened... but is it then Punishment?)
+Portal (teleports you - at high power, with control, granting teleport
+        control for six turns)
+Frost (replaced with Hammer for interface reasons, could be salvaged?)
+Flame (ditto)
+Spark (ditto)
+Summoning (summoned a demon, terrible name, removed long ago, do other
+           cards summon demons?)
+
+The deck of dungeons, which has interesting cards but it's hard to
+know _when_ you'd use them, and some want thought:
+Dowsing (can give magic mapping, detect items/traps, and temporary
+         antenna-like telepathy...)
+Spade (one-shot wand of digging)
+Trowel (can create decorations, an altar, a friendly golem and a
+hostile statue, or once per game a portal to a portal branch)
+Vitrification (Xom-style but at high level it can do the _whole
+               level_)
+Water (turns squares into deep and shallow water, was in the deck of
+       Summoning, why?)
+
+Removed cards that specifically want thought for a Nemelex worshipper
+in good standing:
+Crusade (casts Aura of Abjuration, at higher power may charm monsters,
+         is getting only abjuration too harsh for worshippers, but
+	 that only happens at power 0 and can a Nemelexie with decent
+	 piety/invo even get that?)
+Swap (transposes the player with a nearby adjacent monster,
+      maybe make it drain stuff around the destination a la
+      Transference?)
+	 
+What I'm thinking of for Nemelex worshippers is that they should
+never get a bad result from a card Nemelex can grant or one that's
+mostly good. Probably also they should not be able to get Oddities
+from combat-oriented decks.
+
+Notes to self:
+
+Damnation card wasn't removed, it was renamed.
+
+If I don't say when something was removed, it was probably removed in
+the big 0.19 shakeup when decks became Nemelex alone.
+
+The deck of Wonders had rather shrunk when removed, and overlapped
+badly with Changes. Also, arguably Hypothetically Optimal Man should
+max Evocations, find a safeish place, and just run through a deck of
+Wonders. Think about how often they drop and how many cards they
+have. Most of the arguably-problematic effects there like Genie and
+Experience would be fine if they just came from Oddities and/or
+Wonders was very rare.
+
+There have been decks of escape and emergency and Nemelex has granted
+one or the other at different times. Probably one should be granted
+and the other have more oddball maybe-useful effects like Swap in?
+
+describe-god penance descriptions moved
+
+Even older wonder cards:
+
+butterfly (creates butterflies)
+wraith    (lose level, drain XP)
+wealth    (gives gold)
+int/str/quicksilver/stupid/weak/sloth
+          (better than they look - could easily increase max but less
+	  likely to decrease it - but could stat zero you quite easily)
+freak     (mutate)
+death     (reapers)
+normality (unmutate)
+statue    (friendly crystal golem)
+acquisition (acquirement)
+hasten    (haste self)
+lich      (hostile lich)
+decay     (rot)
+altar     (create altar)
+fountain  (ditto fountain)
+maze      (cast into labyrinth)
+pandemonium (ditto)
+
+tricks:
+teleport     (with control?)
+teleport now (with control?)
+rage         (berserk)
+levity       (flight)
+healing      (curing?)
+
+power:
+heal wounds  (as potion)
+violence     (acq weapon)
+protection   (acq armour)
+knowledge    (acq book)
+torment
+slow         (slows you, bad)
+
+crawl-1999
+shadow (soul eater)
+gate   (abyssed)
+
+TODO now:
+Swap: thought for Nemelexies
+#Velocity: 399e8c341965d9d9435fd9f8c5a1eb865 Make the Velocity card less harmful at low power (probably with in_good_standing)
+#Shaft: removed
+Tomb: kinda bad
+#Cloud: 31946683ed5e7c890adf0bb2e14208c707 (Improve the Cloud card and subsequent 1471edab23a3a4c3d23b3441f029cc)
+# 5278e7341f079d8684e23ad50e343b324405c9f5 (clouds card)
+Venom: bad
+#Pain: d0b4d5de9998df622908415763a5d21a7e (Remove summons from Pain)
+Wild Magic: 2b2469d174ed4e36d057f88781859fe04c4356e9 (when did Wild Magic move?)
+Helm: 7879e01766e08f2d050d39970ed1a216 Replace the Helm card's Stoneskin effect
+ (granted Phase Shift or Stoneskin, two themselves removed defensive buffs, removed 0.18)
+#Blade: Blade (grants cleaving, which is a bit sad if you're using an axe;
+#       used to temporarily apply a brand or animate the weapon, so if
+#       restored wants improvement)
+Crusade (casts Aura of Abjuration, at higher power may charm monsters,
+         is getting only abjuration too harsh for worshippers, but
+         that only happens at power 0 and can a Nemelexie with decent
+         piety/invo even get that?)
+Water (turns squares into deep and shallow water, was in the deck of
+       Summoning, why?)
+
+check the stupid tiles
+Changes is battle+transport, floorgod
+Battle is Battle, granted by Nemelex
+Defence is Battle+Emergency, granted by floorgod
+Destruction is Destruction, granted by Nemelex and floorgod
+Escape is Emergency+Transport, granted by Nemelex and floorgod
+Summoning is Summoning, granted by Nemelex
+War is Battle+Summoning, floorgod
+
+Oddities and Punishment are special
+
+So we need icons for bat trans emer dest summ
+
+Battle/War: crossed swords -> bat
+Changes: two arrows in a circle
+Defence: shield            -> emer
+Destruction: zap           -> dest
+Dungeons: altar?
+escape: boots zooming      -> trans
+punishment: impaled hand
+summoning: critter         -> sum
+wonders: goblet
