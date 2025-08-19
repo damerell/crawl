@@ -147,15 +147,37 @@ static enchant_type _player_duration_to_mons_enchantment(duration_type dur)
 {
     switch (dur)
     {
-    case DUR_INVIS:     return ENCH_INVIS;
-    case DUR_CONF:      return ENCH_CONFUSION;
-    case DUR_PARALYSIS: return ENCH_PARALYSIS;
-    case DUR_SLOW:      return ENCH_SLOW;
-    case DUR_HASTE:     return ENCH_HASTE;
-    case DUR_MIGHT:     return ENCH_MIGHT;
-    case DUR_BERSERK:   return ENCH_BERSERK;
-    case DUR_POISONING: return ENCH_POISON;
-
+    case DUR_BARBS:            return ENCH_BARBS;
+    case DUR_BERSERK:          return ENCH_BERSERK;
+    case DUR_BRILLIANCE:       return ENCH_EMPOWERED_SPELLS;
+    case DUR_CONF:             return ENCH_CONFUSION;
+    case DUR_CORROSION:        return ENCH_CORROSION;
+    case DUR_DIMENSION_ANCHOR: return ENCH_DIMENSION_ANCHOR;
+    case DUR_FIRE_VULN:        return ENCH_FIRE_VULN;
+    case DUR_FROZEN:           return ENCH_FROZEN;
+    case DUR_HASTE:            return ENCH_HASTE;
+    case DUR_INVIS:            return ENCH_INVIS;
+    case DUR_LOWERED_MR:       return ENCH_LOWERED_MR;
+    case DUR_BLADE:
+    case DUR_MIGHT:            return ENCH_MIGHT;
+    case DUR_AGILITY:          return ENCH_AGILE;
+    case DUR_PARALYSIS:        return ENCH_PARALYSIS;
+    case DUR_PETRIFYING:       return ENCH_PETRIFYING;
+    case DUR_PETRIFIED:        return ENCH_PETRIFIED;
+    case DUR_POISONING:        return ENCH_POISON;
+    case DUR_POISON_VULN:      return ENCH_POISON_VULN;
+    case DUR_RESISTANCE:       return ENCH_RESISTANCE;
+    case DUR_SAP_MAGIC:        return ENCH_SAP_MAGIC;
+    case DUR_SLOW:             return ENCH_SLOW;
+    case DUR_SWIFTNESS:        return ENCH_SWIFT;
+    case DUR_TOXIC_RADIANCE:   return ENCH_TOXIC_RADIANCE;
+    case DUR_TROGS_HAND:       return ENCH_TROGS_HAND;
+    case DUR_WEAK:             return ENCH_WEAK;
+    case DUR_MAGIC_SHIELD:
+    case DUR_MAGIC_ARMOUR:     return ENCH_MAGIC_ARMOUR;
+        
+    case DUR_LIQUID_FLAMES: // To catch vanilla maybe changing it contra
+        // comment above - they do in 3386d7afde0c1ab07975
     default:            return ENCH_NONE;
     }
 }
