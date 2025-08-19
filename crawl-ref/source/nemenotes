@@ -3,6 +3,16 @@ Tomb card
 7060c5926a461574f7faff4c582abbdf3f2e765d Adjust Triple Draw and Deal Four
  review once expected numbers exist
 
+Vanilla has destruction having maximum size 26, others 13.
+
+"Compared to the effects in summoning and escape, destruction effects
+tend to be a single turn conjuration (Storm and top tier Pain need
+adjustment here) which makes them comparatively weaker"
+
+gifts      dest 3 : summ 1 : escape 1
+pre-rework dest 5 : summ 4 : escape 2
+we had     dest 3  : summ 3 : escape 2 : batt 3
+we have    dest 5  : summ 3 : escape 2 : batt 2
 
 
 # 1a011fea95c6f55bc9f9541fe9385505dd7b49c4 elements card
