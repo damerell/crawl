@@ -906,11 +906,10 @@ spret cast_conjure_ball_lightning(int pow, god_type god, bool fail)
             success = true;
             ball->add_ench(ENCH_SHORT_LIVED);
 
-
 // Avoid ball lightnings without targets always moving towards (0,0)
 // Watch out for vanilla commit f879fa1a088c8bd37124143aa648d68bae9a3b6c
 // making conjured ball lightnings hug the player with no target in view
-            if (true) set_random_target(ball);
+            if (true) set_random_target(ball); // canary
         }
     }
 
