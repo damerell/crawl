@@ -5300,7 +5300,7 @@ string player::permabuff_whynot(permabuff_type pb) {
     case PB_CONFUSED:
         return "you are too confused";
     case PB_IHPIX_FOF:
-        return "the spell can't be used with Piercing Fire";
+        return "the spell can't be used with Piercing Shots";
     case PB_EXCRU_NOWEP:
     {
         if (you.weapon()) {

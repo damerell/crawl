@@ -664,7 +664,7 @@ static const ability_def Ability_List[] =
     { ABIL_IHPIX_TEMP_WEAPON, "Request Divine Weapon",
       0, 0, 0, 0, { fail_basis::invo }, abflag::none },
     // Fail chances from Heroism/Finesse for original low-Invo design?
-    { ABIL_IHPIX_FOF, "Piercing Fire",
+    { ABIL_IHPIX_FOF, "Piercing Shots",
       0, 0, 100, 4, { fail_basis::invo, 30, 6, 20 }, abflag::none},
     { ABIL_IHPIX_SUPERIOR_WEAPON, "Superior Divine Weapon",
       0, 0, 0, 20, { fail_basis::invo }, abflag::none},
@@ -1616,7 +1616,7 @@ static bool _check_ability_possible(const ability_def& abil, bool quiet = false)
         }
         if (player_equip_unrand(UNRAND_DAMNATION)) {
             if (!quiet) {
-                mpr("You can't use Piercing Fire when your shots would explode on impact.");
+                mpr("You can't use Piercing Shots when your shots would explode on impact.");
             }
             return false;
         }

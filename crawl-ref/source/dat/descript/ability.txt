@@ -355,7 +355,7 @@ After using this ability, you cannot use it again until you have
 defeated a sufficient number of enemies and returned the previous
 weapon to the divine armoury.
 %%%%
-Piercing Fire ability
+Piercing Shots ability
 
 For the duration of this ability, your shots will pierce your enemies and spare
 your friends.

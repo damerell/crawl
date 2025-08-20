@@ -89,7 +89,7 @@ struct bolt
                                   // hit another target behind the first?
     bool   willpierce = false;    // Will pierce later in channel (ie, is
                                   // Searing Ray right now)
-    bool   ihpierce = false;      // Fired with ihpix Piercing Fire
+    bool   ihpierce = false;      // Fired with ihpix Piercing Shots
     bool   is_explosion = false;
     bool   is_death_effect = false; // effect of e.g. ballistomycete spore
     bool   aimed_at_spot = false; // aimed at (x, y), should not cross

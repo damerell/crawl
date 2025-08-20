@@ -2322,7 +2322,7 @@ string get_item_description(const item_def &item, bool verbose,
     }
     if (you_worship(GOD_IHPIX) &&
         is_unrandom_artefact(item, UNRAND_DAMNATION)) {
-        description << "\n\nIhp'ix's Piercing Fire ability will not work with shots that explode on impact.";
+        description << "\n\nIhp'ix's Piercing Shots ability will not work with shots that explode on impact.";
     }
 
     if (verbose && origin_describable(item))
