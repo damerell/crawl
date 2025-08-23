@@ -237,6 +237,9 @@ equipment, perceive the invisible, and preserve their mental clarity.
 The truly devout will gain the ability to transfer a portion of their
 knowledge from one skill to another.
 
+A given category of equipment (armour, jewellery, weapon, shield) is
+"partly bound" if more than half the available slots in it have cursed
+equipment, and "fully bound" if all the slots in it do.
 %%%%
 Beogh powers
 
