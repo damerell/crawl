@@ -72,7 +72,7 @@ LUAFN(l_spells_mana_cost)
 LUAFN(l_spells_range)
 {
     spell_type spell = spell_by_name(luaL_checkstring(ls, 1), false);
-    PLUARET(number, spell_range(spell, calc_spell_power(spell, true)));
+    PLUARET(number, spell_range(spell, calc_spell_power(spell, true), true));
 }
 
 /*** The maximum range of the spell.
@@ -83,7 +83,7 @@ LUAFN(l_spells_range)
 LUAFN(l_spells_max_range)
 {
     spell_type spell = spell_by_name(luaL_checkstring(ls, 1), false);
-    PLUARET(number, spell_range(spell, spell_power_cap(spell)));
+    PLUARET(number, spell_range(spell, spell_power_cap(spell), true));
 }
 
 /*** The minimum range of the spell.
@@ -94,7 +94,7 @@ LUAFN(l_spells_max_range)
 LUAFN(l_spells_min_range)
 {
     spell_type spell = spell_by_name(luaL_checkstring(ls, 1), false);
-    PLUARET(number, spell_range(spell, 0));
+    PLUARET(number, spell_range(spell, 0, true));
 }
 
 /*** The failure rate of the spell as a number in [0,100].

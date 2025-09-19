@@ -925,8 +925,9 @@ spret cast_summon_lightning_spire(int pow, const coord_def& where, god_type god,
 {
     const int dur = 2;
 
-    if (grid_distance(where, you.pos()) > spell_range(SPELL_SUMMON_LIGHTNING_SPIRE,
-                                                      pow)
+    if (grid_distance(where, you.pos())
+        // true == caster is you
+        > spell_range(SPELL_SUMMON_LIGHTNING_SPIRE, pow, true) 
         || !in_bounds(where))
     {
         mpr("That's too far away.");
@@ -2992,7 +2993,7 @@ spret cast_fulminating_prism(actor* caster, int pow,
                                   const coord_def& where, bool fail)
 {
     if (grid_distance(where, caster->pos())
-        > spell_range(SPELL_FULMINANT_PRISM, pow))
+        > spell_range(SPELL_FULMINANT_PRISM, pow, caster->is_player()))
     {
         if (caster->is_player())
             mpr("That's too far away.");

@@ -2336,7 +2336,8 @@ spret cast_thunderbolt(actor *caster, int pow, coord_def aim, bool fail)
     else
         charges = 0;
 
-    targeter_thunderbolt hitfunc(caster, spell_range(SPELL_THUNDERBOLT, pow),
+    targeter_thunderbolt hitfunc(caster, spell_range(SPELL_THUNDERBOLT,
+                                                     pow, caster->is_player()),
                                  prev);
     hitfunc.set_aim(aim);
 
@@ -2621,7 +2622,8 @@ static bool _dazzle_can_hit(const actor *act)
 
 spret cast_dazzling_spray(int pow, coord_def aim, bool fail)
 {
-    int range = spell_range(SPELL_DAZZLING_SPRAY, pow);
+    // not TRUE if caster can be monster
+    int range = spell_range(SPELL_DAZZLING_SPRAY, pow, true);
 
     targeter_spray hitfunc(&you, range, ZAP_DAZZLING_SPRAY);
     hitfunc.set_aim(aim);
@@ -2891,7 +2893,7 @@ static bool _player_glaciate_affects(const actor *victim)
 
 spret cast_glaciate(actor *caster, int pow, coord_def aim, bool fail)
 {
-    const int range = spell_range(SPELL_GLACIATE, pow);
+    const int range = spell_range(SPELL_GLACIATE, pow, caster->is_player());
     targeter_cone hitfunc(caster, range);
     hitfunc.set_aim(aim);
 
@@ -3009,7 +3011,8 @@ size_t shotgun_beam_count(int pow)
 spret cast_scattershot(const actor *caster, int pow, const coord_def &pos,
                             bool fail)
 {
-    const size_t range = spell_range(SPELL_SCATTERSHOT, pow);
+    const size_t range = spell_range(SPELL_SCATTERSHOT,
+                                     pow, caster->is_player());
     const size_t beam_count = shotgun_beam_count(pow);
 
     targeter_shotgun hitfunc(caster, beam_count, range);

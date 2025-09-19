@@ -495,7 +495,8 @@ static void _blink_cooldown(int pow) {
  */
 spret controlled_blink(bool fail, bool safe_cancel, int power)
 {
-    int range = spell_range(SPELL_CONTROLLED_BLINK, power);
+    // true == caster is you
+    int range = spell_range(SPELL_CONTROLLED_BLINK, power, true);
     coord_def target;
     targeter_smite tgt(&you, range);
     tgt.obeys_mesmerise = true;
@@ -1055,7 +1056,8 @@ spret cast_golubrias_passage(int pow, const coord_def& where, bool fail)
     }
 
     if (grid_distance(where, you.pos())
-        > spell_range(SPELL_GOLUBRIAS_PASSAGE, pow))
+        // true == caster is you
+        > spell_range(SPELL_GOLUBRIAS_PASSAGE, pow, true))
     {
         mpr("That's out of range!");
         return spret::abort;
@@ -1156,7 +1158,8 @@ static int _disperse_monster(monster& mon, int pow)
 spret cast_dispersal(int pow, bool fail)
 {
     fail_check();
-    const int radius = spell_range(SPELL_DISPERSAL, pow);
+    // true == caster is you
+    const int radius = spell_range(SPELL_DISPERSAL, pow, true);
     if (!apply_monsters_around_square([pow] (monster& mon) {
             return _disperse_monster(mon, pow);
         }, you.pos(), radius))

@@ -3394,7 +3394,7 @@ void aura_of_brilliance(monster* agent)
 
 static bool _glaciate_tracer(monster *caster, int pow, coord_def aim)
 {
-    targeter_cone hitfunc(caster, spell_range(SPELL_GLACIATE, pow));
+    targeter_cone hitfunc(caster, spell_range(SPELL_GLACIATE, pow, false));
     hitfunc.set_aim(aim);
 
     mon_attitude_type castatt = caster->temp_attitude();
@@ -3425,7 +3425,7 @@ static bool _glaciate_tracer(monster *caster, int pow, coord_def aim)
 bool mons_should_cloud_cone(monster* agent, int power, const coord_def pos)
 {
     targeter_shotgun hitfunc(agent, CLOUD_CONE_BEAM_COUNT,
-                              spell_range(SPELL_CLOUD_CONE, power));
+                             spell_range(SPELL_CLOUD_CONE, power, false));
 
     hitfunc.set_aim(pos);
 
@@ -3456,7 +3456,7 @@ bool mons_should_cloud_cone(monster* agent, int power, const coord_def pos)
 static bool _spray_tracer(monster *caster, int pow, bolt parent_beam, spell_type spell)
 {
     vector<bolt> beams = get_spray_rays(caster, parent_beam.target,
-                                        spell_range(spell, pow), 3);
+                                        spell_range(spell, pow, false), 3);
     if (beams.size() == 0)
         return false;
 
@@ -3764,7 +3764,7 @@ static bool _worth_hexing(const monster &caster, spell_type spell)
 bool scattershot_tracer(monster *caster, int pow, coord_def aim)
 {
     targeter_shotgun hitfunc(caster, shotgun_beam_count(pow),
-                              spell_range(SPELL_SCATTERSHOT, pow));
+                             spell_range(SPELL_SCATTERSHOT, pow, false));
     hitfunc.set_aim(aim);
 
     mon_attitude_type castatt = caster->temp_attitude();

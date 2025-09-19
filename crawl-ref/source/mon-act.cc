@@ -1650,7 +1650,7 @@ static void _maybe_submerge(monster* mons) {
     }
 
     if (grid_distance(mons->target, mons->pos()) <=
-        spell_range(SPELL_THORN_VOLLEY, 50)) return;
+        spell_range(SPELL_THORN_VOLLEY, 50, false)) return;
     
     if (monster_can_submerge(mons, grd(mons->pos()))
         && !mons->caught()         // No submerging while caught.
@@ -1879,7 +1879,7 @@ void handle_monster_move(monster* mons)
     if (mons->has_ench(ENCH_SUBMERGED))
     {
         int range = (mons->type == MONS_THORN_LOTUS ?
-                     spell_range(SPELL_THORN_VOLLEY, 50) : 1);
+                     spell_range(SPELL_THORN_VOLLEY, 50, false) : 1);
         if (mons->foe != MHITNOT
             && grid_distance(mons->target, mons->pos()) <= range)
         {

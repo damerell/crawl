@@ -37,7 +37,8 @@ spret conjure_flame(const actor *agent, int pow, const coord_def& where,
                          bool fail)
 {
     // FIXME: This would be better handled by a flag to enforce max range.
-    if (grid_distance(where, agent->pos()) > spell_range(SPELL_CONJURE_FLAME, pow)
+    if (grid_distance(where, agent->pos()) >
+        spell_range(SPELL_CONJURE_FLAME, pow, agent->is_player())
         || !in_bounds(where))
     {
         if (agent->is_player())
@@ -413,7 +414,7 @@ spret cast_cloud_cone(const actor *caster, int pow, const coord_def &pos,
     // For monsters:
     pow = min(100, pow);
 
-    const int range = spell_range(SPELL_CLOUD_CONE, pow);
+    const int range = spell_range(SPELL_CLOUD_CONE, pow, caster->is_player());
 
     targeter_shotgun hitfunc(caster, CLOUD_CONE_BEAM_COUNT, range);
 
