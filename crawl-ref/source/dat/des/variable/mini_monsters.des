@@ -2206,7 +2206,7 @@ ITEM: legendary deck
 MONS: orc warrior, orc wizard, orc
 ITEM: ornate deck / w:5 legendary deck
 : elseif you.depth() >= 12 then
-MONS: hill giant, two-headed ogre, ogre
+MONS: ettin, two-headed ogre, ogre
 ITEM: ornate deck
 : elseif you.depth() >= 6 then
 MONS: crimson imp / shadow imp, orc wizard, orc
