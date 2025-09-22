@@ -556,7 +556,7 @@ static void _place_little_rooms(const dgn_region &lab) {
             }
             const map_def *toplace =
             find_map_by_name("lab_statue_" + rocktype);
-            if (dgn_place_map(toplace, false, true, *ranri)) {
+            if (dgn_place_map(toplace, true, true, *ranri)) {
                 rooms.push_back(*ranri);
                 grd(doors[0]) = grd(doors[1]) = DNGN_FLOOR;
             } if (!(--quota)) { break;}
