@@ -958,7 +958,7 @@ static bool _sif_muna_retribution()
         // a duration of one round, thus potentially exposing
         // the player to real danger.
         // It just turns off your permabuffs completely and makes you wait
-        debuff_player(true,false,true);
+        debuff_player(false, false, true);
         break;
     }
 
