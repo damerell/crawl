@@ -1177,15 +1177,20 @@ static inline bool _monster_warning(activity_interrupt_type ai,
             text += " comes into view.";
 
         if ((mon->type == MONS_PLAYER_GHOST) &&
-            (!mon->props.exists("ghost gaze")) &&
+            (!mon->props.exists("ghost gaze"))) {
             // This check is needed in case eg just pulled out of limbo
-            (mon->get_foe()) &&
-            (mon->get_foe()->is_monster()) &&
-            (mon->get_foe()->as_monster()->alive()) &&
-            (you.can_see(*(mon->get_foe())))) {
-            text += " Its baleful gaze is fixed on ";
-            text += mon->get_foe()->as_monster()->full_name(DESC_A);
-            text += ".";
+            if (mon->get_foe() &&
+                (mon->get_foe()->is_monster()) &&
+                (mon->get_foe()->as_monster()->alive()) &&
+                (you.can_see(*(mon->get_foe())))) {
+                text += " Its baleful gaze is fixed on ";
+                text += mon->get_foe()->as_monster()->full_name(DESC_A);
+                text += ".";
+            } else if (mon->ghost->slayer != MONS_NO_MONSTER) {
+                text += " Slain by ";
+                text += mons_type_name(mon->ghost->slayer,DESC_A);
+                text += ", it craves vengeance.";
+            }
             mon->props["ghost gaze"] = true;
         }
         bool ash_id = mon->props.exists("ash_id") && mon->props["ash_id"];
