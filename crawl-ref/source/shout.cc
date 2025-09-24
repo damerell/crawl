@@ -153,10 +153,11 @@ void monster_shout(monster* mons, int shout)
 {
     shout_type s_type = static_cast<shout_type>(shout);
     mon_acting mact(mons);
+    bool isghost = (mons->type == MONS_PLAYER_GHOST);
 
     // less specific, more specific.
     const string default_msg_key
-        = mons->type == MONS_PLAYER_GHOST ?
+        = isghost ?
                  "player ghost" :
                  lookup(default_msg_keys, s_type, "__BUGGY");
     const string key = _shout_key(*mons);
@@ -198,7 +199,9 @@ void monster_shout(monster* mons, int shout)
         msg::streams(MSGCH_SOUND) << "You hear something buggy!"
                                   << endl;
     }
-    else if (s_type == S_SILENT && (message.empty() || message == "__NONE"))
+    // player ghosts do not shout, so __NONE is expected
+    else if (((s_type == S_SILENT) || isghost)
+             && (message.empty() || message == "__NONE"))
         ; // No "visual shout" defined for silent monster, do nothing.
     else if (message.empty()) // Still nothing found?
     {
