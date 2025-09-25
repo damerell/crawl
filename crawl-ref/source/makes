@@ -1,0 +1,11 @@
+make -k -j 4 DEBUG=yes NO_OPTIMIZE=yes TILES=y FORCE_CXX='g++ -fsanitize=address' 2> foo; less foo; cp crawl crawl-tiles
+make -j 4 DEBUG=yes NO_OPTIMIZE=yes WEBTILES=y FORCE_CXX=g++
+python3 webserver/server.py 2> foo
+make -k -j 4 DEBUG=yes NO_OPTIMIZE=yes FORCE_CXX='g++ -fsanitize=address' 2> foo; less foo; cp crawl crawl-console
+valgrind --track-origins=yes --vgdb=yes --vgdb-error=0 ./crawl 2> foo
+gdb ./crawl
+target remote | vgdb
+make -j 4 DEBUG=yes FORCE_CXX='g++ -DDEBUG -DDEBUG_TESTS'
+make -j 4 DEBUG=yes FORCE_CXX='g++ -DDEBUG -DDEBUG_DIAGNOSTICS'
+make -j 4 DEBUG=yes FORCE_CXX='g++ -DDEBUG -DDEBUG_STATISTICS'
+make  CROSSHOST=i686-w64-mingw32 package-windows-zips 2> foo; less foo
