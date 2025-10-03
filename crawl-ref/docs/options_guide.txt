@@ -1373,6 +1373,10 @@ easy_door = true
 warn_hatches = false
         Ask for confirmation before using a one-way escape hatch or shaft.
 
+warn_unknown_hatches = false
+       If warn_hatches is true, only warn when the destination of a hatch
+       is unknown.
+
 enable_recast_spell = true
         If enabled, allows recasting the previously cast spell by pressing
         Enter or '.' at the spellcasting prompt.

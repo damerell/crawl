@@ -230,6 +230,7 @@ public:
     bool        jewellery_prompt; // Always prompt for slot when changing jewellery.
     bool        easy_door;       // 'O', 'C' don't prompt with just one door.
     bool        warn_hatches;    // offer a y/n prompt when the player uses an escape hatch
+    bool        warn_unknown_hatches; // only if we don't know where it goes
     bool        enable_recast_spell; // Allow recasting spells with 'z' Enter.
     int         confirm_butcher; // When to prompt for butchery
     hunger_state_t auto_butcher; // auto-butcher corpses while travelling
