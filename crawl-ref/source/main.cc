@@ -1416,8 +1416,11 @@ static bool _prompt_stairs(dungeon_feature_type ygrd, bool down, bool shaft)
 
     if (Options.warn_hatches)
     {
-        if (feat_is_escape_hatch(ygrd))
+        if (feat_is_escape_hatch(ygrd)) {
+            if (is_unknown_stair(you.pos()) || !Options.warn_unknown_hatches) {
             return yesno("Really go through this one-way escape hatch?", true, 'n');
+            }
+        }
         if (down && shaft) // voluntary shaft usage
             return yesno("Really dive through this shaft in the floor?", true, 'n');
     }
