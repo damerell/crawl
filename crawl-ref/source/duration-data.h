@@ -753,6 +753,8 @@ static const duration_def duration_data[] =
       "piercing", "",
       "Your shots pierce your enemies and spare your foes.", D_NO_FLAGS,
       {{ "Your shots are no longer piercing."}}},
+    { DUR_ANTIMAGIC, 0, "", "", "", "",
+      D_NO_FLAGS, {{""}}},
 
     // The following are visible in wizmode only, or are handled
     // specially in the status lights and/or the % or @ screens.
@@ -834,11 +836,6 @@ static const duration_def duration_data[] =
     { DUR_DOOM_HOWL_IMMUNITY, 0, "", "", "old howl immunity", "", D_NO_FLAGS, {{""}}},
     { DUR_CONDENSATION_SHIELD, 0, "", "", "old condensation shield", "", D_NO_FLAGS},
     { DUR_PHASE_SHIFT, 0, "", "", "old phase shift", "", D_NO_FLAGS},
-    { DUR_ANTIMAGIC,
-        RED, "-Mag",
-        "antimagic", "",
-        "You have trouble accessing your magic.", D_DISPELLABLE | D_EXPIRES,
-        {{ "You regain control over your magic." }}, 27},
     { DUR_TELEPATHY, 0, "", "", "old telepathy", "", D_NO_FLAGS},
     { DUR_RESIDUAL_HARM, 0, "", "", "", "", D_NO_FLAGS, {{""}}},
 

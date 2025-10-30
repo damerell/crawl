@@ -110,7 +110,6 @@ enum permabuff_state {
     PB_GOD,
     PB_NO_CAST,
     PB_NO_MPREGEN,
-    PB_ANTIMAGIC,
     PB_BRAINLESS,
     PB_STARVING,
     PB_DONTHAVE,

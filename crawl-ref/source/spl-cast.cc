@@ -1538,17 +1538,7 @@ spret your_spells(spell_type spell, int powc, bool allow_fail,
                                       : GOD_NO_GOD;
 
     int fail = 0;
-#if TAG_MAJOR_VERSION == 34
-    bool antimagic = false; // lost time but no other penalty
 
-    if (allow_fail && you.duration[DUR_ANTIMAGIC]
-        && x_chance_in_y(you.duration[DUR_ANTIMAGIC] / 3, you.hp_max))
-    {
-        mpr("You fail to access your magic.");
-        fail = antimagic = true;
-    }
-    else
-#endif
     if (evoked_item && evoked_item->charges == 0)
         return spret::fail;
     else if (allow_fail)
@@ -1599,11 +1589,6 @@ spret your_spells(spell_type spell, int powc, bool allow_fail,
     }
     case spret::fail:
     {
-#if TAG_MAJOR_VERSION == 34
-        if (antimagic)
-            return spret::fail;
-#endif
-
         apply_miscast(spell, fail, true);
         return spret::fail;
     }
