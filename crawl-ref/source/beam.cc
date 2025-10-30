@@ -3773,17 +3773,27 @@ void bolt::affect_player_enchantment(bool resistible)
 
     case BEAM_DRAIN_MAGIC:
     {
-        int amount = min(you.magic_points, random2avg(ench_power / 8, 3));
-        if (!amount)
-            break;
-        mprf(MSGCH_WARN, "You feel your power leaking away.");
-        dec_mp(amount);
-        if (agent() && (agent()->type == MONS_EYE_OF_DRAINING
-                        || agent()->type == MONS_GHOST_MOTH))
-        {
-            agent()->heal(amount);
+        int amount = random2avg(ench_power / 8, 3);
+        int excess = max(0, amount - you.magic_points);
+        amount -= excess;
+        if (amount) {
+            mprf(MSGCH_WARN, "You feel your power leaking away.");
+            dec_mp(amount);
+            if (agent() && (agent()->type == MONS_EYE_OF_DRAINING
+                            || agent()->type == MONS_GHOST_MOTH))
+            {
+                agent()->heal(amount);
+            }
+            obvious_effect = true;
         }
-        obvious_effect = true;
+        if (excess) {
+            you.charms_reserve -= excess * 100;
+            if (you.charms_reserve < 0) {
+                you.duration[DUR_ANTIMAGIC] = max(you.duration[DUR_ANTIMAGIC],
+                                                  you.charms_reserve / -10);
+                you.charms_reserve = 0;
+            }
+        }
         break;
     }
 

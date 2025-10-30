@@ -5204,10 +5204,6 @@ permabuff_state player::permabuff_notworking(permabuff_type pb) {
     if (!player_regenerates_mp()) return PB_NO_MPREGEN;
     // Not clear you can get this duration right now
     // Just as well because I think this is broken
-    if ((you.duration[DUR_ANTIMAGIC]) && 
-        (x_chance_in_y(you.duration[DUR_ANTIMAGIC] / 3, you.hp_max))) {
-        return PB_ANTIMAGIC;
-    }
     if (you.duration[DUR_BRAINLESS]) return PB_BRAINLESS;
     if ((you.hunger_state <= HS_STARVING) &&
         (you.species != SP_VAMPIRE)) return PB_STARVING;
@@ -5274,8 +5270,6 @@ string player::permabuff_whynot(permabuff_type pb) {
         return "your equipment doesn't let you cast spells";
     case PB_NO_MPREGEN:
         return "you cannot regenerate MP";
-    case PB_ANTIMAGIC:
-        return "you have been hit with an antimagic attack";
     case PB_BRAINLESS:
         return "you are brainless";
     case PB_STARVING:
@@ -5408,6 +5402,9 @@ string player::cannot_renew_pbs_because(permabuff_type pb) {
     }
     if (you.duration[DUR_NO_CAST]) {
         return "you are unable to access your magic";
+    }
+    if (you.duration[DUR_ANTIMAGIC]) {
+        return "your magic points were drained recently";
     }
     if (apply_starvation_penalties()) {
         return "you are too hungry";
