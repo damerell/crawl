@@ -5524,6 +5524,7 @@ player::player()
     turn_is_over     = false;
     banished         = false;
     doing_monster_catchup = false;
+    shouted_pos.reset();
 
     wield_change         = false;
     gear_change          = false;
