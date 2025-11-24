@@ -1954,6 +1954,16 @@ static string _describe_deck(const item_def &item)
 {
     string description;
 
+    description += "\nLike any magical deck, the results of drawing a card "
+    "are improved by higher Evocations skill";
+    if (you_worship(GOD_NEMELEX_XOBEH)) {
+        description += " and piety.";
+        if (item.deck_rarity == DECK_RARITY_DIVINE) {
+            description += " Divinely granted, this deck's power is particularly dependent on piety.";
+        }
+    } else {
+        description += ".";
+    }
     description += "\n";
 
     if (_check_buggy_deck(item, description))

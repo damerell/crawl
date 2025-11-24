@@ -1025,6 +1025,7 @@ static bool _give_nemelex_gift(bool forced = false)
 
         if (thing_created != NON_ITEM)
         {
+            // This comment now moot
             // Piety|Common  | Rare  |Legendary
             // --------------------------------
             //     0:  95.00%,  5.00%,  0.00%
@@ -1038,18 +1039,9 @@ static bool _give_nemelex_gift(bool forced = false)
             //   160:  23.00%, 49.00%, 28.00%
             //   180:  14.00%, 54.50%, 31.50%
             //   200:   5.00%, 60.00%, 35.00%
-            const int common_weight = 95 - (90 * you.piety / MAX_PIETY);
-            const int rare_weight   = 5  + (55 * you.piety / MAX_PIETY);
-            const int legend_weight = 0  + (35 * you.piety / MAX_PIETY);
-
-            const deck_rarity_type rarity = random_choose_weighted(
-                common_weight, DECK_RARITY_COMMON,
-                rare_weight,   DECK_RARITY_RARE,
-                legend_weight, DECK_RARITY_LEGENDARY);
-
             item_def &deck(mitm[thing_created]);
 
-            deck.deck_rarity = rarity;
+            deck.deck_rarity = DECK_RARITY_DIVINE;
             deck.flags |= ISFLAG_KNOW_TYPE;
 
             simple_god_message(" grants you a gift!");

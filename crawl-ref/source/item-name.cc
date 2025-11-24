@@ -1008,6 +1008,7 @@ const char* deck_rarity_name(deck_rarity_type rarity)
     case DECK_RARITY_COMMON:    return "plain";
     case DECK_RARITY_RARE:      return "ornate";
     case DECK_RARITY_LEGENDARY: return "legendary";
+    case DECK_RARITY_DIVINE:    return "divine";
     default:                    return "buggy rarity";
     }
 }

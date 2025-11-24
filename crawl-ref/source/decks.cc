@@ -461,8 +461,10 @@ static card_type _choose_from_archetype(const deck_archetype* pdeck,
                                         deck_rarity_type rarity)
 {
     // Random rarity should have been replaced by one of the others by now.
-    ASSERT_RANGE(rarity, DECK_RARITY_COMMON, DECK_RARITY_LEGENDARY + 1);
+    ASSERT_RANGE(rarity, DECK_RARITY_COMMON, DECK_RARITY_DIVINE + 1);
 
+    // Vanilla went to RARE probs with deck quality elimination
+    if (rarity == DECK_RARITY_DIVINE) rarity = DECK_RARITY_RARE;
     // FIXME: We should use one of the various choose_random_weighted
     // functions here, probably with an iterator, instead of
     // duplicating the implementation.
@@ -752,6 +754,8 @@ static string _empty_deck_msg(deck_rarity_type rarity)
             "disappears without a trace." },
         { DECK_RARITY_RARE,
             "glows slightly and disappears." },
+        { DECK_RARITY_DIVINE,
+            "sparkles brightly and disappears." },
         { DECK_RARITY_LEGENDARY,
             "glows with a rainbow of weird colours and disappears." },
     };
@@ -1390,6 +1394,9 @@ static int _get_power_level(int power, deck_rarity_type rarity)
     case DECK_RARITY_RARE:
         if (x_chance_in_y(power, 700))
             ++power_level;
+        break;
+    case DECK_RARITY_DIVINE:
+        power_level = x_chance_in_y(power, 900) + x_chance_in_y(power, 2700);
         break;
     case DECK_RARITY_RANDOM:
         die("unset deck rarity");
@@ -2685,6 +2692,8 @@ static int _card_power(deck_rarity_type rarity, bool punishment)
         result += 150;
     else if (rarity == DECK_RARITY_LEGENDARY)
         result += 300;
+    else if (rarity == DECK_RARITY_DIVINE)
+        result += (you.piety * 3) / 2;
 
     if (result < 0)
         result = 0;
@@ -2918,6 +2927,20 @@ colour_t deck_rarity_to_colour(deck_rarity_type rarity)
     case DECK_RARITY_LEGENDARY:
         return LIGHTMAGENTA;
 
+    // is this pointlessly complex eh eh?
+    case DECK_RARITY_DIVINE:
+        if (in_good_standing(GOD_NEMELEX_XOBEH)) {
+            if (you.piety > piety_breakpoint(4)) {
+                return LIGHTMAGENTA;
+            } else if (you.piety > piety_breakpoint(2)) {
+                return MAGENTA;
+            } else {
+                return GREEN;
+            }
+        } else {
+            return DARKGREY;
+        }
+        
     case DECK_RARITY_RANDOM:
         die("unset deck rarity");
     }
@@ -2933,7 +2956,7 @@ void init_deck(item_def &item)
     ASSERT_RANGE(item.initial_cards, 1, 128);
     ASSERT(!props.exists(CARD_KEY));
     ASSERT(item.deck_rarity >= DECK_RARITY_COMMON
-           && item.deck_rarity <= DECK_RARITY_LEGENDARY);
+           && item.deck_rarity <= DECK_RARITY_DIVINE);
 
     const store_flags fl = SFLAG_CONST_TYPE;
 

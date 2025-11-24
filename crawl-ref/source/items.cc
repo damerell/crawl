@@ -4287,6 +4287,7 @@ static void _deck_from_specs(const char* _specs, item_def &item,
         "plain",
         "ornate",
         "legendary",
+        "divine",
         nullptr
     };
 
@@ -4306,7 +4307,7 @@ static void _deck_from_specs(const char* _specs, item_def &item,
     {
         while (true)
         {
-            mprf(MSGCH_PROMPT, "[a] plain [b] ornate [c] legendary? (ESC to exit)");
+            mprf(MSGCH_PROMPT, "[a] plain [b] ornate [c] legendary [d] divine? (ESC to exit)");
 
             int keyin = toalower(get_ch());
 
@@ -4325,7 +4326,7 @@ static void _deck_from_specs(const char* _specs, item_def &item,
             case 'l': keyin = 'c'; break;
             }
 
-            if (keyin < 'a' || keyin > 'c')
+            if (keyin < 'a' || keyin > 'd')
                 continue;
 
             rarity_val = keyin - 'a';
