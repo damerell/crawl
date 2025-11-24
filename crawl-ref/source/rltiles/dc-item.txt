@@ -1163,6 +1163,53 @@ misc_deck_legendary MISC_DECK_LEGENDARY
 %compose misc_deck_legendary
 %compose i-deck_battle
 %finish
+misc_deck_divine MISC_DECK_DIVINE
+%start
+%compose misc_deck_divine
+%compose i-deck_emergency
+%compose topleft-i-deck_transport
+%finish
+%start
+%compose misc_deck_divine
+%compose i-deck_destruction
+%finish
+# Remove dungeons, summoning and wonders when TAG_MAJOR_VERSION > 34
+%start
+%compose misc_deck_divine
+%compose i-deck_dungeons
+%finish
+%start
+%compose misc_deck_divine
+%compose i-deck_summoning
+%finish
+%start
+%compose misc_deck_divine
+%compose i-deck_wonders
+%finish
+%start
+%compose misc_deck_divine
+%compose i-deck_punishment
+%finish
+%start
+%compose misc_deck_divine
+%compose topleft-i-deck_battle
+%compose i-deck_summoning
+%finish
+# Remove changes and defense when TAG_MAJOR_VERSION > 34
+%start
+%compose misc_deck_divine
+%compose topleft-i-deck_battle
+%compose i-deck_transport
+%finish
+%start
+%compose misc_deck_divine
+%compose topleft-i-deck_battle
+%compose i-deck_emergency
+%finish
+%start
+%compose misc_deck_divine
+%compose i-deck_battle
+%finish
 misc_quad MISC_QUAD_DAMAGE
 %sdir item/misc/runes
 generic MISC_RUNE_OF_ZOT

@@ -2507,6 +2507,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
             case DECK_RARITY_RARE:
                 ch = TILE_MISC_DECK_RARE;
                 break;
+            case DECK_RARITY_DIVINE:
+                ch = TILE_MISC_DECK_DIVINE;
+                break;
             case DECK_RARITY_COMMON:
             default:
                 ch = TILE_MISC_DECK;
