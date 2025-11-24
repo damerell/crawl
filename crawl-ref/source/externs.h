@@ -560,7 +560,7 @@ struct item_def
         // These must all be the same size!
         int special;            ///< legacy/generic name
         int unrand_idx;         ///< unrandart index (for get_unrand_entry)
-        deck_rarity_type deck_rarity;    ///< plain, ornate, legendary
+        deck_rarity_type deck_rarity;    ///< plain, ornate, legendary, divine
         uint32_t subtype_rnd;   ///< appearance of un-ID'd items, by subtype.
                                 /// jewellery, scroll, staff, wand, potions
                                 // see comment in item_colour()

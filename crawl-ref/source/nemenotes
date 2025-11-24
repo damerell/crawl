@@ -1,22 +1,7 @@
+cards remaining
+
 Tomb card
-
-7060c5926a461574f7faff4c582abbdf3f2e765d Adjust Triple Draw and Deal Four
- review once expected numbers exist
-
-A vanilla gift is 4-13 cards, exactly like an old deck, with the same
-gifting timeout
-
-Vanilla has destruction having maximum size 26, others 13.
-
-"Compared to the effects in summoning and escape, destruction effects
-tend to be a single turn conjuration (Storm and top tier Pain need
-adjustment here) which makes them comparatively weaker"
-
-gifts      dest 3 : summ 1 : escape 1
-pre-rework dest 5 : summ 4 : escape 2
-we had     dest 3  : summ 3 : escape 2 : batt 3
-we have    dest 5  : summ 3 : escape 2 : batt 2
-
+check _card_power in decks.cc
 
 # 1a011fea95c6f55bc9f9541fe9385505dd7b49c4 elements card
 # 8735e2aeb51eb73d09cfb5ee046eb8205c2421f2 deck descriptions??
@@ -44,6 +29,9 @@ be15bf46499166527efb13b04ca Streamline the Stack Five UI
 
 2fa7c9c2c93ba3d3fa6688d8e6dbf5fc9b9  Prompt before canceling damaging cards
  wants careful look at logic
+
+7060c5926a461574f7faff4c582abbdf3f2e765d Adjust Triple Draw and Deal Four
+ review once expected numbers exist
 
 prob irrelevant 5f4ef5656c3db80fadf20274687f70d7688a6dd0 stack five 
 
@@ -131,18 +119,18 @@ out Xom (makes Xom act - fine in Oddities but a bit weird in Punishment
 # you get from other cards
 #Experience (grants XP up to a whole level at high power, too good?)
 # won't return
-Flight (can grant Hippo Form (which made sense when player hippos
+out Flight (can grant Hippo Form (which made sense when player hippos
         could cling), Bat Form; or Flight and Swiftness and maybe
 	place a shaft; and maybe make you invisible for a little)
-Genie (gives acquirement or degeneration or rotting)	
-Minefield (places traps in a radius around the player, probably good
+out Genie (gives acquirement or degeneration or rotting)	
+out Minefield (places traps in a radius around the player, probably good
            given you know it's happened... but is it then Punishment?)
-Portal (teleports you - at high power, with control, granting teleport
+out Portal (teleports you - at high power, with control, granting teleport
         control for six turns)
-Frost (replaced with Hammer for interface reasons, could be salvaged?)
-Flame (ditto)
-Spark (ditto)
-Summoning (summoned a demon, terrible name, removed long ago, do other
+out Frost (replaced with Hammer for interface reasons, could be salvaged?)
+out Flame (ditto)
+out Spark (ditto)
+out Summoning (summoned a demon, terrible name, removed long ago, do other
            cards summon demons?)
 
 The deck of dungeons, which has interesting cards but it's hard to
@@ -165,6 +153,18 @@ Crusade (casts Aura of Abjuration, at higher power may charm monsters,
 	 piety/invo even get that?)
 Swap (transposes the player with a nearby adjacent monster,
       maybe make it drain stuff around the destination a la
+      Transference?)
+	 
+What I'm thinking of for Nemelex worshippers is that they should
+never get a bad result from a card Nemelex can grant or one that's
+mostly good. Probably also they should not be able to get Oddities
+from combat-oriented decks.
+
+Notes to self:
+
+Damnation card wasn't removed, it was renamed.
+
+If I don't say when something was removed, it was probably removed in
       Transference?)
 	 
 What I'm thinking of for Nemelex worshippers is that they should
@@ -265,15 +265,3 @@ Summoning is Summoning, granted by Nemelex
 War is Battle+Summoning, floorgod
 
 Oddities and Punishment are special
-
-So we need icons for bat trans emer dest summ
-
-Battle/War: crossed swords -> bat
-Changes: two arrows in a circle
-Defence: shield            -> emer
-Destruction: zap           -> dest
-Dungeons: altar?
-escape: boots zooming      -> trans
-punishment: impaled hand
-summoning: critter         -> sum
-wonders: goblet
