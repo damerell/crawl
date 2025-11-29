@@ -620,13 +620,13 @@ deserving!
 %%%%
 Nemelex Xobeh wrath
 
-Nemelex Xobeh forces sinners to rely on the luck of the draw. Stacked
-decks are immediately shuffled, and offenders are regularly forced to
-draw from the deck of Punishment, inflicting a range of unpleasant
-effects including draining, hunger, torment and polymorphing, as well
-as calling upon other gods to assist in inflicting wrath.  Further,
-attempting to draw from other decks may instead lead to drawing from
-the deck of Punishment.
+Nemelex Xobeh forces sinners to rely on the luck of the draw. Divine
+decks are reclaimed, stacked decks are immediately shuffled, and
+offenders are regularly forced to draw from the deck of Punishment,
+inflicting a range of unpleasant effects including draining, hunger,
+torment and polymorphing, as well as calling upon other gods to assist
+in inflicting wrath.  Further, attempting to draw from other decks may
+instead lead to drawing from the deck of Punishment.
 %%%%
 Okawaru wrath
 
