@@ -27,7 +27,7 @@ enum daction_type
     DACT_ALLY_TROG,
 #endif
 
-    DACT_SHUFFLE_DECKS,
+    DACT_SHUFFLE_DECKS, // also reclaims
     DACT_REAUTOMAP,
     DACT_JIYVA_DEAD,
     DACT_PIKEL_MINIONS,

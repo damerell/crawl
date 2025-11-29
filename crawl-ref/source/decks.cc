@@ -2979,47 +2979,50 @@ void init_deck(item_def &item)
     item.used_count  = 0;
 }
 
-void shuffle_all_decks_on_level()
-{
+void shuffle_reclaim_decks_on_level() {
     for (auto &item : mitm)
     {
-        if (item.defined() && is_deck(item))
-        {
+        if (item.defined() && is_deck(item)) {
+            if (item.deck_rarity == DECK_RARITY_DIVINE) {
+                destroy_item(item.index());
+            } else {
 #ifdef DEBUG_DIAGNOSTICS
-            mprf(MSGCH_DIAGNOSTICS, "Shuffling: %s on %s",
-                 item.name(DESC_PLAIN).c_str(),
-                 level_id::current().describe().c_str());
+                mprf(MSGCH_DIAGNOSTICS, "Shuffling: %s on %s",
+                     item.name(DESC_PLAIN).c_str(),
+                     level_id::current().describe().c_str());
 #endif
-            _shuffle_deck(item);
+                _shuffle_deck(item);
+            }
         }
     }
 }
 
-static bool _shuffle_inventory_decks()
+static bool _shuffle_reclaim_inventory_decks()
 {
     bool success = false;
 
     for (auto &item : you.inv)
     {
-        if (item.defined() && is_deck(item))
-        {
+        if (item.defined() && is_deck(item)) {
+            if (item.deck_rarity == DECK_RARITY_DIVINE) {
+                dec_inv_item_quantity(item.link, 1);
+            } else {
 #ifdef DEBUG_DIAGNOSTICS
-            mprf(MSGCH_DIAGNOSTICS, "Shuffling in inventory: %s",
-                 item.name(DESC_PLAIN).c_str());
+                mprf(MSGCH_DIAGNOSTICS, "Shuffling in inventory: %s",
+                     item.name(DESC_PLAIN).c_str());
 #endif
-            _shuffle_deck(item);
-
+                _shuffle_deck(item);
+            }
             success = true;
         }
     }
-
     return success;
 }
 
 void nemelex_shuffle_decks()
 {
     add_daction(DACT_SHUFFLE_DECKS);
-    _shuffle_inventory_decks();
+    _shuffle_reclaim_inventory_decks();
 
     // Wildly inaccurate, but of similar quality as the old code which
     // was triggered by the presence of any deck anywhere.
