@@ -1,7 +1,17 @@
-cards remaining
+On abandonment - shuffle doesn't lose identification
+ - could just rejoin?
 
-Tomb card
-check _card_power in decks.cc
+replace the  random_choose_weighted in religion.cc with an array of deck
+types and weights?
+
+when we drop a divine deck, set a you.props bit to say that type of deck
+on level
+
+reap these decks in load_level, unsetting the bit
+
+also unset the bit when a divine deck is destroyed by any means
+
+Neme could remove divine decks on apostacy
 
 # 1a011fea95c6f55bc9f9541fe9385505dd7b49c4 elements card
 # 8735e2aeb51eb73d09cfb5ee046eb8205c2421f2 deck descriptions??

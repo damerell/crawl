@@ -158,7 +158,7 @@ bool deck_deal();
 string which_decks(card_type card);
 bool deck_stack();
 void nemelex_shuffle_decks();
-void shuffle_all_decks_on_level();
+void shuffle_reclaim_decks_on_level();
 
 bool draw_three(int slot);
 bool stack_five(int slot);
