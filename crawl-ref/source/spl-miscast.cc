@@ -2699,11 +2699,11 @@ void MiscastEffect::_air(int severity)
             break;
         case 1:
             if (special_source == HELL_EFFECT_MISCAST)
-                all_msg = "Venomous gases billow around you!";
-            you_msg        = "Venomous gases pour from your @hands@!";
-            mon_msg_seen   = "Venomous gases pour from @the_monster@'s "
+                all_msg = "Poisonous gases billow around you!";
+            you_msg        = "Poisonous gases pour from your @hands@!";
+            mon_msg_seen   = "Poisonous gases pour from @the_monster@'s "
                              "@hands@!";
-            mon_msg_unseen = "Venomous gases pour forth from the thin air!";
+            mon_msg_unseen = "Poisonous gases pour forth from the thin air!";
 
             _big_cloud(CLOUD_POISON, 20, 8 + random2(5));
             break;
@@ -2884,11 +2884,11 @@ void MiscastEffect::_poison(int severity)
             break;
         case 1:
             if (special_source == HELL_EFFECT_MISCAST)
-                all_msg = "Venomous gases billow around you!";
-            you_msg        = "Venomous gases pour from your @hands@!";
-            mon_msg_seen   = "Venomous gases pour from @the_monster@'s "
+                all_msg = "Poisonous gases billow around you!";
+            you_msg        = "Poisonous gases pour from your @hands@!";
+            mon_msg_seen   = "Poisonous gases pour from @the_monster@'s "
                              "@hands@!";
-            mon_msg_unseen = "Venomous gases pour forth from the thin air!";
+            mon_msg_unseen = "Poisonous gases pour forth from the thin air!";
 
             _big_cloud(CLOUD_POISON, 20, 7 + random2(7));
             break;
