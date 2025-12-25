@@ -1431,6 +1431,9 @@ static void _name_deck(const item_def &deck, description_level_type desc,
     // name overridden
     if (dbname) return;
 
+    // is this always OK? I don't knooooow
+    if (desc == DESC_QUALNAME) return;
+    
     buff << " {";
     // A marked deck!
     if (top_card_is_known(deck))
@@ -1440,20 +1443,16 @@ static void _name_deck(const item_def &deck, description_level_type desc,
     if (top_card_is_known(deck))
         buff << ", ";
     
-    if (deck.used_count >= 0) {
-        if (deck.props.exists(DECK_MAX_CARDS)) {
-            int max = deck.props[DECK_MAX_CARDS].get_int();
-            int min = deck.props[DECK_MIN_CARDS].get_int();
-            if (min == max) {
-                buff << min << " card" << ((max > 1) ? "s": "");
-            } else {
-                buff << min << "-" << max << " cards";
-            }
+    if (deck.props.exists(DECK_MAX_CARDS)) {
+        int max = deck.props[DECK_MAX_CARDS].get_int();
+        int min = deck.props[DECK_MIN_CARDS].get_int();
+        if (min == max) {
+            buff << min << " card" << ((max > 1) ? "s": "");
         } else {
-            buff << "drawn: " << abs(deck.used_count);
+            buff << min << "-" << max << " cards";
         }
     } else {
-        buff << abs(deck.used_count) << " cards";
+        buff << "drawn: " << abs(deck.used_count);
     }
     buff << "}";
 }
