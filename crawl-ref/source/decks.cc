@@ -79,8 +79,6 @@ using namespace ui;
 
 // For information on deck structure, reference the comment near the beginning
 
-#define STACKED_KEY "stacked"
-// 'deck is stacked' prop
 
 static void _deck_ident(item_def& deck);
 
@@ -190,53 +188,65 @@ struct deck_type_data
     int weight;
     /// The list of decks this deck contains
     vector<const deck_archetype *> subdecks;
+    int deck_max;
 };
 
 static map<misc_item_type, deck_type_data> all_decks =
 {
     { MISC_DECK_OF_ESCAPE, {
         "escape",
-        2, { &deck_of_transport, &deck_of_emergency }
+        2, { &deck_of_transport, &deck_of_emergency },
+        18
     } },
     { MISC_DECK_OF_DESTRUCTION, {
         "destruction",
-        1, { &deck_of_destruction }
+        1, { &deck_of_destruction },
+        27
     } },
     { MISC_DECK_OF_DUNGEONS, {
         "dungeons",
-        0, { &deck_of_dungeons }
+        0, { &deck_of_dungeons },
+        1
     } },
     { MISC_DECK_OF_SUMMONING, {
         "summoning",
-        0, { &deck_of_summoning }
+        0, { &deck_of_summoning },
+        15
     } },
     { MISC_DECK_OF_WONDERS, {
         "wonders",
-        0, { &deck_of_wonders }
+        0, { &deck_of_wonders },
+        1
     } },
     { MISC_DECK_OF_ODDITIES, {
         "oddities",
-        0, { &deck_of_oddities }
+        0, { &deck_of_oddities },
+        1
     } },
     { MISC_DECK_OF_PUNISHMENT, {
         "punishment",
-        0, { &deck_of_punishment }
+        0, { &deck_of_punishment },
+        13
     } },
     { MISC_DECK_OF_WAR, {
         "war",
-        4, { &deck_of_battle, &deck_of_summoning }
+        4, { &deck_of_battle, &deck_of_summoning },
+        13
     } },
     { MISC_DECK_OF_BATTLE, {
         "battle",
-        0, { &deck_of_battle }
+        0, { &deck_of_battle },
+        15
     } },
     { MISC_DECK_OF_CHANGES, {
         "changes",
-        2, { &deck_of_battle, &deck_of_transport }
+        2, { &deck_of_battle, &deck_of_transport },
+        13
     } },
     { MISC_DECK_OF_DEFENCE, {
         "defence",
-        2, { &deck_of_battle, &deck_of_emergency }
+        2, { &deck_of_battle, &deck_of_emergency },
+        13
     } },
 };
 
@@ -534,6 +544,9 @@ static void _remember_drawn_card(item_def& deck, card_type card, bool allow_id)
     ASSERT(is_deck(deck));
     CrawlHashTable &props = deck.props;
     CrawlVector &drawn = props[DRAWN_CARD_KEY].get_vector();
+
+    if ((drawn.size() >=3) or item_type_known(deck)) return;
+
     drawn.push_back(static_cast<char>(card));
 
     // Once you've drawn two cards, you know the deck.
@@ -590,10 +603,7 @@ static bool _check_buggy_deck(item_def& deck)
                 strm << "Strange, this deck is already empty.";
 
                 int cards_left = 0;
-                if (deck.used_count >= 0)
-                    cards_left = deck.initial_cards - deck.used_count;
-                else
-                    cards_left = -deck.used_count;
+                cards_left = deck.initial_cards - deck.used_count;
 
                 if (cards_left != 0)
                 {
@@ -703,27 +713,13 @@ static bool _check_buggy_deck(item_def& deck)
         problems = true;
     }
 
-    if (deck.used_count >= 0)
+    if (deck.initial_cards != (deck.used_count + num_cards))
     {
-        if (deck.initial_cards != (deck.used_count + num_cards))
-        {
-            strm << "Have you used " << deck.used_count << " cards, or "
-                 << (deck.initial_cards - num_cards) << "? Oops.";
-            strm << endl;
-            deck.used_count = deck.initial_cards - num_cards;
-            problems = true;
-        }
-    }
-    else
-    {
-        if (-deck.used_count != num_cards)
-        {
-            strm << "There are " << num_cards << " cards left, not "
-                 << (-deck.used_count) << ". Oops.";
-            strm << endl;
-            deck.used_count = -num_cards;
-            problems = true;
-        }
+        strm << "Have you used " << deck.used_count << " cards, or "
+             << (deck.initial_cards - num_cards) << "? Oops.";
+        strm << endl;
+        deck.used_count = deck.initial_cards - num_cards;
+        problems = true;
     }
 
     if (!problems)
@@ -788,6 +784,7 @@ static void _deck_ident(item_def& deck)
     {
         set_ident_flags(deck, ISFLAG_KNOW_TYPE);
         mprf("This is %s.", deck.name(DESC_A).c_str());
+        you.wield_change = true;
     }
 }
 
@@ -806,8 +803,7 @@ bool deck_identify_first(item_def& deck)
 }
 
 // Draw the top four cards of an unstacked deck and play them all.
-// Discards the rest of the deck. Return false if the operation was
-// failed/aborted along the way.
+// Return false if the operation was failed/aborted along the way.
 bool deck_deal()
 {
     const int slot = _choose_inventory_deck("Deal from which deck?");
@@ -821,10 +817,17 @@ bool deck_deal()
         return false;
 
     CrawlHashTable &props = deck.props;
-    if (props[STACKED_KEY].get_bool())
+    if (props.exists(STACKED_KEY) && props[STACKED_KEY].get_int() > 0)
     {
-        mpr("This deck seems insufficiently random for dealing.");
+        mpr("This deck seems insufficiently random for dealing. The stacked cards must be played normally before you can Deal Four from it.");
         crawl_state.zero_turns_taken();
+        return false;
+    }
+    
+    if ((deck.props[DECK_MAX_CARDS].get_int() < 4) &&
+        (!yesno("Really Deal Four from a deck you know has too few cards? "
+                "Nemelex will not be pleased.", false, 0))) {
+        canned_msg(MSG_OK);
         return false;
     }
 
@@ -856,16 +859,6 @@ bool deck_deal()
     {
         mpr("Nemelex gives you another card to finish dealing.");
         draw_from_deck_of_punishment(true);
-    }
-
-    // If the deck had cards left, exhaust it.
-    if (deck.quantity > 0)
-    {
-        mpr(_empty_deck_msg(deck.deck_rarity));
-        if (slot == you.equip[EQ_WEAPON])
-            unwield_item();
-
-        dec_inv_item_quantity(slot, 1);
     }
 
     return true;
@@ -1008,6 +1001,12 @@ static void _describe_cards(vector<card_type> cards)
 // Return false if the operation was failed/aborted along the way.
 bool deck_stack()
 {
+    if (crawl_state.is_replaying_keys())
+    {
+        crawl_state.cancel_cmd_all("You can't repeat Stack Five.");
+        return false;
+    }
+
     const int slot = _choose_inventory_deck("Stack which deck?");
     if (slot == -1)
     {
@@ -1019,6 +1018,14 @@ bool deck_stack()
     if (_check_buggy_deck(deck))
         return false;
 
+    CrawlHashTable &props = deck.props;
+    if (props.exists(STACKED_KEY) && props[STACKED_KEY].get_int() > 0)
+    {
+        mpr("This deck has been stacked, and the stacked cards must be played before it can be stacked again.");
+        crawl_state.zero_turns_taken();
+        return false;
+    }
+    
     _deck_ident(deck);
     const int num_cards    = cards_in_deck(deck);
 
@@ -1109,9 +1116,9 @@ bool stack_five(int slot)
     }
 
     CrawlHashTable &props = deck.props;
-    deck.used_count = -num_to_stack;
-    deck.props[DECK_MIN_CARDS] = deck.props[DECK_MAX_CARDS] = num_to_stack;
-    props[STACKED_KEY] = true;
+    deck.used_count = 0; deck.initial_cards = num_to_stack;
+    props[DECK_MIN_CARDS] = props[DECK_MAX_CARDS] = num_to_stack;
+    props[STACKED_KEY] = num_to_stack;
     you.wield_change = true;
 
     StackFiveMenu menu(draws, flags);
@@ -1145,6 +1152,12 @@ bool stack_five(int slot)
 // Draw the next three cards, discard two and pick one.
 bool deck_triple_draw()
 {
+    if (crawl_state.is_replaying_keys())
+    {
+        crawl_state.cancel_cmd_all("You can't repeat Triple Draw.");
+        return false;
+    }
+    
     const int slot = _choose_inventory_deck("Triple draw from which deck?");
     if (slot == -1)
     {
@@ -3037,5 +3050,60 @@ void count_out_cards(item_def& deck, int count) {
         deck.props[DECK_MIN_CARDS] =
         max(1, deck.props[DECK_MIN_CARDS].get_int() - count);
         deck.props[DECK_MAX_CARDS].get_int() -= count;
+    }
+    if (deck.props.exists(STACKED_KEY)) {
+        deck.props[STACKED_KEY] =
+        max(0, deck.props[STACKED_KEY].get_int() - count);
+    }
+    // These numbers are no longer player visible so this is just to prevent
+    // integer overflow if a deck is used all game
+    if (deck.used_count > 27) {
+        deck.used_count -= 9; deck.initial_cards -= 9;
+    }
+}
+
+int deck_max_cards(const item_def& deck) {
+    return all_decks[(misc_item_type)deck.sub_type].deck_max;
+}
+
+int top_up_deck(item_def& deck) {
+    // for now it is intentional that Nemelex can top up one card. Use 'em up
+    // or waste 'em
+    int maxcards = deck_max_cards(deck);
+    if (cards_in_deck(deck) >= maxcards) {
+        if (deck.props[DECK_MIN_CARDS].get_int() < maxcards) {
+            ASSERT(deck.props[DECK_MAX_CARDS].get_int() == maxcards);
+            deck.props[DECK_MIN_CARDS] = maxcards;
+            mprf(MSGCH_GOD, "%s reveals that your %s has %d cards.",
+                 god_name(GOD_NEMELEX_XOBEH).c_str(),
+                 deck.name(DESC_QUALNAME).c_str(), maxcards);
+            return -1;
+        }
+        return 0;
+    } else {
+        CrawlVector &cards = deck.props[CARD_KEY].get_vector();
+        CrawlVector &flags = deck.props[CARD_FLAG_KEY].get_vector();
+
+        int todeal = random_range(MIN_STARTING_CARDS, MAX_STARTING_CARDS);
+        if (todeal + cards_in_deck(deck) >= maxcards) {
+            todeal = maxcards - cards_in_deck(deck);
+        }
+        deck.initial_cards += todeal;
+//        cards.resize((vec_size) deck.initial_cards);
+//        flags.resize((vec_size) deck.initial_cards);
+        for (int i = 0; i < todeal; ++i) {
+            card_type card = _random_card(deck);
+            cards.insert(0, (char) card); flags.insert(0, (char) 0);
+        }
+        deck.props[DECK_MIN_CARDS] =
+        min(maxcards,
+            deck.props[DECK_MIN_CARDS].get_int() + MIN_STARTING_CARDS);
+        deck.props[DECK_MAX_CARDS] =
+        min(maxcards,
+            deck.props[DECK_MAX_CARDS].get_int() + MAX_STARTING_CARDS);
+        mprf(MSGCH_GOD, "%s adds to your %s.",
+             god_name(GOD_NEMELEX_XOBEH).c_str(),
+             deck.name(DESC_QUALNAME).c_str());
+        return todeal;
     }
 }
