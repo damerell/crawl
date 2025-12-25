@@ -33,6 +33,7 @@ public:
     void load(reader&);
 
     void rot_all_corpses();
+    void remove_divine_decks();
 
     string description() const;
     string feature_description() const;
@@ -169,6 +170,7 @@ public:
     bool  update_stash(const coord_def& c);
 
     void rot_all_corpses();
+    void remove_divine_decks();
 
     // Mark nets at (x,y) as no longer trapping an actor.
     bool unmark_trapping_nets(const coord_def &c);

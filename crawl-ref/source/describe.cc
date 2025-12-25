@@ -1959,7 +1959,7 @@ static string _describe_deck(const item_def &item)
     if (you_worship(GOD_NEMELEX_XOBEH)) {
         description += " and piety.";
         if (item.deck_rarity == DECK_RARITY_DIVINE) {
-            description += " Divinely granted, this deck's power is particularly dependent on piety.";
+            description += "\nDivinely granted, this deck's power is particularly dependent on piety. If you drop this deck, it will vanish when you leave the level.";
         }
     } else {
         description += ".";
@@ -1969,17 +1969,18 @@ static string _describe_deck(const item_def &item)
     if (_check_buggy_deck(item, description))
         return "";
 
-    if (item_type_known(item))
+    if (item_type_known(item)) {
         description += deck_contents(item.sub_type) + "\n";
-
-    const vector<card_type> drawn_cards = get_drawn_cards(item);
-    if (!drawn_cards.empty())
-    {
-        description += "\n";
-        description += "Drawn card(s): ";
-        description += comma_separated_fn(drawn_cards.begin(),
-                                          drawn_cards.end(),
-                                          card_name);
+    } else {
+        const vector<card_type> drawn_cards = get_drawn_cards(item);
+        if (!drawn_cards.empty())
+        {
+            description += "\n";
+            description += "Drawn card(s): ";
+            description += comma_separated_fn(drawn_cards.begin(),
+                                              drawn_cards.end(),
+                                              card_name);
+        }
     }
 
     const int num_cards = cards_in_deck(item);

@@ -41,6 +41,7 @@
 #include "coordit.h"
 #include "dbg-scan.h"
 #include "dbg-util.h"
+#include "decks.h"
 #include "describe.h"
 #include "dgn-overview.h"
 #include "dungeon.h"
@@ -5047,6 +5048,18 @@ void unmarshallItem(reader &th, item_def &item)
                 item.brand = SPMSL_STEEL;
                 break;
             }
+        }
+    }
+    if (th.getMinorVersion() < TAG_MINOR_DECK_USED_COUNT
+        && item.base_type == OBJ_MISCELLANY
+        && is_deck(item)) {
+        if (item.used_count < 0) {
+            item.initial_cards = -item.used_count;
+            item.used_count = 0;
+        }
+        if (item.props[STACKED_KEY].get_bool()) {
+            item.props.erase(STACKED_KEY);
+            item.props[STACKED_KEY] = cards_in_deck(item);
         }
     }
 #endif

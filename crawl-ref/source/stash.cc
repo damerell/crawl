@@ -17,6 +17,7 @@
 #include "cluautil.h"
 #include "command.h"
 #include "coordit.h"
+#include "decks.h"
 #include "describe.h"
 #include "describe-spells.h"
 #include "directn.h"
@@ -518,6 +519,16 @@ void Stash::rot_all_corpses()
             item.stash_freshness = -1;
     }
 }
+/// Nemelex: remove divine decks
+void Stash::remove_divine_decks() {
+    for (int i = items.size() - 1; i >= 0; i--)  {
+        item_def &item = items[i];
+        
+        if (is_deck(item) && (item.deck_rarity == DECK_RARITY_DIVINE)) {
+            items.erase(items.begin() + i);
+        }
+    }
+}
 
 void Stash::_update_corpses(int rot_time)
 {
@@ -991,6 +1002,12 @@ void LevelStashes::rot_all_corpses()
 {
     for (auto &entry : m_stashes)
         entry.second.rot_all_corpses();
+}
+// Nemelex: remove divine decks
+void LevelStashes::remove_divine_decks()
+{
+    for (auto &entry : m_stashes)
+        entry.second.remove_divine_decks();
 }
 
 void LevelStashes::_update_corpses(int rot_time)

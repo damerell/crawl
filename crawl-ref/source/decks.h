@@ -10,6 +10,9 @@
 #define CARD_KEY "cards"
 #define CARD_FLAG_KEY "card_flags"
 #define DRAWN_CARD_KEY "drawn_cards"
+#define STACKED_KEY "stacked"
+// 'deck is stacked' prop
+
 const int BLADE_SLAYING_BONUS = 4;
 
 // DECK STRUCTURE: deck.initial_cards is the number of cards the deck *started*
@@ -20,7 +23,8 @@ const int BLADE_SLAYING_BONUS = 4;
 // (with index 0 being the first drawn), deck.props[CARD_FLAG_KEY]
 // holds the flags for each card.
 //
-// *if deck.used_count is negative, it's actually -(cards_left). wtf.
+// initial_cards and used_count can be reduced in sync by count_out_cards
+// to prevent integer overflow with a very much used deck
 //
 // The card type and per-card flags are each stored as unsigned bytes,
 // for a maximum of 256 different kinds of cards and 8 bits of flags.
@@ -189,3 +193,6 @@ const vector<card_type> get_drawn_cards(const item_def& deck);
 bool deck_identify_first(item_def& deck);
 
 void count_out_cards(item_def& deck, int count); // ah ah ah ah
+
+int deck_max_cards(const item_def& deck);
+int top_up_deck(item_def& deck);

@@ -996,15 +996,36 @@ static bool _need_missile_gift(bool forced)
                && x_chance_in_y(1 + you.skills[sk], 12));
 }
 
-static bool _give_nemelex_gift(bool forced = false)
-{
+static bool _give_new_deck(misc_item_type gift_type) {
     // But only if you're not flying over deep water.
     if (!(feat_has_solid_floor(grd(you.pos()))
-          || feat_is_watery(grd(you.pos())) && species_likes_water(you.species)))
-    {
+          || feat_is_watery(grd(you.pos())) &&
+          species_likes_water(you.species))) {
         return false;
     }
+    int thing_created = items(true, OBJ_MISCELLANY, gift_type, 1, 0,
+                              GOD_NEMELEX_XOBEH);
+    
+    move_item_to_grid(&thing_created, you.pos(), true);
+    
+    if (thing_created != NON_ITEM) {
+        item_def &deck(mitm[thing_created]);
+        
+        deck.deck_rarity = DECK_RARITY_DIVINE;
+        deck.flags |= ISFLAG_KNOW_TYPE;
+        
+        simple_god_message(" grants you a gift!");
+        // included in default force_more_message
+        canned_msg(MSG_SOMETHING_APPEARS);
+        return true;
+    }        
+    return false;
+}
 
+static bool _give_nemelex_gift(bool forced = false)
+{
+    bool success = false; bool foundininv = false; bool foundatall = false;
+    int dealt = MIN_STARTING_CARDS;
     // Nemelex will give at least one gift early.
     if (forced
         || !you.num_total_gifts[GOD_NEMELEX_XOBEH]
@@ -1018,44 +1039,46 @@ static bool _give_nemelex_gift(bool forced = false)
                                         2, MISC_DECK_OF_BATTLE,
                                         2, MISC_DECK_OF_ESCAPE);
 
-        int thing_created = items(true, OBJ_MISCELLANY, gift_type, 1, 0,
-                                  GOD_NEMELEX_XOBEH);
+        for (auto &item : you.inv) {
+            if ((item.base_type == OBJ_MISCELLANY) &&
+                (item.sub_type == gift_type) &&
+                (item.deck_rarity == DECK_RARITY_DIVINE)) {
+                dealt = top_up_deck(item); success = (dealt != 0);
+                foundininv = true; foundatall = true; break;
+            }
+        }
+        
+        if (!foundininv) {
+            for (auto &item : mitm) {
+                if ((item.base_type == OBJ_MISCELLANY) &&
+                    (item.sub_type == gift_type) &&
+                    (item.deck_rarity == DECK_RARITY_DIVINE)) {
+                    success = false; foundatall = true; break;
+                }
+            }
+        }
 
-        move_item_to_grid(&thing_created, you.pos(), true);
-
-        if (thing_created != NON_ITEM)
-        {
-            // This comment now moot
-            // Piety|Common  | Rare  |Legendary
-            // --------------------------------
-            //     0:  95.00%,  5.00%,  0.00%
-            //    20:  86.00%, 10.50%,  3.50%
-            //    40:  77.00%, 16.00%,  7.00%
-            //    60:  68.00%, 21.50%, 10.50%
-            //    80:  59.00%, 27.00%, 14.00%
-            //   100:  50.00%, 32.50%, 17.50%
-            //   120:  41.00%, 38.00%, 21.00%
-            //   140:  32.00%, 43.50%, 24.50%
-            //   160:  23.00%, 49.00%, 28.00%
-            //   180:  14.00%, 54.50%, 31.50%
-            //   200:   5.00%, 60.00%, 35.00%
-            item_def &deck(mitm[thing_created]);
-
-            deck.deck_rarity = DECK_RARITY_DIVINE;
-            deck.flags |= ISFLAG_KNOW_TYPE;
-
-            simple_god_message(" grants you a gift!");
-            // included in default force_more_message
-            canned_msg(MSG_SOMETHING_APPEARS);
-
-            inc_gift_timeout(5 + random2avg(9, 2));
+        if (!foundatall) {
+            success = _give_new_deck(gift_type);
+        }
+        
+        if (success) {
+            int timeout = (5 + random2avg(9, 2));
+            if (dealt == -1) {
+                inc_gift_timeout(1);
+                return true;
+            } else if (dealt >= MIN_STARTING_CARDS) {
+                inc_gift_timeout(timeout);
+            } else {
+                timeout *= dealt + 1 ; timeout /= MIN_STARTING_CARDS;
+                inc_gift_timeout(timeout);
+            }
             you.num_current_gifts[you.religion]++;
             you.num_total_gifts[you.religion]++;
             take_note(Note(NOTE_GOD_GIFT, you.religion));
+            return true;
         }
-        return true;
     }
-
     return false;
 }
 
@@ -4060,6 +4083,12 @@ bool join_religion(god_type which_god)
     if (you_worship(GOD_VEHUMET))
         do_god_gift();
 
+//    if (you_worship(GOD_NEMELEX_XOBEH)) {
+//        you.props.erase("dropped decks");
+//        for (auto it = deck_types.begin(); it != deck_types.end(); ++it) {
+//            you.props["dropped_decks"].get_vector()[*it].get_int() = 0;
+//       }
+//    }
     // Allow training all divine ability skills immediately.
     vector<ability_type> abilities = get_god_abilities();
     for (ability_type abil : abilities)

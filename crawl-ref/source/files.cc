@@ -35,6 +35,7 @@
 #include "coordit.h"
 #include "dactions.h"
 #include "dgn-overview.h"
+#include "decks.h"
 #include "directn.h"
 #include "dungeon.h"
 #include "end.h"
@@ -1173,6 +1174,16 @@ static bool _leave_level(dungeon_feature_type stair_taken,
     if (you.religion == GOD_FEDHAS)
         _fedhas_rot_all_corpses(old_level);
 
+    for (size_t mitm_index = 0; mitm_index < mitm.size(); ++mitm_index) {
+        item_def &item = mitm[mitm_index];
+        if (item.defined() && is_deck(item) &&
+            (item.deck_rarity == DECK_RARITY_DIVINE)) {
+            item_was_destroyed(item); destroy_item(mitm_index);
+        }
+    }
+    LevelStashes *ls = StashTrack.find_level(old_level);
+    if (ls) ls->remove_divine_decks();
+    
     if (!you.level_stack.empty()
         && you.level_stack.back().id == level_id::current())
     {
