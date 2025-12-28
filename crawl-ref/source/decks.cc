@@ -844,6 +844,7 @@ bool deck_deal()
 
     const int num_to_deal = (num_cards < 4 ? num_cards : 4);
 
+    you.props["in stack four"] = true; you.props["stack four iood"] = false;
     for (int i = 0; i < num_to_deal; ++i)
     {
         int last = cards_in_deck(deck) - 1;
@@ -856,7 +857,8 @@ bool deck_deal()
         evoke_deck(deck);
         redraw_screen();
     }
-
+    you.props["in stack four"] = false;
+    
     // Nemelex doesn't like dealers with inadequate decks.
     if (num_to_deal < 4)
     {
@@ -1776,7 +1778,17 @@ static void _damaging_card(card_type card, int power, deck_rarity_type rarity,
     case CARD_HAMMER:  ztype = hammerzaps[power_level];  break;
     case CARD_ORB: // XXX this is here to stop 45c4a97 applying cleanly
         // it breaks the Orb - see f4014ab7dd66aeb7e08f8ac1f
-        ztype = orbzaps[power_level];     break;
+        ztype = orbzaps[power_level];
+        if (ztype == ZAP_IOOD) {
+            if (you.props["in stack four"].get_bool()) {
+                if (you.props["stack four iood"].get_bool()) {
+                    ztype = ZAP_IRON_SHOT;
+                } else {
+                    you.props["stack four iood"] = true;
+                }
+            }
+        }
+        break;
 
     case CARD_PAIN:
         if (power_level == 2)
