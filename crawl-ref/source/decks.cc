@@ -1042,8 +1042,7 @@ bool deck_stack()
         mpr("The deck has exactly five cards.");
     else
     {
-        mprf("You draw the first five cards out of %d and discard the rest.",
-             num_cards);
+        mpr("You draw the first five cards to stack atop the deck.");
     }
     // these are included in default force_more_message to show them before menu
 
@@ -1105,8 +1104,8 @@ bool stack_five(int slot)
     const int num_cards    = cards_in_deck(deck);
     const int num_to_stack = (num_cards < 5 ? num_cards : 5);
 
-    vector<card_type> draws;
-    vector<uint8_t>   flags;
+    vector<card_type> draws; vector<card_type> leftovers;
+    vector<uint8_t>   flags; vector<uint8_t>   overflags;
     for (int i = 0; i < num_cards; ++i)
     {
         uint8_t   _flags;
@@ -1116,13 +1115,20 @@ bool stack_five(int slot)
         {
             draws.push_back(card);
             flags.push_back(_flags | CFLAG_SEEN);
+        } else {
+            leftovers.push_back(card); overflags.push_back(_flags);
         }
-        // Rest of deck is discarded.
     }
-
+    
     CrawlHashTable &props = deck.props;
-    deck.used_count = 0; deck.initial_cards = num_to_stack;
-    props[DECK_MIN_CARDS] = props[DECK_MAX_CARDS] = num_to_stack;
+    deck.used_count = 0; deck.initial_cards = num_cards;
+    if (num_cards <= 5) {
+        // We know exactly how many there are now
+        props[DECK_MIN_CARDS] = props[DECK_MAX_CARDS] = num_cards;
+    } else {
+        // There must be at least 6
+        props[DECK_MIN_CARDS] = max(6, props[DECK_MIN_CARDS].get_int());
+    }
     props[STACKED_KEY] = num_to_stack;
     you.wield_change = true;
 
@@ -1142,6 +1148,11 @@ bool stack_five(int slot)
                 " or <w>Enter</w> to accept."));
     menu.show();
 
+    for (unsigned int i = 0; i < leftovers.size(); ++i)
+    {
+        _push_top_card(deck, leftovers[leftovers.size() - 1 - i],
+                       overflags[overflags.size() - 1 - i]);
+    }
     for (unsigned int i = 0; i < draws.size(); ++i)
     {
         _push_top_card(deck, draws[draws.size() - 1 - i],
