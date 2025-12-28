@@ -479,9 +479,9 @@ Nemelex will give you one extra card, but you might not like it.
 %%%%
 Stack Five ability
 
-Shows you five cards from any unstacked deck in your inventory, losing the rest
-of the deck, and allows you to sort them into any order. Subsequently, you can
-draw these cards in the order you chose.
+Shows you five cards from any unstacked deck in your inventory and allows you
+to stack them on top of the deck in any order. However, stacked cards cannot be
+played with Deal Four.
 %%%%
 # Beogh
 Smiting ability
