@@ -2960,6 +2960,10 @@ bool is_deck(const item_def &item, bool iinfo)
            && is_deck_type(item.sub_type, iinfo);
 }
 
+bool is_divine_deck(const item_def &item) {
+    return is_deck(item) && (item.deck_rarity == DECK_RARITY_DIVINE);
+}
+
 bool bad_deck(const item_def &item)
 {
     if (!is_deck(item))

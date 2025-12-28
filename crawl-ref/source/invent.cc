@@ -1585,8 +1585,9 @@ bool needs_handle_warning(const item_def &item, operation_types oper,
         return true;
     }
 
-    if ((oper == OPER_DROP || oper == OPER_DESTROY || oper == OPER_THROW) &&
-        item.props.exists(DIVINE_DROP_KEY)) {
+    if ((oper == OPER_DROP || oper == OPER_DESTROY || oper == OPER_THROW ||
+         (oper == OPER_FIRE && is_divine_deck(item))) &&
+        (item.props.exists(DIVINE_DROP_KEY) || is_divine_deck(item))) {
         penance = false; return true;
     }
 
@@ -1776,6 +1777,9 @@ bool check_warning_inscriptions(const item_def& item,
             } else {
                 prompt += " This divinely granted item will be lost.";
             }
+        }
+        if (is_divine_deck(item)) {
+            prompt += " This deck will be lost if you leave the level without picking it up.";
         }
                 
         return yesno(prompt.c_str(), false, 'n')

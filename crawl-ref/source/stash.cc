@@ -524,9 +524,7 @@ void Stash::remove_divine_decks() {
     for (int i = items.size() - 1; i >= 0; i--)  {
         item_def &item = items[i];
         
-        if (is_deck(item) && (item.deck_rarity == DECK_RARITY_DIVINE)) {
-            items.erase(items.begin() + i);
-        }
+        if (is_divine_deck(item)) items.erase(items.begin() + i);
     }
 }
 
