@@ -938,12 +938,16 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
             continue;
 
         // The tile is occupied.
-        if (actor_at(*ai))
+        if (actor *act = actor_at(*ai))
         {
             had_monster = true;
-            coord_def newpos = push_actor_from(*ai, &veto_spots, false);
-            if (zin) ASSERT(!newpos.origin());
-            veto_spots.push_back(newpos);
+            if (mons_is_tentacle_or_tentacle_segment(act->type) && !zin) {
+                monster_die(*act->as_monster(), KILL_MISC, NON_MONSTER, true);
+            } else {
+                coord_def newpos = push_actor_from(*ai, &veto_spots, false);
+                if (zin) ASSERT(!newpos.origin());
+                veto_spots.push_back(newpos);
+            }
         }
 
         // closed doors are solid, but we don't want a behaviour difference
@@ -993,7 +997,7 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
             // Tomb card
             else
             {
-                if (had_monster) {
+                if (had_monster || (igrd(*ai) != NON_ITEM)) {
                     if (monster_habitable_grid(MONS_WITHERED_PLANT,
                                                grd(*ai))) {
                         mgen_data plant(MONS_WITHERED_PLANT, BEH_HOSTILE, *ai,
