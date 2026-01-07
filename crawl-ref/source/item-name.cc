@@ -1837,7 +1837,7 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
                  << " wand";
         }
 
-        if (dbname) 
+        if (dbname || qualname) 
             break;
 
         if (ident) {
