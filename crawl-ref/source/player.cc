@@ -7876,7 +7876,7 @@ bool player::can_do_shaft_ability(bool quiet) const
 
     if (feat_is_shaftable(grd(pos())))
     {
-        if (!is_valid_shaft_level())
+        if (!is_valid_shaft_level(false, false))
         {
             if (!quiet)
                 mpr("You can't shaft yourself on this level.");

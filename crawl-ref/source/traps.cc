@@ -1543,7 +1543,7 @@ dungeon_feature_type trap_category(trap_type type)
  *              this argument is ignored.
  * @returns true if such a shaft can be placed.
  */
-bool is_valid_shaft_level(bool known)
+bool is_valid_shaft_level(bool known, bool respect_brflags)
 {
     // Important: We are sometimes called before the level has been loaded
     // or generated, so should not depend on properties of the level itself,
@@ -1560,7 +1560,7 @@ bool is_valid_shaft_level(bool known)
 
     const Branch &branch = branches[place.branch];
 
-    if (branch.branch_flags & BFLAG_NO_SHAFTS)
+    if (respect_brflags && (branch.branch_flags & BFLAG_NO_SHAFTS))
         return false;
 
     // When generating levels, don't place an unknown shaft on the level

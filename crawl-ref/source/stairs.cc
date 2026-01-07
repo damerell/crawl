@@ -466,7 +466,7 @@ static level_id _travel_destination(const dungeon_feature_type how,
     level_id dest;
     if (shaft)
     {
-        if (!is_valid_shaft_level())
+        if (!is_valid_shaft_level(false, false))
         {
             if (known_shaft)
                 mpr("The shaft disappears in a puff of logic!");
@@ -783,7 +783,7 @@ void floor_transition(dungeon_feature_type how,
     }
 
     // Warn Formicids if they cannot shaft here
-    if (you.species == SP_FORMICID && !is_valid_shaft_level())
+    if (you.species == SP_FORMICID && !is_valid_shaft_level(false, false))
         mpr("Beware, you cannot shaft yourself on this level.");
 
     const bool newlevel = load_level(how, LOAD_ENTER_LEVEL, old_level);
