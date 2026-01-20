@@ -4565,9 +4565,9 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
         agent->is_player() && you.visible_igrd(pos()) &&
         adjacent(pos(), agent->pos()) &&
         !feat_destroys_items(grd(agent->pos()))) {
-//        x_chance_in_y(amount, 10) &&
         int items_moved = 0;
-        if (x_chance_in_y(amount, 10)) {
+        // I slightly think it always is > 0 at this point?
+        if (amount > 0) {
             while (igrd(pos()) != NON_ITEM) {
                 items_moved += mitm[igrd(pos())].quantity;
                 move_top_item(pos(), agent->pos());
