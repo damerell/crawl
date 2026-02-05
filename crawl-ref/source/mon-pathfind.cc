@@ -491,8 +491,7 @@ int monster_pathfind::mons_travel_cost(coord_def npos)
     if (ptrap)
     {
         const bool knows_trap = ptrap->is_known(mons);
-        const trap_type tt = ptrap->type;
-        if (tt == TRAP_ALARM || tt == TRAP_ZOT)
+        if (ptrap->is_bad_for_player())
         {
             // Your allies take extra precautions to avoid known alarm traps.
             // Zot traps are considered intraversable.
