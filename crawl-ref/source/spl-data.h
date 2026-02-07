@@ -27,7 +27,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_TELEPORT_SELF, "Teleport Self",
     SPTYP_TRANSLOCATION,
-    SPFLAG_ESCAPE | SPFLAG_EMERGENCY | SPFLAG_UTILITY | SPFLAG_MONSTER,
+    spflag::escape | spflag::emergency | spflag::utility | spflag::monster,
     5,
     0,
     -1, -1,
@@ -39,7 +39,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CAUSE_FEAR, "Cause Fear",
     SPTYP_HEXES,
-    SPFLAG_AREA | SPFLAG_MR_CHECK,
+    spflag::area | spflag::mr_check,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -51,7 +51,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MAGIC_DART, "Magic Dart",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     1,
     25,
     LOS_RADIUS, LOS_RADIUS,
@@ -63,7 +63,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FIREBALL, "Fireball",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     5,
     200,
     5, 5,
@@ -75,7 +75,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_APPORTATION, "Apportation",
     SPTYP_TRANSLOCATION,
-    SPFLAG_TARGET | SPFLAG_OBJ | SPFLAG_NOT_SELF,
+    spflag::target | spflag::obj | spflag::not_self,
     1,
     50,
     LOS_RADIUS, LOS_RADIUS,
@@ -87,7 +87,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DELAYED_FIREBALL, "Delayed Fireball",
     SPTYP_FIRE | SPTYP_CONJURATION,
-    SPFLAG_UTILITY,
+    spflag::utility,
     7,
     0,
     -1, -1,
@@ -99,7 +99,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CONJURE_FLAME, "Conjure Flame",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_TARGET | SPFLAG_NEUTRAL | SPFLAG_NOT_SELF,
+    spflag::target | spflag::neutral | spflag::not_self,
     3,
     100,
     3, 3,
@@ -111,7 +111,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DIG, "Dig",
     SPTYP_EARTH,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEUTRAL | SPFLAG_UTILITY,
+    spflag::dir_or_target | spflag::not_self | spflag::neutral | spflag::utility,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -123,7 +123,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BOLT_OF_FIRE, "Bolt of Fire",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     6,
     200,
     6, 6,
@@ -135,7 +135,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BOLT_OF_COLD, "Bolt of Cold",
     SPTYP_CONJURATION | SPTYP_ICE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     6,
     200,
     5, 5,
@@ -147,7 +147,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_LIGHTNING_BOLT, "Lightning Bolt",
     SPTYP_CONJURATION | SPTYP_AIR,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     5,
     200,
     4, 11, // capped at LOS, yet this 11 matters since range increases linearly
@@ -159,7 +159,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BLINKBOLT, "Blinkbolt",
     SPTYP_AIR | SPTYP_TRANSLOCATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     200,
     4, 11,
@@ -171,7 +171,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BOLT_OF_MAGMA, "Bolt of Magma",
     SPTYP_CONJURATION | SPTYP_FIRE | SPTYP_EARTH,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     5,
     200,
     4, 4,
@@ -183,7 +183,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_POLYMORPH, "Polymorph",
     SPTYP_TRANSMUTATION | SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_CHAOTIC | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::chaotic | spflag::monster | spflag::needs_tracer | spflag::mr_check,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -195,7 +195,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SLOW, "Slow",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::mr_check,
     2,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -207,8 +207,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HASTE, "Haste",
     SPTYP_CHARMS,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_HELPFUL | SPFLAG_HASTY | SPFLAG_SELFENCH
-        | SPFLAG_UTILITY,
+    spflag::dir_or_target | spflag::helpful | spflag::hasty | spflag::selfench
+        | spflag::utility,
     9,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -220,7 +220,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PETRIFY, "Petrify",
     SPTYP_TRANSMUTATION | SPTYP_EARTH,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::mr_check,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -232,7 +232,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CONFUSE, "Confuse",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::mr_check,
     3,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -244,8 +244,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_INVISIBILITY, "Invisibility",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_HELPFUL | SPFLAG_SELFENCH
-        | SPFLAG_EMERGENCY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::helpful | spflag::selfench
+        | spflag::emergency | spflag::needs_tracer,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -257,7 +257,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_THROW_FLAME, "Throw Flame",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     2,
     50,
     LOS_RADIUS, LOS_RADIUS,
@@ -269,7 +269,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_THROW_FROST, "Throw Frost",
     SPTYP_CONJURATION | SPTYP_ICE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     2,
     50,
     6, 6,
@@ -281,7 +281,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CONTROLLED_BLINK, "Controlled Blink",
     SPTYP_TRANSLOCATION,
-    SPFLAG_ESCAPE | SPFLAG_EMERGENCY | SPFLAG_UTILITY,
+    spflag::escape | spflag::emergency | spflag::utility,
     7,
     100,
     2, LOS_RADIUS,
@@ -294,7 +294,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DISJUNCTION, "Disjunction",
     SPTYP_TRANSLOCATION,
-    SPFLAG_ESCAPE | SPFLAG_UTILITY,
+    spflag::escape | spflag::utility,
     8,
     200,
     -1, -1,
@@ -306,8 +306,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FREEZING_CLOUD, "Freezing Cloud",
     SPTYP_CONJURATION | SPTYP_ICE | SPTYP_AIR,
-    SPFLAG_TARGET | SPFLAG_AREA | SPFLAG_NEEDS_TRACER
-        | SPFLAG_CLOUD,
+    spflag::target | spflag::area | spflag::needs_tracer
+        | spflag::cloud,
     6,
     200,
     5, 5,
@@ -319,8 +319,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MEPHITIC_CLOUD, "Mephitic Cloud",
     SPTYP_CONJURATION | SPTYP_POISON | SPTYP_AIR,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_AREA
-        | SPFLAG_NEEDS_TRACER | SPFLAG_CLOUD,
+    spflag::dir_or_target | spflag::area
+        | spflag::needs_tracer | spflag::cloud,
     3,
     100,
     4, 4,
@@ -332,7 +332,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_RING_OF_FLAMES, "Ring of Flames",
     SPTYP_CHARMS | SPTYP_FIRE,
-    SPFLAG_AREA,
+    spflag::area,
     7,
     200,
     -1, -1,
@@ -344,7 +344,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_RING_OF_THUNDER, "Ring of Thunder",
     SPTYP_CHARMS | SPTYP_AIR,
-    SPFLAG_AREA,
+    spflag::area,
     7,
     200,
     -1, -1,
@@ -356,7 +356,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_VENOM_BOLT, "Venom Bolt",
     SPTYP_CONJURATION | SPTYP_POISON,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     5,
     200,
     5, 5,
@@ -368,7 +368,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_OLGREBS_TOXIC_RADIANCE, "Olgreb's Toxic Radiance",
     SPTYP_POISON,
-    SPFLAG_AREA,
+    spflag::area,
     4,
     100,
     -1, -1,
@@ -380,8 +380,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_TELEPORT_OTHER, "Teleport Other",
     SPTYP_TRANSLOCATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_ESCAPE
-        | SPFLAG_EMERGENCY | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::not_self | spflag::escape
+        | spflag::emergency | spflag::needs_tracer | spflag::mr_check,
     3,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -393,7 +393,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DEATHS_DOOR, "Death's Door",
     SPTYP_CHARMS | SPTYP_NECROMANCY,
-    SPFLAG_EMERGENCY | SPFLAG_UTILITY | SPFLAG_NO_GHOST,
+    spflag::emergency | spflag::utility | spflag::no_ghost,
     8,
     200,
     -1, -1,
@@ -405,7 +405,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MASS_CONFUSION, "Mass Confusion",
     SPTYP_HEXES,
-    SPFLAG_AREA | SPFLAG_MR_CHECK,
+    spflag::area | spflag::mr_check,
     6,
     200,
     -1, -1,
@@ -417,7 +417,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SMITING, "Smiting",
     SPTYP_NONE,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF,
+    spflag::target | spflag::not_self,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -429,7 +429,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_SMALL_MAMMAL, "Summon Small Mammal",
     SPTYP_SUMMONING,
-    SPFLAG_NONE,
+    spflag::none,
     1,
     25,
     -1, -1,
@@ -442,7 +442,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ABJURATION, "Abjuration",
     SPTYP_SUMMONING,
-    SPFLAG_ESCAPE | SPFLAG_NEEDS_TRACER | SPFLAG_MONSTER,
+    spflag::escape | spflag::needs_tracer | spflag::monster,
     3,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -454,7 +454,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_AURA_OF_ABJURATION, "Aura of Abjuration",
     SPTYP_SUMMONING,
-    SPFLAG_AREA | SPFLAG_NEUTRAL | SPFLAG_ESCAPE,
+    spflag::area | spflag::neutral | spflag::escape,
     5,
     200,
     -1, -1,
@@ -467,7 +467,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_SCORPIONS, "Summon Scorpions",
     SPTYP_SUMMONING | SPTYP_POISON,
-    SPFLAG_NONE,
+    spflag::none,
     4,
     200,
     -1, -1,
@@ -480,7 +480,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BOLT_OF_DRAINING, "Bolt of Draining",
     SPTYP_CONJURATION | SPTYP_NECROMANCY,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     5,
     200,
     5, 5,
@@ -492,7 +492,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_LEHUDIBS_CRYSTAL_SPEAR, "Lehudib's Crystal Spear",
     SPTYP_CONJURATION | SPTYP_EARTH,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     8,
     200,
     3, 3,
@@ -505,7 +505,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BOLT_OF_INACCURACY, "Bolt of Inaccuracy",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER, // rod/tome of destruction
+    spflag::dir_or_target | spflag::needs_tracer, // rod/tome of destruction
     3,
     1000,
     6, 6,
@@ -518,7 +518,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_TORNADO, "Tornado",
     SPTYP_AIR,
-    SPFLAG_AREA,
+    spflag::area,
     9,
     200,
     TORNADO_RADIUS, TORNADO_RADIUS,
@@ -530,7 +530,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_POISONOUS_CLOUD, "Poisonous Cloud",
     SPTYP_CONJURATION | SPTYP_POISON | SPTYP_AIR,
-    SPFLAG_TARGET | SPFLAG_AREA | SPFLAG_NEEDS_TRACER | SPFLAG_CLOUD,
+    spflag::target | spflag::area | spflag::needs_tracer | spflag::cloud,
     5,
     200,
     5, 5,
@@ -542,7 +542,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FIRE_STORM, "Fire Storm",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_TARGET | SPFLAG_AREA | SPFLAG_NEEDS_TRACER,
+    spflag::target | spflag::area | spflag::needs_tracer,
     9,
     200,
     5, 5,
@@ -554,7 +554,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CALL_DOWN_DAMNATION, "Call Down Damnation",
     SPTYP_CONJURATION,
-    SPFLAG_TARGET | SPFLAG_AREA | SPFLAG_UNHOLY | SPFLAG_NEEDS_TRACER,
+    spflag::target | spflag::area | spflag::unholy | spflag::needs_tracer,
     9,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -566,7 +566,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BLINK, "Blink",
     SPTYP_TRANSLOCATION,
-    SPFLAG_ESCAPE | SPFLAG_SELFENCH | SPFLAG_EMERGENCY | SPFLAG_UTILITY,
+    spflag::escape | spflag::selfench | spflag::emergency | spflag::utility,
     2,
     50,
     -1, -1,
@@ -578,7 +578,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BLINK_RANGE, "Blink Range", // XXX needs better name
     SPTYP_TRANSLOCATION,
-    SPFLAG_ESCAPE | SPFLAG_MONSTER | SPFLAG_SELFENCH | SPFLAG_EMERGENCY,
+    spflag::escape | spflag::monster | spflag::selfench | spflag::emergency,
     2,
     0,
     -1, -1,
@@ -590,7 +590,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BLINK_AWAY, "Blink Away",
     SPTYP_TRANSLOCATION,
-    SPFLAG_ESCAPE | SPFLAG_MONSTER | SPFLAG_EMERGENCY | SPFLAG_SELFENCH,
+    spflag::escape | spflag::monster | spflag::emergency | spflag::selfench,
     2,
     0,
     -1, -1,
@@ -602,7 +602,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BLINK_CLOSE, "Blink Close",
     SPTYP_TRANSLOCATION,
-    SPFLAG_MONSTER,
+    spflag::monster,
     2,
     0,
     -1, -1,
@@ -616,7 +616,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ISKENDERUNS_MYSTIC_BLAST, "Iskenderun's Mystic Blast",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     4,
     100,
     6, 6,
@@ -629,7 +629,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_SWARM, "Summon Swarm",
     SPTYP_SUMMONING,
-    SPFLAG_NONE,
+    spflag::none,
     5,
     200,
     -1, -1,
@@ -642,7 +642,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_HORRIBLE_THINGS, "Summon Horrible Things",
     SPTYP_SUMMONING,
-    SPFLAG_UNHOLY | SPFLAG_CHAOTIC | SPFLAG_MONS_ABJURE,
+    spflag::unholy | spflag::chaotic | spflag::mons_abjure,
     8,
     200,
     -1, -1,
@@ -654,7 +654,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MALIGN_GATEWAY, "Malign Gateway",
     SPTYP_SUMMONING | SPTYP_TRANSLOCATION,
-    SPFLAG_UNHOLY | SPFLAG_CHAOTIC,
+    spflag::unholy | spflag::chaotic,
     7,
     200,
     -1, -1,
@@ -666,8 +666,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CHARMING, "Charm Monster",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER
-        | SPFLAG_MONSTER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer
+        | spflag::monster | spflag::mr_check,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -679,7 +679,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ANIMATE_DEAD, "Animate Dead",
     SPTYP_NECROMANCY,
-    SPFLAG_AREA | SPFLAG_NEUTRAL | SPFLAG_CORPSE_VIOLATING | SPFLAG_UTILITY,
+    spflag::area | spflag::neutral | spflag::corpse_violating | spflag::utility,
     4,
     0,
     -1, -1,
@@ -691,8 +691,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PAIN, "Pain",
     SPTYP_NECROMANCY,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK |
-    SPFLAG_MONSTER,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::mr_check |
+    spflag::monster,
     1,
     25,
     5, 5,
@@ -704,7 +704,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_NECROTISE, "Necrotise",
     SPTYP_NECROMANCY,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::mr_check,
     1,
     25,
     5, 5,
@@ -717,7 +717,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CONTROL_UNDEAD, "Control Undead",
     SPTYP_NECROMANCY,
-    SPFLAG_MR_CHECK,
+    spflag::mr_check,
     4,
     200,
     -1, -1,
@@ -730,7 +730,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ANIMATE_SKELETON, "Animate Skeleton",
     SPTYP_NECROMANCY,
-    SPFLAG_CORPSE_VIOLATING | SPFLAG_UTILITY | SPFLAG_MONSTER,
+    spflag::corpse_violating | spflag::utility | spflag::monster,
     1,
     0,
     -1, -1,
@@ -742,7 +742,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_VAMPIRIC_DRAINING, "Vampiric Draining",
     SPTYP_NECROMANCY,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_EMERGENCY | SPFLAG_SELFENCH,
+    spflag::dir_or_target | spflag::not_self | spflag::emergency | spflag::selfench,
     3,
     200,
     1, 1,
@@ -754,7 +754,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HAUNT, "Haunt",
     SPTYP_SUMMONING | SPTYP_NECROMANCY,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_MONS_ABJURE,
+    spflag::target | spflag::not_self | spflag::mons_abjure,
     7,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -766,7 +766,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BORGNJORS_REVIVIFICATION, "Borgnjor's Revivification",
     SPTYP_NECROMANCY,
-    SPFLAG_UTILITY,
+    spflag::utility,
     8,
     200,
     -1, -1,
@@ -778,7 +778,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FREEZE, "Freeze",
     SPTYP_ICE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF,
+    spflag::dir_or_target | spflag::not_self,
     1,
     25,
     1, 1,
@@ -791,7 +791,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_ELEMENTAL, "Summon Elemental",
     SPTYP_SUMMONING,
-    SPFLAG_NONE,
+    spflag::none,
     4,
     200,
     -1, -1,
@@ -804,7 +804,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_OZOCUBUS_REFRIGERATION, "Ozocubu's Refrigeration",
     SPTYP_ICE,
-    SPFLAG_AREA,
+    spflag::area,
     6,
     200,
     -1, -1,
@@ -816,7 +816,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_STICKY_FLAME, "Sticky Flame",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     4,
     100,
     1, 1,
@@ -828,7 +828,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_ICE_BEAST, "Summon Ice Beast",
     SPTYP_ICE | SPTYP_SUMMONING,
-    SPFLAG_NONE,
+    spflag::none,
     4,
     100,
     -1, -1,
@@ -840,7 +840,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_OZOCUBUS_ARMOUR, "Ozocubu's Armour",
     SPTYP_CHARMS | SPTYP_ICE,
-    SPFLAG_NO_GHOST,
+    spflag::no_ghost,
     3,
     100,
     -1, -1,
@@ -852,7 +852,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CALL_IMP, "Call Imp",
     SPTYP_SUMMONING,
-    SPFLAG_UNHOLY | SPFLAG_SELFENCH,
+    spflag::unholy | spflag::selfench,
     2,
     100,
     -1, -1,
@@ -864,7 +864,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_REPEL_MISSILES, "Repel Missiles",
     SPTYP_CHARMS | SPTYP_AIR,
-    SPFLAG_MONSTER,
+    spflag::monster,
     2,
     50,
     -1, -1,
@@ -876,7 +876,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BERSERKER_RAGE, "Berserker Rage",
     SPTYP_CHARMS,
-    SPFLAG_HASTY | SPFLAG_MONSTER,
+    spflag::hasty | spflag::monster,
     3,
     0,
     -1, -1,
@@ -889,7 +889,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FRENZY, "Frenzy",
     SPTYP_CHARMS,
-    SPFLAG_HASTY | SPFLAG_MONSTER,
+    spflag::hasty | spflag::monster,
     3,
     0,
     -1, -1,
@@ -902,7 +902,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DISPEL_UNDEAD, "Velakast's Disruption",
     SPTYP_NECROMANCY,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     5,
     100,
     4, 4,
@@ -915,7 +915,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FULSOME_DISTILLATION, "Fulsome Distillation",
     SPTYP_TRANSMUTATION | SPTYP_NECROMANCY,
-    SPFLAG_CORPSE_VIOLATING,
+    spflag::corpse_violating,
     1,
     0,
     -1, -1,
@@ -928,7 +928,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_POISON_ARROW, "Poison Arrow",
     SPTYP_CONJURATION | SPTYP_POISON,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     6,
     200,
     6, 6,
@@ -940,7 +940,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_TWISTED_RESURRECTION, "Twisted Resurrection",
     SPTYP_NECROMANCY,
-    SPFLAG_CHAOTIC | SPFLAG_CORPSE_VIOLATING | SPFLAG_UTILITY | SPFLAG_MONSTER,
+    spflag::chaotic | spflag::corpse_violating | spflag::utility | spflag::monster,
     5,
     200,
     -1, -1,
@@ -952,7 +952,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_REGENERATION, "Regeneration",
     SPTYP_CHARMS | SPTYP_NECROMANCY,
-    SPFLAG_SELFENCH | SPFLAG_UTILITY,
+    spflag::selfench | spflag::utility,
     4,
     200,
     -1, -1,
@@ -965,8 +965,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BANISHMENT, "Banishment",
     SPTYP_TRANSLOCATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_UNHOLY | SPFLAG_CHAOTIC | SPFLAG_MONSTER
-        | SPFLAG_EMERGENCY | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::unholy | spflag::chaotic | spflag::monster
+        | spflag::emergency | spflag::needs_tracer | spflag::mr_check,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -979,7 +979,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CIGOTUVIS_DEGENERATION, "Cigotuvi's Degeneration",
     SPTYP_TRANSMUTATION | SPTYP_NECROMANCY,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_CHAOTIC,
+    spflag::dir_or_target | spflag::not_self | spflag::chaotic,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -992,7 +992,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_STING, "Sting",
     SPTYP_CONJURATION | SPTYP_POISON,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     1,
     25,
     6, 6,
@@ -1004,7 +1004,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUBLIMATION_OF_BLOOD, "Sublimation of Blood",
     SPTYP_NECROMANCY,
-    SPFLAG_UTILITY,
+    spflag::utility,
     2,
     200,
     -1, -1,
@@ -1016,8 +1016,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_TUKIMAS_DANCE, "Tukima's Dance",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK
-        | SPFLAG_NOT_SELF,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::mr_check
+        | spflag::not_self,
     3,
     100,
     LOS_RADIUS, LOS_RADIUS,
@@ -1029,7 +1029,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_DEMON, "Summon Demon",
     SPTYP_SUMMONING,
-    SPFLAG_UNHOLY | SPFLAG_SELFENCH | SPFLAG_MONS_ABJURE,
+    spflag::unholy | spflag::selfench | spflag::mons_abjure,
     5,
     200,
     -1, -1,
@@ -1042,7 +1042,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DEMONIC_HORDE, "Demonic Horde",
     SPTYP_SUMMONING,
-    SPFLAG_UNHOLY,
+    spflag::unholy,
     6,
     200,
     -1, -1,
@@ -1055,7 +1055,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_GREATER_DEMON, "Summon Greater Demon",
     SPTYP_SUMMONING,
-    SPFLAG_UNHOLY | SPFLAG_SELFENCH | SPFLAG_MONS_ABJURE,
+    spflag::unholy | spflag::selfench | spflag::mons_abjure,
     7,
     200,
     -1, -1,
@@ -1067,7 +1067,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CORPSE_ROT, "Corpse Rot",
     SPTYP_NECROMANCY,
-    SPFLAG_AREA | SPFLAG_NEUTRAL | SPFLAG_UNCLEAN,
+    spflag::area | spflag::neutral | spflag::unclean,
     2,
     0,
     -1, -1,
@@ -1080,7 +1080,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FIRE_BRAND, "Fire Brand",
     SPTYP_CHARMS | SPTYP_FIRE,
-    SPFLAG_HELPFUL,
+    spflag::helpful,
     2,
     200,
     -1, -1,
@@ -1092,7 +1092,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FREEZING_AURA, "Freezing Aura",
     SPTYP_CHARMS | SPTYP_ICE,
-    SPFLAG_HELPFUL,
+    spflag::helpful,
     2,
     200,
     -1, -1,
@@ -1104,7 +1104,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_LETHAL_INFUSION, "Lethal Infusion",
     SPTYP_CHARMS | SPTYP_NECROMANCY,
-    SPFLAG_HELPFUL,
+    spflag::helpful,
     2,
     200,
     -1, -1,
@@ -1117,7 +1117,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_IRON_SHOT, "Iron Shot",
     SPTYP_CONJURATION | SPTYP_EARTH,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     6,
     200,
     4, 4,
@@ -1129,7 +1129,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_STONE_ARROW, "Stone Arrow",
     SPTYP_CONJURATION | SPTYP_EARTH,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     3,
     50,
     4, 4,
@@ -1141,7 +1141,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SHOCK, "Shock",
     SPTYP_CONJURATION | SPTYP_AIR,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     1,
     25,
     LOS_RADIUS, LOS_RADIUS,
@@ -1153,7 +1153,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SWIFTNESS, "Swiftness",
     SPTYP_CHARMS | SPTYP_AIR,
-    SPFLAG_HASTY | SPFLAG_SELFENCH | SPFLAG_UTILITY,
+    spflag::hasty | spflag::selfench | spflag::utility,
     2,
     100,
     -1, -1,
@@ -1166,7 +1166,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FLY, "Flight",
     SPTYP_CHARMS | SPTYP_AIR,
-    SPFLAG_UTILITY,
+    spflag::utility,
     3,
     200,
     -1, -1,
@@ -1179,7 +1179,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_INSULATION, "Insulation",
     SPTYP_CHARMS | SPTYP_AIR,
-    SPFLAG_NONE,
+    spflag::none,
     4,
     200,
     -1, -1,
@@ -1192,7 +1192,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CURE_POISON, "Cure Poison",
     SPTYP_POISON,
-    SPFLAG_RECOVERY | SPFLAG_HELPFUL | SPFLAG_UTILITY,
+    spflag::recovery | spflag::helpful | spflag::utility,
     2,
     200,
     -1, -1,
@@ -1206,7 +1206,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CONTROL_TELEPORT, "Control Teleport",
     SPTYP_CHARMS | SPTYP_TRANSLOCATION,
-    SPFLAG_HELPFUL | SPFLAG_UTILITY,
+    spflag::helpful | spflag::utility,
     4,
     200,
     -1, -1,
@@ -1218,7 +1218,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_POISON_WEAPON, "Poison Weapon",
     SPTYP_CHARMS | SPTYP_POISON,
-    SPFLAG_HELPFUL,
+    spflag::helpful,
     3,
     200,
     -1, -1,
@@ -1231,7 +1231,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DEBUGGING_RAY, "Debugging Ray",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_TESTING,
+    spflag::dir_or_target | spflag::testing,
     7,
     100,
     LOS_RADIUS, LOS_RADIUS,
@@ -1243,7 +1243,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_RECALL, "Recall",
     SPTYP_SUMMONING | SPTYP_TRANSLOCATION,
-    SPFLAG_UTILITY,
+    spflag::utility,
     3,
     0,
     -1, -1,
@@ -1255,7 +1255,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_AGONY, "Agony",
     SPTYP_NECROMANCY,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer | spflag::mr_check,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -1267,7 +1267,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SPIDER_FORM, "Spider Form",
     SPTYP_TRANSMUTATION | SPTYP_POISON,
-    SPFLAG_HELPFUL | SPFLAG_CHAOTIC | SPFLAG_UTILITY,
+    spflag::helpful | spflag::chaotic | spflag::utility,
     3,
     200,
     -1, -1,
@@ -1279,7 +1279,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MINDBURST, "Mindburst",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer | spflag::mr_check,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -1291,7 +1291,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BLADE_HANDS, "Blade Hands",
     SPTYP_TRANSMUTATION,
-    SPFLAG_HELPFUL | SPFLAG_CHAOTIC | SPFLAG_UTILITY,
+    spflag::helpful | spflag::chaotic | spflag::utility,
     5,
     200,
     -1, -1,
@@ -1303,7 +1303,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_STATUE_FORM, "Statue Form",
     SPTYP_TRANSMUTATION | SPTYP_EARTH,
-    SPFLAG_HELPFUL | SPFLAG_CHAOTIC | SPFLAG_UTILITY,
+    spflag::helpful | spflag::chaotic | spflag::utility,
     6,
     150,
     -1, -1,
@@ -1315,7 +1315,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ICE_FORM, "Ice Form",
     SPTYP_ICE | SPTYP_TRANSMUTATION,
-    SPFLAG_HELPFUL | SPFLAG_CHAOTIC | SPFLAG_UTILITY,
+    spflag::helpful | spflag::chaotic | spflag::utility,
     4,
     100,
     -1, -1,
@@ -1327,7 +1327,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DRAGON_FORM, "Dragon Form",
     SPTYP_TRANSMUTATION,
-    SPFLAG_HELPFUL | SPFLAG_CHAOTIC | SPFLAG_UTILITY,
+    spflag::helpful | spflag::chaotic | spflag::utility,
     7,
     200,
     -1, -1,
@@ -1339,7 +1339,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HYDRA_FORM, "Hydra Form",
     SPTYP_TRANSMUTATION,
-    SPFLAG_HELPFUL | SPFLAG_CHAOTIC | SPFLAG_UTILITY,
+    spflag::helpful | spflag::chaotic | spflag::utility,
     6,
     200,
     -1, -1,
@@ -1351,7 +1351,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_NECROMUTATION, "Necromutation",
     SPTYP_TRANSMUTATION | SPTYP_NECROMANCY,
-    SPFLAG_HELPFUL | SPFLAG_CORPSE_VIOLATING | SPFLAG_CHAOTIC,
+    spflag::helpful | spflag::corpse_violating | spflag::chaotic,
     8,
     200,
     -1, -1,
@@ -1363,7 +1363,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DEATH_CHANNEL, "Death Channel",
     SPTYP_NECROMANCY,
-    SPFLAG_HELPFUL | SPFLAG_UTILITY,
+    spflag::helpful | spflag::utility,
     6,
     200,
     -1, -1,
@@ -1376,7 +1376,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SYMBOL_OF_TORMENT, "Symbol of Torment",
     SPTYP_NECROMANCY,
-    SPFLAG_AREA | SPFLAG_MONSTER,
+    spflag::area | spflag::monster,
     6,
     0,
     -1, -1,
@@ -1388,7 +1388,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DEFLECT_MISSILES, "Deflect Missiles",
     SPTYP_CHARMS | SPTYP_AIR,
-    SPFLAG_HELPFUL | SPFLAG_UTILITY,
+    spflag::helpful | spflag::utility,
     6,
     200,
     -1, -1,
@@ -1400,7 +1400,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_THROW_ICICLE, "Throw Icicle",
     SPTYP_CONJURATION | SPTYP_ICE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     4,
     100,
     5, 5,
@@ -1412,7 +1412,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_AIRSTRIKE, "Airstrike",
     SPTYP_AIR,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF,
+    spflag::target | spflag::not_self,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -1424,7 +1424,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SHADOW_CREATURES, "Shadow Creatures",
     SPTYP_SUMMONING,
-    SPFLAG_MONS_ABJURE,
+    spflag::mons_abjure,
     6,
     0,
     -1, -1,
@@ -1436,7 +1436,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CONFUSING_TOUCH, "Confusing Touch",
     SPTYP_HEXES,
-    SPFLAG_NONE,
+    spflag::none,
     1,
     50,
     -1, -1,
@@ -1449,7 +1449,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SURE_BLADE, "Sure Blade",
     SPTYP_HEXES | SPTYP_CHARMS,
-    SPFLAG_HELPFUL | SPFLAG_UTILITY,
+    spflag::helpful | spflag::utility,
     2,
     200,
     -1, -1,
@@ -1461,7 +1461,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FLAME_TONGUE, "Flame Tongue",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer,
     1,
     40, // cap for range; damage cap is at 25
     2, 5,
@@ -1473,7 +1473,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PASSWALL, "Passwall",
     SPTYP_TRANSMUTATION | SPTYP_EARTH,
-    SPFLAG_TARGET | SPFLAG_ESCAPE | SPFLAG_NOT_SELF | SPFLAG_UTILITY,
+    spflag::target | spflag::escape | spflag::not_self | spflag::utility,
     2,
     120,
     1, 7,
@@ -1485,7 +1485,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_IGNITE_POISON, "Ignite Poison",
     SPTYP_FIRE | SPTYP_TRANSMUTATION | SPTYP_POISON,
-    SPFLAG_AREA,
+    spflag::area,
     3,
     100,
     -1, -1,
@@ -1497,7 +1497,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_STICKS_TO_SNAKES, "Sticks to Snakes",
     SPTYP_TRANSMUTATION,
-    SPFLAG_NO_GHOST,
+    spflag::no_ghost,
     2,
     100,
     -1, -1,
@@ -1509,7 +1509,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CALL_CANINE_FAMILIAR, "Call Canine Familiar",
     SPTYP_SUMMONING,
-    SPFLAG_NONE,
+    spflag::none,
     3,
     100,
     -1, -1,
@@ -1521,7 +1521,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_DRAGON, "Summon Dragon",
     SPTYP_SUMMONING,
-    SPFLAG_MONS_ABJURE,
+    spflag::mons_abjure,
     9,
     200,
     -1, -1,
@@ -1533,7 +1533,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HIBERNATION, "Ensorcelled Hibernation",
     SPTYP_HEXES | SPTYP_ICE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer | spflag::mr_check,
     2,
     56,
     LOS_RADIUS, LOS_RADIUS,
@@ -1545,7 +1545,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ENGLACIATION, "Metabolic Englaciation",
     SPTYP_HEXES | SPTYP_ICE,
-    SPFLAG_AREA,
+    spflag::area,
     5,
     200,
     -1, -1,
@@ -1557,7 +1557,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SEE_INVISIBLE, "See Invisible",
     SPTYP_CHARMS,
-    SPFLAG_HELPFUL,
+    spflag::helpful,
     4,
     200,
     -1, -1,
@@ -1570,7 +1570,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PHASE_SHIFT, "Phase Shift",
     SPTYP_TRANSLOCATION,
-    SPFLAG_HELPFUL | SPFLAG_UTILITY,
+    spflag::helpful | spflag::utility,
     5,
     200,
     -1, -1,
@@ -1583,7 +1583,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_BUTTERFLIES, "Summon Butterflies",
     SPTYP_SUMMONING,
-    SPFLAG_NONE,
+    spflag::none,
     1,
     100,
     -1, -1,
@@ -1596,7 +1596,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_WARP_BRAND, "Warp Weapon",
     SPTYP_CHARMS | SPTYP_TRANSLOCATION,
-    SPFLAG_HELPFUL | SPFLAG_UTILITY,
+    spflag::helpful | spflag::utility,
     5,
     200,
     -1, -1,
@@ -1609,7 +1609,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SILENCE, "Silence",
     SPTYP_HEXES | SPTYP_AIR,
-    SPFLAG_AREA,
+    spflag::area,
     5,
     200,
     -1, -1,
@@ -1621,7 +1621,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SHATTER, "Shatter",
     SPTYP_EARTH,
-    SPFLAG_AREA,
+    spflag::area,
     9,
     200,
     -1, -1,
@@ -1633,7 +1633,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DISPERSAL, "Dispersal",
     SPTYP_TRANSLOCATION,
-    SPFLAG_AREA | SPFLAG_ESCAPE,
+    spflag::area | spflag::escape,
     6,
     200,
     1, 4,
@@ -1645,7 +1645,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DISCHARGE, "Static Discharge",
     SPTYP_CONJURATION | SPTYP_AIR,
-    SPFLAG_AREA,
+    spflag::area,
     3,
     100,
     1, 1,
@@ -1657,7 +1657,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CORONA, "Corona",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK | SPFLAG_MONSTER,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer | spflag::mr_check | spflag::monster,
     1,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -1669,7 +1669,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_INTOXICATE, "Alistair's Intoxication",
     SPTYP_TRANSMUTATION | SPTYP_POISON,
-    SPFLAG_NONE,
+    spflag::none,
     5,
     100,
     -1, -1,
@@ -1682,7 +1682,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_EVAPORATE, "Evaporate",
     SPTYP_FIRE | SPTYP_TRANSMUTATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_AREA,
+    spflag::dir_or_target | spflag::area,
     2,
     50,
     5, 5,
@@ -1695,7 +1695,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_LRD, "Lee's Rapid Deconstruction",
     SPTYP_EARTH,
-    SPFLAG_TARGET,
+    spflag::target,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -1707,7 +1707,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SANDBLAST, "Sandblast",
     SPTYP_EARTH,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer,
     1,
     50,
     3, 3,
@@ -1720,7 +1720,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CONDENSATION_SHIELD, "Condensation Shield",
     SPTYP_ICE,
-    SPFLAG_HELPFUL | SPFLAG_UTILITY,
+    spflag::helpful | spflag::utility,
     4,
     200,
     -1, -1,
@@ -1732,7 +1732,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_STONESKIN, "Stoneskin",
     SPTYP_EARTH | SPTYP_TRANSMUTATION,
-    SPFLAG_HELPFUL | SPFLAG_UTILITY | SPFLAG_NO_GHOST | SPFLAG_MONSTER,
+    spflag::helpful | spflag::utility | spflag::no_ghost | spflag::monster,
     2,
     100,
     -1, -1,
@@ -1745,7 +1745,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SIMULACRUM, "Simulacrum",
     SPTYP_ICE | SPTYP_NECROMANCY,
-    SPFLAG_CORPSE_VIOLATING,
+    spflag::corpse_violating,
     6,
     200,
     -1, -1,
@@ -1757,7 +1757,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CONJURE_BALL_LIGHTNING, "Conjure Ball Lightning",
     SPTYP_AIR | SPTYP_CONJURATION,
-    SPFLAG_SELFENCH,
+    spflag::selfench,
     6,
     200,
     -1, -1,
@@ -1769,7 +1769,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CHAIN_LIGHTNING, "Chain Lightning",
     SPTYP_AIR | SPTYP_CONJURATION,
-    SPFLAG_AREA,
+    spflag::area,
     8,
     200,
     -1, -1,
@@ -1781,7 +1781,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_EXCRUCIATING_WOUNDS, "Excruciating Wounds",
     SPTYP_CHARMS | SPTYP_NECROMANCY,
-    SPFLAG_HELPFUL,
+    spflag::helpful,
     5,
     200,
     -1, -1,
@@ -1793,7 +1793,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PORTAL_PROJECTILE, "Portal Projectile",
     SPTYP_TRANSLOCATION | SPTYP_HEXES,
-    SPFLAG_NONE,
+    spflag::none,
     3,
     50,
     -1, -1,
@@ -1805,7 +1805,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MONSTROUS_MENAGERIE, "Monstrous Menagerie",
     SPTYP_SUMMONING,
-    SPFLAG_MONS_ABJURE,
+    spflag::mons_abjure,
     7,
     200,
     -1, -1,
@@ -1817,7 +1817,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_GOLUBRIAS_PASSAGE, "Passage of Golubria",
     SPTYP_TRANSLOCATION,
-    SPFLAG_TARGET | SPFLAG_NEUTRAL | SPFLAG_ESCAPE | SPFLAG_SELFENCH,
+    spflag::target | spflag::neutral | spflag::escape | spflag::selfench,
     4,
     100,
     2, LOS_RADIUS,
@@ -1829,7 +1829,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FULMINANT_PRISM, "Fulminant Prism",
     SPTYP_CONJURATION | SPTYP_HEXES,
-    SPFLAG_TARGET | SPFLAG_AREA | SPFLAG_NOT_SELF,
+    spflag::target | spflag::area | spflag::not_self,
     4,
     200,
     4, 4,
@@ -1842,7 +1842,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SINGULARITY, "Singularity",
     SPTYP_TRANSLOCATION,
-    SPFLAG_TARGET | SPFLAG_AREA | SPFLAG_NOT_SELF | SPFLAG_MONSTER,
+    spflag::target | spflag::area | spflag::not_self | spflag::monster,
     9,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -1855,7 +1855,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PARALYSE, "Paralyse",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer | spflag::mr_check,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -1867,8 +1867,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MINOR_HEALING, "Minor Healing",
     SPTYP_NECROMANCY,
-    SPFLAG_RECOVERY | SPFLAG_HELPFUL | SPFLAG_MONSTER | SPFLAG_SELFENCH
-        | SPFLAG_EMERGENCY | SPFLAG_UTILITY | SPFLAG_NOT_EVIL,
+    spflag::recovery | spflag::helpful | spflag::monster | spflag::selfench
+        | spflag::emergency | spflag::utility | spflag::not_evil,
     2,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -1880,8 +1880,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MAJOR_HEALING, "Major Healing",
     SPTYP_NECROMANCY,
-    SPFLAG_RECOVERY | SPFLAG_HELPFUL | SPFLAG_MONSTER | SPFLAG_SELFENCH
-        | SPFLAG_EMERGENCY | SPFLAG_UTILITY | SPFLAG_NOT_EVIL,
+    spflag::recovery | spflag::helpful | spflag::monster | spflag::selfench
+        | spflag::emergency | spflag::utility | spflag::not_evil,
     6,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -1893,7 +1893,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HURL_DAMNATION, "Hurl Damnation",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_UNHOLY | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::unholy | spflag::monster | spflag::needs_tracer,
     // plus DS ability, staff of Dispater & Sceptre of Asmodeus
     9,
     200,
@@ -1907,7 +1907,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_VAMPIRE_SUMMON, "Vampire Summon",
     SPTYP_SUMMONING,
-    SPFLAG_UNHOLY | SPFLAG_MONSTER,
+    spflag::unholy | spflag::monster,
     3,
     0,
     -1, -1,
@@ -1920,7 +1920,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BRAIN_FEED, "Brain Feed",
     SPTYP_NECROMANCY,
-    SPFLAG_TARGET | SPFLAG_MONSTER,
+    spflag::target | spflag::monster,
     3,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -1933,7 +1933,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FAKE_RAKSHASA_SUMMON, "Rakshasa Summon",
     SPTYP_SUMMONING,
-    SPFLAG_UNHOLY | SPFLAG_MONSTER,
+    spflag::unholy | spflag::monster,
     3,
     0,
     -1, -1,
@@ -1946,8 +1946,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_NOXIOUS_CLOUD, "Noxious Cloud",
     SPTYP_CONJURATION | SPTYP_POISON | SPTYP_AIR,
-    SPFLAG_TARGET | SPFLAG_AREA | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER
-        | SPFLAG_CLOUD,
+    spflag::target | spflag::area | spflag::monster | spflag::needs_tracer
+        | spflag::cloud,
     5,
     200,
     5, 5,
@@ -1959,7 +1959,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_STEAM_BALL, "Steam Ball",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer,
     4,
     0,
     6, 6,
@@ -1971,7 +1971,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_UFETUBUS, "Summon Ufetubus",
     SPTYP_SUMMONING,
-    SPFLAG_UNHOLY | SPFLAG_MONSTER | SPFLAG_SELFENCH,
+    spflag::unholy | spflag::monster | spflag::selfench,
     4,
     0,
     -1, -1,
@@ -1983,7 +1983,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_HELL_BEAST, "Summon Hell Beast",
     SPTYP_SUMMONING,
-    SPFLAG_UNHOLY | SPFLAG_MONSTER | SPFLAG_SELFENCH,
+    spflag::unholy | spflag::monster | spflag::selfench,
     4,
     0,
     -1, -1,
@@ -1995,7 +1995,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ENERGY_BOLT, "Energy Bolt",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer,
     4,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -2007,7 +2007,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SPIT_POISON, "Spit Poison",
     SPTYP_POISON,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     2,
     0,
     6, 6,
@@ -2019,7 +2019,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_UNDEAD, "Summon Undead",
     SPTYP_SUMMONING | SPTYP_NECROMANCY,
-    SPFLAG_MONSTER | SPFLAG_MONS_ABJURE,
+    spflag::monster | spflag::mons_abjure,
     7,
     0,
     -1, -1,
@@ -2031,7 +2031,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CANTRIP, "Cantrip",
     SPTYP_NONE,
-    SPFLAG_MONSTER,
+    spflag::monster,
     1,
     0,
     -1, -1,
@@ -2043,7 +2043,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_QUICKSILVER_BOLT, "Quicksilver Bolt",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2055,7 +2055,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_METAL_SPLINTERS, "Metal Splinters",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer,
     5,
     0,
     4, 4,
@@ -2067,8 +2067,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MIASMA_BREATH, "Miasma Breath",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_UNCLEAN | SPFLAG_MONSTER
-        | SPFLAG_NEEDS_TRACER | SPFLAG_CLOUD,
+    spflag::dir_or_target | spflag::unclean | spflag::monster
+        | spflag::needs_tracer | spflag::cloud,
     6,
     0,
     5, 5,
@@ -2080,7 +2080,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_DRAKES, "Summon Drakes",
     SPTYP_SUMMONING | SPTYP_NECROMANCY, // since it can summon shadow dragons
-    SPFLAG_UNCLEAN | SPFLAG_MONSTER | SPFLAG_MONS_ABJURE,
+    spflag::unclean | spflag::monster | spflag::mons_abjure,
     6,
     0,
     -1, -1,
@@ -2092,8 +2092,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BLINK_OTHER, "Blink Other",
     SPTYP_TRANSLOCATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_ESCAPE | SPFLAG_MONSTER
-        | SPFLAG_EMERGENCY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::not_self | spflag::escape | spflag::monster
+        | spflag::emergency | spflag::needs_tracer,
     2,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -2105,7 +2105,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BLINK_OTHER_CLOSE, "Blink Other Close",
     SPTYP_TRANSLOCATION,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::target | spflag::not_self | spflag::monster | spflag::needs_tracer,
     2,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -2117,7 +2117,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_MUSHROOMS, "Summon Mushrooms",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER | SPFLAG_SELFENCH | SPFLAG_MONS_ABJURE,
+    spflag::monster | spflag::selfench | spflag::mons_abjure,
     4,
     0,
     -1, -1,
@@ -2129,7 +2129,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SPIT_ACID, "Spit Acid",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -2140,7 +2140,7 @@ static const struct spell_desc spelldata[] =
 
 { SPELL_ACID_SPLASH, "Acid Splash",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -2153,7 +2153,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_STICKY_FLAME_RANGE, "Sticky Flame Range",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer,
     4,
     100,
     4, 4,
@@ -2165,7 +2165,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FIRE_BREATH, "Fire Breath",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     5, 5,
@@ -2177,7 +2177,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SEARING_BREATH, "Searing Breath",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     5, 5,
@@ -2189,8 +2189,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CHAOS_BREATH, "Chaos Breath",
     SPTYP_CONJURATION | SPTYP_RANDOM,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY
-        | SPFLAG_NEEDS_TRACER | SPFLAG_CLOUD,
+    spflag::dir_or_target | spflag::monster | spflag::noisy
+        | spflag::needs_tracer | spflag::cloud,
     5,
     0,
     5, 5,
@@ -2202,7 +2202,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_COLD_BREATH, "Cold Breath",
     SPTYP_CONJURATION | SPTYP_ICE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     5, 5,
@@ -2214,7 +2214,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CHILLING_BREATH, "Chilling Breath",
     SPTYP_CONJURATION | SPTYP_ICE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     5, 5,
@@ -2227,7 +2227,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DRACONIAN_BREATH, "Draconian Breath",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY,
+    spflag::dir_or_target | spflag::monster | spflag::noisy,
     8,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -2240,7 +2240,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_WATER_ELEMENTALS, "Summon Water Elementals",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER | SPFLAG_MONS_ABJURE,
+    spflag::monster | spflag::mons_abjure,
     5,
     0,
     -1, -1,
@@ -2252,7 +2252,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PORKALATOR, "Porkalator",
     SPTYP_HEXES | SPTYP_TRANSMUTATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_CHAOTIC | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::chaotic | spflag::needs_tracer | spflag::mr_check,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2264,7 +2264,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CREATE_TENTACLES, "Spawn Tentacles",
     SPTYP_NONE,
-    SPFLAG_MONSTER | SPFLAG_SELFENCH,
+    spflag::monster | spflag::selfench,
     5,
     0,
     -1, -1,
@@ -2276,7 +2276,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_TOMB_OF_DOROKLOHE, "Tomb of Doroklohe",
     SPTYP_EARTH,
-    SPFLAG_MONSTER | SPFLAG_EMERGENCY,
+    spflag::monster | spflag::emergency,
     5,
     0,
     -1, -1,
@@ -2288,7 +2288,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_EYEBALLS, "Summon Eyeballs",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER | SPFLAG_MONS_ABJURE,
+    spflag::monster | spflag::mons_abjure,
     5,
     0,
     -1, -1,
@@ -2300,8 +2300,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HASTE_OTHER, "Haste Other",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_HELPFUL
-        | SPFLAG_HASTY | SPFLAG_NEEDS_TRACER | SPFLAG_UTILITY,
+    spflag::dir_or_target | spflag::not_self | spflag::helpful
+        | spflag::hasty | spflag::needs_tracer | spflag::utility,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2313,7 +2313,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_EARTH_ELEMENTALS, "Summon Earth Elementals",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER | SPFLAG_MONS_ABJURE,
+    spflag::monster | spflag::mons_abjure,
     5,
     0,
     -1, -1,
@@ -2325,7 +2325,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_AIR_ELEMENTALS, "Summon Air Elementals",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER | SPFLAG_MONS_ABJURE,
+    spflag::monster | spflag::mons_abjure,
     5,
     0,
     -1, -1,
@@ -2337,7 +2337,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FIRE_ELEMENTALS, "Summon Fire Elementals",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER | SPFLAG_MONS_ABJURE,
+    spflag::monster | spflag::mons_abjure,
     5,
     0,
     -1, -1,
@@ -2350,7 +2350,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_IRON_ELEMENTALS, "Summon Iron Elementals",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER | SPFLAG_MONS_ABJURE,
+    spflag::monster | spflag::mons_abjure,
     5,
     0,
     -1, -1,
@@ -2363,7 +2363,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SLEEP, "Sleep",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer | spflag::mr_check,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2375,7 +2375,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FAKE_MARA_SUMMON, "Mara Summon",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER | SPFLAG_SELFENCH,
+    spflag::monster | spflag::selfench,
     5,
     0,
     -1, -1,
@@ -2388,7 +2388,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_RAKSHASA, "Summon Rakshasa",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER,
+    spflag::monster,
     5,
     0,
     -1, -1,
@@ -2400,7 +2400,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MISLEAD, "Mislead",
     SPTYP_HEXES,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF,
+    spflag::target | spflag::not_self,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2413,7 +2413,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_ILLUSION, "Summon Illusion",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER,
+    spflag::monster,
     5,
     0,
     -1, -1,
@@ -2425,7 +2425,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PRIMAL_WAVE, "Primal Wave",
     SPTYP_CONJURATION | SPTYP_ICE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     6,
     200,
     6, 6,
@@ -2437,7 +2437,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CALL_TIDE, "Call Tide",
     SPTYP_TRANSLOCATION,
-    SPFLAG_MONSTER,
+    spflag::monster,
     7,
     0,
     -1, -1,
@@ -2449,7 +2449,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_IOOD, "Orb of Destruction",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer,
     7,
     200,
     8, 8,
@@ -2461,7 +2461,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_INK_CLOUD, "Ink Cloud",
     SPTYP_CONJURATION | SPTYP_ICE, // it's a water spell
-    SPFLAG_MONSTER | SPFLAG_EMERGENCY | SPFLAG_UTILITY,
+    spflag::monster | spflag::emergency | spflag::utility,
     7,
     0,
     -1, -1,
@@ -2473,7 +2473,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MIGHT, "Might",
     SPTYP_CHARMS,
-    SPFLAG_HELPFUL | SPFLAG_SELFENCH | SPFLAG_EMERGENCY | SPFLAG_UTILITY,
+    spflag::helpful | spflag::selfench | spflag::emergency | spflag::utility,
     3,
     200,
     -1, -1,
@@ -2485,8 +2485,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MIGHT_OTHER, "Might Other",
     SPTYP_CHARMS,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_HELPFUL
-        | SPFLAG_NEEDS_TRACER | SPFLAG_UTILITY,
+    spflag::dir_or_target | spflag::not_self | spflag::helpful
+        | spflag::needs_tracer | spflag::utility,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2499,7 +2499,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUNRAY, "Sunray",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET,
+    spflag::dir_or_target,
     6,
     200,
     8, 8,
@@ -2512,7 +2512,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_AWAKEN_FOREST, "Awaken Forest",
     SPTYP_HEXES | SPTYP_SUMMONING,
-    SPFLAG_AREA,
+    spflag::area,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2524,7 +2524,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DRUIDS_CALL, "Druid's Call",
     SPTYP_CHARMS,
-    SPFLAG_MONSTER,
+    spflag::monster,
     6,
     0,
     -1, -1,
@@ -2536,7 +2536,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BROTHERS_IN_ARMS, "Brothers in Arms",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER | SPFLAG_EMERGENCY,
+    spflag::monster | spflag::emergency,
     6,
     0,
     -1, -1,
@@ -2548,7 +2548,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_TROGS_HAND, "Trog's Hand",
     SPTYP_NONE,
-    SPFLAG_MONSTER | SPFLAG_SELFENCH,
+    spflag::monster | spflag::selfench,
     3,
     0,
     -1, -1,
@@ -2560,7 +2560,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_SPECTRAL_ORCS, "Summon Spectral Orcs",
     SPTYP_NECROMANCY | SPTYP_SUMMONING,
-    SPFLAG_MONSTER | SPFLAG_TARGET,
+    spflag::monster | spflag::target,
     4,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -2573,7 +2573,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HOLY_LIGHT, "Holy Light",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET,
+    spflag::dir_or_target,
     6,
     200,
     5, 5,
@@ -2586,7 +2586,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_HOLIES, "Summon Holies",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER | SPFLAG_MONS_ABJURE | SPFLAG_HOLY,
+    spflag::monster | spflag::mons_abjure | spflag::holy,
     5,
     0,
     -1, -1,
@@ -2598,8 +2598,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HEAL_OTHER, "Heal Other",
     SPTYP_NECROMANCY,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_HELPFUL
-        | SPFLAG_NEEDS_TRACER | SPFLAG_UTILITY | SPFLAG_NOT_EVIL,
+    spflag::dir_or_target | spflag::not_self | spflag::helpful
+        | spflag::needs_tracer | spflag::utility | spflag::not_evil,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2611,7 +2611,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HOLY_FLAMES, "Holy Flames",
     SPTYP_NONE,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_HOLY,
+    spflag::target | spflag::not_self | spflag::holy,
     7,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2623,8 +2623,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HOLY_BREATH, "Holy Breath",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_AREA | SPFLAG_NEEDS_TRACER | SPFLAG_CLOUD
-        | SPFLAG_HOLY,
+    spflag::dir_or_target | spflag::area | spflag::needs_tracer | spflag::cloud
+        | spflag::holy,
     5,
     200,
     5, 5,
@@ -2636,8 +2636,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_INJURY_MIRROR, "Injury Mirror",
     SPTYP_NONE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_HELPFUL | SPFLAG_SELFENCH | SPFLAG_EMERGENCY
-        | SPFLAG_UTILITY,
+    spflag::dir_or_target | spflag::helpful | spflag::selfench | spflag::emergency
+        | spflag::utility,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2649,9 +2649,9 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DRAIN_LIFE, "Drain Life",
     SPTYP_NECROMANCY,
-    // n.b. marked as SPFLAG_MONSTER for wizmode purposes, but this spell is
+    // n.b. marked as spflag::monster for wizmode purposes, but this spell is
     // called by the yred ability.
-    SPFLAG_AREA | SPFLAG_EMERGENCY | SPFLAG_MONSTER,
+    spflag::area | spflag::emergency | spflag::monster,
     6,
     0,
     -1, -1,
@@ -2663,7 +2663,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_LEDAS_LIQUEFACTION, "Leda's Liquefaction",
     SPTYP_EARTH | SPTYP_HEXES,
-    SPFLAG_AREA,
+    spflag::area,
     4,
     200,
     -1, -1,
@@ -2675,7 +2675,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_HYDRA, "Summon Hydra",
     SPTYP_SUMMONING,
-    SPFLAG_MONS_ABJURE,
+    spflag::mons_abjure,
     7,
     200,
     -1, -1,
@@ -2687,7 +2687,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DARKNESS, "Darkness",
     SPTYP_HEXES,
-    SPFLAG_NONE,
+    spflag::none,
     6,
     200,
     -1, -1,
@@ -2699,7 +2699,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MESMERISE, "Mesmerise",
     SPTYP_HEXES,
-    SPFLAG_AREA | SPFLAG_MR_CHECK,
+    spflag::area | spflag::mr_check,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2712,7 +2712,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MELEE, "Melee",
     SPTYP_NONE,
-    SPFLAG_NONE,
+    spflag::none,
     1,
     0,
     -1, -1,
@@ -2725,7 +2725,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FIRE_SUMMON, "Fire Summon",
     SPTYP_SUMMONING | SPTYP_FIRE,
-    SPFLAG_MONSTER | SPFLAG_MONS_ABJURE,
+    spflag::monster | spflag::mons_abjure,
     8,
     0,
     -1, -1,
@@ -2737,7 +2737,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PETRIFYING_CLOUD, "Petrifying Cloud",
     SPTYP_CONJURATION | SPTYP_EARTH | SPTYP_AIR,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer,
     5,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -2749,7 +2749,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SHROUD_OF_GOLUBRIA, "Shroud of Golubria",
     SPTYP_CHARMS | SPTYP_TRANSLOCATION,
-    SPFLAG_SELFENCH,
+    spflag::selfench,
     2,
     50,
     -1, -1,
@@ -2761,7 +2761,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_INNER_FLAME, "Inner Flame",
     SPTYP_HEXES | SPTYP_FIRE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEUTRAL | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::not_self | spflag::neutral | spflag::mr_check,
     3,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2773,7 +2773,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BEASTLY_APPENDAGE, "Beastly Appendage",
     SPTYP_TRANSMUTATION,
-    SPFLAG_HELPFUL | SPFLAG_CHAOTIC,
+    spflag::helpful | spflag::chaotic,
     1,
     50,
     -1, -1,
@@ -2786,7 +2786,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SILVER_BLAST, "Silver Blast",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET,
+    spflag::dir_or_target,
     5,
     200,
     5, 5,
@@ -2799,7 +2799,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ENSNARE, "Ensnare",
     SPTYP_CONJURATION | SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     6,
     200,
     5, 5,
@@ -2811,7 +2811,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_THUNDERBOLT, "Thunderbolt",
     SPTYP_CONJURATION | SPTYP_AIR,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF,
+    spflag::dir_or_target | spflag::not_self,
     2, // 2-5, sort of
     200,
     5, 5,
@@ -2823,7 +2823,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BATTLESPHERE, "Iskenderun's Battlesphere",
     SPTYP_CONJURATION | SPTYP_CHARMS,
-    SPFLAG_UTILITY,
+    spflag::utility,
     5,
     100,
     -1, -1,
@@ -2835,7 +2835,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_MINOR_DEMON, "Summon Minor Demon",
     SPTYP_SUMMONING,
-    SPFLAG_UNHOLY | SPFLAG_SELFENCH,
+    spflag::unholy | spflag::selfench,
     2,
     200,
     -1, -1,
@@ -2847,7 +2847,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MALMUTATE, "Deterioration",
     SPTYP_TRANSMUTATION | SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_CHAOTIC | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::not_self | spflag::chaotic | spflag::needs_tracer,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2860,7 +2860,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_TWISTER, "Summon Twister",
     SPTYP_SUMMONING | SPTYP_AIR,
-    SPFLAG_UNCLEAN | SPFLAG_MONSTER,
+    spflag::unclean | spflag::monster,
     9,
     0,
     -1, -1,
@@ -2873,7 +2873,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DAZZLING_SPRAY, "Dazzling Spray",
     SPTYP_CONJURATION | SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF,
+    spflag::dir_or_target | spflag::not_self,
     3,
     50,
     5, 5,
@@ -2885,7 +2885,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FORCE_LANCE, "Force Lance",
     SPTYP_CONJURATION | SPTYP_TRANSLOCATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     4,
     100,
     3, 3,
@@ -2897,7 +2897,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SENTINEL_MARK, "Sentinel's Mark",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::mr_check,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2910,7 +2910,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_WORD_OF_RECALL, "Word of Recall",
     SPTYP_SUMMONING | SPTYP_TRANSLOCATION,
-    SPFLAG_UTILITY,
+    spflag::utility,
     3,
     0,
     -1, -1,
@@ -2922,7 +2922,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_INJURY_BOND, "Injury Bond",
     SPTYP_CHARMS,
-    SPFLAG_AREA | SPFLAG_HELPFUL,
+    spflag::area | spflag::helpful,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2934,7 +2934,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SPECTRAL_CLOUD, "Spectral Cloud",
     SPTYP_CONJURATION | SPTYP_NECROMANCY,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_CLOUD,
+    spflag::dir_or_target | spflag::monster | spflag::cloud,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2946,7 +2946,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_GHOSTLY_FIREBALL, "Ghostly Fireball",
     SPTYP_CONJURATION | SPTYP_NECROMANCY,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_UNHOLY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::unholy | spflag::needs_tracer,
     5,
     200,
     5, 5,
@@ -2958,7 +2958,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CALL_LOST_SOUL, "Call Lost Soul",
     SPTYP_SUMMONING | SPTYP_NECROMANCY,
-    SPFLAG_UNHOLY | SPFLAG_MONSTER,
+    spflag::unholy | spflag::monster,
     5,
     200,
     -1, -1,
@@ -2970,7 +2970,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DIMENSION_ANCHOR, "Dimension Anchor",
     SPTYP_TRANSLOCATION | SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::mr_check,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2982,7 +2982,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BLINK_ALLIES_ENCIRCLE, "Blink Allies Encircling",
     SPTYP_TRANSLOCATION,
-    SPFLAG_AREA,
+    spflag::area,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -2995,7 +2995,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SHAFT_SELF, "Shaft Self",
     SPTYP_EARTH,
-    SPFLAG_ESCAPE,
+    spflag::escape,
     1,
     0,
     -1, -1,
@@ -3008,7 +3008,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_AWAKEN_VINES, "Awaken Vines",
     SPTYP_HEXES | SPTYP_SUMMONING,
-    SPFLAG_AREA | SPFLAG_MONSTER,
+    spflag::area | spflag::monster,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3021,7 +3021,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CONTROL_WINDS, "Control Winds",
     SPTYP_CHARMS | SPTYP_AIR,
-    SPFLAG_AREA | SPFLAG_MONSTER,
+    spflag::area | spflag::monster,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3034,7 +3034,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_THORN_VOLLEY, "Volley of Thorns",
     SPTYP_CONJURATION | SPTYP_EARTH,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     4,
     100,
     5, 5,
@@ -3046,7 +3046,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_WALL_OF_BRAMBLES, "Wall of Brambles",
     SPTYP_CONJURATION | SPTYP_EARTH,
-    SPFLAG_AREA | SPFLAG_MONSTER,
+    spflag::area | spflag::monster,
     5,
     100,
     LOS_RADIUS, LOS_RADIUS,
@@ -3058,7 +3058,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_WATERSTRIKE, "Waterstrike",
     SPTYP_ICE,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_MONSTER,
+    spflag::target | spflag::not_self | spflag::monster,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3071,7 +3071,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HASTE_PLANTS, "Haste Plants",
     SPTYP_CHARMS,
-    SPFLAG_AREA | SPFLAG_HELPFUL,
+    spflag::area | spflag::helpful,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3084,7 +3084,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_WIND_BLAST, "Wind Blast",
     SPTYP_AIR,
-    SPFLAG_AREA,
+    spflag::area,
     3,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3096,7 +3096,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_STRIP_RESISTANCE, "Strip Resistance",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::mr_check,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3108,7 +3108,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_INFUSION, "Infusion",
     SPTYP_CHARMS,
-    SPFLAG_UTILITY | SPFLAG_PERMABUFF,
+    spflag::utility | spflag::permabuff,
     1,
     25,
     -1, -1,
@@ -3120,7 +3120,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SONG_OF_SLAYING, "Song of Slaying",
     SPTYP_CHARMS,
-    SPFLAG_UTILITY,
+    spflag::utility,
     2,
     100,
     -1, -1,
@@ -3133,7 +3133,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SONG_OF_SHIELDING, "Song of Shielding",
     SPTYP_CHARMS,
-    SPFLAG_NONE,
+    spflag::none,
     4,
     100,
     -1, -1,
@@ -3146,7 +3146,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SPECTRAL_WEAPON, "Spectral Weapon",
     SPTYP_HEXES | SPTYP_CHARMS,
-    SPFLAG_SELFENCH | SPFLAG_UTILITY | SPFLAG_NO_GHOST,
+    spflag::selfench | spflag::utility | spflag::no_ghost,
     3,
     100,
     -1, -1,
@@ -3158,7 +3158,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_VERMIN, "Summon Vermin",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER | SPFLAG_UNHOLY | SPFLAG_SELFENCH | SPFLAG_MONS_ABJURE,
+    spflag::monster | spflag::unholy | spflag::selfench | spflag::mons_abjure,
     5,
     0,
     -1, -1,
@@ -3170,7 +3170,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MALIGN_OFFERING, "Malign Offering",
     SPTYP_NECROMANCY,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3182,7 +3182,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SEARING_RAY, "Searing Ray",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     2,
     50,
     4, 4,
@@ -3194,7 +3194,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DISCORD, "Discord",
     SPTYP_HEXES,
-    SPFLAG_AREA | SPFLAG_HASTY,
+    spflag::area | spflag::hasty,
     8,
     200,
     -1, -1,
@@ -3206,7 +3206,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_INVISIBILITY_OTHER, "Invisibility Other",
     SPTYP_CHARMS | SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_HELPFUL,
+    spflag::dir_or_target | spflag::not_self | spflag::helpful,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3218,7 +3218,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_VIRULENCE, "Virulence",
     SPTYP_POISON | SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::mr_check,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3231,7 +3231,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_IGNITE_POISON_SINGLE, "Localized Ignite Poison",
     SPTYP_FIRE | SPTYP_TRANSMUTATION,
-    SPFLAG_MONSTER | SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::monster | spflag::dir_or_target | spflag::not_self | spflag::needs_tracer | spflag::mr_check,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3244,7 +3244,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ORB_OF_ELECTRICITY, "Orb of Electricity",
     SPTYP_CONJURATION | SPTYP_AIR,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer,
     7,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3257,7 +3257,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_EXPLOSIVE_BOLT, "Explosive Bolt",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3270,7 +3270,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FLASH_FREEZE, "Flash Freeze",
     SPTYP_CONJURATION | SPTYP_ICE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer,
     7,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3282,7 +3282,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_LEGENDARY_DESTRUCTION, "Legendary Destruction",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer,
     8,
     200,
     5, 5,
@@ -3295,7 +3295,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_EPHEMERAL_INFUSION, "Ephemeral Infusion",
     SPTYP_CHARMS | SPTYP_NECROMANCY,
-    SPFLAG_MONSTER | SPFLAG_EMERGENCY,
+    spflag::monster | spflag::emergency,
     6,
     200,
     -1, -1,
@@ -3308,7 +3308,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FORCEFUL_INVITATION, "Forceful Invitation",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER,
+    spflag::monster,
     4,
     200,
     -1, -1,
@@ -3320,7 +3320,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PLANEREND, "Plane Rend",
     SPTYP_SUMMONING,
-    SPFLAG_MONSTER,
+    spflag::monster,
     8,
     200,
     -1, -1,
@@ -3332,7 +3332,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CHAIN_OF_CHAOS, "Chain of Chaos",
     SPTYP_CONJURATION,
-    SPFLAG_AREA | SPFLAG_MONSTER | SPFLAG_CHAOTIC,
+    spflag::area | spflag::monster | spflag::chaotic,
     8,
     200,
     -1, -1,
@@ -3344,7 +3344,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CALL_OF_CHAOS, "Call of Chaos",
     SPTYP_CHARMS,
-    SPFLAG_AREA | SPFLAG_CHAOTIC | SPFLAG_MONSTER,
+    spflag::area | spflag::chaotic | spflag::monster,
     7,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3356,7 +3356,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BLACK_MARK, "Black Mark",
     SPTYP_CHARMS | SPTYP_NECROMANCY,
-    SPFLAG_MONSTER,
+    spflag::monster,
     7,
     200,
     -1, -1,
@@ -3369,7 +3369,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_GRAND_AVATAR, "Grand Avatar",
     SPTYP_CONJURATION | SPTYP_CHARMS | SPTYP_HEXES,
-    SPFLAG_MONSTER | SPFLAG_UTILITY,
+    spflag::monster | spflag::utility,
     4,
     100,
     -1, -1,
@@ -3382,7 +3382,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SAP_MAGIC, "Sap Magic",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3394,7 +3394,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CORRUPT_BODY, "Corrupt Body",
     SPTYP_TRANSMUTATION | SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOT_SELF | SPFLAG_CHAOTIC | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::not_self | spflag::chaotic | spflag::needs_tracer,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3407,7 +3407,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_REARRANGE_PIECES, "Rearrange the Pieces",
     SPTYP_HEXES,
-    SPFLAG_AREA | SPFLAG_MONSTER | SPFLAG_CHAOTIC,
+    spflag::area | spflag::monster | spflag::chaotic,
     8,
     200,
     -1, -1,
@@ -3420,7 +3420,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_MAJOR_DESTRUCTION, "Major Destruction",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_CHAOTIC | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::chaotic | spflag::needs_tracer,
     7,
     200,
     6, 6,
@@ -3432,7 +3432,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BLINK_ALLIES_AWAY, "Blink Allies Away",
     SPTYP_TRANSLOCATION,
-    SPFLAG_AREA,
+    spflag::area,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3444,7 +3444,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_FOREST, "Summon Forest",
     SPTYP_SUMMONING | SPTYP_TRANSLOCATION,
-    SPFLAG_NONE,
+    spflag::none,
     5,
     200,
     -1, -1,
@@ -3456,7 +3456,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_LIGHTNING_SPIRE, "Summon Lightning Spire",
     SPTYP_SUMMONING | SPTYP_AIR,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEUTRAL,
+    spflag::target | spflag::not_self | spflag::neutral,
     4,
     100,
     2, 2,
@@ -3468,7 +3468,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_GUARDIAN_GOLEM, "Summon Guardian Golem",
     SPTYP_SUMMONING | SPTYP_HEXES,
-    SPFLAG_NONE,
+    spflag::none,
     3,
     100,
     -1, -1,
@@ -3480,7 +3480,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SHADOW_SHARD, "Shadow Shard",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3492,7 +3492,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SHADOW_BOLT, "Shadow Bolt",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3504,7 +3504,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CRYSTAL_BOLT, "Crystal Bolt",
     SPTYP_CONJURATION | SPTYP_FIRE | SPTYP_ICE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     6,
     200,
     6, 6,
@@ -3516,7 +3516,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_RANDOM_BOLT, "Random Bolt",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     4,
     200,
     5, 5,
@@ -3528,7 +3528,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_GLACIATE, "Glaciate",
     SPTYP_CONJURATION | SPTYP_ICE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_AREA | SPFLAG_NOT_SELF,
+    spflag::dir_or_target | spflag::area | spflag::not_self,
     9,
     200,
     6, 6,
@@ -3540,7 +3540,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CLOUD_CONE, "Cloud Cone",
     SPTYP_CONJURATION | SPTYP_AIR,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF,
+    spflag::target | spflag::not_self,
     6,
     100,
     3, LOS_DEFAULT_RANGE,
@@ -3553,7 +3553,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_WEAVE_SHADOWS, "Weave Shadows",
     SPTYP_SUMMONING,
-    SPFLAG_NONE,
+    spflag::none,
     5,
     0,
     -1, -1,
@@ -3566,7 +3566,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DRAGON_CALL, "Dragon's Call",
     SPTYP_SUMMONING,
-    SPFLAG_NONE,
+    spflag::none,
     9,
     200,
     -1, -1,
@@ -3578,7 +3578,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SPELLFORGED_SERVITOR, "Spellforged Servitor",
     SPTYP_CONJURATION | SPTYP_SUMMONING,
-    SPFLAG_NONE,
+    spflag::none,
     7,
     200,
     -1, -1,
@@ -3591,7 +3591,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FORCEFUL_DISMISSAL, "Forceful Dismissal",
     SPTYP_SUMMONING,
-    SPFLAG_AREA,
+    spflag::area,
     6,
     200,
     -1, -1,
@@ -3604,7 +3604,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_MANA_VIPER, "Summon Mana Viper",
     SPTYP_SUMMONING | SPTYP_HEXES,
-    SPFLAG_MONS_ABJURE,
+    spflag::mons_abjure,
     5,
     100,
     -1, -1,
@@ -3616,7 +3616,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PHANTOM_MIRROR, "Phantom Mirror",
     SPTYP_CHARMS | SPTYP_HEXES,
-    SPFLAG_HELPFUL | SPFLAG_SELFENCH,
+    spflag::helpful | spflag::selfench,
     5,
     200,
     -1, -1,
@@ -3628,7 +3628,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DRAIN_MAGIC, "Drain Magic",
     SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER | SPFLAG_MR_CHECK,
+    spflag::dir_or_target | spflag::monster | spflag::needs_tracer | spflag::mr_check,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3640,7 +3640,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CORROSIVE_BOLT, "Corrosive Bolt",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     6,
     200,
     5, 5,
@@ -3652,7 +3652,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SERPENT_OF_HELL_GEH_BREATH, "gehenna serpent of hell breath",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -3664,7 +3664,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SERPENT_OF_HELL_COC_BREATH, "cocytus serpent of hell breath",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -3676,7 +3676,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SERPENT_OF_HELL_DIS_BREATH, "dis serpent of hell breath",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -3688,7 +3688,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SERPENT_OF_HELL_TAR_BREATH, "tartarus serpent of hell breath",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -3700,7 +3700,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_EMPEROR_SCORPIONS, "Summon Emperor Scorpions",
     SPTYP_SUMMONING | SPTYP_POISON,
-    SPFLAG_MONS_ABJURE,
+    spflag::mons_abjure,
     7,
     100,
     -1, -1,
@@ -3712,7 +3712,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_IRRADIATE, "Irradiate",
     SPTYP_CONJURATION | SPTYP_TRANSMUTATION,
-    SPFLAG_AREA | SPFLAG_CHAOTIC,
+    spflag::area | spflag::chaotic,
     5,
     200,
     1, 1,
@@ -3724,7 +3724,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SPIT_LAVA, "Spit Lava",
     SPTYP_CONJURATION | SPTYP_FIRE | SPTYP_EARTH,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     5, 5,
@@ -3736,7 +3736,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ELECTRICAL_BOLT, "Electrical Bolt",
     SPTYP_CONJURATION | SPTYP_AIR,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -3748,8 +3748,8 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FLAMING_CLOUD, "Flaming Cloud",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_TARGET | SPFLAG_AREA | SPFLAG_MONSTER | SPFLAG_NEEDS_TRACER
-        | SPFLAG_CLOUD,
+    spflag::target | spflag::area | spflag::monster | spflag::needs_tracer
+        | spflag::cloud,
     5,
     0,
     5, 5,
@@ -3761,7 +3761,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_THROW_BARBS, "Throw Barbs",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_NOISY | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::monster | spflag::noisy | spflag::needs_tracer,
     5,
     0,
     5, 5,
@@ -3773,7 +3773,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BATTLECRY, "Battlecry",
     SPTYP_CHARMS,
-    SPFLAG_AREA | SPFLAG_MONSTER | SPFLAG_SELFENCH,
+    spflag::area | spflag::monster | spflag::selfench,
     6,
     0,
     -1, -1,
@@ -3785,7 +3785,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_WARNING_CRY, "Warning Cry",
     SPTYP_HEXES,
-    SPFLAG_AREA | SPFLAG_MONSTER | SPFLAG_SELFENCH | SPFLAG_NOISY,
+    spflag::area | spflag::monster | spflag::selfench | spflag::noisy,
     6,
     0,
     -1, -1,
@@ -3797,7 +3797,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SEAL_DOORS, "Seal Doors",
     SPTYP_HEXES,
-    SPFLAG_AREA | SPFLAG_MONSTER | SPFLAG_SELFENCH,
+    spflag::area | spflag::monster | spflag::selfench,
     6,
     0,
     -1, -1,
@@ -3809,7 +3809,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_FLAY, "Flay",
     SPTYP_NECROMANCY,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_MONSTER,
+    spflag::target | spflag::not_self | spflag::monster,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3821,7 +3821,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BERSERK_OTHER, "Berserk Other",
     SPTYP_CHARMS,
-    SPFLAG_HASTY | SPFLAG_MONSTER | SPFLAG_NOT_SELF | SPFLAG_HELPFUL,
+    spflag::hasty | spflag::monster | spflag::not_self | spflag::helpful,
     3,
     0,
     3, 3,
@@ -3834,7 +3834,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_THROW, "Throw",
     SPTYP_TRANSLOCATION,
-    SPFLAG_MONSTER | SPFLAG_NOT_SELF,
+    spflag::monster | spflag::not_self,
     5,
     200,
     1, 1,
@@ -3847,7 +3847,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CORRUPTING_PULSE, "Corrupting Pulse",
     SPTYP_HEXES | SPTYP_TRANSMUTATION,
-    SPFLAG_AREA | SPFLAG_MONSTER,
+    spflag::area | spflag::monster,
     6,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3859,7 +3859,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SIREN_SONG, "Siren Song",
     SPTYP_HEXES,
-    SPFLAG_AREA | SPFLAG_MR_CHECK,
+    spflag::area | spflag::mr_check,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3871,7 +3871,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_AVATAR_SONG, "Avatar Song",
     SPTYP_HEXES,
-    SPFLAG_AREA | SPFLAG_MR_CHECK,
+    spflag::area | spflag::mr_check,
     7,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3883,7 +3883,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PARALYSIS_GAZE, "Paralysis Gaze",
     SPTYP_HEXES,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_MONSTER,
+    spflag::target | spflag::not_self | spflag::monster,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3895,7 +3895,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CONFUSION_GAZE, "Confusion Gaze",
     SPTYP_HEXES,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_MONSTER | SPFLAG_MR_CHECK,
+    spflag::target | spflag::not_self | spflag::monster | spflag::mr_check,
     3,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3907,7 +3907,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DRAINING_GAZE, "Draining Gaze",
     SPTYP_HEXES,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_MONSTER,
+    spflag::target | spflag::not_self | spflag::monster,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -3919,7 +3919,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DEATH_RATTLE, "Death Rattle",
     SPTYP_CONJURATION | SPTYP_NECROMANCY | SPTYP_AIR,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER,
+    spflag::dir_or_target | spflag::monster,
     7,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -3931,7 +3931,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_SCARABS, "Summon Scarabs",
     SPTYP_SUMMONING | SPTYP_NECROMANCY,
-    SPFLAG_MONS_ABJURE,
+    spflag::mons_abjure,
     7,
     100,
     -1, -1,
@@ -3943,7 +3943,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SCATTERSHOT, "Scattershot",
     SPTYP_CONJURATION | SPTYP_EARTH,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF,
+    spflag::dir_or_target | spflag::not_self,
     6,
     200,
     5, 5,
@@ -3955,7 +3955,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_THROW_ALLY, "Throw Ally",
     SPTYP_TRANSLOCATION,
-    SPFLAG_TARGET | SPFLAG_MONSTER | SPFLAG_NOT_SELF,
+    spflag::target | spflag::monster | spflag::not_self,
     2,
     50,
     LOS_RADIUS, LOS_RADIUS,
@@ -3968,7 +3968,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HUNTING_CRY, "Hunting Cry",
     SPTYP_HEXES,
-    SPFLAG_AREA | SPFLAG_MONSTER | SPFLAG_SELFENCH | SPFLAG_NOISY,
+    spflag::area | spflag::monster | spflag::selfench | spflag::noisy,
     6,
     0,
     -1, -1,
@@ -3981,7 +3981,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CLEANSING_FLAME, "Cleansing Flame",
     SPTYP_NONE,
-    SPFLAG_AREA | SPFLAG_MONSTER | SPFLAG_HOLY,
+    spflag::area | spflag::monster | spflag::holy,
     8,
     200,
     -1, -1,
@@ -3994,7 +3994,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CIGOTUVIS_EMBRACE, "Cigotuvi's Embrace",
     SPTYP_NECROMANCY,
-    SPFLAG_CHAOTIC | SPFLAG_CORPSE_VIOLATING | SPFLAG_UTILITY | SPFLAG_NO_GHOST,
+    spflag::chaotic | spflag::corpse_violating | spflag::utility | spflag::no_ghost,
     5,
     200,
     -1, -1,
@@ -4007,7 +4007,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_GRAVITAS, "Gell's Gravitas",
     SPTYP_TRANSLOCATION,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER,
+    spflag::target | spflag::not_self | spflag::needs_tracer,
     3,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -4020,7 +4020,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_CHANT_FIRE_STORM, "Chant Fire Storm",
     SPTYP_CONJURATION | SPTYP_FIRE,
-    SPFLAG_UTILITY,
+    spflag::utility,
     6,
     200,
     -1, -1,
@@ -4033,7 +4033,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_VIOLENT_UNRAVELLING, "Yara's Violent Unravelling",
     SPTYP_HEXES | SPTYP_TRANSMUTATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_NO_GHOST | SPFLAG_CHAOTIC,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::no_ghost | spflag::chaotic,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -4045,7 +4045,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ENTROPIC_WEAVE, "Entropic Weave",
     SPTYP_HEXES,
-    SPFLAG_UTILITY,
+    spflag::utility,
     5,
     200,
     -1, -1,
@@ -4057,7 +4057,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SUMMON_EXECUTIONERS, "Summon Executioners",
     SPTYP_SUMMONING,
-    SPFLAG_UNHOLY | SPFLAG_SELFENCH | SPFLAG_MONS_ABJURE,
+    spflag::unholy | spflag::selfench | spflag::mons_abjure,
     9,
     200,
     -1, -1,
@@ -4069,7 +4069,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DOOM_HOWL, "Doom Howl",
     SPTYP_TRANSLOCATION | SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET,
+    spflag::dir_or_target,
     3,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -4081,7 +4081,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_AWAKEN_EARTH, "Awaken Earth",
     SPTYP_SUMMONING | SPTYP_EARTH,
-    SPFLAG_MONSTER | SPFLAG_TARGET,
+    spflag::monster | spflag::target,
     7,
     0,
     LOS_RADIUS, LOS_RADIUS,
@@ -4093,7 +4093,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_AURA_OF_BRILLIANCE, "Aura of Brilliance",
     SPTYP_CHARMS,
-    SPFLAG_AREA | SPFLAG_MONSTER,
+    spflag::area | spflag::monster,
     5,
     200,
     -1, -1,
@@ -4105,7 +4105,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ICEBLAST, "Iceblast",
     SPTYP_CONJURATION | SPTYP_ICE,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     5,
     200,
     5, 5,
@@ -4117,7 +4117,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SLUG_DART, "Slug Dart",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MONSTER,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::monster,
     1,
     25,
     LOS_RADIUS, LOS_RADIUS,
@@ -4129,7 +4129,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_SPRINT, "Sprint",
     SPTYP_CHARMS,
-    SPFLAG_HASTY | SPFLAG_SELFENCH | SPFLAG_UTILITY,
+    spflag::hasty | spflag::selfench | spflag::utility,
     2,
     100,
     -1, -1,
@@ -4141,7 +4141,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_GREATER_SERVANT_MAKHLEB, "Greater Servant of Makhleb",
     SPTYP_SUMMONING,
-    SPFLAG_UNHOLY | SPFLAG_SELFENCH | SPFLAG_MONS_ABJURE,
+    spflag::unholy | spflag::selfench | spflag::mons_abjure,
     7,
     200,
     -1, -1,
@@ -4153,7 +4153,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BIND_SOULS, "Bind Souls",
     SPTYP_NECROMANCY | SPTYP_ICE,
-    SPFLAG_AREA | SPFLAG_MONSTER,
+    spflag::area | spflag::monster,
     6,
     200,
     -1, -1,
@@ -4165,7 +4165,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_INFESTATION, "Infestation",
     SPTYP_NECROMANCY,
-    SPFLAG_TARGET | SPFLAG_UNCLEAN,
+    spflag::target | spflag::unclean,
     8,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -4177,7 +4177,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_STILL_WINDS, "Still Winds",
     SPTYP_HEXES | SPTYP_AIR,
-    SPFLAG_MONSTER | SPFLAG_SELFENCH,
+    spflag::monster | spflag::selfench,
     6,
     200,
     -1, -1,
@@ -4189,7 +4189,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_RESONANCE_STRIKE, "Resonance Strike",
     SPTYP_EARTH,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_MONSTER,
+    spflag::target | spflag::not_self | spflag::monster,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -4201,7 +4201,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_GHOSTLY_SACRIFICE, "Ghostly Sacrifice",
     SPTYP_NECROMANCY,
-    SPFLAG_TARGET | SPFLAG_MONSTER,
+    spflag::target | spflag::monster,
     7,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -4213,7 +4213,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_DREAM_DUST, "Dream Dust",
     SPTYP_HEXES,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_MONSTER,
+    spflag::target | spflag::not_self | spflag::monster,
     3,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -4225,7 +4225,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BECKONING, "Lesser Beckoning",
     SPTYP_TRANSLOCATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer,
     3,
     200,
     2, LOS_DEFAULT_RANGE,
@@ -4238,7 +4238,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_UPHEAVAL, "Upheaval",
     SPTYP_CONJURATION,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER | SPFLAG_MONSTER,
+    spflag::target | spflag::not_self | spflag::needs_tracer | spflag::monster,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -4250,7 +4250,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_RANDOM_EFFECTS, "Random Effects",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::needs_tracer,
     4,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -4262,7 +4262,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_POISONOUS_VAPOURS, "Poisonous Vapours",
     SPTYP_POISON | SPTYP_AIR,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF,
+    spflag::target | spflag::not_self,
     2,
     50,
     LOS_RADIUS, LOS_RADIUS,
@@ -4274,7 +4274,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_IGNITION, "Ignition",
     SPTYP_FIRE,
-    SPFLAG_AREA,
+    spflag::area,
     8,
     200,
     -1, -1,
@@ -4286,7 +4286,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_VORTEX, "Vortex",
     SPTYP_AIR,
-    SPFLAG_AREA,
+    spflag::area,
     5,
     200,
     VORTEX_RADIUS, VORTEX_RADIUS,
@@ -4298,7 +4298,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_BORGNJORS_VILE_CLUTCH, "Borgnjor's Vile Clutch",
     SPTYP_NECROMANCY | SPTYP_EARTH,
-    SPFLAG_TARGET,
+    spflag::target,
     5,
     200,
     5, 5,
@@ -4310,7 +4310,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_HARPOON_SHOT, "Harpoon Shot",
     SPTYP_CONJURATION | SPTYP_EARTH,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MONSTER,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::monster,
     4,
     200,
     6, 6,
@@ -4322,7 +4322,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_GRASPING_ROOTS, "Grasping Roots",
     SPTYP_EARTH,
-    SPFLAG_TARGET | SPFLAG_NOT_SELF | SPFLAG_MONSTER,
+    spflag::target | spflag::not_self | spflag::monster,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -4333,7 +4333,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_WARNING_FLASH, "Warning Flash",
     SPTYP_NONE,
-    SPFLAG_MONSTER,
+    spflag::monster,
     1,
     25,
     -1, -1,
@@ -4345,7 +4345,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_NOXIOUS_BOG, "Eringya's Noxious Bog",
     SPTYP_POISON | SPTYP_TRANSMUTATION,
-    SPFLAG_SELFENCH,
+    spflag::selfench,
     6,
     200,
     -1, -1,
@@ -4356,7 +4356,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_PERFECTED_RADIANCE, "Velakast's Superior Radiance",
     SPTYP_POISON | SPTYP_HEXES,
-    SPFLAG_AREA,
+    spflag::area,
     6,
     200,
     -1, -1,
@@ -4369,7 +4369,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_ISKENDERUNS_UNDOING, "Iskenderun's Undoing",
     SPTYP_CONJURATION,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_NEEDS_TRACER,
+    spflag::dir_or_target | spflag::not_self | spflag::needs_tracer,
     9,
     200,
     8, 8,
@@ -4380,7 +4380,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_THROW_PIE, "Throw Klown Pie",
     SPTYP_CONJURATION | SPTYP_HEXES,
-    SPFLAG_DIR_OR_TARGET | SPFLAG_NEEDS_TRACER | SPFLAG_MONSTER,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::monster,
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
@@ -4391,7 +4391,7 @@ static const struct spell_desc spelldata[] =
 {
     SPELL_NO_SPELL, "nonexistent spell",
     SPTYP_NONE,
-    SPFLAG_TESTING,
+    spflag::testing,
     1,
     0,
     -1, -1,

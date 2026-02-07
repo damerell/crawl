@@ -3048,7 +3048,7 @@ static string _player_spell_stats(const spell_type spell)
                      schools.c_str());
 
     if (!crawl_state.need_save
-        || (get_spell_flags(spell) & SPFLAG_MONSTER))
+        || (get_spell_flags(spell) & spflag::monster))
     {
         return description; // all other info is player-dependent
     }
@@ -3215,7 +3215,7 @@ int hex_chance(const spell_type spell, const int hd)
  */
 static string _player_spell_desc(spell_type spell)
 {
-    if (!crawl_state.need_save || (get_spell_flags(spell) & SPFLAG_MONSTER))
+    if (!crawl_state.need_save || (get_spell_flags(spell) & spflag::monster))
         return ""; // all info is player-dependent
 
     ostringstream description;
@@ -3360,7 +3360,7 @@ static bool _get_spell_description(const spell_type spell,
                        + "\n";
 
         // only display this if the player exists (not in the main menu)
-        if (crawl_state.need_save && (get_spell_flags(spell) & SPFLAG_MR_CHECK)
+        if (crawl_state.need_save && (get_spell_flags(spell) & spflag::mr_check)
 #ifndef DEBUG_DIAGNOSTICS
             && mon_owner->attitude != ATT_FRIENDLY
 #endif
