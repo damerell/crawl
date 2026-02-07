@@ -74,6 +74,7 @@ Vanilla changes messed around with
 * Decks for everyone. Nemelex uses Evocations. Decks will never become
   abilities, but Nemelex will not carry out so brutal an attack on inventory
   space. Some cards are reworked.
+* Klown pies have a slightly different set of effects.
 
 Changes swiped from other variants
 ----------------------------------

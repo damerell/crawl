@@ -3895,16 +3895,9 @@ static const vector<pie_effect> pie_effects = {
     },
     {
         "lemon",
-        [](const actor &defender) {
-            return defender.is_player() && !you_foodless();
-        },
+        nullptr,
         [](actor &defender, const bolt &beam) {
-            if (you.duration[DUR_NO_POTIONS])
-                mpr("You feel your inability to drink will last longer.");
-            else
-                mpr("You feel unable to drink.");
-
-            you.increase_duration(DUR_NO_POTIONS, 10 + random2(11), 50);
+            defender.corrode_equipment("the pie");
         },
         10
     },
@@ -3915,9 +3908,7 @@ static const vector<pie_effect> pie_effects = {
             if (defender.is_monster())
             {
                 monster *mons = defender.as_monster();
-                simple_monster_message(*mons, " looks unnaturally silent");
-                mons->add_ench(mon_enchant(ENCH_SILENCE, 0, beam.agent(),
-                            10 + random2(21) * BASELINE_DELAY));
+                silence_monster(*mons, beam.agent(), (4 + random2(7)) * BASELINE_DELAY);
             }
             else
             {
@@ -3926,7 +3917,8 @@ static const vector<pie_effect> pie_effects = {
                 else
                     mpr("An unnatural silence engulfs you.");
 
-                you.increase_duration(DUR_SILENCE, 10 + random2(21), 30);
+                silence_player(4 + random2(7));
+
             }
         },
         10
@@ -3972,16 +3964,6 @@ static const vector<pie_effect> pie_effects = {
             }
         },
         6
-    },
-    {
-        "moon pie",
-        [](const actor &defender) {
-            return defender.can_polymorph();
-        },
-        [](actor &defender, const bolt &beam) {
-            defender.polymorph(100, false);
-        },
-        4
     },
 };
 
