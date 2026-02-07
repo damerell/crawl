@@ -776,8 +776,10 @@ const string make_cost_description(ability_type ability)
     if (abil.flags & abflag::variable_mp)
         ret += ", MP";
 
-    if (ability == ABIL_HEAL_WOUNDS)
-        ret += ", Permanent MP";
+    if (ability == ABIL_HEAL_WOUNDS) {
+        ret += make_stringf(", Permanent MP (%d left)",
+                            get_real_mp(false, false));
+    }
 
     if (abil.hp_cost)
         ret += make_stringf(", %d HP", abil.hp_cost.cost(you.hp_max));
