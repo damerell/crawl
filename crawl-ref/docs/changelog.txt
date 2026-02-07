@@ -117,7 +117,7 @@ Gods
 * Exploration-based piety is no longer granted for the Temple, deep water, or
   lava.
 * Qazlal's cloud immunity is extended to elementals created with Elemental
-Force
+  Force
 
 Interface
 ---------
@@ -126,8 +126,8 @@ Interface
 * WebTiles users can use a "Forgot Password" link to reset their password
   via a link sent to their registration email address. This feature is not yet
   enabled on most official servers.
-* New display_chars: cloud_weak, cloud_fading, and cloud_terminal display cloud
-  duration in console; a long available to tiles players.
+* The new display_chars cloud_weak, cloud_fading, and cloud_terminal indicate
+  remaining cloud duration in console.
 
 Items
 -----
@@ -149,9 +149,9 @@ Items
   - Unrandarts with melee effects that could anger nearby allies give a proper
     warning.
   - The robe of Clouds is now +3 {+Thunder rCloud rElec}, providing evocable
-    storm clouds in place of its old mist
-  - The storm bow no longer occasionally creates rain clouds
-  - The skin of Zhor gains SInv and a passive Metabolic Englaciation effect
+    storm clouds in place of its old mist.
+  - The storm bow no longer occasionally creates rain clouds.
+  - The skin of Zhor gains SInv and a passive Metabolic Englaciation effect.
 
 Lua
 ---
@@ -162,6 +162,11 @@ Monsters
 * The shambling mangrove Grasping Roots ability now performs smite-targeted
   constriction instead of applying a 'Roots' status.
 * Jorgrun gains the Grasping Roots spell and can now spawn in Swamp.
+* Killer Klowns now have a pie throwing ability that damages the player and
+  affects them with one of Vertigo, Silence, Corrode, Stat drain, rF-.
+* Killer Klowns have highly enchanted, branded clubs instead of the Klown
+  melee flavor, and no longer have fast regen.
+
 * Orb run spawns are more frequently near the player and more dangerous.
 * Confused monsters now get a 1 in 3 chance to move normally, like players do.
 
