@@ -1972,10 +1972,8 @@ weapon_stat_weight weapon_str_weight(const item_def *wpn) {
     } else {
         switch (skill) {
         case SK_MACES_FLAILS:
-            if ((wpn->sub_type == WPN_WHIP) ||
-                (wpn->sub_type == WPN_DEMON_WHIP) ||
-                (wpn->sub_type == WPN_SACRED_SCOURGE)) {
-                return FAVOUR_STR;
+            if (get_vorpal_type(*wpn) == DVORP_SLASHING) {
+                return BALANCED;
             } else {
                 return ALL_STR;
             }
