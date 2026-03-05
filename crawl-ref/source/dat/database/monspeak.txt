@@ -848,6 +848,8 @@ VISUAL:@The_monster@ cocks @possessive@ head sideways at you.
 
 VISUAL:@The_monster@ scratches at a flea.
 
+VISUAL:@The_monster@ whuffles happily.
+
 w:1
 VISUAL:@The_monster@ gnaws at a bone — where's that from?
 
