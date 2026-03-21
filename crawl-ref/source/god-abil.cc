@@ -5079,7 +5079,10 @@ bool qazlal_disaster_area()
             continue;
 
         const monster_info* m = env.map_knowledge(*ri).monsterinfo();
+        monster* mons;
+        if (m) mons = monster_at(*ri);
         if (m && mons_att_wont_attack(m->attitude)
+            && !testbits(mons->flags, MF_DEMONIC_GUARDIAN)
             && !mons_is_projectile(m->type))
         {
             friendlies = true;
