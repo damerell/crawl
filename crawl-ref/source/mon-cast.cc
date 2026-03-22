@@ -1429,8 +1429,8 @@ bolt mons_spell_beam(const monster* mons, spell_type spell_cast, int power,
         beam.damage   = dice_def(3, min(6 + power / 10, 40));
         break;
 
-    case SPELL_MALMUTATE:
-        beam.flavour  = BEAM_MALMUTATE;
+    case SPELL_DETERIORATION:
+        beam.flavour  = BEAM_DETERIORATION;
         break;
 
     case SPELL_FIRE_STORM:
@@ -2332,7 +2332,7 @@ static bool _mons_call_of_chaos(const monster& mon, bool check_only = false)
                                                     15, BEAM_BLINK,
                                                     15, BEAM_SLOW,
                                                     15, BEAM_VULNERABILITY,
-                                                    15, BEAM_MALMUTATE,
+                                                    15, BEAM_DETERIORATION,
                                                     15, BEAM_POLYMORPH,
                                                     15, BEAM_INNER_FLAME);
 

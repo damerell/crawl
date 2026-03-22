@@ -29,7 +29,7 @@ enum class spflag
     escape               = 0x002000,      // useful for running away
     recovery             = 0x004000,      // healing or recovery spell
     area                 = 0x008000,      // area affect
-    permabuff            = 0x010000,      // is a permabuff
+    //                   = 0x010000,      // was unused "is a permabuff"
     selfench             = 0x020000,      // monsters use as selfench
     monster              = 0x040000,      // monster-only spell
     needs_tracer         = 0x080000,      // monster casting needs tracer
