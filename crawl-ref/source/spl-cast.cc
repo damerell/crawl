@@ -1455,7 +1455,7 @@ spret your_spells(spell_type spell, int powc, bool allow_fail,
         unique_ptr<targeter> hitfunc = _spell_targeter(spell, powc, range);
 
         // Add success chance to targeted spells checking monster MR
-        const bool mr_check = testbits(flags, spflag::mr_check)
+        const bool mr_check = testbits(flags, spflag::MR_check)
                               && testbits(flags, spflag::dir_or_target)
                               && !testbits(flags, spflag::helpful);
         desc_filter additional_desc = nullptr;

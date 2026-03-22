@@ -3374,7 +3374,7 @@ static bool _get_spell_description(const spell_type spell,
                        + "\n";
 
         // only display this if the player exists (not in the main menu)
-        if (crawl_state.need_save && (get_spell_flags(spell) & spflag::mr_check)
+        if (crawl_state.need_save && (get_spell_flags(spell) & spflag::MR_check)
 #ifndef DEBUG_DIAGNOSTICS
             && mon_owner->attitude != ATT_FRIENDLY
 #endif
