@@ -325,7 +325,7 @@ NORETURN void end_game(scorefile_entry &se)
 
     for (auto &item : you.inv)
         if (item.defined() && item_type_unknown(item))
-            add_inscription(item, "unknown");
+            add_inscription(item, "unidentified");
 
     identify_inventory();
 
