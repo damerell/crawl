@@ -27,6 +27,7 @@
 #include "prompt.h"
 #include "religion.h"
 #include "shopping.h"
+#include "spl-clouds.h"
 #include "spl-goditem.h"
 #include "state.h"
 #include "stepdown.h"
@@ -86,9 +87,23 @@ static bool _pray_ecumenical_altar()
             unwind_var<int> fakepoor(you.attribute[ATTR_GOLD_GENERATED], 0);
 
             god_type altar_god = _altar_identify_ecumenical_altar();
+            you.turn_is_over = true;
+            if ((altar_god == GOD_XOM) && xom_afflicted()) {
+                mpr("There is a sudden shower of confetti.");
+                big_cloud(CLOUD_XOM_TRAIL, 0, you.pos(), 25, 4 + random2(4));
+                god_speaks(GOD_XOM,
+                           "Xom yells \"SURPRISE! Happy birthday to you!\"");
+                if (one_chance_in(27)) {
+                    god_speaks(GOD_XOM,
+                               "Xom sings \"I went to the zoo, "
+                               "I saw a plague shambler, "
+                               "and I thought it was you!\"");
+                }
+                xom_is_stimulated(100, XM_NORMAL, true, true);
+                return false;
+            }
             mprf(MSGCH_GOD, "%s hears your prayer!",
                             god_name(altar_god).c_str());
-            you.turn_is_over = true;
             if (!you_worship(altar_god)) {
                 if (join_religion(altar_god)) {
                     you.props["joined faded"] = true;
