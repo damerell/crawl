@@ -214,7 +214,7 @@ static void _ench_animation(int flavour, const monster* mon, bool force)
         elem = ETC_HOLY;
         break;
     case BEAM_POLYMORPH:
-    case BEAM_MALMUTATE:
+    case BEAM_DETERIORATION:
     case BEAM_CORRUPT_BODY:
         elem = ETC_MUTAGENIC;
         break;
@@ -3516,7 +3516,7 @@ void bolt::affect_player_enchantment(bool resistible)
         obvious_effect = you.polymorph(ench_power);
         break;
 
-    case BEAM_MALMUTATE:
+    case BEAM_DETERIORATION:
         mprf("Your body %s rapidly!", species_is_undead(you.species) ? "decomposes" : "deteriorates");
         lose_stat(STAT_STR, 1 + random2(2));
         lose_stat(STAT_DEX, 1 + random2(2));
@@ -5360,7 +5360,7 @@ bool bolt::has_saving_throw() const
     case BEAM_MALIGN_OFFERING:
     case BEAM_AGILITY:
     case BEAM_RESISTANCE:
-    case BEAM_MALMUTATE:
+    case BEAM_DETERIORATION:
     case BEAM_SAP_MAGIC:
     case BEAM_CORRUPT_BODY:
     case BEAM_UNRAVELLING:
@@ -5384,7 +5384,7 @@ bool ench_flavour_affects_monster(beam_type flavour, const monster* mon,
     bool rc = true;
     switch (flavour)
     {
-    case BEAM_MALMUTATE:
+    case BEAM_DETERIORATION:
     case BEAM_CORRUPT_BODY:
     case BEAM_UNRAVELLED_MAGIC:
         rc = mon->can_mutate();
@@ -5595,7 +5595,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         }
         return MON_AFFECTED;
 
-    case BEAM_MALMUTATE:
+    case BEAM_DETERIORATION:
     case BEAM_CORRUPT_BODY:
     case BEAM_UNRAVELLED_MAGIC:
         if (mon->malmutate("")) // exact source doesn't matter
@@ -6807,8 +6807,8 @@ static string _beam_type_name(beam_type type)
     case BEAM_DIGGING:               return "digging";
     case BEAM_TELEPORT:              return "teleportation";
     case BEAM_POLYMORPH:             return "polymorph";
-    case BEAM_MALMUTATE:             return "malmutation";
-    case BEAM_CHARM:               return "charm";
+    case BEAM_DETERIORATION:         return "deterioration";
+    case BEAM_CHARM:                 return "charm";
     case BEAM_BANISH:                return "banishment";
     case BEAM_PAIN:                  return "pain";
     case BEAM_AGONY:                 return "agony";

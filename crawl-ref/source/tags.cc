@@ -6954,7 +6954,7 @@ static void unmarshallSpells(reader &th, monster_spells &spells
         if (th.getMinorVersion() < TAG_MINOR_MALMUTATE
             && spells[j].spell == SPELL_POLYMORPH)
         {
-            spells[j].spell = SPELL_MALMUTATE;
+            spells[j].spell = SPELL_DETERIORATION;
         }
 
         if (spells[j].spell == SPELL_FAKE_RAKSHASA_SUMMON)
