@@ -548,7 +548,7 @@ static void _describe_book(const spellbook_contents &book,
 #ifndef DEBUG_DIAGNOSTICS
             && mon_owner->attitude != ATT_FRIENDLY
 #endif
-            && testbits(get_spell_flags(spell), spflag::mr_check))
+            && testbits(get_spell_flags(spell), spflag::MR_check))
         {
             if (you.immune_to_hex(spell))
                 hex_str = "(immune) ";
@@ -642,7 +642,7 @@ static void _write_book(const spellbook_contents &book,
 #ifndef DEBUG_DIAGNOSTICS
             && mon_owner->attitude != ATT_FRIENDLY
 #endif
-            && (get_spell_flags(spell) & spflag::mr_check))
+            && (get_spell_flags(spell) & spflag::MR_check))
         {
             if (you.immune_to_hex(spell))
                 tiles.json_write_string("hex_chance", "immune");
