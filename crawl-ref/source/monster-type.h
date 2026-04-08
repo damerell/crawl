@@ -1040,7 +1040,8 @@ enum monster_type                      // menv[].type
     MONS_GOLIATH_BEETLE,
     MONS_VIPER,
     MONS_CAVALIER,
-    MONS_TAINTED_LEVIATHAN,
+    MONS_TAINTED_LEVIATHAN,     // Not in Stoat Soup, added to let later
+    MONS_FOXFIRE,               // commits apply OK
 #endif
 
     NUM_MONSTERS,               // used for polymorph
