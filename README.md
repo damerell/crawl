@@ -2,7 +2,7 @@
 
 Dungeon Crawl Stone Soup is a game of dungeon exploration, combat and magic, involving characters of diverse skills, worshipping deities of great power and caprice. To win, you'll need to be a master of tactics and strategy, and prevail against overwhelming odds.
 
-Stoat Soup is a variant of Stone Soup. Amongst the changes are that monsters still spawn during play, and that it remains possible to eat mutagenic chunks. The changes are discussed in more detail in [the changelog](crawl-ref/docs/changelog.txt).
+Stoat Soup is a variant of Stone Soup. [Stoat Soup for people who play modern Crawl](https://crawl.montres.org.uk/about-new.html), [Stoat Soup for people who played old versions](https://crawl.montres.org.uk/about-old.html), or the [changelog](crawl-ref/docs/changelog.txt) may shed some light on the differences.
 
 ## Contents
 
@@ -28,11 +28,13 @@ You can play Crawl online, competing with other players or watching them. [Gener
 
 #### Offline Play
 
-To play Stoat Soup offline you will have to compile it yourself, I regret.
+Periodically we make [Windows releases](https://github.com/damerell/crawl/releases) available. It is reasonably straightforward to compile it on Linux, and the procedure is identical to vanilla Stone Soup.
 
 ## Community
 
 ### Web
+[Scoring](https://crawl.montres.org.uk) for Stoat Soup is available.
+
 Stone Soup's official homepage is [https://crawl.develz.org](https://crawl.develz.org/). You can find online play, offline downloads, a community forum and the development bug tracker/wiki.
 
 ### IRC
@@ -44,11 +46,13 @@ If you like the game and you want to help make it better, there are a number
 of ways to do so. For a detailed guide to the crawl workflow, look at
 the [contributor's guide](crawl-ref/docs/develop/contribution-process.md).
 
+In the (unlikely) event that you want to contribute to Stoat Soup, you are welcome to submit patches but you MUST NOT use any form of generative "AI" / LLM (such as "Claude" or "Copilot").
+
 ### Reporting bugs
 
 At any time, there will be bugs -- finding and reporting them is a great help.
-Many of the online servers host the regularly updated development version. Bugs
-should be reported to [our bug tracker](https://crawl.develz.org/mantis/) - if you can verify they are present in vanilla Stone Soup.
+Many of the online servers host the regularly updated development version. If you find a bug while playing Stoat Soup, please [report it](https://github.com/damerell/crawl/issues). Please don't report our bugs to Stone Soup unless you really can reproduce them there.
+
 
 ### Map making
 Crawl creates levels by combining many hand-made (but often randomised) maps, known as *vaults*. Making them is fun and
