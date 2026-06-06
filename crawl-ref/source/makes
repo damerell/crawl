@@ -9,3 +9,7 @@ make -j 4 DEBUG=yes FORCE_CXX='g++ -DDEBUG -DDEBUG_TESTS'
 make -j 4 DEBUG=yes FORCE_CXX='g++ -DDEBUG -DDEBUG_DIAGNOSTICS'
 make -j 4 DEBUG=yes FORCE_CXX='g++ -DDEBUG -DDEBUG_STATISTICS'
 make  CROSSHOST=i686-w64-mingw32 package-windows-zips 2> foo; less foo
+
+# ccls
+compiledb make -k DEBUG=yes NO_OPTIMIZE=yes TILES=y
+ccls --index=.
