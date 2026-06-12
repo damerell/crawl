@@ -260,8 +260,13 @@ spret cast_call_canine_familiar(int pow, god_type god, bool fail)
 
     const int dur = min(2 + (random2(pow) / 4), 6);
 
-    if (!create_monster(_pal_data(mon, dur, god, SPELL_CALL_CANINE_FAMILIAR)))
+    if (monster* mons =
+        create_monster(_pal_data(mon, dur, god, SPELL_CALL_CANINE_FAMILIAR))) {
+        if (you.can_see(*mons))
+            mpr("Your familiar appears, barking eagerly.");
+    } else {
         canned_msg(MSG_NOTHING_HAPPENS);
+    }
 
     return spret::success;
 }
