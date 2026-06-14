@@ -88,6 +88,17 @@ Gooncrawl:
 * Iskenderun's Undoing - cast 8 orbs of destruction at once.
 * Haste spell returns as level 9.
 
+Pulled forward from 0.28
+------------------------
+* Kills by summoned allies now grant full experience.
+* Spell summon caps are reduced:
+  - Summon Small Mammal, Summon Hydra, and Monstrous Menagerie are capped at 2.
+  - Haunt is capped at 8.
+  - All other summon spells except Summon Horrible Things and Dragon's Call are
+    capped at 1.
+* New spell: Summon Cactus Giant (L6 Summonings). Summons a giant which attacks
+  very slowly but has enormous spines, impaling melee attackers.
+
 Stone Soup 0.23 (up to 0.23-a0-642-g3120c2f5)
 --------------------------------------------
 
