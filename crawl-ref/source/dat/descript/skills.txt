@@ -183,6 +183,9 @@ allies, or lower chances of creating hostile creatures. Note that summoned
 beings do not leave corpses and give no experience when killed, and their
 equipment is as ephemeral as they are.
 
+In older versions of the game, there was an XP penalty to kills by summoned
+creatures. There is now no such penalty in Stoat Soup.
+
 Being skilled in Summonings increases the success rate and spell power of
 spells in this school. Many spells belong to a combination of several schools,
 in which case spellcasting success and power will depend on the average skill
