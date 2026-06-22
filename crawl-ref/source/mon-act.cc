@@ -1415,7 +1415,8 @@ static void _monster_add_energy(monster& mons)
 
 #ifdef DEBUG
 #    define DEBUG_ENERGY_USE(problem) \
-    if (mons->speed_increment == old_energy && mons->alive()) \
+    if (mons->speed_increment == old_energy && mons->alive() && \
+        (mons->type != MONS_INUGAMI)) \
              mprf(MSGCH_DIAGNOSTICS, \
                   problem " for monster '%s' consumed no energy", \
                   mons->name(DESC_PLAIN).c_str());
