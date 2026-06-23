@@ -293,7 +293,7 @@ spret cast_call_canine_familiar(int pow, god_type god, bool fail)
     // Summon our dog if one isn't already active
     if (!old_dog)
     {
-        mgen_data mg = _pal_data(MONS_INUGAMI, 5, god, SPELL_CALL_CANINE_FAMILIAR);
+        mgen_data mg = _pal_data(MONS_INUGAMI, 6, god, SPELL_CALL_CANINE_FAMILIAR);
 
         monster* dog = create_monster(mg);
         if (!dog)
@@ -328,8 +328,8 @@ spret cast_call_canine_familiar(int pow, god_type god, bool fail)
         // is currently low, to avoid imbuing it and then having it immediately
         // poof before it can even do anything with the buff.
         mon_enchant abj = old_dog->get_ench(ENCH_ABJ);
-        if (abj.duration < 110)
-            abj.duration += random_range(60, 90);
+        if (abj.duration < 220)
+            abj.duration += random_range(120, 180);
         old_dog->update_ench(abj);
     }
 
