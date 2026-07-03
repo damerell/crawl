@@ -273,6 +273,14 @@ void check_canid_farewell(const monster &dog, bool deadish)
     }
 }
 
+string dogname() {
+    if (!you.props.exists("dog name")) {
+        string dogname = dognames[random2(dognames.size())];
+        you.props["dog name"] = dogname;
+    } 
+    return you.props["dog name"];
+}
+
 spret cast_call_canine_familiar(int pow, god_type god, bool fail)
 {
     // Many parts of this spell behave differently if our familiar has already
@@ -308,8 +316,10 @@ spret cast_call_canine_familiar(int pow, god_type god, bool fail)
         ASSERT(dog->ghost);
         dog->ghost->init_inugami_from_player(pow);
         dog->inugami_init();
-
-        mpr("You call for your canine familiar and it appears with a howl!");
+        if (Options.dog_names) dog->mname = dogname();
+        
+        mprf("You call for your canine familiar and %s appears with a howl!",
+             Options.dog_names ? dogname().c_str() : "it");
         you.props[CANINE_FAMILIAR_MID].get_int() = dog->mid;
     }
     // If it's active, instead heal and boost its next attack.
@@ -334,6 +344,35 @@ spret cast_call_canine_familiar(int pow, god_type god, bool fail)
     }
 
     return spret::success;
+}
+
+// shamelessly cribbed from hep aha
+void rename_dog() {
+    const string old_name = dogname();
+    string prompt = make_stringf("Rename %s, your canine familiar, to what? ",
+                                 old_name.c_str());
+    char buf[18];
+    int ret = msgwin_get_line(prompt, buf, sizeof buf, nullptr, old_name);
+    if (ret)
+    {
+        canned_msg(MSG_OK);
+        return;
+    }
+
+    // strip whitespace & colour tags
+    const string new_name
+        = trimmed_string(formatted_string::parse_string(buf).tostring());
+    if (old_name == new_name || !new_name.size())
+    {
+        canned_msg(MSG_OK);
+        return;
+    }
+
+    you.props["dog name"] = new_name;
+    mprf("Your familiar will now answer to %s.", new_name.c_str());
+    if (monster *mons = find_canine_familiar()) {
+        mons->mname = new_name;
+    }
 }
 
 spret cast_summon_cactus(int pow, god_type god, bool fail)

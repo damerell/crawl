@@ -72,7 +72,8 @@ The contents of this text are:
                 msg_max_height, messages_at_top, skill_focus,
                 msg_condense_repeats, msg_condense_short, show_travel_trail,
                 monster_list_colour, view_delay, force_more_message,
-                flash_screen_message, use_animations, darken_beyond_range
+                flash_screen_message, use_animations, darken_beyond_range,
+                dog_names
 3-i     Colours (messages and menus)
                 menu_colour, message_colour
 3-j     Missiles.
@@ -931,9 +932,9 @@ rest_wait_both = false
 
 rest_wait_ignore_mp = false
         Never continue to rest because MP are depleted. This option
-	overrules rest_wait_both. It is provided for characters who
-	are intermittently wielding antimagic weapons and have no use
-	for MP.
+        overrules rest_wait_both. It is provided for characters who
+        are intermittently wielding antimagic weapons and have no use
+        for MP.
 
 rest_wait_ancestor = false
         If rest_wait_ancestor is set to true then resting will only stop when
@@ -970,13 +971,13 @@ wall_jump_prompt = false
 
 branch_end_warn = ( dangerous | vaults | none | all )
         Warn the player when first attempting to descend to the level at the
-	end of a branch; also warn if you land involuntarily on such a level.
-	
-	"dangerous" warns on those branches where the game also tries to stop
-	you being shafted to the branch end: Elf, all Lair branches, Crypt,
-	Hell, Tomb, and Zot; but not Dungeon, Depths, Abyss, Orc, or Lair.
+        end of a branch; also warn if you land involuntarily on such a level.
+        
+        "dangerous" warns on those branches where the game also tries to stop
+        you being shafted to the branch end: Elf, all Lair branches, Crypt,
+        Hell, Tomb, and Zot; but not Dungeon, Depths, Abyss, Orc, or Lair.
 
-	"all" warns on all branches which are not 1 level deep.
+        "all" warns on all branches which are not 1 level deep.
 
 annotate_ghosts = false
         In vanilla Crawl, ghosts are added to the Ctrl-O notes, because they
@@ -1625,6 +1626,12 @@ darken_beyond_range = true
         If set to true, everything beyond range when targeting will be
         coloured grey. Setting this to false will also disable the "range"
         category of the use_animations option.
+
+dog_names = true
+        If false, inugami summoned by Call Canine Familiar will not be given
+        names, and can't be renamed, they'll just be "your inugami". This may
+        help if you are not excessively fond of dogs. If you change this option
+        with an inugami summoned, it may not be respected until you resummon.
 
 force_more_message += <regex>, <regex>
         (List option)

@@ -54,7 +54,8 @@ enum ability_type
     ABIL_HOP,
     // General purpose
     ABIL_END_PERMABUFFS,
-    ABIL_MAX_INTRINSIC = ABIL_END_PERMABUFFS,
+    ABIL_RENAME_DOG,
+    ABIL_MAX_INTRINSIC = ABIL_RENAME_DOG,
 
     // Evoking items.
     ABIL_EVOKE_BERSERK = 40,

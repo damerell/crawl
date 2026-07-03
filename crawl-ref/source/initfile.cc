@@ -218,6 +218,7 @@ const vector<GameOption*> game_options::build_options_list()
         new BoolGameOption(SIMPLE_NAME(wall_jump_prompt), false),
         new BoolGameOption(SIMPLE_NAME(wall_jump_move), true),
         new BoolGameOption(SIMPLE_NAME(darken_beyond_range), true),
+        new BoolGameOption(SIMPLE_NAME(dog_names), true),
         new BoolGameOption(SIMPLE_NAME(dump_book_spells), true),
         new BoolGameOption(SIMPLE_NAME(annotate_ghosts), false),
         new BoolGameOption(SIMPLE_NAME(arena_dump_msgs), false),

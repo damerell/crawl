@@ -328,6 +328,9 @@ static const ability_def Ability_List[] =
 
     { ABIL_HOP, "Hop", 0, 0, 0, 0, {}, abflag::none },
     
+    { ABIL_RENAME_DOG,  "Rename Canine Familiar",
+      0, 0, 0, 0, {}, abflag::instant | abflag::starve_ok | abflag::conf_ok },
+
     { ABIL_END_PERMABUFFS, "End Permanent Enchantments",
       0, 0, 0, 0, {}, abflag::starve_ok | abflag::perma },
 
@@ -1662,6 +1665,9 @@ static bool _check_ability_possible(const ability_def& abil, bool quiet = false)
 
     case ABIL_HOP:
         return _can_hop(quiet);
+
+    case ABIL_RENAME_DOG:
+        return you.has_spell(SPELL_CALL_CANINE_FAMILIAR) && Options.dog_names;
         
     case ABIL_BLINK:
     case ABIL_EVOKE_BLINK:
@@ -1984,6 +1990,10 @@ static spret _do_ability(const ability_def& abil, bool fail)
         else
             return spret::abort;
 
+    case ABIL_RENAME_DOG:
+        rename_dog();
+        break;
+        
     case ABIL_SPIT_POISON:      // Naga poison spit
     {
         int power = 10 + you.experience_level;
@@ -3514,6 +3524,9 @@ vector<talent> your_talents(bool check_confused, bool include_unusable)
     if (you.get_mutation_level(MUT_HOP))
         _add_talent(talents, ABIL_HOP, check_confused);
 
+    if (you.has_spell(SPELL_CALL_CANINE_FAMILIAR) && Options.dog_names)
+        _add_talent(talents, ABIL_RENAME_DOG, check_confused);
+
     // Spit Poison, possibly upgraded to Breathe Poison.
     if (you.get_mutation_level(MUT_SPIT_POISON) == 2)
         _add_talent(talents, ABIL_BREATHE_POISON, check_confused);
@@ -3810,6 +3823,9 @@ int find_ability_slot(const ability_type abil, char firstletter)
     // not already used & harder to type by accident
     case ABIL_END_PERMABUFFS:
         first_slot = letter_to_index('E');
+        break;
+    case ABIL_RENAME_DOG:
+        first_slot = letter_to_index('R');
         break;
     case ABIL_IHPIX_INFUSE:
     case ABIL_IHPIX_STOP_INFUSE:
