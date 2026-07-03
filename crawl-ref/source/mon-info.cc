@@ -499,7 +499,9 @@ monster_info::monster_info(const monster* m, int milev)
 
     mname = m->mname;
 
-    const auto name_flags = m->flags & MF_NAME_MASK;
+    // hack DJSD
+    const auto name_flags = ((type == MONS_INUGAMI) && (mname != "")) ?
+    MF_NAME_REPLACE : (m->flags & MF_NAME_MASK);
 
     if (name_flags == MF_NAME_SUFFIX)
         mb.set(MB_NAME_SUFFIX);
