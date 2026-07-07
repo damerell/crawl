@@ -293,7 +293,9 @@ void tile::copy(const tile &img)
     m_filename = img.m_filename;
     m_pixels   = new tile_colour[m_width * m_height];
     m_shrink   = img.m_shrink;
-    memcpy(m_pixels, img.m_pixels, m_width * m_height * sizeof(tile_colour));
+    for (int i = 0, iend = m_width * m_height; i < iend; ++i) {
+        m_pixels[i] = img.m_pixels[i];
+    }
 
     // enum explicitly not copied
     m_enumname.clear();

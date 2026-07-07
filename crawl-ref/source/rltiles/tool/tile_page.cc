@@ -137,7 +137,6 @@ bool tile_page::write_image(const char *filename)
     }
 
     tile_colour *pixels = new tile_colour[m_width * m_height];
-    memset(pixels, 0, m_width * m_height * sizeof(tile_colour));
 
     for (unsigned int i = 0; i < m_tiles.size(); i++)
     {
