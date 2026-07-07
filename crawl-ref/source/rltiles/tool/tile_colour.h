@@ -34,7 +34,7 @@ public:
 
     bool operator==(const tile_colour &rhs) const;
     bool operator!=(const tile_colour &rhs) const;
-    const tile_colour &operator=(const tile_colour &rhs);
+    tile_colour &operator=(const tile_colour &rhs) = default;
 
     unsigned char &operator[](int idx);
     unsigned char operator[](int idx) const;
