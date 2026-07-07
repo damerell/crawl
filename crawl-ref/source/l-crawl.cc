@@ -1493,7 +1493,7 @@ void cluaopen_crawl(lua_State *ls)
     clua_register_metatable(ls, MESSF_METATABLE, crawl_messf_ops,
                             lua_object_gc<message_filter>);
 
-    luaL_openlib(ls, "crawl", crawl_clib, 0);
+    luaL_register(ls, "crawl", crawl_clib);
 }
 
 //
@@ -1733,5 +1733,5 @@ static const struct luaL_reg crawl_dlib[] =
 
 void dluaopen_crawl(lua_State *ls)
 {
-    luaL_openlib(ls, "crawl", crawl_dlib, 0);
+    luaL_register(ls, "crawl", crawl_dlib);
 }

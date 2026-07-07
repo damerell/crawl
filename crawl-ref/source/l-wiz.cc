@@ -48,7 +48,7 @@ static const struct luaL_reg wiz_dlib[] =
 
 void dluaopen_wiz(lua_State *ls)
 {
-    luaL_openlib(ls, "wiz", wiz_dlib, 0);
+    luaL_register(ls, "wiz", wiz_dlib);
 }
 
 #endif

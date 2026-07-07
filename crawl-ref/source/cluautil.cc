@@ -52,7 +52,7 @@ void luaopen_setmeta(lua_State *ls,
     luaL_newmetatable(ls, meta);
     lua_setglobal(ls, global);
 
-    luaL_openlib(ls, global, lua_lib, 0);
+    luaL_register(ls, global, lua_lib);
 
     // Do <global>.__index = <global>
     lua_pushstring(ls, "__index");
@@ -77,8 +77,9 @@ void clua_register_metatable(lua_State *ls, const char *tn,
         lua_settable(ls, -3);
     }
 
-    if (lr)
-        luaL_openlib(ls, nullptr, lr, 0);
+    if (lr) {
+        luaL_register(ls, NULL, lr);
+    }
 }
 
 int clua_pushcxxstring(lua_State *ls, const string &s)

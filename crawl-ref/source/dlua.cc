@@ -294,9 +294,9 @@ void init_dungeon_lua()
     dluaopen_wiz(dlua);
     #endif
 
-    luaL_openlib(dlua, "feat", feat_dlib, 0);
-    luaL_openlib(dlua, "debug", debug_dlib, 0);
-    luaL_openlib(dlua, "los", los_dlib, 0);
+    luaL_register(dlua, "feat", feat_dlib);
+    luaL_register(dlua, "debug", debug_dlib);
+    luaL_register(dlua, "los", los_dlib);
 
     dlua.execfile("dlua/dungeon.lua", true, true);
     dlua.execfile("dlua/luamark.lua", true, true);

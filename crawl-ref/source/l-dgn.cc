@@ -1927,13 +1927,13 @@ void dluaopen_dgn(lua_State *ls)
 {
     _dgn_register_metatables(ls);
 
-    luaL_openlib(ls, "dgn", dgn_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_build_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_event_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_grid_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_item_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_level_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_mons_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_subvault_dlib, 0);
-    luaL_openlib(ls, "dgn", dgn_tile_dlib, 0);
+    luaL_register(ls, "dgn", dgn_dlib);
+    luaL_register(ls, "dgn", dgn_build_dlib);
+    luaL_register(ls, "dgn", dgn_event_dlib);
+    luaL_register(ls, "dgn", dgn_grid_dlib);
+    luaL_register(ls, "dgn", dgn_item_dlib);
+    luaL_register(ls, "dgn", dgn_level_dlib);
+    luaL_register(ls, "dgn", dgn_mons_dlib);
+    luaL_register(ls, "dgn", dgn_subvault_dlib);
+    luaL_register(ls, "dgn", dgn_tile_dlib);
 }

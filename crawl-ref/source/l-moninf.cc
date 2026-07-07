@@ -639,5 +639,5 @@ void cluaopen_moninf(lua_State *ls)
 {
     clua_register_metatable(ls, MONINF_METATABLE, moninf_lib,
                             lua_object_gc<monster_info>);
-    luaL_openlib(ls, "monster", mon_lib, 0);
+    luaL_register(ls, "monster", mon_lib);
 }

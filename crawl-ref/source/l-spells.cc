@@ -291,5 +291,5 @@ static const struct luaL_reg spells_clib[] =
 
 void cluaopen_spells(lua_State *ls)
 {
-    luaL_openlib(ls, "spells", spells_clib, 0);
+    luaL_register(ls, "spells", spells_clib);
 }

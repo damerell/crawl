@@ -989,7 +989,7 @@ static const struct luaL_reg kill_lib[] =
 
 void cluaopen_kills(lua_State *ls)
 {
-    luaL_openlib(ls, "kills", kill_lib, 0);
+    luaL_register(ls, "kills", kill_lib);
 }
 
 #ifdef CLUA_BINDINGS
