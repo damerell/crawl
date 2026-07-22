@@ -467,6 +467,10 @@ luck!
 Seeded play
 ========================================
 
+We regret to say that, while Stoat Soup takes vanilla commits related to seeded
+play, we don't have any further effort to fix bugs in seeded play which aren't
+in vanilla. Sorry about that.
+
 Crawl dungeons are determined by a "seed" number used to initialise the game's
 random number generator. If you initialise the game with the same seed, you
 will (within certain parameters) get the same dungeon. In offline games you can
