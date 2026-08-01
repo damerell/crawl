@@ -1048,6 +1048,7 @@ enum monster_type                      // menv[].type
     MONS_ANIMATED_ARMOUR,
     MONS_CACTUS_GIANT,
     MONS_INUGAMI,
+    MONS_ANGHARAD,
 #endif
 
     NUM_MONSTERS,               // used for polymorph

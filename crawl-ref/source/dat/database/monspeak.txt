@@ -1813,6 +1813,67 @@ VISUAL:@The_monster@ coils and then uncoils.
 
 VISUAL:@The_monster@ winks several times @at_foe@.
 %%%%
+############ ANGHARAD ### Overconfident in the queendom of her power
+silenced Angharad
+
+VISUAL:@The_monster@ looks highly exasperated at @possessive@ inability to cast spells.
+
+@_Angharad_silent_@
+%%%%
+Angharad
+
+w:2
+@The_monster@ says, "Extinct? I think not!"
+
+w:8
+@_Angharad_silent_@
+
+w:5
+@_Angharad_rare_@
+%%%%
+_Angharad_silent_
+
+VISUAL:Sparks fly from @the_monster@'s eyes.
+
+VISUAL:Raw power drips from @the_monster@'s claws.
+
+VISUAL:@The_monster@ looks scornfully at @foe@.
+
+VISUAL:The light sparkles off @the_monster@'s wings.
+%%%%
+_Angharad_rare_
+
+@The_monster@ says "I learned from Vehumet and Sif Muna. You, I think, learned from an unusually stupid ogre?" @player_only@
+
+@The_monster@ says, "I went to @_ang_nasty_place_@ for knowledge. Nothing there could thwart me, and yet you think you can?" @player_only@
+
+@The_monster@ says "I even learned from Kikubaaqudgha... mostly that the undead are more trouble than they're worth, like you." @player_only@
+
+@The_monster@ says @to_foe@, "If I can't burn you, I'll freeze you. Or lace your bones with molten lead."
+%%%%
+_ang_nasty_place_
+
+#the King in Yellow
+lost Carcosa
+
+# angband
+the Iron Prison of Morgoth
+
+# nethack
+the Mazes of Menace
+
+# omega
+the Star Peak
+
+# DoomRL
+the Halls of Carnage
+
+# POWDER
+Belweir's Library
+
+#DCSS
+the depths of the Abyss
+%%%%
 ############ AGNES ### She is an honourable warrior from a far-away land.
 Agnes
 

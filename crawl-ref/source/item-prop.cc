@@ -1331,7 +1331,6 @@ static map<monster_type, armour_type> _monster_hides = {
     { MONS_PEARL_DRAGON,        ARM_PEARL_DRAGON_ARMOUR },
     { MONS_SHADOW_DRAGON,       ARM_SHADOW_DRAGON_ARMOUR },
     { MONS_QUICKSILVER_DRAGON,  ARM_QUICKSILVER_DRAGON_ARMOUR },
-    { MONS_FAERIE_DRAGON,       ARM_FD_ARMOUR },
 };
 
 /**

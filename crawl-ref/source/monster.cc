@@ -3170,6 +3170,10 @@ int monster::shield_bonus() const
         sh += jewellery_plus * 2;
     }
 
+    if (mons_species() == MONS_FAERIE_DRAGON) {
+        sh += 12;
+    }
+
     return sh ? sh : -100;
 }
 

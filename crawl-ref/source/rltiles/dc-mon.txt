@@ -1122,6 +1122,7 @@ tiamat_red
 tiamat_white
 bai_suizhen MONS_BAI_SUZHEN
 bai_suizhen_dragon MONS_BAI_SUZHEN_DRAGON
+angharad MONS_ANGHARAD
 %sdir mon/draco
 # must match monster_type enum order.
 draco-base-brown DRACO_BASE
