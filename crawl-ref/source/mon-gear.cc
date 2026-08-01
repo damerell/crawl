@@ -1253,6 +1253,18 @@ int make_mons_weapon(monster_type type, int level, bool melee_only)
         upgrade_hepliaklqana_weapon(type, item);
         break;
 
+    case MONS_ANGHARAD:
+        force_item = true;
+        item.base_type = OBJ_STAVES;
+        static const vector<stave_type> angharstaff = {
+            STAFF_FIRE,
+            STAFF_COLD,
+            STAFF_AIR,
+            STAFF_EARTH,
+        };
+        item.sub_type = angharstaff[random2(angharstaff.size())];
+        break;
+        
     default:
         break;
     }

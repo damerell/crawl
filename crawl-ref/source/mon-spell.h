@@ -1702,6 +1702,24 @@ static const mon_spellbook mspell_list[] =
       }
     },
 
+    { MST_ANGHARAD,
+      {
+	  { SPELL_BANISHMENT, 4, MON_SPELL_WIZARD },
+	  { SPELL_CORROSIVE_BOLT, 6, MON_SPELL_WIZARD },
+	  { SPELL_LIGHTNING_BOLT, 8, MON_SPELL_WIZARD },
+	  { SPELL_IRON_SHOT, 8, MON_SPELL_WIZARD },
+	  { SPELL_FREEZING_CLOUD, 8, MON_SPELL_WIZARD },
+	  { SPELL_FIREBALL, 8, MON_SPELL_WIZARD },
+	  { SPELL_SUMMON_EMPEROR_SCORPIONS, 6, MON_SPELL_WIZARD },
+	  { SPELL_HASTE, 12, MON_SPELL_WIZARD },
+	  { SPELL_OZOCUBUS_ARMOUR, 6, MON_SPELL_WIZARD },
+	  { SPELL_WORD_OF_RECALL, 4, MON_SPELL_WIZARD },
+	  // yes she might blink into her own IOOD
+	  { SPELL_IOOD, 10, MON_SPELL_WIZARD },
+	  { SPELL_BLINK, 10, MON_SPELL_WIZARD },
+      }
+    },
+
     // ('e') Elves.
     {  MST_DOWAN,
       {
