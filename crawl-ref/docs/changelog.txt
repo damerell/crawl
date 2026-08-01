@@ -35,6 +35,7 @@ Stoat Soup 0.23 "The Masque of the Red Death"
 * Ring mail, scale mail, and chain mail are renamed to the more distinct
   mail hauberk, scale armour, and brigandine, also avoiding using "ring mail"
   because it is a Victorian invention.
+* Angharad, Sorceress Prime, a Zot unique faerie dragon.
 
 Vanilla changes messed around with
 ----------------------------------
@@ -71,9 +72,8 @@ Vanilla changes messed around with
 * The armour of Talos returns.
 * Rings of loudness return, but now they make you loud. Malign Gateway's
   "horrible noise" is also loud.
-* Decks for everyone. Nemelex uses Evocations. Decks will never become
-  abilities, but Nemelex will not carry out so brutal an attack on inventory
-  space. Some cards are reworked.
+* Decks for everyone. Nemelex uses Evocations, and grants physical decks but
+  without so brutal an assault on inventory space as before.
 * Klown pies have a slightly different set of effects.
 
 Changes swiped from other variants
@@ -88,8 +88,8 @@ Gooncrawl:
 * Iskenderun's Undoing - cast 8 orbs of destruction at once.
 * Haste spell returns as level 9.
 
-Pulled forward from 0.28
-------------------------
+Summoning changes pulled forward from versions to 0.31
+------------------------------------------------------
 * Kills by summoned allies now grant full experience.
 * Spell summon caps are reduced:
   - Summon Small Mammal, Summon Hydra, and Monstrous Menagerie are capped at 2.
@@ -98,6 +98,13 @@ Pulled forward from 0.28
     capped at 1.
 * New spell: Summon Cactus Giant (L6 Summonings). Summons a giant which attacks
   very slowly but has enormous spines, impaling melee attackers.
+* New spell: Animate Armour, a level 4 Summon/Earth spell which draws out the
+  spirit of the caster's armour to fight alongside them. The heavier the
+  armour, the more powerful the spirit.
+* Call Canine Familiar now summons inugami, dog spirits which scale with power.
+  Recasting the spell heals the dogs and gives them a free cleaving attack, but
+  if the inugami is defeated, it can't be resummoned for some time.
+  We added a pointless feature which gives the dog a name, like an ancestor.
 
 Stone Soup 0.23 (up to 0.23-a0-642-g3120c2f5)
 --------------------------------------------
