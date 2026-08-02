@@ -1801,7 +1801,7 @@ endif
 	cp -p $(ZIP_DOCS) build-win/stone_soup-$(MAJOR_VERSION)/
 	cd build-win && zip -9r ../stone_soup-$(SRC_VERSION)-win32.zip *
 	rm -rf build-win
-	if which advzip >/dev/null;then advzip -z4 stone_soup-$(SRC_VERSION)*-win32.zip;fi
+	if which advzip >/dev/null;then advzip -z4 stoat_soup-$(SRC_VERSION)*-win32.zip;fi
 
 #############################################################################
 # Building Mac app bundles
