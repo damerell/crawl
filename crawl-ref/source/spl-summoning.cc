@@ -423,6 +423,8 @@ spret cast_summon_armour_spirit(int pow, god_type god, bool fail)
         return spret::success;
     }
 
+    mprf("You draw out the spirit of %s", armour->name(DESC_YOUR).c_str());
+    
     item_def &fake_armour = env.item[mitm_slot];
     fake_armour.clear();
     fake_armour.base_type = OBJ_ARMOUR;
