@@ -4611,6 +4611,10 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
         else
             monster_die(*this, KILL_MON, agent->mindex());
     }
+    if (hit_points > 0 && get_hit_dice() > 0 &&
+        ((type == MONS_INUGAMI) || mons_is_hepliaklqana_ancestor(type))) {
+        print_wounds(*this);
+    }
 
     return amount;
 }
