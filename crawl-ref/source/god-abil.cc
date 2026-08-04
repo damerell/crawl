@@ -7034,6 +7034,7 @@ spret hepliaklqana_idealise(bool fail)
     const int dur = random_range(50, 80)
                     + random2avg(you.skill(SK_INVOCATIONS, 20), 2);
     ancestor->add_ench({ ENCH_IDEALISED, 1, &you, dur});
+    print_wounds(*ancestor);
     return spret::success;
 }
 
