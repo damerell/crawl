@@ -1038,7 +1038,7 @@ allow_self_target = (yes | no | prompt)
         effect on area-effect spells, such as Mephitic Cloud, where you are
         always a valid target.
 
-auto_butcher = very hungry
+auto_butcher = very full
         If this is set to true, you will automatically travel to and attempt to
         butcher edible corpses. Can also be set to a hunger threshold ('very
         full', 'full', 'satiated', 'hungry', 'very hungry', or 'near starving')
@@ -1051,7 +1051,7 @@ confirm_butcher = (always | never | auto)
         even if there are multiple corpses on the square. If always, you will
         be prompted before butchering any number of corpses.
 
-easy_eat_chunks = false
+easy_eat_chunks = true
         If this is set to true then when using the (e)at command, the
         game will automatically determine the oldest chunk that is safe
         to eat, and eat it without prompting.

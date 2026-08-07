@@ -160,7 +160,7 @@ const vector<GameOption*> game_options::build_options_list()
         new BoolGameOption(SIMPLE_NAME(warn_hatches), false),
         new BoolGameOption(SIMPLE_NAME(warn_unknown_hatches), false),
         new BoolGameOption(SIMPLE_NAME(enable_recast_spell), true),
-        new BoolGameOption(SIMPLE_NAME(easy_eat_chunks), false),
+        new BoolGameOption(SIMPLE_NAME(easy_eat_chunks), true),
         new BoolGameOption(SIMPLE_NAME(auto_eat_chunks), true),
         new BoolGameOption(SIMPLE_NAME(auto_hide_spells), false),
         new BoolGameOption(SIMPLE_NAME(blink_brightens_background), false),
@@ -1040,7 +1040,7 @@ void game_options::reset_options()
     autopickups.set(OBJ_FOOD);
 
     confirm_butcher        = CONFIRM_AUTO;
-    auto_butcher           = HS_VERY_HUNGRY;
+    auto_butcher           = HS_VERY_FULL;
     easy_confirm           = CONFIRM_SAFE_EASY;
     allow_self_target      = CONFIRM_PROMPT;
     skill_focus            = SKM_FOCUS_ON;
