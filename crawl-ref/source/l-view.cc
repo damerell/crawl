@@ -223,5 +223,5 @@ static const struct luaL_reg view_lib[] =
 
 void cluaopen_view(lua_State *ls)
 {
-    luaL_openlib(ls, "view", view_lib, 0);
+    luaL_register(ls, "view", view_lib);
 }

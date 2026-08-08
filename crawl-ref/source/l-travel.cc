@@ -126,5 +126,5 @@ static const struct luaL_reg travel_lib[] =
 
 void cluaopen_travel(lua_State *ls)
 {
-    luaL_openlib(ls, "travel", travel_lib, 0);
+    luaL_register(ls, "travel", travel_lib);
 }

@@ -5311,7 +5311,7 @@ static void _choose_arcana_mutations()
         = you.props[ARCANA_SAC_KEY].get_vector();
     ASSERT(current_arcane_sacrifices.empty());
 
-    for (const vector<mutation_type> arcane_sacrifice_list :
+    for (const vector<mutation_type> &arcane_sacrifice_list :
                                     _arcane_sacrifice_lists)
     {
         const mutation_type sacrifice =
@@ -5331,7 +5331,7 @@ static void _choose_arcana_mutations()
  */
 static bool _player_sacrificed_arcana()
 {
-    for (const vector<mutation_type> arcane_sacrifice_list :
+    for (const vector<mutation_type> &arcane_sacrifice_list :
                                     _arcane_sacrifice_lists)
     {
         for (mutation_type sacrifice : arcane_sacrifice_list)

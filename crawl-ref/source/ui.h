@@ -27,7 +27,7 @@ namespace ui {
 template <size_t N>
 struct vec {
     int items[N];
-    template <typename... Ts> vec<N> (Ts... l) : items{l...} {}
+    template <typename... Ts> vec(Ts... l) : items{l...} {}
     const int& operator[](int index) const { return items[index]; }
     int& operator[](int index) { return items[index]; }
     inline bool operator==(const vec<N>& rhs) {
