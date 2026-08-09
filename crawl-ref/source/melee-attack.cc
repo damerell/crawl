@@ -2359,6 +2359,9 @@ void melee_attack::apply_staff_damage()
                     attacker->name(DESC_THE).c_str(),
                     attacker->is_player() ? "" : "s",
                     defender->name(DESC_THE).c_str());
+            if (defender->is_summoned()) {
+                abjuration_fineff::schedule(defender, special_damage * 2);
+            }
         }
         break;
     case STAFF_POWER: {

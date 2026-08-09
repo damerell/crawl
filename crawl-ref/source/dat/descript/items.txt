@@ -1215,7 +1215,7 @@ staff of summoning
 
 A staff that increases the power of summonings cast by its wielder. If
 the wielder is skilled in Evocations and Summoning, they can damage
-those struck by it.
+those struck by it, and abjure them if they have been summoned.
 %%%%
 staff of wizardry
 
