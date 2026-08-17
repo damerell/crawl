@@ -63,6 +63,7 @@
 #include "spl-goditem.h"
 #include "spl-monench.h"
 #include "spl-other.h"
+#include "spl-selfench.h"
 #include "spl-summoning.h"
 #include "spl-transloc.h"
 #include "spl-util.h"
@@ -2888,6 +2889,15 @@ void bolt::affect_place_clouds()
         {
             if (player_can_hear(p))
                 mprf(MSGCH_SOUND, "You hear a sizzling sound!");
+            if (flavour == BEAM_COLD) {
+                if (you.permabuff_working(PERMA_ROF) &&
+            // adjacency isn't quite right here
+                    adjacent(p, you.pos())) {
+                    permabuff_fail_check(
+                        PERMA_ROF,
+                        "You lose control of the ring of flames around you.");
+                }
+            }
 
             delete_cloud(p);
             extra_range_used += 5;

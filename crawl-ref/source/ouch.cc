@@ -326,6 +326,12 @@ void expose_player_to_element(beam_type flavour, int strength, bool slow_cold_bl
         you.props.erase("sticky_flame_source");
         you.props.erase("sticky_flame_aux");
     }
+
+    if (flavour == BEAM_FIRE && you.permabuff_working(PERMA_ROF)) {
+        permabuff_fail_check(
+            PERMA_ROF,
+            "You lose control of the ring of flames around you.");
+    }
 }
 
 static void _lose_level_abilities()
