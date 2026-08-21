@@ -413,7 +413,7 @@ char *json_encode(const JsonNode *node)
 
 char *json_encode_string(const char *str)
 {
-    SB sb;
+    SB sb = {};
     sb_init(&sb);
 
     emit_string(&sb, str);
@@ -423,7 +423,7 @@ char *json_encode_string(const char *str)
 
 char *json_stringify(const JsonNode *node, const char *space)
 {
-    SB sb;
+    SB sb = {};
     sb_init(&sb);
 
     if (space != nullptr)
@@ -844,7 +844,7 @@ failure:
 bool parse_string(const char **sp, char **out)
 {
     const char *s = *sp;
-    SB sb;
+    SB sb = {};
     char throwaway_buffer[4];
         /* enough space for a UTF-8 character */
     char *b;
