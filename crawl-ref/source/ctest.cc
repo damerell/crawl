@@ -93,7 +93,7 @@ static const struct luaL_reg crawl_test_lib[] =
 static void _init_test_bindings()
 {
     lua_stack_cleaner clean(dlua);
-    luaL_openlib(dlua, "crawl", crawl_test_lib, 0);
+    luaL_register(dlua, "crawl", crawl_test_lib);
     dlua.execfile("dlua/test.lua", true, true);
     initialise_branch_depths();
     initialise_item_descriptions();

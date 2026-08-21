@@ -22,7 +22,7 @@ static const struct luaL_reg file_clib[] =
 
 void cluaopen_file(lua_State *ls)
 {
-    luaL_openlib(ls, "file", file_clib, 0);
+    luaL_register(ls, "file", file_clib);
 }
 
 //
@@ -218,5 +218,5 @@ static const struct luaL_reg file_dlib[] =
 
 void dluaopen_file(lua_State *ls)
 {
-    luaL_openlib(ls, "file", file_dlib, 0);
+    luaL_register(ls, "file", file_dlib);
 }

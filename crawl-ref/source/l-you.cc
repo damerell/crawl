@@ -1304,7 +1304,7 @@ static const struct luaL_reg you_clib[] =
 
 void cluaopen_you(lua_State *ls)
 {
-    luaL_openlib(ls, "you", you_clib, 0);
+    luaL_register(ls, "you", you_clib);
 }
 
 //
@@ -1610,5 +1610,5 @@ static const struct luaL_reg you_dlib[] =
 
 void dluaopen_you(lua_State *ls)
 {
-    luaL_openlib(ls, "you", you_dlib, 0);
+    luaL_register(ls, "you", you_dlib);
 }

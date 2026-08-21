@@ -1683,5 +1683,5 @@ void cluaopen_item(lua_State *ls)
     // Pop the metatable off the stack.
     lua_pop(ls, 1);
 
-    luaL_openlib(ls, "items", item_lib, 0);
+    luaL_register(ls, "items", item_lib);
 }

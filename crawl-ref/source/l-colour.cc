@@ -110,5 +110,5 @@ static const struct luaL_reg colour_lib[] =
 
 void dluaopen_colour(lua_State *ls)
 {
-    luaL_openlib(ls, "colour", colour_lib, 0);
+    luaL_register(ls, "colour", colour_lib);
 }

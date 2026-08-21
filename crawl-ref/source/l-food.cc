@@ -182,5 +182,5 @@ static const struct luaL_reg food_lib[] =
 
 void cluaopen_food(lua_State *ls)
 {
-    luaL_openlib(ls, "food", food_lib, 0);
+    luaL_register(ls, "food", food_lib);
 }
