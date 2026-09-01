@@ -15,12 +15,10 @@
 #include <cstring>
 
 #include "areas.h"
-#include "chardump.h"
 #include "coordit.h"
 #include "directn.h"
 #include "english.h"
 #include "env.h"
-#include "exercise.h"
 #include "god-passive.h"
 #include "god-abil.h"
 #include "item-prop.h"
@@ -1704,39 +1702,6 @@ permabuff_type permabuff_is(spell_type spell){
 bool is_permabuff(spell_type spell) {
     permabuff_type permabuff = permabuff_is(spell);
     return (permabuff != PERMA_NO_PERMA);
-}
-
-// It is safe to call this more than once in the same turn for the same PB
-int permabuff_track(int pb) {
-    spell_type spell = permabuff_spell[pb];
-    ASSERT (is_permabuff(spell));
-    int dur = BASELINE_DELAY * nominal_duration(spell);
-    if (you.perma_benefit[pb] == 0) {
-        practise_casting(spell, true);
-        count_action(CACT_CAST, spell);
-    }
-    int old = you.perma_benefit[pb];
-    you.perma_benefit[pb] = max(you.perma_benefit[pb],
-                                div_rand_round(dur, PERMA_DURATION_DIVISOR));
-    int time = you.perma_benefit[pb] - old;
-    you.perma_hunger[pb] = (100 * spell_hunger(spell)) / dur;
-    int succ = 100 - (min(90, 
-                          failure_rate_to_int
-                          (raw_spell_fail(spell))));
-    you.perma_mp[pb] = (1000000 * spell_mana(spell)) / (dur * succ);
-    dprf(DIAG_PERMABUFF, "%s: %d hunger, %d MP per aut, %d auts",
-         spell_title(spell), you.perma_hunger[pb],
-         you.perma_mp[pb],you.perma_benefit[pb]);
-    you.perma_last_track[pb] = you.elapsed_time;
-    if (time > 0) {
-        string reason = you.cannot_renew_pbs_because();
-        if ((!reason.empty()) && one_chance_in(dur / time)) {
-            mprf(MSGCH_DURATION, "You can't renew one of your enchantments because %s!", reason.c_str());
-            // Duration reduced now _recheck_perma will silently renew it
-            you.increase_duration(permabuff_durs[pb], roll_dice(2, 4));
-        }
-    }
-    return time;
 }
 
 bool permabuff_uses_charms_reserve(permabuff_type pb) {

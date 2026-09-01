@@ -1481,14 +1481,6 @@ void player_reacts()
     // increment constriction durations
     you.accum_has_constricted();
 
-    // This is done here not in _regenerate_hp_and_mp to get the full duration
-    // for MP and hunger
-    if (you.permabuff_working(PERMA_REGEN) &&
-        (you.hp < you.hp_max) &&
-        (you.props[REGEN_RESERVE].get_int() > 0)) {
-        permabuff_track(PERMA_REGEN);
-    }
-
     const int food_use = div_rand_round(player_hunger_rate() * you.time_taken,
                                         BASELINE_DELAY);
     if (food_use > 0 && you.hunger > 0)
