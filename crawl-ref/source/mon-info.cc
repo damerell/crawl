@@ -1985,7 +1985,8 @@ vector<monster_info_func> init_monster_info_funcs() {
     toret.push_back({"holy wrath", "holy wrath", 
                 [](const monster_info &mi, bool newconditions) {
                 if (!you.holy_wrath_susceptible()) return false;
-                if (mi.itemuse() >= MONUSE_STARTING_EQUIPMENT) {
+                if (mi.itemuse() >= MONUSE_STARTING_EQUIPMENT ||
+                    (mi.type == MONS_DANCING_WEAPON)) {
                     const item_def* weapon = mi.inv[MSLOT_WEAPON].get();
                     if (weapon && 
                         get_weapon_brand(*weapon) == SPWPN_HOLY_WRATH) {
@@ -2000,7 +2001,8 @@ vector<monster_info_func> init_monster_info_funcs() {
                 return false; }});
     toret.push_back({"distortion", "distortion", 
                 [](const monster_info &mi, bool newconditions) {
-                if (mi.itemuse() >= MONUSE_STARTING_EQUIPMENT) {
+                if (mi.itemuse() >= MONUSE_STARTING_EQUIPMENT ||
+                    (mi.type == MONS_DANCING_WEAPON)) {
                     const item_def* weapon = mi.inv[MSLOT_WEAPON].get();
                     if (weapon && 
                         get_weapon_brand(*weapon) == SPWPN_DISTORTION)
