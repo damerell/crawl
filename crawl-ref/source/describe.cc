@@ -1127,6 +1127,9 @@ static void _append_weapon_stats(string &description, const item_def &item)
 
     if (!is_useless_item(item))
     {
+        if (basic_hands_reqd(item, SIZE_MEDIUM) == HANDS_TWO) {
+            description += "\nSince it is designed to be used with two hands, low levels of skill are more effective at reducing the attack delay.";
+        }
         description += "\n    " + _your_skill_desc(skill,
                     could_set_target && in_inventory(item), mindelay_skill);
     }

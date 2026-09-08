@@ -803,6 +803,17 @@ int weapon_min_delay_skill(const item_def &weapon)
 }
 
 /**
+ * What skill is required to reach 1.0 delay with a weapon?
+ * @param weapon The weapon to be considered.
+ * @returns The level of the relevant skill you must reach.
+ */
+int weapon_turn_delay_skill(const item_def &weapon)
+{
+    const int speed = property(weapon, PWPN_SPEED);
+    return (speed - 10) * 2;
+}
+
+/**
  * How fast will this weapon get from your skill training?
  *
  * @param weapon the weapon to be considered.

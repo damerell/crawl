@@ -54,6 +54,7 @@ void attack_cleave_targets(actor &attacker, list<actor*> &targets,
                                = WU_JIAN_ATTACK_NONE);
 
 int weapon_min_delay_skill(const item_def &weapon);
+int weapon_turn_delay_skill(const item_def &weapon);
 int weapon_min_delay(const item_def &weapon, bool check_speed = true);
 
 int mons_weapon_damage_rating(const item_def &launcher);

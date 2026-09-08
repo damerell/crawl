@@ -36,6 +36,9 @@ Stoat Soup 0.23 "The Masque of the Red Death"
   mail hauberk, scale armour, and brigandine, also avoiding using "ring mail"
   because it is a Victorian invention.
 * Angharad, Sorceress Prime, a Zot unique faerie dragon.
+* The attack delay on two-handed weapons reduces more quickly with the
+  early skill levels (then the reduction drops off so we reach 1.0 delay
+  at the usual skill level).
 
 Vanilla changes messed around with
 ----------------------------------

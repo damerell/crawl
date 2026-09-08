@@ -276,9 +276,21 @@ random_var player::attack_delay(const item_def *projectile, bool rescale) const
         const skill_type wpn_skill = item_attack_skill(*weap);
         // Cap skill contribution to mindelay skill, so that rounding
         // doesn't make speed brand benefit from higher skill.
-        const int wpn_sklev = min(you.skill(wpn_skill, 10),
-                                  10 * weapon_min_delay_skill(*weap));
+        int wpn_sklev = min(you.skill(wpn_skill, 10),
+                            10 * weapon_min_delay_skill(*weap));
 
+        // With two-handers we reduce delay at low but not zero skill
+        if (basic_hands_reqd(*weap, SIZE_MEDIUM) == HANDS_TWO) {
+            int halfturnskill = 5 * weapon_turn_delay_skill(*weap);
+            if (wpn_sklev < halfturnskill * 2) {
+                if (wpn_sklev < halfturnskill) {
+                    wpn_sklev += wpn_sklev / 2;
+                } else {
+                    wpn_sklev -= (wpn_sklev - halfturnskill) / 2;
+                    wpn_sklev += halfturnskill / 2;
+                }
+            }
+        }
         attk_delay = random_var(property(*weap, PWPN_SPEED));
         attk_delay -= div_rand_round(random_var(wpn_sklev), DELAY_SCALE);
         if (get_weapon_brand(*weap) == SPWPN_SPEED)
