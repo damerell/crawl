@@ -498,11 +498,12 @@ static int _acquirement_weapon_subtype(bool divine, int & /*quantity*/)
     item_considered.base_type = OBJ_WEAPONS;
     // Let's guess the percentage of shield use the player did, this is
     // based on empirical data where pure-shield MDs get skills like 17 sh
-    // 25 m&f and pure-shield Spriggans 7 sh 18 m&f. Pretend formicid
-    // shield skill is 0 so they always weight towards 2H.
-    const int shield_sk = you.species == SP_FORMICID
-        ? 0
-        : _skill_rdiv(SK_SHIELDS) * species_apt_factor(SK_SHIELDS);
+    // 25 m&f and pure-shield Spriggans 7 sh 18 m&f.
+    // Don't pretend formicid shield skill is 0 so they always weight towards
+    // 2H. This did nothing before they could wield GC/GSC (because two_handed
+    // is always false below) and after made acq shower you with GC/GSC
+    const int shield_sk = _skill_rdiv(SK_SHIELDS) *
+        species_apt_factor(SK_SHIELDS);
     const int want_shield = min(2 * shield_sk, best_sk) + 10;
     const int dont_shield = max(best_sk - shield_sk, 0) + 10;
     // At XL 10, weapons of the handedness you want get weight *2, those of
@@ -531,6 +532,13 @@ static int _acquirement_weapon_subtype(bool divine, int & /*quantity*/)
 
         const bool two_handed = you.hands_reqd(item_considered) == HANDS_TWO;
 
+        // Fo usually wants two-handers, especially with high skill
+        if (you.species == SP_FORMICID) {
+            if (basic_hands_reqd(item_considered, SIZE_MEDIUM) == HANDS_ONE) {
+                acqweight /= max((best_sk / 2), 1);
+            }
+        }
+        
         if (two_handed && you.get_mutation_level(MUT_MISSING_HAND))
             continue;
 
