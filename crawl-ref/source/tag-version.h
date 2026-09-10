@@ -237,6 +237,7 @@ enum tag_minor_version
     TAG_MINOR_FOOD_MUTS,           // 3-level carn/herb
     TAG_MINOR_DECK_USED_COUNT,     // deck used_count always counts up
     TAG_MINOR_GAMESEEDS,           // Game seeds + rng state saved
+    TAG_MINOR_SHOP_KEEPER_NAME,    // Seed shopkeeper names from all three keeper_name bytes
 #endif
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
