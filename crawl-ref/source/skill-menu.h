@@ -83,6 +83,7 @@ public:
     void set_skill(skill_type sk = SK_NONE);
     void set_cost();
     EditableTextItem *get_progress();
+    void deletestuff();
 
 private:
     skill_type m_sk;

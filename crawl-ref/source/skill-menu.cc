@@ -449,6 +449,13 @@ EditableTextItem *SkillMenuEntry::get_progress()
     return m_progress;
 }
 
+void SkillMenuEntry::deletestuff() {
+    if (m_name) {delete m_name;}
+    if (m_level) {delete m_level;}
+    if (m_progress) {delete m_progress;}
+    if (m_aptitude) {delete m_aptitude;}
+}
+
 void SkillMenuEntry::set_targets()
 {
     int target = you.get_training_target(m_sk);
@@ -856,6 +863,13 @@ void SkillMenu::init(int flag, int region_height)
     m_min_coord.x = 1;
     m_min_coord.y = 1;
     m_pos = m_min_coord;
+    for (int col = 0; col < SK_ARR_COL; ++col)
+        for (int ln = 0; ln < SK_ARR_LN; ++ln)
+        {
+            {
+                m_skills[ln][col].deletestuff();
+            }
+        }
     m_ff = new MenuFreeform();
 
     m_max_coord.x = MIN_COLS + 1;
@@ -884,6 +898,7 @@ void SkillMenu::init(int flag, int region_height)
     for (int col = 0; col < SK_ARR_COL; ++col)
         for (int ln = 0; ln < SK_ARR_LN; ++ln)
         {
+//            if (m_ff) {m_skills[ln][col].deletestuff();}
             m_skills[ln][col] = SkillMenuEntry(coord_def(m_pos.x
                                                          + col_split * col,
                                                          m_pos.y + ln));
