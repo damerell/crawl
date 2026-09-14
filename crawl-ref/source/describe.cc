@@ -2029,8 +2029,10 @@ static string _describe_deck(const item_def &item)
                                           card_name);
     }
 
-    description += "\n\nIndividual card descriptions:\n";
-    description += deck_contents_verbose(item.sub_type);
+    if (item_ident(item, ISFLAG_KNOW_TYPE)) {
+        description += "\n\nIndividual card descriptions:\n";
+        description += deck_contents_verbose(item.sub_type);
+    }
 
     return description;
 }
