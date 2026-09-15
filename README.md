@@ -51,16 +51,12 @@ In the (unlikely) event that you want to contribute to Stoat Soup, you are welco
 ### Reporting bugs
 
 At any time, there will be bugs -- finding and reporting them is a great help.
-Many of the online servers host the regularly updated development version. If you find a bug while playing Stoat Soup, please [report it](https://github.com/damerell/crawl/issues). Please don't report our bugs to Stone Soup unless you really can reproduce them there.
+One of the online servers, crawl.montres.org.uk (ssh only) hosts the regularly updated development version. If you find a bug while playing Stoat Soup, please [report it](https://github.com/damerell/crawl/issues). Please don't report our bugs to vanilla Stone Soup unless you really can reproduce them there.
 
 
 ### Map making
 Crawl creates levels by combining many hand-made (but often randomised) maps, known as *vaults*. Making them is fun and
 easy. It's best to start with simple entry vaults: see [simple.des](crawl-ref/source/dat/des/arrival/simple.des) for examples. You can also read [the level-design manual](crawl-ref/docs/develop/levels/introduction.txt) for more help.
-
-If you're ambitious, you can create new vaults for anywhere in the game. If you've
-made some vaults, you can test them on your own system (no compiling needed) and
-submit them to [our bug tracker](https://crawl.develz.org/mantis/).
 
 ### Monster Speech & Item Descriptions
 Monster speech provides a lot of flavour. Just like vaults, varied speech depends
@@ -73,14 +69,7 @@ them in [dat/descript/](crawl-ref/source/dat/descript/). The following conventio
 * Citations are okay, but try to stay away from the most generic ones.
 
 ### Tiles
-We're always open to improvements to existing tiles or variants of often-used tiles (eg floor tiles). If you want to give this a shot, please [contact us](#community) via forums or IRC. In case you drew some tiles of your own, you can submit them to [our bug tracker](https://crawl.develz.org/mantis/).
-
-### Patches
-For developers (both existing & aspiring!), you can download/fork the source code and write patches. Bug fixes as well as new features are very much welcome.
-
-For large changes, it's always a good idea to [talk with the dev team](#community) first, to see if any plans already exist and if your suggestion is likely to be accepted.
-
-Please be sure to read [docs/develop/coding_conventions.txt](crawl-ref/docs/develop/coding_conventions.txt) too.
+We're always open to improvements to existing tiles or variants of often-used tiles (eg floor tiles). If you want to give this a shot, please [contact us](#community) via forums or IRC. In case you drew some tiles of your own, you can submit them via github PRs or issues.
 
 ## License and history information
 
