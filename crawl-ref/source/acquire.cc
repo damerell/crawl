@@ -932,6 +932,10 @@ static bool _skill_useless_with_god(int skill)
     case GOD_SHINING_ONE:
     case GOD_ELYVILON:
         return skill == SK_NECROMANCY;
+    case GOD_IHPIX:
+        return skill == SK_THROWING;
+    case GOD_DITHMENOS:
+        return skill == SK_FIRE_MAGIC;
     default:
         return false;
     }

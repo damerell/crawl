@@ -579,6 +579,8 @@ bool training_restricted(skill_type sk)
         return false;
     case SK_THROWING:
         return you_worship(GOD_IHPIX);
+    case SK_FIRE_MAGIC:
+        return you_worship(GOD_DITHMENOS);
     default:
         return true;
     }
@@ -1924,8 +1926,6 @@ bool is_useless_skill(skill_type skill)
         || (skill == SK_SHIELDS && you.get_mutation_level(MUT_MISSING_HAND))
         || (skill == SK_EVOCATIONS && you.get_mutation_level(MUT_NO_ARTIFICE))
         || (skill == SK_STEALTH && you.get_mutation_level(MUT_NO_STEALTH))
-        || (skill == SK_THROWING && in_good_standing(GOD_IHPIX))
-        || (skill == SK_FIRE_MAGIC && in_good_standing(GOD_DITHMENOS))
     )
     {
         return true;
