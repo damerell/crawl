@@ -2137,7 +2137,7 @@ bool item_skills(const item_def &item, set<skill_type> &skills)
         return !skills.empty();
 
     if (item_is_evokable(item, false, false, false, false)
-        || staff_uses_evocations(item)
+        || (staff_uses_evocations(item) && item_type_known(item))
         || item.base_type == OBJ_WEAPONS && gives_ability(item))
     {
         skills.insert(SK_EVOCATIONS);
@@ -2148,19 +2148,19 @@ bool item_skills(const item_def &item, set<skill_type> &skills)
         skills.insert(sk);
 
     if ((item.base_type == OBJ_WEAPONS) && 
-        (get_weapon_brand(item) == SPWPN_PAIN)) {
+        ((get_weapon_brand(item) == SPWPN_PAIN) && item_type_known(item))) {
         skills.insert(SK_NECROMANCY);
     }
-
+        
     if (is_unrandom_artefact(item, UNRAND_OLGREB)) {
-      skills.insert(SK_POISON_MAGIC);
+        skills.insert(SK_POISON_MAGIC);
     }
     if (is_unrandom_artefact(item, UNRAND_ELEMENTAL_STAFF)) {
-      skills.insert(SK_FIRE_MAGIC); skills.insert(SK_EARTH_MAGIC);
-      skills.insert(SK_ICE_MAGIC); skills.insert(SK_AIR_MAGIC);
+        skills.insert(SK_FIRE_MAGIC); skills.insert(SK_EARTH_MAGIC);
+        skills.insert(SK_ICE_MAGIC); skills.insert(SK_AIR_MAGIC);
     }
 
-    if (item.base_type == OBJ_STAVES) {
+    if ((item.base_type == OBJ_STAVES) && item_type_known(item)) {
       switch (item.sub_type) {
       case STAFF_FIRE:
         skills.insert(SK_FIRE_MAGIC); break;
