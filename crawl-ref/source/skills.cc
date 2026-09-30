@@ -570,17 +570,14 @@ bool training_restricted(skill_type sk)
     switch (sk)
     {
     case SK_FIGHTING:
-    // Requiring missiles would mean disabling the skill when you run out.
     case SK_ARMOUR:
     case SK_DODGING:
     case SK_STEALTH:
     case SK_UNARMED_COMBAT:
     case SK_SPELLCASTING:
-        return false;
+    // Requiring missiles would mean disabling the skill when you run out.
     case SK_THROWING:
-        return you_worship(GOD_IHPIX);
-    case SK_FIRE_MAGIC:
-        return you_worship(GOD_DITHMENOS);
+        return false;
     default:
         return true;
     }
@@ -1934,9 +1931,11 @@ bool is_useless_skill(skill_type skill)
     return species_apt(skill) == UNUSABLE_SKILL;
 }
 
+// bit of a stretch but I'm going to argue dumping XP into something you can't
+// use is "harmful" especially since we also don't let you turn it on
 bool is_harmful_skill(skill_type skill)
 {
-    return is_magic_skill(skill) && you_worship(GOD_TROG);
+    return skill_useless_with_god(skill);
 }
 
 /**
@@ -2404,4 +2403,32 @@ bool can_enable_skill(skill_type sk, bool override)
        && you.skills[sk] < MAX_SKILL_LEVEL
        && !is_useless_skill(sk)
        && (override || (you.can_currently_train[sk] && !is_harmful_skill(sk)));
+}
+
+bool skill_useless_with_god(skill_type skill)
+{
+    if (skill == SK_INVOCATIONS)
+    {
+        // No active invocations, or uses a different skill.
+        return invo_skill() != SK_INVOCATIONS
+               || you_worship(GOD_XOM)
+               || you_worship(GOD_VEHUMET)
+               || you_worship(GOD_NO_GOD);
+    }
+
+    switch (you.religion)
+    {
+    case GOD_TROG:
+        return is_magic_skill(skill);
+    case GOD_ZIN:
+    case GOD_SHINING_ONE:
+    case GOD_ELYVILON:
+        return skill == SK_NECROMANCY;
+    case GOD_IHPIX:
+        return skill == SK_THROWING;
+    case GOD_DITHMENOS:
+        return skill == SK_FIRE_MAGIC;
+    default:
+        return false;
+    }
 }

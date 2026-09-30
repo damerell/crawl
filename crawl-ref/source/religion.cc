@@ -3163,7 +3163,6 @@ void excommunication(bool voluntary, god_type new_god)
 
     case GOD_IHPIX:
         leave_or_penance(old_god);
-        you.start_train.insert(SK_THROWING);
         you.exp_docked[old_god] = exp_needed(min<int>(you.max_level, 27) + 1)
                                   - exp_needed(min<int>(you.max_level, 27));
         you.exp_docked_total[old_god] = you.exp_docked[old_god];
@@ -3904,10 +3903,6 @@ static void _join_ru()
 /// Setup for joining the furious barbarians of Trog.
 static void _join_trog()
 {
-    if (you.species != SP_GNOLL)
-        for (int sk = SK_SPELLCASTING; sk <= SK_LAST_MAGIC; ++sk)
-            you.train[sk] = you.train_alt[sk] = TRAINING_DISABLED;
-
     // When you start worshipping Trog, you make all non-hostile magic
     // users hostile.
     if (query_daction_counter(DACT_ALLY_SPELLCASTER))
@@ -4138,8 +4133,14 @@ bool join_religion(god_type which_god)
     vector<ability_type> abilities = get_god_abilities();
     for (ability_type abil : abilities)
         you.start_train.insert(abil_skill(abil));
-    if (you_worship(GOD_IHPIX)) you.stop_train.insert(SK_THROWING);
-    if (you_worship(GOD_DITHMENOS)) you.stop_train.insert(SK_FIRE_MAGIC);
+
+    if (you.species != SP_GNOLL) {
+        for (skill_type sk = SK_FIRST_SKILL; sk < NUM_SKILLS; ++sk) {
+            if (skill_useless_with_god(sk)) {
+                you.train[sk] = you.train_alt[sk] = TRAINING_DISABLED;
+            }
+        }
+    }
     update_can_currently_train(); reset_training(); check_selected_skills();
 
     // now that you have a god, you can't save any piety from your prev god

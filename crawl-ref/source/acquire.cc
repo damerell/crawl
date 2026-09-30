@@ -908,34 +908,6 @@ static int _book_weight(book_type book)
     return total_weight;
 }
 
-static bool _skill_useless_with_god(skill_type skill)
-{
-    if (skill == SK_INVOCATIONS)
-    {
-        // No active invocations, or uses a different skill.
-        return invo_skill() != SK_INVOCATIONS
-               || you_worship(GOD_XOM)
-               || you_worship(GOD_VEHUMET)
-               || you_worship(GOD_NO_GOD);
-    }
-
-    switch (you.religion)
-    {
-    case GOD_TROG:
-        return is_magic_skill(skill);
-    case GOD_ZIN:
-    case GOD_SHINING_ONE:
-    case GOD_ELYVILON:
-        return skill == SK_NECROMANCY;
-    case GOD_IHPIX:
-        return skill == SK_THROWING;
-    case GOD_DITHMENOS:
-        return skill == SK_FIRE_MAGIC;
-    default:
-        return false;
-    }
-}
-
 /**
  * Randomly decide whether the player should get a manual from a given instance
  * of book acquirement.
@@ -988,7 +960,7 @@ static bool _acquire_manual(item_def &book)
     {
         const int skl = _skill_rdiv(sk);
 
-        if (skl == 27 || is_useless_skill(sk) || _skill_useless_with_god(sk))
+        if (skl == 27 || is_useless_skill(sk) || skill_useless_with_god(sk))
             continue;
 
         int w = (skl < 12) ? skl + 3 : max(0, 25 - skl);

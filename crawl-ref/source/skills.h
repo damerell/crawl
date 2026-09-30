@@ -107,6 +107,7 @@ bool is_removed_skill(skill_type skill);
 bool is_useless_skill(skill_type skill);
 bool is_harmful_skill(skill_type skill);
 bool can_enable_skill(skill_type sk, bool override = false);
+bool skill_useless_with_god(skill_type skill);
 bool trainable_skills(bool check_all = false);
 bool skills_being_trained();
 

@@ -109,12 +109,16 @@ skill_type SkillMenuEntry::get_skill() const
     return m_sk;
 }
 
+static bool _trainable_and_god_useful(skill_type sk) {
+    return (you.can_currently_train[sk] && !skill_useless_with_god(sk));
+}
+
 static bool _show_skill(skill_type sk, skill_menu_state state)
 {
     switch (state)
     {
     case SKM_SHOW_DEFAULT:
-        return you.can_currently_train[sk] || you.skill(sk, 10, false, false)
+        return _trainable_and_god_useful(sk) || you.skill(sk, 10, false, false)
                || sk == you.transfer_from_skill || sk == you.transfer_to_skill;
     case SKM_SHOW_ALL:     return true;
     default:               return false;
@@ -149,8 +153,8 @@ bool SkillMenuEntry::is_selectable(bool keep_hotkey)
         return false;
     }
 
-    if (!you.can_currently_train[m_sk] && !is_set(SKMF_RESKILL_TO)
-        && !is_set(SKMF_RESKILL_FROM))
+    if (!_trainable_and_god_useful(m_sk) &&
+        !is_set(SKMF_RESKILL_TO) && !is_set(SKMF_RESKILL_FROM))
     {
         return false;
     }
@@ -337,7 +341,7 @@ string SkillMenuEntry::get_prefix()
     else
         letter = ' ';
 
-    const int sign = (!you.can_currently_train[m_sk] || mastered()) ? ' ' :
+    const int sign = (!_trainable_and_god_useful(m_sk) || mastered()) ? ' ' :
                                    (you.train[m_sk] == TRAINING_FOCUSED) ? '*' :
                                           you.train[m_sk] ? '+'
                                                           : '-';
