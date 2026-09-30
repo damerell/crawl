@@ -27,6 +27,7 @@
 #include "fprop.h"
 #include "god-abil.h"
 #include "god-conduct.h"
+#include "god-passive.h"
 #include "invent.h"
 #include "item-name.h"
 #include "items.h"
@@ -2285,16 +2286,26 @@ spret cast_sandblast(int pow, bolt &beam, bool fail)
 {
     item_def *stone = nullptr;
     int num_stones = 0;
-    for (item_def& i : you.inv)
-    {
-        if (i.is_type(OBJ_MISSILES, MI_STONE)
-            && check_warning_inscriptions(i, OPER_DESTROY))
+    if (have_passive(passive_t::ihpix_gather)) {
+        static CrawlVector &ammo_vec = you.props[IHPIX_AMMO_KEY].get_vector();
+        for (int i = 0; i < ihpix_nr_ammos; i++) {
+            stone = &ammo_vec[i].get_item();
+            if (stone->sub_type == MI_STONE) {
+                num_stones = stone->quantity;
+            }
+        }
+    } else {
+        for (item_def& i : you.inv)
         {
-            num_stones += i.quantity;
-            stone = &i;
+            if (i.is_type(OBJ_MISSILES, MI_STONE)
+                && check_warning_inscriptions(i, OPER_DESTROY))
+            {
+                num_stones += i.quantity;
+                stone = &i;
+            }
         }
     }
-
+    
     if (num_stones == 0)
     {
         mpr("You don't have any stones to cast with.");
@@ -2306,10 +2317,21 @@ spret cast_sandblast(int pow, bolt &beam, bool fail)
 
     if (ret == spret::success)
     {
-        if (dec_inv_item_quantity(letter_to_index(stone->slot), 1))
-            mpr("You now have no stones remaining.");
-        else
-            mprf_nocap("%s", stone->name(DESC_INVENTORY).c_str());
+        bool nostones = false;
+        if (have_passive(passive_t::ihpix_gather)) {
+            you.redraw_quiver = true;
+            if (--stone->quantity) {
+                mprf("%s remaining.", stone->name(DESC_A).c_str());
+            } else {
+                nostones = true;
+            }
+        } else {
+            if (dec_inv_item_quantity(letter_to_index(stone->slot), 1))
+                nostones = true;
+            else
+                mprf_nocap("%s", stone->name(DESC_INVENTORY).c_str());
+        }
+        if (nostones) mpr("You now have no stones remaining.");
     }
 
     return ret;
