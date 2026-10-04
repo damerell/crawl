@@ -198,6 +198,15 @@ const int AGILITY_BONUS = 5;
 #define berserk_mul(x) div_rand_round((x) * 3, 2)
 #define berserk_div(x) div_rand_round((x) * 2, 3)
 
+#define MONINFOFUDGE 100
+// Used for faster-than-you mon-info calculations, so pessimistic
+// This works because for a monster high values are good; for a player, bad
+// why on earth is it like that??
+#define haste_moninfo_mul(x) div_round_up(x * 3, 2)
+#define haste_moninfo_div(x) div_round_up(x * 2, 3)
+#define berserk_moninfo_mul(x) div_round_up(x * 3, 2)
+#define berserk_moninfo_div(x) div_round_up(x * 2, 3)
+
 #define MAX_MONSTER_HP 10000
 
 // some shortcuts:

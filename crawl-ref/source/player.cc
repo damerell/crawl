@@ -2008,9 +2008,9 @@ int player_prot_life(bool calc_unid, bool temp, bool items)
 // this isn't as fast as it used to be (6 for having anything), but
 // even a slight speed advantage is very good... and we certainly don't
 // want to go past 6 (see below). -- bwr
-int player_movement_speed()
+int player_movement_speed(bool forreal)
 {
-    int mv = 10;
+    int mv = 10; 
 
     // transformations
     if (you.form == transformation::bat)
@@ -2039,9 +2039,12 @@ int player_movement_speed()
 
     // Cheibriados
     if (have_passive(passive_t::slowed))
-        mv += 2 + min(div_rand_round(you.piety, 20), 8);
+        mv += 2 + min(forreal ? div_rand_round(you.piety, 20) :
+                      div_round_up(you.piety, 20), 8);
     else if (player_under_penance(GOD_CHEIBRIADOS))
-        mv += 2 + min(div_rand_round(you.piety_max[GOD_CHEIBRIADOS], 20), 8);
+        mv += 2 + min(forreal ?
+                      div_rand_round(you.piety_max[GOD_CHEIBRIADOS], 20) :
+                      div_round_up(you.piety_max[GOD_CHEIBRIADOS], 20), 8);
 
     // Tengu can move slightly faster when flying.
     if (you.tengu_flight())
@@ -2066,11 +2069,12 @@ int player_movement_speed()
     if (you.duration[DUR_SWIFTNESS] > 0 && !you.in_liquid())
     {
         if (you.attribute[ATTR_SWIFTNESS] > 0)
-          mv = div_rand_round(3*mv, 4);
+            mv = forreal ? div_rand_round(3*mv, 4) : div_round_up(3*mv, 4);
         else if (mv >= 8)
-          mv = div_rand_round(3*mv, 2);
+            mv = forreal ? div_rand_round(3*mv, 2) : div_round_up(3*mv, 2);
         else if (mv == 7)
-          mv = div_rand_round(7*6, 5); // balance for the cap at 6
+            // balance for the cap at 6
+            mv = forreal ? div_rand_round(7*6, 5) : div_round_up(7*6, 5); 
     }
 
     // We'll use the old value of six as a minimum, with haste this could
@@ -2108,21 +2112,21 @@ const int player_adjust_evoc_power(const int power, int enhancers,
 // This function differs from the above in that it's used to set the
 // initial time_taken value for the turn. Everything else (movement,
 // spellcasting, combat) applies a ratio to this value.
-int player_speed()
+int player_speed(bool forreal)
 {
-    int ps = 10;
+    int ps = 10; if (!forreal) ps *= MONINFOFUDGE;
 
     // When paralysed, speed is irrelevant.
     if (you.cannot_act())
         return ps;
 
     if (you.duration[DUR_SLOW] || have_stat_zero())
-        ps = haste_mul(ps);
+        ps = forreal ? haste_mul(ps) : haste_moninfo_mul(ps);
 
     if (you.duration[DUR_BERSERK] && !have_passive(passive_t::no_haste))
-        ps = berserk_div(ps);
+        ps = forreal ? berserk_div(ps) : berserk_moninfo_div(ps);
     else if (you.duration[DUR_HASTE])
-        ps = haste_div(ps);
+        ps = forreal ? haste_div(ps) : haste_moninfo_div(ps);
 
     if (you.form == transformation::statue || you.duration[DUR_PETRIFYING])
     {

@@ -1028,7 +1028,8 @@ int player_energy();
 int player_shield_racial_factor();
 int player_armour_shield_spell_penalty();
 
-int player_movement_speed();
+int player_movement_speed(bool forreal = true); // otherwise for relative
+                                           // monster speed in describe.cc
 
 int player_hunger_rate(bool temp = true);
 
@@ -1093,7 +1094,7 @@ int player_spec_summ();
 const int player_adjust_evoc_power(const int power, int enhancers = 0,
 				   bool nostepdown = false);
 
-int player_speed();
+int player_speed(bool forreal = true); // otherwise for relative speed
 
 int player_spell_levels();
 int player_total_spell_levels();

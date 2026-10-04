@@ -308,6 +308,7 @@ monster_info::monster_info(monster_type p_type, monster_type p_base_type)
     mb.reset();
     attitude = ATT_HOSTILE;
     pos = coord_def(0, 0);
+    actual_monster = false;
 
     type = p_type;
 
@@ -340,7 +341,10 @@ monster_info::monster_info(monster_type p_type, monster_type p_base_type)
 
     mbase_speed = mons_class_base_speed(type);
     menergy = mons_class_energy(type);
-
+    terrainspeed = div_round_up(MONINFOFUDGE * mbase_speed,
+                                (mons_class_primary_habitat(type) == HT_LAND ?
+                                 menergy.move : menergy.swim));
+    
     if (mons_class_flag(type, M_FLIES) || mons_class_flag(base_type, M_FLIES))
         mb.set(MB_AIRBORNE);
 
@@ -428,7 +432,8 @@ monster_info::monster_info(const monster* m, int milev)
     mb.reset();
     attitude = ATT_HOSTILE;
     pos = m->pos();
-
+    actual_monster = true;
+    
     attitude = mons_attitude(*m);
 
     type = m->type;
@@ -557,6 +562,10 @@ monster_info::monster_info(const monster* m, int milev)
     mitemuse = mons_itemuse(*m);
     mbase_speed = mons_base_speed(*m, true);
     menergy = mons_energy(*m);
+    
+    terrainspeed = div_round_up(m->calc_moninfo_speed(),
+                                m->action_energy(mons_should_swim(*m) ?
+                                                 EUT_SWIM : EUT_MOVE));
     can_go_frenzy = m->can_go_frenzy();
 
     // Not an MB_ because it's rare.

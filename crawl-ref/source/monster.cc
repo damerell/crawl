@@ -6,6 +6,7 @@
 #include "AppHdr.h"
 
 #include <algorithm>
+#include <cmath>
 #include <functional>
 #include <queue>
 
@@ -5148,17 +5149,27 @@ bool monster::sicken(int amount)
 // Recalculate movement speed.
 void monster::calc_speed()
 {
-    speed = mons_base_speed(*this);
+    speed = calc_speed_internal();
+}
+int monster::calc_moninfo_speed() const {
+    return calc_speed_internal(false);
+}
+int monster::calc_speed_internal(bool forreal) const {
+    int mispeed = mons_base_speed(*this);
 
     if (type == MONS_BOULDER_BEETLE && has_ench(ENCH_ROLLING))
-        speed = 14;
+        mispeed = 14;
+
+    if (!forreal) mispeed *= MONINFOFUDGE;
 
     if (has_ench(ENCH_BERSERK))
-        speed = berserk_mul(speed);
+        mispeed = (forreal ? berserk_mul(mispeed) :
+                   berserk_moninfo_mul(mispeed));
     else if (has_ench(ENCH_HASTE))
-        speed = haste_mul(speed);
+        mispeed = (forreal ? haste_mul(mispeed) : haste_moninfo_mul(mispeed));
     if (has_ench(ENCH_SLOW))
-        speed = haste_div(speed);
+        mispeed = (forreal ? haste_div(mispeed) : haste_moninfo_div(mispeed));
+    return mispeed;
 }
 
 // Check speed and speed_increment sanity.

@@ -212,12 +212,14 @@ struct monster_info_base
     mon_itemuse_type mitemuse;
     int mbase_speed;
     mon_energy_usage menergy;
+    int terrainspeed; // How fast we think it moves _right now_
     CrawlHashTable props;
     string constrictor_name;
     vector<string> constricting_name;
     monster_spells spells;
     mon_attack_def attack[MAX_NUM_ATTACKS];
     bool can_go_frenzy;
+    bool actual_monster; // actual monster in world or describing type
 
     uint32_t client_id;
 };

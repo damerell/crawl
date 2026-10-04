@@ -4203,6 +4203,37 @@ const char* get_size_adj(const size_type size, bool ignore_medium)
     return size_adj[size];
 }
 
+static string _describe_relative_speed(int monspeed) {
+    string result;
+    int playerspeed = player_speed(false) * player_movement_speed(false);
+    uint32_t ratio = monspeed * playerspeed / 10000;
+    if ((ratio > 95) && (ratio < 105)) {
+        result = "at about the same speed as";
+    } else if (ratio < 100) {
+        if (ratio > 80) {
+            result = "slightly slower than";
+        } else if (ratio > 65) {
+            result = "moderately slower than";
+        } else if (ratio > 50) {
+            result = "much slower than";
+        } else {
+            result = "no more than half as fast as";
+        }
+    } else { // ratio > 1
+        if (ratio < 125) {
+            result = "slightly faster than";
+        } else if (ratio < 150) {
+            result = "moderately faster than";
+        } else if (ratio < 175) {
+            result = "much faster than";
+        } else {
+            result = "at least twice as fast as";
+        }
+    }
+//    result = make_stringf("Ratio %d: monster %d / player %d\n", ratio, monspeed, playerspeed);
+    return result;
+}
+
 // Describe a monster's (intrinsic) resistances, speed and a few other
 // attributes.
 static string _monster_stat_description(const monster_info& mi)
@@ -4375,7 +4406,9 @@ static string _monster_stat_description(const monster_info& mi)
         did_speed = true;
         result << uppercase_first(pronoun) << " is " << mi.speed_description();
     }
+
     const mon_energy_usage def = DEFAULT_ENERGY;
+
     if (!(mi.menergy == def))
     {
         const mon_energy_usage me = mi.menergy;
@@ -4437,6 +4470,15 @@ static string _monster_stat_description(const monster_info& mi)
     }
     else if (did_speed)
         result << ".\n";
+
+    if (!(mons_class_flag(mi.type, M_STATIONARY)
+          && !mons_is_tentacle_or_tentacle_segment(mi.type))) {
+        string relspeed = _describe_relative_speed(mi.terrainspeed);
+        result << (mi.actual_monster ?
+                   "Currently, it moves " + relspeed + " you.\n" :
+                   "Typically, it would move " + relspeed +
+                   " you are moving now.\n");
+    }
 
     if (mi.type == MONS_SHADOW)
     {

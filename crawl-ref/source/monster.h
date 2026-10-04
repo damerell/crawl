@@ -547,6 +547,7 @@ public:
     void bind_melee_flags();
     void bind_spell_flags();
     void calc_speed();
+    int calc_moninfo_speed() const;
     bool attempt_escape(int attempts = 1);
     void struggle_against_net();
     bool has_usable_tentacle() const override;
@@ -617,6 +618,7 @@ private:
     bool wants_armour(const item_def &item) const;
     bool wants_jewellery(const item_def &item) const;
     void lose_pickup_energy();
+    int calc_speed_internal(bool forreal = true) const; // else for describe.cc
     bool check_set_valid_home(const coord_def &place,
                               coord_def &chosen,
                               int &nvalid) const;
