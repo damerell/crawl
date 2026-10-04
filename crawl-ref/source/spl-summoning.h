@@ -184,7 +184,6 @@ const vector<string> dognames = {
     "Douglas",
     "Droopy",
     "Duggee",
-    "Ein",
     "Fenrir",
     "Fido",
     "Fluffy",
@@ -267,4 +266,11 @@ const vector<string> dognames = {
     "Gaspode",
     // Jerome
     "Montmorency",
+    // Locked Tomb
+    "Noodle",
+    "Stop It",
+    // anime
+    "Terminal Core", // FLCL
+    "Tadakichi",     // Azudaioh
+    "Ein", // Cowboy Bebop
 };
