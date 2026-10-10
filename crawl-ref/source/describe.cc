@@ -4473,10 +4473,11 @@ static string _monster_stat_description(const monster_info& mi)
 
     if (!(mons_class_flag(mi.type, M_STATIONARY)
           && !mons_is_tentacle_or_tentacle_segment(mi.type))) {
+        string itname = mi.pronoun(PRONOUN_SUBJECTIVE);
         string relspeed = _describe_relative_speed(mi.terrainspeed);
         result << (mi.actual_monster ?
-                   "Currently, it moves " + relspeed + " you.\n" :
-                   "Typically, it would move " + relspeed +
+                   "Currently, " + itname + " moves " + relspeed + " you.\n" :
+                   "Typically, " + itname + " would move " + relspeed +
                    " you are moving now.\n");
     }
 
