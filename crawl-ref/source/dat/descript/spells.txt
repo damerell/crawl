@@ -795,12 +795,13 @@ This spell protects the caster from electric shocks.
 %%%%
 Invisibility spell
 
-Turns a targeted creature invisible. Turning invisible causes magical
-contamination and may eventually cause glowing, nullifying the invisibility.
-%%%%
-Invisibility Other spell
+Turns the caster, or one of your allies, invisible.
 
-Turns a nearby ally invisible.
+While an enemy is invisible to you, your accuracy against them is reduced and
+you suffer a major penalty to your evasion and ability to block any attacks
+they make against you.
+
+[[player invis desc]]
 %%%%
 Iron Shot spell
 
