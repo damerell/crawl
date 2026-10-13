@@ -1183,6 +1183,9 @@ static string _stat_weight_string(weapon_stat_weight weight) {
 }
 static string _item_stat_weight_string(const item_def &item,
                                        bool thrown = false) {
+    if (property(item, PWPN_DAMAGE) == 0) {
+        return "";
+    }
     string description = "Damage inflicted ";
     weapon_stat_weight weight = weapon_str_weight(&item);
     string throwstring = thrown ? "by throwing this item " :
