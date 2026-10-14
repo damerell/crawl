@@ -2380,6 +2380,9 @@ bool item_is_spellbook(const item_def &item)
            && item.sub_type != BOOK_MANUAL;
 }
 
+bool item_is_fds(const item_def &item) {
+    return item.is_type(OBJ_ARMOUR, ARM_FD_ARMOUR);
+}
 //
 // Ring functions:
 

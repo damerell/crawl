@@ -192,6 +192,7 @@ string item_def::name(description_level_type descrip, bool terse, bool ident,
          && !(corpse_flags & MF_NAME_SUFFIX)
          && !starts_with(get_corpse_name(*this), "shaped "))
         || item_is_orb(*this) || item_is_horn_of_geryon(*this)
+        || item_is_fds(*this)
         || (ident || item_type_known(*this)) && is_artefact(*this)
             && special != UNRAND_OCTOPUS_KING_RING)
     {
