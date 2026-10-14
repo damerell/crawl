@@ -881,7 +881,12 @@ void ash_id_monster_equipment(monster* mon)
             mon->props["wand_known"] = true;
         }
         else
+        {
+            if (is_weapon(item) && is_artefact(item)) {
+                artefact_learn_prop(item, ARTP_BRAND);
+            }
             set_ident_flags(item, ISFLAG_KNOW_TYPE);
+        }
 
         id = true;
     }
