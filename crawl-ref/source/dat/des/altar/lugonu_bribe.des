@@ -42,7 +42,7 @@ function callback.tgw_lugonu_bribe_lugonu_item (data, triggerable,
               randbook owner:Lugonu spells:corpse_rot&animate_dead numspells:2",
          ["Ihp'ix"]="dart ego:curare q:2-4 / throwing net q:2-4",
          Jiyva="stone q:10-20 / large rock q:2-4",
-         Kikubaaqudgha="randbook owner:Lugonu spells:dispel_undead \
+         Kikubaaqudgha="randbook owner:Lugonu spells:velakast's_disruption \
                        numspells:1 / rat corpse w:5 / kobold corpse w:5",
          Pakellas="staff of energy / crystal ball of energy w:5",
          ["the Shining One"]="potion of invisibility ident:type q:3-6",
