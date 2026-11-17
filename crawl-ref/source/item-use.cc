@@ -2199,7 +2199,8 @@ static void _brand_weapon(item_def &wpn)
     you.wield_change = true;
 
     const string itname = _item_name(wpn);
-
+    // in case we're rebranding pain
+    item_skills(wpn, you.stop_train);
     _rebrand_weapon(wpn);
 
     bool success = true;
@@ -2264,6 +2265,7 @@ static void _brand_weapon(item_def &wpn)
 
     if (success)
     {
+        item_skills(wpn, you.start_train);
         item_set_appearance(wpn);
         // Message would spoil this even if we didn't identify.
         set_ident_flags(wpn, ISFLAG_KNOW_TYPE);
